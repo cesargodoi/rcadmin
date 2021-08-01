@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "event/elements/event_navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <form class="form-control-sm mt-1" method="GET">
+      {% csrf_token %}
+      {% include "base/searchs/event.html" %}
+    </form>
+    <br>
+    {% include 'event/elements/events.html' %}
+  </div>
+</article>
+
+{% endblock %}

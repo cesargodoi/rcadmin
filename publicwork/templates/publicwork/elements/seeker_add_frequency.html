@@ -1,0 +1,6 @@
+<form class="form-control-sm mt-1 mb-2" method="GET">
+  {% csrf_token %}
+  {% include "base/searchs/lecture.html" %}
+</form>
+<br>
+{% include 'publicwork/elements/lectures.html' %}

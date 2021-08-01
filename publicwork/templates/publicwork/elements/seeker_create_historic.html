@@ -1,0 +1,29 @@
+{% load crispy_forms_tags %}
+
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+  <fieldset class="form-group">
+
+    <legend class="border-bottom mb-4">
+      {% if add %}Add{% else %}Edit{% endif %} Frequency
+    </legend>
+
+    
+    {{ form.seeker | as_crispy_field }}
+
+    <div class="row">
+      <div class="col-3">
+        {{ form.date | as_crispy_field }}
+      </div>
+      <div class="col-2">
+        {{ form.occurrence | as_crispy_field }}
+      </div>
+      <div class="col-7">
+        {{ form.description | as_crispy_field }}
+      </div>
+    </div>    
+
+    {{ form.made_by | as_crispy_field }}
+
+  </fieldset>
+</form>

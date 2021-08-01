@@ -1,0 +1,48 @@
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="article-metadata">
+      <div class="row">
+        <div class="col-9">
+          {{ person.center }}
+          {% if person.aspect != "--" %}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <em>{{ person.get_aspect_display }}</em>
+          {% endif %}
+          {% if person.center != request.user.person.center %}
+          &nbsp;&nbsp;&nbsp;
+          <span class="badge badge-pill badge-warning">only view</span>
+          {% endif %}
+        </div>
+        <div class="col text-right">
+          {% if person.reg %}
+          <span class="badge badge-pill badge-secondary">{{ person.reg }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <h3>
+          {{ person.name }} &nbsp;&nbsp;
+          <small class="text-muted"><em>{{ person.user.profile.social_name }}</em></small>
+        </h3>
+      </div>
+      <div class="col text-right">
+        {% if person.status not in "ACT,---" %}
+        <span class="badge badge-pill 
+             {% if person.status == 'LIC' %}
+             badge-success
+             {% elif person.status == 'DIS' %}
+             badge-warning
+             {% elif person.status == 'REM' %}
+             badge-danger
+             {% elif person.status == 'DEA' %}
+             badge-dark
+             {% endif %}">
+          {{ person.get_status_display }}
+        </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>

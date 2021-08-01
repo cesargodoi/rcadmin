@@ -1,0 +1,65 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h2>BankFlags</h2>
+  </div>
+</article>
+
+<div class="text-right mb-2">
+  <div class="btn-group btn-group-sm mt-1" role="group">
+    <a type="button" 
+      class="btn btn-light text-primary" 
+      href="{% url 'bankflag_create' %}">
+      <i class="fas fa-plus"></i> 
+      Add
+    </a>
+    <a type="button" 
+      class="btn btn-light text-info" 
+      href="{% url 'home' %}">
+      <i class="fas fa-chevron-left "></i> Go back
+    </a>
+  </div>
+</div>
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>active</th>
+      <th class="text-right"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+    <tr onclick="location.href='{% url 'bankflag_update' object.pk %}';">
+      <td>{{ object.name }}</td>
+      <td>
+        {% if object.is_active %}
+        <i class="fas fa-check-square text-primary"></i>
+        {% else %}
+        <i class="fas fa-square text-secondary"></i>
+        {% endif %}
+      </td>
+      <td width="15px" class="text-right">
+        <a type="button" 
+          href="{% url 'bankflag_delete' object.pk %}" 
+          class="btn btn-outline-light btn-sm">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% endblock content %}

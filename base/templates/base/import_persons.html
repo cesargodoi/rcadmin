@@ -1,0 +1,135 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+  {% include search %}
+
+  <article class="media content-section mb-1">
+    <div class="media-body cabecalho-relatorios">
+  
+      <img src="{% if request.session.color_theme == 'dark' %}{% static 'images/logo-mini-white.png' %}{% else %}{% static 'images/logo-mini-black.png' %}{% endif %}" class="logo-relatorio" alt="...">
+  
+      <div class="title-cabecalho-relatorio">
+        <h2>
+          {{ title | upper }}
+        </h2>
+      </div>
+  
+      <small class="cabecalho-dados">
+        <p>{{ request.user.person.center }}</p>
+        <p>{{ request.user }}</p>
+        <p>{% now "SHORT_DATETIME_FORMAT" %}</p>
+      </small>
+  
+    </div>
+  </article>
+
+  <div class="text-right mb-2">
+    <div class="btn-group btn-group-sm mt-1" role="group">
+      <a type="button" 
+        class="btn btn-light text-success controls-report" 
+        data-toggle="modal" data-target="#modal">
+        <i class="fas fa-chart-bar"></i> 
+        New import
+      </a>
+      <a type="button" 
+        class="btn btn-light text-warning controls-report" 
+        href="#"
+        onclick="window.print()">
+        <i class="fas fa-print"></i> 
+        To print
+      </a>
+      <a type="button" 
+        class="btn btn-light text-info controls-report" 
+        href="{% url 'home' %}">
+        <i class="fas fa-chevron-left "></i> 
+        Go back
+      </a>
+    </div>
+  </div>
+
+  {% if report_data %}
+
+  <article class="content-section mb-1">
+    <h4>Summary</h4>
+    <table class="table table-sm table-striped">
+      <tr>
+        <th>center to insert</th>
+        <td>{{ report_data.center }}</td>
+      </tr>
+      <tr>
+        <th>file name</th>
+        <td>{{ report_data.file }} &nbsp;&nbsp;
+        </td>
+      </tr>
+      <tr>
+        <th>importeds</th>
+        <td>{{ report_data.importeds|length }}</td>
+      </tr>
+      <tr>
+        <th>without email</th>
+        <td>{{ report_data.no_email|length }}</td>
+      </tr>
+      <tr>
+        <th>already in db</th>
+        <td>{{ report_data.used_email|length }}</td>
+      </tr>
+      <tr>
+        <th>total</th>
+        <td>{{ report_data.total }} objects</td>
+      </tr>
+    </table>
+
+    <h4>Detail</h4>
+    <table class="table table-sm">
+      <tr>
+        <th>importeds</th>
+        <td>
+          {% for obj in report_data.importeds %}
+          {{ obj }} &nbsp;&nbsp;
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <th>without email</th>
+        <td>
+          {% for obj in report_data.no_email %}
+          {{ obj }} &nbsp;&nbsp;
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <th>already in db</th>
+        <td>
+          {% for obj in report_data.used_email %}
+          {{ obj }} &nbsp;&nbsp;
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  </article>
+
+  {% else %}
+
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">select file (.csv) to import</h4>
+  </div>
+
+  {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function(){
+    var reportData = '{{ report_data }}';
+    if (!reportData) {
+      $('#modal').modal('show');
+    }
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+  <div id="liveToast" 
+       class="toast hide toast-hide" 
+       role="alert" 
+       aria-live="assertive" 
+       aria-atomic="true" 
+       data-delay="5000">
+    <div class="toast-header">
+      <img src="{% static 'images/logo-mini-white.png'%}" class="rounded mr-2 tamanho-img" alt="...">
+      <small> {% now "d/m/y H:i:s" %}</small>
+      <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      {{ message }}
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+{% endif %}
+

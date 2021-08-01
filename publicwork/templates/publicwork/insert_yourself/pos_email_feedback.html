@@ -1,0 +1,11 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+
+{% block content %}
+  {% if feedback == "congratulations" %}
+    {% include 'publicwork/insert_yourself/congratulations.html' %}
+  {% else %}
+    {% include 'publicwork/insert_yourself/expired_token.html' %}
+  {% endif %}
+  <a href="#" id="close">{% translate 'This page can be closed' %}</a>
+{% endblock %}

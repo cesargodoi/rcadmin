@@ -1,0 +1,25 @@
+<div class="form-row align-items-center">
+  <div class="col-sm-2 mb-1">
+    <div class="input-group">
+      <input name="ct_term" 
+            id="ct_term"
+            class="form-control" 
+            placeholder="center"
+            value="{{request.session.search.ct_term }}">
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <a href="?ct_term=+" class="text-secondary">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm mb-1">
+    {% include 'base/elements/checkbox_all.html' %}
+    <button class="btn btn btn-outline-success" type="submit">
+      <i class="fas fa-search"></i>
+      Search
+    </button>
+  </div>
+</div>

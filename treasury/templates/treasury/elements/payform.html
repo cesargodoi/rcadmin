@@ -1,0 +1,33 @@
+<div class="media border-top">
+  <div class="media-body">
+    <div class="row mt-1 mb-0">
+      <div class="col-sm-3">
+        <strong>{{ object.payform_type.1 }}</strong>
+      </div>
+      <div class="col-sm-9">
+        <small class="text-muted">
+          {% if object.bank_flag %}
+          {{ object.bank_flag.name }} &nbsp;
+          {% endif %}
+          {% if object.ctrl_number %}
+          {{ object.ctrl_number }}
+          {% endif %}
+          {% if object.complement %}
+          <br>
+          <em>{{ object.complement }}</em>
+          {% endif %}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    {{ object.value|floatformat:2 }}
+    {% if not detail %}
+    <a type="button" 
+      href="{% url 'order_del_payform' object.id %}" 
+      class="btn btn-light btn-sm text-danger">
+      <i class="fas fa-trash-alt"></i>
+    </a>
+    {% endif %}
+  </div>
+</div>

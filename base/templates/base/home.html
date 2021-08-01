@@ -1,0 +1,115 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load base_extras %}
+
+{% block content %}
+
+<div class="content-section mb-1" 
+     onclick="location.href='{% url 'center_detail' object.pk %}?from=home'">
+  <div class="article-metadata">Welcome to</div>
+  <div class="row">
+    <div class="col-lg-2">
+        <img src="{{ object.image.url }}" class="round-circle article-img" >
+    </div>
+    
+    <div class="media-body col-lg-10">
+        <h1> {{ object.name }}</h1>
+        {% if object.phone_1 %}
+        <i class="fas fa-phone"></i> {{ object.phone_1 }} &nbsp;&nbsp;
+        {% endif %}
+        {% if object.phone_2 %}
+        <i class="fas fa-phone"></i> {{ object.phone_2 }} &nbsp;&nbsp;
+        {% endif %}
+        {% if object.email %}
+        <i class="fas fa-envelope"></i> {{ object.email }} &nbsp;&nbsp;
+        {% endif %}
+        {% if object.secretary %}
+        <!-- need to create a link to: profile -->
+        <i class="fas fa-user"></i> {{ object.secretary.person.name }}
+        <!-- end link -->
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<div class="row-pg-initial">
+  {% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"office_jr" %}
+  <div class="col-lg-3 card-principal-col-lg-3"
+    onclick="location.href='{% url 'center_home' %}?init=on';">
+      <div class="card h-100 card-principal-backimage ">
+        <img src="{% static 'images/center.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Centers</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'person_home' %}?init=on';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/persons.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Persons</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'event_home' %}?init=on';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/events.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Events</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'workgroup_home' %}?init=on';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/workgroups.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Workgroups</h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if request.user.is_superuser or request.user|has_group:"mentoring" %}
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'mentoring_home' %}';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/mentoring.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Mentoring</h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'publicwork_home' %}';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/publicwork.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Public Work</h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
+  <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'treasury_home' %}';">
+    <div class="card h-100 card-principal-backimage ">
+      <img src="{% static 'images/reports.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title" onclick="location.href='{% url 'treasury_home' %}';">Treasury</h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock content %}

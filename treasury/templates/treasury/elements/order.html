@@ -1,0 +1,38 @@
+<article 
+  class="media content-section mb-1" 
+  onclick="location.href='{% url 'order_detail' object.id %}';">
+  <div class="media-body">
+    <div class="row mt-1 mb-0">
+      <div class="col-md-2">
+        <strong> {{ object.created_on | date:"d/m/Y" }}</strong>
+      </div>
+      <div class="col-md-8">
+        <small>
+          {{ object.person.name }} &nbsp;&nbsp;
+          {{ object.payments.count }} payment{{ object.payments.count|pluralize }} &nbsp;&nbsp;
+          {% if object.self_payed %}
+          <span class="badge badge-pill badge-secondary">
+            made by the pupil
+          </span>
+          {% endif %}
+        </small>
+      </div>
+      <div class="col-md-2 text-right">
+        <span class="text-{% if object.status == 'PND' %}info
+                    {% elif object.status == 'CCL' %}danger
+                    {% else %}success{% endif %}">
+          <small>
+            {{ object.get_status_display }}
+          </small>
+        </span>
+        &nbsp;
+        <span class="badge badge-pill badge-{% if object.status == 'PND' %}info
+                    {% elif object.status == 'CCL' %}danger
+                    {% else %}success{% endif %}">
+          {{ object.amount }}
+        </span>
+      </div>
+      </row>
+
+    </div>
+</article>

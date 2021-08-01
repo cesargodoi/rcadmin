@@ -1,0 +1,150 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+  <ul class="nav nav-pills" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" 
+        id="basic-tab" 
+        data-toggle="tab" 
+        href="#basic" 
+        role="tab" 
+        aria-controls="basic"
+        aria-selected="true">Basic</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="contacts-tab" 
+        data-toggle="tab" 
+        href="#contacts" 
+        role="tab" 
+        aria-controls="contacts"
+        aria-selected="true">Contacts</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="address-tab" 
+        data-toggle="tab" 
+        href="#address" 
+        role="tab" 
+        aria-controls="address"
+        aria-selected="false">Address</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="other-tab" 
+        data-toggle="tab" 
+        href="#other" 
+        role="tab" 
+        aria-controls="other"
+        aria-selected="false">Others</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" 
+      id="basic" 
+      role="tabpanel" 
+      aria-labelledby="basic-tab">
+      <br>
+      <div class="row">
+        <div class="col-6">
+          {{ form.name | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.short_name | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.center_type | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.conf_center | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="contacts" 
+      role="tabpanel" 
+      aria-labelledby="contacts-tab">
+      <br>
+      <div class="row">
+        <div class="col-6">
+          {{ form.phone_1 | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.phone_2 | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.email | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.secretary | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="address" 
+      role="tabpanel" 
+      aria-labelledby="address-tab">
+      <br>
+      <div class="row">
+        <div class="col-8">
+          {{ form.address | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ form.number | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.complement | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.district | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          {{ form.city | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ form.state | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.country | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.zip_code | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="other" 
+      role="tabpanel" 
+      aria-labelledby="other-tab">
+      <br>
+      <div class="row">
+        <div class="col-6">
+          {{ form.image | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.pix_image | as_crispy_field }}
+        </div>
+      </div>
+      {{ form.pix_key | as_crispy_field }}
+      {{ form.observations | as_crispy_field }}
+      {{ form.is_active | as_crispy_field }}
+      {{ form.made_by | as_crispy_field }}
+    </div>
+  </div>
+</form>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/center.js' %}"></script>

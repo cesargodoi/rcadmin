@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+  {% include search %}
+
+  {% include "publicwork/reports/navbar.html" %}
+
+  {% include "publicwork/reports/header.html" %}
+
+  {% if report_data %}
+
+  <article class="content-section mb-1">
+    <div class="pandas-table">
+      {{ report_data | safe }}
+    </div>
+  </article>
+
+  {% else %}
+
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">define the reporting terms</h4>
+  </div>
+
+  {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function(){
+    var reportData = '{{ report_data }}';
+    if (!reportData) {
+      $('#modal').modal('show');
+    }
+  });
+</script>
+
+{% endblock %}

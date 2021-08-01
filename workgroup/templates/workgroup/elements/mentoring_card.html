@@ -1,0 +1,35 @@
+<article 
+  class="media content-section" 
+  onclick="location.href='{% url 'mentoring_group_detail' group.workgroup.pk %}';">
+  <div class="media-body">
+    <div class="article-metadata">
+      <div class="row">
+        <div class="col-10">
+          {{ group.workgroup.center }}
+        </div>
+        <div class="col text-right">
+          <span class="badge badge-pill badge-secondary">
+            {{ group.workgroup.get_workgroup_type_display }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+        <h4>
+          {{ group.workgroup.name }} &nbsp;&nbsp;
+          <small class="text-muted">
+            {% if group.workgroup.aspect != "--" %}
+            {{ group.workgroup.get_aspect_display }}
+            {% endif %}
+          </small>
+        </h4>
+      </div>
+      <div class="col text-right">
+        <span class="badge badge-pill badge-info">
+          {{ group.workgroup.members.all|length }}
+        </span>
+      </div>
+    </div>
+  </div>
+</article>

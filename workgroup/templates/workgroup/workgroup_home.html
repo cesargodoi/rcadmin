@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "workgroup/elements/workgroup_navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <form class="form-control-sm mt-1" method="GET">
+      {% csrf_token %}
+      {% include "base/searchs/workgroup.html" %}
+    </form>
+    <br>
+    {% include 'workgroup/elements/workgroups.html' %}
+  </div>
+</article>
+
+{% endblock %}

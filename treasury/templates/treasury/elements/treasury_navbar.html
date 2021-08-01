@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="{% url 'treasury_home' %}">
+    Treasury
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
+    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link {% if nav == 'order' %}active{% endif %}" 
+          href="{% url 'orders' %}?init=on">
+          Orders
+        </a>
+      </li>
+      {% include 'treasury/reports/menu.html' %} 
+    </ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      {% if nav == "order" %}
+      <a class="btn btn-light btn-sm" 
+        href="{% url 'order_create' %}">
+        <i class="fas fa-plus"></i> 
+        New order
+      </a>
+      {% endif %}
+
+      {% if nav == "reports" %}
+        {% if object %}
+        <a class="btn btn-light btn-sm" 
+          href="{% url 'order_create' %}">
+          <i class="fas fa-plus"></i> 
+          New order
+        </a>
+        {% endif %}
+      {% endif %}
+
+      <a class="btn btn-light btn-sm" 
+          href="
+          {% if nav == 'home' %}
+          {% url 'home' %}
+          {% else %}
+          {% url 'treasury_home' %}
+          {% endif %}
+          ">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+
+    </div>
+  </div>
+</nav>

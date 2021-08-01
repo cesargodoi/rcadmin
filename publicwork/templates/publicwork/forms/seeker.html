@@ -1,0 +1,49 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col-6">
+      {{ form.name | as_crispy_field }}
+    </div>
+    <div class="col-3">
+      {{ form.birth | as_crispy_field }}
+    </div>
+    <div class="col-3">
+      {{ form.gender | as_crispy_field }}
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-6">
+      {{ form.city | as_crispy_field }}
+    </div>
+    <div class="col-3">
+      {{ form.state | as_crispy_field }}
+    </div>
+    <div class="col-3">
+      {{ form.country | as_crispy_field }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      {{ form.phone | as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ form.email | as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ form.center | as_crispy_field }}
+    </div>
+  </div>
+
+  {{ form.image | as_crispy_field }}
+  {{ form.observations | as_crispy_field }}
+  {{ form.is_active | as_crispy_field }}
+  {{ form.made_by | as_crispy_field }}
+
+</form>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/seeker.js' %}"></script>

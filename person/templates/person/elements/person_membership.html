@@ -1,0 +1,52 @@
+{% if object_list %} 
+
+  {% if object_list.has_other_pages %} 
+  {% include "base/elements/paginator.html" %} 
+  {% endif %}
+
+  {% for wg_obj in object_list %}
+    <div class="row border-top border-secondary pb-2 pt-2"
+        onclick="location.href='{% url 'membership_ps_update' person.id wg_obj.pk %}';">
+
+      <div class="col-sm-4">
+        <strong>{{ wg_obj.workgroup.name }}</strong>
+      </div>
+
+      <div class="col-sm-2">
+        <strong>{{ wg_obj.get_role_type_display }}</strong>
+      </div>
+
+      <div class="col-sm-4 small align-middle">
+        {% if wg_obj.observations %}
+          {{ wg_obj.observations }}
+        {% endif %}
+      </div>
+
+      <div class="col-sm text-right">
+        <a type="button" 
+          class="btn btn-outline-danger btn-sm"
+          href="{% url 'membership_ps_delete' person.id wg_obj.pk %}">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </div>
+      
+    </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %} 
+  {% include "base/elements/paginator.html" %} 
+  {% endif %} 
+
+{% else %}
+
+<div class="alert alert-secondary">
+  <h4 class="alert-heading">
+    {% if init %}
+    choose your search terms
+    {% else %}
+    membership not found
+    {% endif %}
+  </h4> 
+</div>
+
+{% endif %}

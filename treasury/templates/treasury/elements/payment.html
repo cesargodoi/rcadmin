@@ -1,0 +1,36 @@
+<div class="media border-top">
+  <div class="media-body">
+    <div class="row mt-1 mb-0">
+      <div class="col-md-4">
+        <strong>{{ object.paytype.name }}</strong>
+      </div>
+      <div class="col-md-8">
+        <small {% if not detail %}class="text-muted" {% endif %}>
+          {% if object.person %}
+          {{ object.person.name }} &nbsp;
+          {% endif %}
+          {% if object.ref_month %}
+          {{ object.ref_month.repr }} &nbsp;
+          {% endif %}
+          {% if object.event %}
+          {{ object.event.name }}
+          {% endif %}
+          {% if object.obs %}
+          <br>
+          <em>{{ object.obs }}</em>
+          {% endif %}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    {{ object.value|floatformat:2 }}
+    {% if not detail %}
+    <a type="button"
+      href="{% if from_user %}{% url 'user_del_payment' object.id %}{% else %}{% url 'order_del_payment' object.id %}{% endif %}"
+      class="btn btn-light btn-sm text-danger">
+      <i class="fas fa-trash-alt"></i>
+    </a>
+    {% endif %}
+  </div>
+</div>

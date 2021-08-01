@@ -1,0 +1,21 @@
+/* Bootstrap class changes */
+.modal-header{
+    padding: 1.5rem;
+  }
+  .modal-body{
+    padding: 1.5rem;
+  }
+  .alert-jady {
+      position: relative;
+      padding: .75rem 1.25rem;
+  }
+  .box-jady{
+    border: 2px solid #5f788a;
+    border-radius: .25rem;
+    padding: 1rem;
+  }
+  .alert-primary-jady {
+    color: #fff;
+    background-color: #5f788a;
+    border-color: #5f788a;
+}

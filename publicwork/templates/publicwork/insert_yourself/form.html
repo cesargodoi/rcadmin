@@ -1,0 +1,94 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block recaptcha %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+{% endblock recaptcha %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+<div class="row box-jady">
+  <div class="col-lg-5 alert-jady alert-primary-jady text-justify">
+    <h2 class="text-left">Caro amigo buscador,</h2>
+    <br>
+    <p>Ficamos muito felizes, com sua decisão de participar do caminho 
+      iniciático proposto pela Escola Espiritual da Rosacruz Áurea!</p>
+    <p>Neste primeiro momento, você será inserido em um grupo de acolhimento, 
+      onde em conjunto com outros buscadores, que como você, também querem se 
+      tornar alunos, serão acompanhados por alguns alunos de nossa Escola.</p>
+    <p>O objetivo deste grupo, é levar você e os demais participantes, ao longo 
+      das próximas semanas, a ter uma compreensão muito clara do que é ser aluno 
+      da Rosacruz Áurea, o que ela espera de cada um de nós e o que podemos 
+      esperar dela.</p>
+    <p>Após este período, você, em conjunto com os coordenadores do grupo, 
+      poderão tomar uma decisão mais assertiva, se este é realmente o melhor 
+      caminho a se seguir.</p>
+    <p>De início, precisamos que nos forneça alguns dados para o cadastro em 
+      nosso sistema e confirme que aceita a nossa politica de uso de dados.</p>
+    <br>
+    <p>Por favor, preencha o formulário a seguir:</p>
+  </div>
+  <div class="col-lg-7 alert-jady alert-secondary">
+    <form class="form-group text-justify" 
+          method="post" 
+          enctype="multipart/form-data"
+          id="form">
+      {% csrf_token %}
+      {{ form.name | as_crispy_field }}
+      <div class="row">
+        <div class="col-lg-6">{{ form.birth | as_crispy_field }}</div>
+        <div class="col-lg-6">{{ form.gender | as_crispy_field }}</div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">{{ form.city | as_crispy_field }}</div>
+        <div class="col-lg-2">{{ form.state | as_crispy_field }}</div>
+        <div class="col-lg-4">{{ form.country | as_crispy_field }}</div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">{{ form.phone | as_crispy_field }}</div>
+        <div class="col-lg-6">{{ form.email | as_crispy_field }}</div>
+      </div>
+      {{ form.image | as_crispy_field }}
+      {{ form.solicited_on | as_crispy_field }}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="accept" name="accept">
+        <label class="form-check-label" for="accept">
+          Li e aceito os termos da 
+          <a data-toggle="modal" 
+             data-target="#modal"
+             href="#"> politica de uso de dados</a>
+          da Rosacruz Áurea.
+        </label>
+      </div>
+      <!-- reCAPTCHA input -->
+      <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+      
+      <div class="text-right mt-4">
+        <input type="submit" 
+          class="btn btn-primary btn-lg" 
+          value="{% translate 'Register' %}" id="submit-button" disabled>
+        <a class="btn btn-info btn-lg" href="#" onclick="window.history.go(-1); return false;">Go back</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include "publicwork/insert_yourself/modal_data_policy.html" %}
+
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
+
+<script>
+  //global grecaptcha
+  grecaptcha.ready(function() {
+    grecaptcha.execute('{{recaptcha_site_key}}', {action: "/contact/"}).then(function(token) {
+      document.getElementById('g-recaptcha-response').value = token;
+    });
+  });
+</script>
+
+{% endblock %}

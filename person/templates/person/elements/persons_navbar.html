@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="{% url 'person_home' %}?init=on">Persons</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAuxiliar"
+    aria-controls="navbarAuxiliar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto"></ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      <a class="btn btn-light btn-sm" href="{% url 'person_create' %}">
+        <i class="fas fa-plus"></i> 
+        Add person
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+    </div>
+  </div>
+</nav>

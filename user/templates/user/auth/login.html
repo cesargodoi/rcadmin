@@ -1,0 +1,38 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if form.errors %}
+<div class="form-signin alert alert-danger" name="warnings">
+  {% translate "Your email and/or password didn't match. Please try again." %}
+</div>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+  <div class="form-signin alert alert-danger" name="warnings">
+    {% translate "Your account doesn't have access to this page. To proceed, please login with an account that has access." %}
+  </div>
+  {% else %}
+  <div class="form-signin alert alert-info" name="warnings">
+    {% translate 'Please login to see this page.' %}
+  </div>
+  {% endif %}
+{% endif %}
+
+<form class="form-signin" method="POST">
+  {% csrf_token %}
+  <h3 class="mb-3 font-weight-normal">{% translate 'Please sign in' %}</h3>
+  {{ form|crispy }}
+  <button class="btn btn-lg btn-primary btn-block" type="submit">{% translate 'Sign in' %}</button>
+  <input type="hidden" name="next" value="{{ next }}" />
+  <br>
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <p><a href="{% url 'password_reset' %}">{% translate 'Lost password?' %}</a></p>
+  <p><a href="{% url 'insert_yourself' %}">{% translate 'I want to be a member' %}</a></p>
+  <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+</form>
+
+{% endblock %}

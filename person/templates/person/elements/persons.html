@@ -1,0 +1,80 @@
+<h4>Persons</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-4">
+      <strong>{{ obj.short_name }}</strong>
+      &nbsp;&nbsp; 
+      <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+        <em>{{ obj.center }}</em>
+      </small>
+    </div>
+
+    <div class="col-sm-2 small">
+      {{ obj.get_aspect_display }}
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {% if obj.user.profile.phone_1 %}
+        <i class="fas fa-phone"></i> {{ obj.user.profile.phone_1 }}
+      {% elif obj.user.profile.phone_2 %}
+        <i class="fas fa-phone"></i> {{ obj.user.profile.phone_2 }}
+      {% endif %}
+    </div>
+
+    <div class="col-sm-3 small align-middle">
+      {% if obj.user.email %}
+        <i class="fas fa-envelope"></i> {{ obj.user.email }}
+      {% endif %}
+    </div>
+
+    <div class="col-sm-1 text-right">
+      {% if flag == "group" and obj.publicworkgroup_set.count %}
+        <i class="fas fa-user-check mr-1"></i>
+      {% elif flag == "membership" and object in obj.workgroup_set.all %}
+        <i class="fas fa-user-check mr-1"></i>
+      {% elif flag == "person" %}
+        <strong>
+          {% if obj.status not in 'ACT,---' %}{{ obj.get_status_display }}{% endif %}
+        </strong>
+      {% elif obj.is_active %}
+        <a type="button" 
+          href="{{ obj.add_link }}"
+          class="btn btn-outline-primary btn-sm">
+          <i class="fas fa-plus"></i> 
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      persons not found in the search
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

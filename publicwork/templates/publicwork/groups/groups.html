@@ -1,0 +1,70 @@
+<h4>Groups</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active or obj.status == 'RST' %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-5">
+      <strong>{{ obj.name }}</strong>
+      &nbsp;&nbsp;
+      <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+        {{ obj.center }}
+      </small>
+      {% if obj.center != request.user.person.center %}
+        &nbsp;&nbsp;
+        <span class="badge badge-pill badge-{% if not obj.is_active %}danger{% else %}warning{% endif %}">
+          only view
+        </span>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-1 align-middle">
+      {% if not obj.is_active %}
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-5 small align-middle">
+      {% for mentor in obj.mentors.all %}
+        <i class="fas fa-user-graduate mr-1"></i>
+        {{ mentor.short_name }} &nbsp;&nbsp;
+      {% endfor %}
+    </div>
+
+    <div class="col-sm text-right">
+      {% if obj.members.count > 0 %}
+        <strong>{{ obj.members.count }}</strong> 
+        <i class="fas fa-users"></i>
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      groups not found
+      {% endif %}
+    </h4> 
+  </div>  
+
+{% endif %}

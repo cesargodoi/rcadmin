@@ -1,0 +1,137 @@
+<article class="media content-section">
+  <div class="media-body">
+
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <img 
+          class="img-thumbnail rounded mx-auto d-block  mt-2 mb-2" 
+          src="{{ object.profile.image.url }}">
+      </div>
+      <div class="col-md-9">
+  
+        <ul class="nav nav-pills mt-2 mb-2" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" 
+              id="basic-tab" 
+              data-toggle="tab" 
+              href="#basic" 
+              role="tab" 
+              aria-controls="basic"
+              aria-selected="true">
+              Basic
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" 
+              id="other-tab" 
+              data-toggle="tab" 
+              href="#other" 
+              role="tab" 
+              aria-controls="other"
+              aria-selected="false">
+              Others
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" 
+              id="address-tab" 
+              data-toggle="tab" 
+              href="#address" 
+              role="tab" 
+              aria-controls="address"
+              aria-selected="false">
+              Address
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" 
+            id="basic" 
+            role="tabpanel" 
+            aria-labelledby="basic-tab">
+            <br>
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>type</th>
+                <td>{{ object.person.get_person_type_display }}</td>
+              </tr>
+              <tr>
+                <th>phone</th>
+                <td>{{ object.profile.phone_1 }}</td>
+              </tr>
+              <tr>
+                <th>phone 2</th>
+                <td>{{ object.profile.phone_2 }}</td>
+              </tr>
+              <tr>
+                <th>email</th>
+                <td>{{ object.email }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="tab-pane fade" 
+            id="other" 
+            role="tabpanel" 
+            aria-labelledby="other-tab">
+            <br>
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>birth</th>
+                <td>{{ object.person.birth|date:"d/m/Y" }}</td>
+              </tr>
+              <tr>
+                <th>profession</th>
+                <td>{{ object.profile.profession }}</td>
+              </tr>
+              <tr>
+                <th>marital status</th>
+                <td>{{ object.profile.marital_status }}</td>
+              </tr>
+              <tr class="text-danger">
+                <th>sos contact</th>
+                <td>
+                  {{ object.profile.sos_contact }}
+                </td>
+              </tr>
+              <tr class="text-danger">
+                <th>sos phone</th>
+                <td>
+                  {{ object.profile.sos_phone }}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="tab-pane fade" 
+            id="address" 
+            role="tabpanel" 
+            aria-labelledby="address-tab">
+            <br>
+            <table class="table table-hover table-sm">
+              <tr>
+                <th>address</th>
+                <td>
+                  <address>
+                    {{ object.profile.address }}, {{ object.profile.number }}
+                    {% if object.profile.complement %}
+                    &nbsp;&nbsp;
+                    <small class="text-muted">
+                      <em>{{ object.profile.complement }}</em>
+                    </small>
+                    {% endif %}
+                    <br>
+                    {{ object.profile.district }} -
+                    {{ object.profile.city }} -
+                    {{ object.profile.state }} <br>
+                    {{ object.profile.country }} -
+                    {{ object.profile.zip_code }}
+                  </address>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</article>

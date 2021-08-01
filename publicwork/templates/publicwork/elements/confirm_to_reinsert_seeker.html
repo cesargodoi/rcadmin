@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">Atention!</h4>
+  <p>Are you shure you want to reinsert: <br>
+    <strong>{{ object }}</strong>
+  </p>
+  <hr>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <button 
+        class="btn btn-outline-primary" 
+        type="submit">
+        Confirm
+      </button>
+      <a 
+        class="btn btn-outline-info" 
+        href="javascript:history.back()">
+        Go back
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

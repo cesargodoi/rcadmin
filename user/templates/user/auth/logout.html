@@ -1,0 +1,9 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="alert alert-secondary">
+  <h3>{% translate 'Logged out!' %}</h3>
+  <a href="{% url 'login' %}">{% translate 'Click here to login again.' %}</a>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+  <ul class="nav nav-pills" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" 
+        id="basic-tab" 
+        data-toggle="tab" 
+        href="#basic" 
+        role="tab" 
+        aria-controls="basic"
+        aria-selected="true">
+        Basic
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="contact-tab" 
+        data-toggle="tab"
+        href="#contact" 
+        role="tab" 
+        aria-controls="contact"
+        aria-selected="false">
+        Contacts
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="address-tab" 
+        data-toggle="tab" 
+        href="#address" 
+        role="tab" 
+        aria-controls="address"
+        aria-selected="false">
+        Address
+      </a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" 
+        id="other-tab" 
+        data-toggle="tab" 
+        href="#other" 
+        role="tab" 
+        aria-controls="other"
+        aria-selected="false">
+        Others
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" 
+      id="basic" 
+      role="tabpanel" 
+      aria-labelledby="basic-tab">
+      <br>
+      {% if not to_create %}
+      <div class="row">
+        <div class="col-8">
+          {{ person_form.center | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ person_form.person_type | as_crispy_field }}
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-{% if not to_create %}8{% else %}12{% endif %}">
+          {{ person_form.name | as_crispy_field }}
+        </div>
+        {% if not to_create %}
+        <div class="col-4">
+          {{ person_form.reg | as_crispy_field }}
+        </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.social_name | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ user_form.email | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-7">
+          {{ profile_form.image | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="contact" 
+      role="tabpanel" 
+      aria-labelledby="contact-tab">
+      <br>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.phone_1 | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ profile_form.phone_2 | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.sos_contact | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ profile_form.sos_phone | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="address" 
+      role="tabpanel" 
+      aria-labelledby="address-tab">
+      <br>
+      <div class="row">
+        <div class="col-8">
+          {{ profile_form.address | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ profile_form.number | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.complement | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ profile_form.district | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          {{ profile_form.city | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ profile_form.state | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.country | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ profile_form.zip_code | as_crispy_field }}
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" 
+      id="other" 
+      role="tabpanel" 
+      aria-labelledby="other-tab">
+      <br>
+      <div class="row">
+        <div class="col-4">
+          {{ person_form.id_card | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ person_form.birth | as_crispy_field }}
+        </div>
+        <div class="col-4">
+          {{ profile_form.gender | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ profile_form.profession | as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ profile_form.marital_status | as_crispy_field }}
+        </div>
+      </div>
+      {{ person_form.observations | as_crispy_field }}
+      {{ person_form.is_active | as_crispy_field }}
+      {{ person_form.made_by | as_crispy_field }}
+    </div>
+    
+  </div>
+  
+</form>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/personValidation.js' %}"></script>

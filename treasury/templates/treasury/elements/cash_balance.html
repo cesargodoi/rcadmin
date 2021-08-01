@@ -1,0 +1,30 @@
+<div class="media border-top {% if item.status == 'PND' %}text-info{% endif %}">
+  <div class="media-body" v-on:click="getOrder('{{ item.order_id }}')">
+    <div class="row mt-1 mb-0">
+      <div class="col-md-2">
+        {{ item.date }}
+      </div>
+      <div class="col-md-10">
+        <small>
+          {% if item.bank_flag %}
+          <strong>{{ item.bank_flag.name }}</strong> &nbsp;&nbsp;
+          {% endif %}
+          {% if item.ctrl_number %}
+          {{ item.ctrl_number }} &nbsp;&nbsp;
+          {% endif %}
+          {% if item.complement %}
+          <em>{{ item.complement }}</em> &nbsp;&nbsp;&nbsp;
+          {% endif %}
+          {% if item.status == 'PND' %}
+          <strong> pending</strong>
+          {% endif %}
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="text-right mr-1">
+    <span class="text-{% if item.status == 'PND' %}info{% endif %}">
+      {{ item.value|floatformat:2 }}
+    </span>
+  </div>
+</div>

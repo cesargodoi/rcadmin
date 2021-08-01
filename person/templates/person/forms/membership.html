@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="text-right mb-3">
+  <button 
+    class="btn btn-outline-{% if to_create %}primary{% else %}warning{% endif %} mt-2"
+    onclick="document.getElementById('form').submit();">
+    <i class="fas fa-check"></i> Save
+  </button>
+  <a class="btn btn-light mt-2 mr-3"
+    href="{% url 'membership_ps_list' person.id %}">
+    <i class="fas fa-chevron-left"></i> 
+    Go back
+  </a>
+</div>
+
+{% include "person/elements/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <h4>{% if to_create %}Create{% else %}Update{% endif %} Membership</h4>
+    <form method="POST" enctype="multipart/form-data" id="form">
+      {% csrf_token %}
+      {{ form | crispy }}
+    </form>
+  </div>
+</article>
+
+{% endblock %}

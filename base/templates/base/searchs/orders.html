@@ -1,0 +1,63 @@
+<div class="form-row align-items-center">
+  <div class="col-sm-3 mb-1">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">from</div>
+      </div>
+      <input type="date" 
+        name="dt1" 
+        class="form-control dateinput" 
+        id="dt1" 
+        {% if request.session.search.dt1 %}value={{ request.session.search.dt1 }}{% endif %}>
+    </div>
+  </div>
+  <div class="col-sm-3 mb-1">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">to</div>
+      </div>
+      <input type="date" 
+        name="dt2" 
+        class="form-control dateinput" 
+        id="dt2" 
+        {% if request.session.search.dt2 %}value={{ request.session.search.dt2 }}{% endif %}>
+    </div>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <div class="input-group">
+      <input name="od_name" 
+            class="form-control" 
+            id="od_name"
+            placeholder="person"
+            {% if request.session.search.od_name %}value={{ request.session.search.od_name }}{% endif %}>
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <a href="?od_name=+" class="text-secondary">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <select class="form-control" name="od_status" id="od_status">
+      <option value="all"
+              {% if request.session.search.od_status == 'all' %}selected{% endif %}>
+        all status
+      </option>
+      {% for stt in status_list %}
+      <option 
+        value="{{ stt.0 }}" 
+        {% if stt.0 == request.session.search.od_status %}selected{% endif %}>
+        {{ stt.1 }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm mb-1">     
+    <button class="btn btn btn-outline-success ml-2" type="submit">
+      <i class="fas fa-search"></i>
+      Search
+    </button>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="text-right mb-2 mt-4">
+  <button 
+    class="btn btn-primary mt-2"
+    onclick="document.getElementById('form').submit();">
+    <i class="fas fa-plus"></i> <i class="fas fa-users"></i>
+    Insert
+  </button>
+  <a class="btn btn-light mt-2 mr-3"
+    href="{% url 'event_detail' object.pk %}">
+    <i class="fas fa-chevron-left"></i> 
+    Go back
+  </a>
+</div>
+
+{% include 'event/elements/event_header.html' %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <h4>Insert Frequencies</h4>
+
+    <form method="POST" id="form">
+      {% csrf_token %}
+      {{ form|crispy }}
+    </form>
+    <div class="alert alert-secondary">
+      <h5 class="border-bottom font-title">Important!</h5>
+      <small>
+        Enter pupils registration numbers, separated by commas. <br>
+        Example: &nbsp;
+        <code>432, 345, 165, 675, 1276, 1021</code>
+      </small>
+    </div>
+
+  </div>
+</article>
+
+{% endblock %}

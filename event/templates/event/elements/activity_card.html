@@ -1,0 +1,32 @@
+<article class="media content-section" 
+  onclick="location.href='{% url 'activity_update' object.pk %}';">
+  <div class="media-body">
+    <div class="row">
+      <div class="col-sm-7">
+        <h4>
+          {{ object.name }}
+          <small class="text-muted ">
+            <em>{{ object.get_activity_type_display }}</em>
+          </small>
+        </h4>
+      </div>
+      <div class="col-sm-4">
+        {% if object.is_active %}
+        &nbsp;&nbsp;
+        <span class="badge badge-pill badge-primary">active</span>
+        {% endif %}
+        {% if object.multi_date %}
+        &nbsp;&nbsp;
+        <span class="badge badge-pill badge-secondary">is multi date</span>
+        {% endif %}
+      </div>
+      <div class="col-sm-1 text-right">
+        <a type="button" 
+          href="{% url 'activity_delete' object.pk %}" 
+          class="btn btn-outline-light btn-sm">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

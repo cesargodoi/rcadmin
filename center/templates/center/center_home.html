@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "center/elements/center_navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <form class="form-control-sm mt-1" method="GET">
+      {% csrf_token %}
+      {% include "base/searchs/center.html" %}
+    </form>
+    <br>
+    {% include 'center/elements/centers.html' %}
+  </div>
+</article>
+
+{% endblock %}

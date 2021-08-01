@@ -1,0 +1,66 @@
+<div class="form-row align-items-center">
+  <div class="col-sm-2 mb-1">
+    <div class="input-group">
+      <input name="sk_name"
+             class="dateinput form-control"
+             id="sk_name"
+             placeholder="seeker"
+             {% if request.session.search.sk_name %}value={{ request.session.search.sk_name }}{% endif %}>
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <a href="?sk_name=+" class="text-secondary">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <div class="input-group">
+      <input name="sk_city"
+             class="dateinput form-control"
+             id="sk_city"
+             placeholder="city"
+             {% if request.session.search.sk_city %}value={{ request.session.search.sk_city }}{% endif %}>
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <a href="?sk_city=+" class="text-secondary">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <select class="form-control" name="center">
+      {% for cnt in centers %}
+      <option value="{{ cnt.0 }}"
+              {% if cnt.0 == request.session.search.center %}selected{% endif %}>
+        {{ cnt.1 }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <select class="form-control" name="sk_status">
+      <option value="all"
+              {% if request.session.search.sk_status == 'all' %}selected{% endif %}>
+        status
+      </option>
+      {% for stt in status_list %}
+      <option value="{% if stt.0 == '--' %}all{% else %}{{ stt.0 }}{% endif %}"
+              {% if stt.0 == request.session.search.sk_status %}selected{% endif %}>
+        {% if stt.0 == "--" %}status{% else %}{{ stt.1 }}{% endif %}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm mb-1">
+    {% include 'base/elements/checkbox_all.html' %}
+    <button class="btn btn btn-outline-success" type="submit">
+      <i class="fas fa-search"></i>
+      Search
+    </button>
+  </div>
+  
+</div>

@@ -1,0 +1,99 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: block;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 25px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.site-header-login {
+    display: flex;
+    height: 10%;
+    justify-content: center;
+    /* justify-content: flex-start; */
+    align-items: center;
+}
+
+.logo_img{
+margin: 2rem 5rem;
+width: 22%;
+opacity: .7;
+}
+
+.logo_img_small{
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }  
+}
+
+@media only screen and (max-width: 700px){
+    .logo_img{
+        display: none;
+      }
+      
+    .logo_img_small{
+        display: flex;
+        margin: 2rem 5rem;
+        width: 20%;
+        opacity: .6;
+        }
+}

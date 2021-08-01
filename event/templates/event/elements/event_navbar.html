@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="
+  {% if nav == 'detail' %}
+  {% url 'event_detail' object.id %}
+  {% else %}
+  {% url 'event_home' %}?init=on
+  {% endif %}
+  ">{% if nav == 'home' %}Events{% else %}Event{% endif %}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
+    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto"></ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      {% if nav == "home" %}
+      <a class="btn btn-light btn-sm" href="{% url 'event_create' %}">
+        <i class="fas fa-plus"></i> 
+        Add event
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+      {% endif %}
+
+      {% if nav == "detail" %}
+      <a class="btn btn-light btn-sm" href="{% url 'frequencies_add' object.pk %}">
+        <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+        Insert frequencies
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'event_update' object.id %}">
+        <i class="fas fa-edit"></i> 
+        Edit
+      </a>
+        {% if not object_list %}
+        <a class="btn btn-light btn-sm" href="{% url 'event_delete' object.id %}">
+          <i class="fas fa-trash-alt"></i> 
+          Delete
+        </a>
+        {% endif %}
+      <a class="btn btn-light btn-sm" href="{% url 'event_home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

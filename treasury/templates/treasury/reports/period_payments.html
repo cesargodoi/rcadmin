@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "treasury/elements/treasury_navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h2>Period payments</h2>
+    <form class="form-control-sm border-top" method="GET">
+      {% csrf_token %}
+      {% include "treasury/elements/search_dates.html" %}
+    </form>
+  </div>
+</article>
+
+<div class="row row-col-2">
+  <div class="col-lg-4 mb-4">
+    {% include "treasury/elements/payments_summary.html" %}
+  </div>
+  <div class="col-lg-8 mb-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header">Details</div>
+      {% for object in object_list %}
+      {% include "treasury/elements/payment_by_paytype.html" %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

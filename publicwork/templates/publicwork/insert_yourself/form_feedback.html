@@ -1,0 +1,45 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="alert alert-info">
+  {% if request.session.fbk.type in 'pupil, seeker' %}
+    <h2>Email já cadastrado</h2>
+    <p>O email: <strong>{{ request.session.fbk.email }}</strong> já está 
+      cadastrado para um 
+      <strong>
+      {% if request.session.fbk.type == 'pupil' %}aluno{% else %}membro{% endif %}
+      </strong>.
+    </p>
+    {% if request.session.fbk.type == 'pupil' %}
+      <p>Você, pode fazer o seu login no sistema  
+        <a href="{% url 'login' %}">clicando aqui</a>.</p>
+      <p>Ou envie-nos um email para: </p>
+    {% else %}
+      <p>Caso tenha encontrado algo de errado, envie-nos um email para: </p>
+    {% endif %}
+    <p><a href="mailto:​schooladmin@gmail.com">schooladmin@gmail.com</a> 
+      relatando o problema.
+  {% elif request.session.fbk.type == 'recaptcha' %}
+    <h2>Invalid reCAPTCHA, please try again.</h2>
+  {% else %}
+    <h2>Email has been sent!</h2>
+    <p>{% translate "We send a confirmation link to the email:" %}</p>
+    <strong>{{ request.session.fbk.email }}</strong>. <br>
+    <p>{% translate "Please check your email inbox and click on the link to continue with your registration." %}</p>
+    <p>{% translate "If they haven't arrived in a few minutes, check your spam folder." %}</p>
+    <br>
+  {% endif %}
+</div>
+<a href="#" id="close">{% translate 'This page can be closed' %}</a>
+<script>
+  document.getElementById('close').addEventListener(
+    'click', function()
+    { 
+      window.open("", "_self").close(); 
+    }
+  );
+</script>
+{% endblock %}
+
+

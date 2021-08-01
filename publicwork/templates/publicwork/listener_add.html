@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="text-right mb-3">
+  <a class="btn btn-light mt-2 mr-3"
+    href="{% url 'lecture_detail' object.pk %}">
+    <i class="fas fa-chevron-left"></i> 
+    Go back
+  </a>
+</div>
+
+{% include "publicwork/elements/lecture_header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <h4>Add listener</h4>
+    <form class="form-control-sm border-top" method="GET">
+      {% csrf_token %}
+      {% include "base/searchs/seeker.html" %}
+    </form>
+    <br>
+
+    {% include 'publicwork/elements/seekers.html' %}
+
+  </div>
+</article>
+
+{% endblock %}

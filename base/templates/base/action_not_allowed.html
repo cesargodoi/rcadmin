@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Action not allowed!</h4>
+    <p><strong>{{ message }}</strong></p>
+    <hr>
+    <a class="btn btn-outline-info" href="javascript:history.back()">Go back</a>
+</div>
+{% endblock %}

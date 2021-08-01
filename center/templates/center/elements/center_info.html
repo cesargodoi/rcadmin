@@ -1,0 +1,150 @@
+<ul class="nav nav-pills" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" 
+      id="contacts-tab" 
+      data-toggle="tab" 
+      href="#contacts" 
+      role="tab" 
+      aria-controls="contacts"
+      aria-selected="true">Contacts</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" 
+      id="address-tab" 
+      data-toggle="tab" 
+      href="#address" 
+      role="tab" 
+      aria-controls="address"
+      aria-selected="false">Address</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" 
+      id="other-tab" 
+      data-toggle="tab" 
+      href="#other" 
+      role="tab" 
+      aria-controls="other"
+      aria-selected="false">Others</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" 
+    id="contacts" 
+    role="tabpanel" 
+    aria-labelledby="contacts-tab">
+    <br>
+    <table class="table table-hover table-sm">
+      <tr>
+        <th width="20%">phone</th>
+        <td>{{ object.phone_1 }}</td>
+      </tr>
+      <tr>
+        <th>backup phone</th>
+        <td>{{ object.phone_2 }}</td>
+      </tr>
+      <tr>
+        <th>email</th>
+        <td>{{ object.email }}</td>
+      </tr>
+      <tr>
+        <th>secretary</th>
+        <td>
+          {% if object.secretary %}
+          <a href="{% url 'person_detail' object.secretary.person.id %}">
+            {{ object.secretary.person.name }}
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="tab-pane fade" 
+    id="address" 
+    role="tabpanel" 
+    aria-labelledby="address-tab">
+    <br>
+    <table class="table table-hover table-sm">
+      <tr>
+        <th width="20%">address</th>
+        <td>
+          <address>
+            {{ object.address }}, {{ object.number }}
+            {% if object.complement %}
+            &nbsp;&nbsp;
+            <small class="text-muted">
+              <em>{{ object.complement }}</em>
+            </small>
+            {% endif %}
+            <br>
+            {{ object.district }} -
+            {{ object.city }} -
+            {{ object.state }}
+            <br>
+            {{ object.country }} -
+            {{ object.zip_code }}
+          </address>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="tab-pane fade" 
+    id="other" 
+    role="tabpanel" 
+    aria-labelledby="other-tab">
+    <br>
+    <table class="table table-hover table-sm">
+      <tr>
+        <th width="20%">short name</th>
+        <td>{{ object.short_name }}</td>
+      </tr>
+      <tr>
+        <th>pix key</th>
+        <td>
+          {% if object.pix_key %}
+          {{ object.pix_key }} &nbsp;&nbsp;
+          <a href="#" data-toggle="modal" data-target="#showPix">
+            <i class="fas fa-eye"></i>
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>observations</th>
+        <td>{{ object.observations }}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" 
+  id="showPix" 
+  tabindex="-1" 
+  aria-labelledby="showPixLabel" 
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showPixLabel">Center PIX</h5>
+        <button type="button" 
+          class="close" 
+          data-dismiss="modal" 
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="img-thumbnail rounded mx-auto d-block mb-4" src="{{ object.pix_image.url }}">
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+          class="btn btn-secondary" 
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

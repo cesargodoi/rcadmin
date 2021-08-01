@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="text-right mb-2 mt-4">
+  <button class="btn btn-primary" 
+    onclick="checkForm()">
+    <i class="fas fa-check"></i> 
+    Add payment
+  </button>
+  <a type="button" 
+    class="btn btn-light mr-3" 
+    href="{% url 'user_new_order' %}">
+    <i class="fas fa-chevron-left "></i> 
+    Go back
+  </a>
+</div>
+
+{% include "user/elements/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <h4>Add payment</h4>
+
+    <form method="POST" enctype="multipart/form-data" id="form">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-sm-6">
+          {{ form.paytype | as_crispy_field }}
+        </div>
+        <div class="col-sm-6">
+          {{ form.event | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          {{ form.value | as_crispy_field }}
+        </div>
+        <div class="col-sm-6">
+          {{ form.ref_month | as_crispy_field }}
+        </div>
+      </div>
+      {{ form.obs | as_crispy_field }}
+    </form>
+  </div>
+</article>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/profile_add_payment.js' %}"></script>
+
+{% endblock %}

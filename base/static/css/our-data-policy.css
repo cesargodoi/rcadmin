@@ -1,0 +1,34 @@
+.modal p{
+    font-size: .9rem;
+    color: rgb(62, 62, 62);
+    text-indent: 1rem;
+}
+.modal h3 {
+    font-size: 1.1rem;
+    color: rgb(62, 62, 62);
+    text-transform: uppercase;
+    text-align: left;
+    margin-top: 20px;
+}
+.modal h5 {
+    font-size: 1rem;
+    color: rgb(62, 62, 62);
+    text-transform: uppercase;
+    text-align: left;
+    margin-top: 8px;
+}
+.modal ul, .modal ol{
+    font-size: .8rem;
+    color: rgb(62, 62, 62);
+}
+.title-list{
+    text-decoration: underline;
+}
+.contact-box {
+    color: rgb(62, 62, 62);
+    margin-left: 2rem;
+    font-size: .8rem;
+    margin: .5rem 1.3rem;
+    padding: .3rem;
+    background-color: #f8f9fa7d;
+}

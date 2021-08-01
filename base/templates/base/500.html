@@ -1,0 +1,30 @@
+{% extends "user/base.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/errors.css' %}">
+
+<article class="media content-section">
+    <div class="media-body content-box" >
+        <aside class="aside-box">
+            <h1>Uh!</h1>
+            <h2>Internal error.</h2>
+            <h2>Please, try again later...</h2>
+            <div class="contact">
+                <p class="contact-link"><strong>or contact our support:</strong></p>
+            </div>
+            <p id="mail">school@admin.com</p>
+        </aside>
+        <main class="main-box">
+            <img class="image-404" src="{% static 'images/500_error.png' %}" alt="Error 404">
+        </main>
+    </div>
+</article>
+
+{% endblock content %}

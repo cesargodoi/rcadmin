@@ -1,0 +1,89 @@
+<h4>Lectures</h4>
+
+{% if object_list %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active or obj.status == 'RST' %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-1">
+      <strong>{{ obj.date|date:'d/m/y' }}</strong>
+    </div>
+
+    <div class="col-sm-5">
+      {{ obj.theme }}
+      &nbsp;&nbsp;
+      <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+        <em>{{ obj.center }}</em>
+      </small>
+      {% if obj.center != request.user.person.center %}
+        &nbsp;&nbsp;
+        <span class="badge badge-pill badge-{% if not obj.is_active %}danger{% else %}warning{% endif %}">
+          only view
+        </span>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 align-middle">
+      {% if not obj.is_active %}
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 align-middle">
+      {{ obj.get_type_display }}
+    </div>
+
+    <div class="col-sm text-right">
+      {% if obj.add_link %}
+        {% if obj.pk in pre_freqs %}
+          <i class="fas fa-user-check mr-1"></i>
+        {% else %}
+          <a type="button" 
+            href="{{ obj.add_link}}?lect_pk={{ obj.pk }}"
+            class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-plus"></i>
+          </a>
+        {% endif %}
+      {% elif obj.add_freqs_link %}
+        <a type="button" 
+          href="{{ obj.add_freqs_link }}"
+          class="btn btn-outline-primary btn-sm">
+          <i class="fas fa-plus"></i>
+        </a>
+      {% else %}
+        {% if obj.listeners.all|length > 0 %}
+          <strong>{{ obj.listeners.all|length }}</strong> 
+          <i class="fas fa-users"></i>
+        {% endif %}
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% else %}
+
+<div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      lectures not found
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

@@ -1,0 +1,99 @@
+{% extends "base/base.html" %} {% block content %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h2>Payments</h2>
+  </div>
+</article>
+
+<div class="text-right mb-2">
+  <div class="btn-group btn-group-sm mt-1" role="group">
+    <a type="button" 
+      class="btn btn-light text-primary" 
+      href="{% url 'payment_create' %}">
+      <i class="fas fa-plus"></i> 
+      Add
+    </a>
+    <a type="button" 
+      class="btn btn-light text-info" 
+      href="{% url 'home' %}">
+      <i class="fas fa-chevron-left"></i> 
+      Go back
+    </a>
+  </div>
+</div>
+
+{% if object_list %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% for object in object_list %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="article-metadata">
+      <div class="row">
+        <div class="col-4">
+          {{ object.created_on | date:"d/m/Y" }}
+        </div>
+        <div class="col text-right">
+          <span class="text-{% if object.order_set.all.0.status == 'PND' %}warning
+                        {% elif object.order_set.all.0.status == 'CCL' %}danger
+                        {% else %}success{% endif %}">
+            {{ object.order_set.all.0.get_status_display }}
+          </span>
+          <span class="badge badge-pill badge-{% if object.order_set.all.0.status == 'PND' %}warning
+                        {% elif object.order_set.all.0.status == 'CCL' %}danger
+                        {% else %}success{% endif %}">
+            {{ object.value }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10">
+        {{ object.paytype }} &nbsp;&nbsp;
+        <small class="text-muted">
+          {% if object.ref_month %}
+          {{ object.ref_month|date:"M/y" }} &nbsp;&nbsp;
+          {% endif %}
+          {% if object.person %}
+          {{ object.person.short_name }} &nbsp;&nbsp;
+          {% endif %}
+          {% if object.event %}
+          {{ object.event.center }} &nbsp;&nbsp;
+          {% endif %}
+        </small>
+      </div>
+      <div class="col-sm text-right">
+        <div class="btn-group btn-group-sm">
+          <a type="button" 
+            href="{% url 'payment_update' pk=object.pk %}" 
+            class="btn btn-outline-light btn-sm">
+            <i class="fas fa-eye text-info"></i>
+          </a>
+          <a type="button" 
+            href="{% url 'payment_delete' pk=object.pk %}" 
+            class="btn btn-outline-light btn-sm">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+{% endfor %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% else %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="alert alert-secondary" role="alert">
+      <h4 class="alert-heading">Payments not found</h4>
+    </div>
+  </div>
+</article>
+{% endif %} {% endblock content %}

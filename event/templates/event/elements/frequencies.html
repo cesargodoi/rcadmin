@@ -1,0 +1,54 @@
+<h4>Frequencies</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.person.is_active %}danger{% elif obj.person.center != request.user.person.center %}warning{% endif %}"
+    {% if obj.click_link %}
+      {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-1">
+      <strong>{{ obj.person.reg }}</strong>
+    </div>
+
+    <div class="col-sm-4">
+      <strong>{{ obj.person.name }}</strong>
+    </div>
+
+    <div class="col-sm-2 small">
+      {{ obj.person.center }}
+    </div>
+
+    <div class="col-sm-2 align-middle">
+      <em>{{ obj.get_aspect_display }}</em>
+    </div>
+
+    <div class="col-sm text-right">
+      <a type="button" 
+        href="{% url 'frequency_delete' object.pk obj.person.pk %}"
+        class="btn btn-outline-danger btn-sm">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    </div>
+    
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">no frequencies found</h4>
+  </div>
+
+{% endif %}

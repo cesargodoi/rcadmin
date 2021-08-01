@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include 'publicwork/elements/lecture_navbar.html' %}
+
+{% include 'publicwork/elements/lecture_header.html' %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+    {% include 'publicwork/elements/listeners.html' %}
+
+  </div>
+</article>
+
+{% endblock content %}

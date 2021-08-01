@@ -1,0 +1,33 @@
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="article-metadata">
+      {{ pay.created_on|date:"d/m/Y" }}
+      <p class=" float-right text-{% if pay.order_set.all.0.status == 'PND' %}info
+                {% elif pay.order_set.all.0.status == 'CCL' %}danger
+                {% else %}success{% endif %}">
+        <small>
+          {{ pay.order_set.all.0.get_status_display }}
+        </small>
+        &nbsp;
+        <span class="badge badge-pill badge-{% if pay.order_set.all.0.status == 'PND' %}info
+                    {% elif pay.order_set.all.0.status == 'CCL' %}danger
+                    {% else %}success{% endif %}">
+          {{ pay.value }}
+        </span>
+      </p>
+    </div>
+    {{ pay.paytype }}
+    {% if pay.ref_month %}
+    &nbsp;&nbsp;&nbsp;
+    <small class="text-muted">
+      {{ pay.ref_month|date:"M/y" }}
+    </small>
+    {% endif %}
+    {% if pay.event %}
+    &nbsp;&nbsp;&nbsp;
+    <small class="text-muted">
+      {{ pay.event.center }}
+    </small>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,16 @@
+:root{
+  --color-background: #fafafa;
+  --color-font: #333333;
+  --color-title: #444444;
+  --background-cabecalho: #5f788a;
+  --font-cabecalho: #cbd5db;
+  --background-card: #ffffff;
+  --content-border: #dddddd;
+  --link-hover: #17a2b8;
+  --card-item:#fff;
+  /* --card-header: rgba(0,0,0,.03); */
+  --card-header: #5f788a57;
+  --card-border: rgba(0,0,0,.125);
+  --table-line: #f2f2f2;
+  --table-hover:#ddd;
+}

@@ -1,0 +1,75 @@
+{% load base_extras %}
+
+<h4>Centers</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 {% if not obj.is_active %}text-danger{% endif %}"
+    {% if obj.click_link %}
+      {% if request.user.is_superuser or request.user|has_group:"office" %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-4">
+      <strong>{{ obj.name }}</strong>
+      <small class="text-{% if not obj.is_active %}danger{% else %}muted{% endif %}">
+        &nbsp;&nbsp;
+        <em>{{ obj.get_center_type_display }}</em>
+      </small>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {% if obj.city and obj.state and obj.country %}
+        &nbsp;&nbsp;
+        {{ obj.city }} ({{ obj.state }}-{{ obj.country }})
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {% if obj.phone_1 %}
+        <i class="fas fa-phone"></i> {{ obj.phone_1 }}
+      {% elif obj.phone_2 %}
+        <i class="fas fa-phone"></i> {{ obj.phone_2 }}
+      {% endif %}
+    </div>
+
+    <div class="col-sm-3 small align-middle">
+      {% if obj.email %}
+        <i class="fas fa-envelope"></i> {{ obj.email }}
+      {% endif %}
+    </div>
+
+    <div class="col-sm-1 text-right">
+      {% if obj.is_active %} 
+      <i class="fas fa-toggle-on"></i>
+      {% else %} 
+      <i class="fas fa-toggle-off text-muted"></i>
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      centers not found
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">Atention!</h4>
+  <p>Are you shure you want to insert: <br>
+    <strong>{{ seeker.name }}</strong> in
+    <strong>{{ insert_to }}</strong>
+  </p>
+  <hr>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-2">
+          {{ form.ranking | as_crispy_field }}
+        </div>
+        <div class="col-sm-10">
+          {{ form.observations | as_crispy_field }}
+        </div>
+      </div>
+      <button 
+        class="btn btn-outline-success" 
+        type="submit">
+        Confirm
+      </button>
+      <a class="btn btn-outline-info" 
+        href="javascript:history.back()">
+        Go back
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

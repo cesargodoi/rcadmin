@@ -1,0 +1,35 @@
+<article class="media content-section">
+  <div class="media-body">
+    <h4>Frequencies</h4>
+
+    {% if frequencies %}
+    {% if frequencies|length < count %} <p>
+      Here showing your last <strong>{{ frequencies|length }}</strong> occurrence(s) out of a total of
+      <strong>{{ count }}</strong>.<br>
+      To learn more, contact the <strong>{{ object.person.center.name }}</strong> secretariat.
+      </p>
+      {% endif %}
+      <table class="table table-hover table-sm">
+        <thead>
+          <tr>
+            <th>date</th>
+            <th>event</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for freq in frequencies %}
+          <tr>
+            <td>{{ freq.date | date:"d/m/Y" }}</td>
+            <td>{{ freq.activity }} {{ freq.center }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="alert alert-secondary" role="alert">
+        <h4 class="alert-heading">no frequencies found</h4>
+      </div>
+      {% endif %}
+
+  </div>
+</article>

@@ -1,0 +1,15 @@
+{% load i18n %}{% autoescape off %}
+Parabéns {{ name }}!
+
+Seu cadastro foi realizado com sucesso!
+Você será incluído em um grupo de acompanhamento e nos próximos dias, 
+um dos coordenadores deste grupo deve entrar em contato com você, 
+para lhe passar as devidas orientações e as próximas atividades.
+
+Caso isso não ocorra num prazo de 7 dias, pedimos o favor, de entrar em
+contato conosco através do email: 
+suporte@rosacruzaurea.org.br
+
+Atenciosamente
+equipe school@admin
+{% endautoescape %}

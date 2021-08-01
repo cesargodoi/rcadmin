@@ -1,0 +1,9 @@
+<h4>Select an event</h4>
+
+<form class="form-control-sm border-top" method="GET">
+  {% csrf_token %}
+  {% include "base/searchs/event.html" %}
+</form>
+<br>
+
+{% include "event/elements/events.html" %}

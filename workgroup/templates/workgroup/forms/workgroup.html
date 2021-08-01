@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-6">
+      {{ form.name | as_crispy_field }}
+      {{ form.workgroup_type | as_crispy_field }}
+      {{ form.aspect | as_crispy_field }}
+    </div>
+    <div class="col-6">
+      {{ form.center | as_crispy_field }}
+      {{ form.description | as_crispy_field }}
+      {{ form.is_active | as_crispy_field }}
+      {{ form.made_by | as_crispy_field }}
+    </div>
+  </div>
+</form>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/workgroup.js' %}"></script>

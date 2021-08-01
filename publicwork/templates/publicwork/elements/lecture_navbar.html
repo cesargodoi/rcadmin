@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="{% url 'lecture_detail' object.pk %}">
+    Lecture
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
+    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto">
+    </ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      <a class="btn btn-light btn-sm" href="{% url 'add_listener' object.pk %}?init=on">
+        <i class="fas fa-plus"></i> <i class="fas fa-users"></i> 
+        Add
+      </a>
+      {% if object.center == request.user.person.center or request.user.is_superuser %}
+        <a class="btn btn-light btn-sm" href="{% url 'lecture_update' object.pk %}">
+          <i class="fas fa-edit"></i> 
+          Edit
+        </a>
+        {% if object.listeners.all|length == 0 %}
+        <a class="btn btn-light btn-sm" href="{% url 'lecture_delete' object.pk %}">
+          <i class="fas fa-edit"></i> 
+          Delete
+        </a>
+        {% endif %}
+      {% endif %}
+
+      {% if object.is_active %}
+        {% if tab == "info" %}
+        <a class="btn btn-light btn-sm" href="{% url 'seeker_update' object.id %}">
+          <i class="fas fa-edit"></i> 
+          Edit
+        </a>
+          {% if object.is_active %}
+          <a class="btn btn-light btn-sm" href="{% url 'seeker_delete' object.id %}">
+            <i class="fas fa-edit"></i> 
+            Delete
+          </a>
+          {% else %}
+          <a class="btn btn-light btn-sm" href="{% url 'seeker_reinsert' object.id %}">
+            <i class="fas fa-edit"></i> 
+            Reinsert
+          </a>
+          {% endif %}
+        {% endif %}
+
+        {% if tab == "frequencies" %}
+        <a class="btn btn-light btn-sm" href="{% url 'add_frequency' object.id %}?init=on">
+          <i class="fas fa-plus"></i> 
+          Add frequency
+        </a>
+        {% endif %}
+
+        {% if tab == "historic" %}
+        <a class="btn btn-light btn-sm" href="{% url 'create_historic' object.id %}">
+          <i class="fas fa-plus"></i> 
+          Add historic
+        </a>
+        {% endif %}
+
+      {% endif %}
+
+      <a class="btn btn-light btn-sm" href="{% url 'lecture_home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+
+    </div>
+  </div>
+</nav>

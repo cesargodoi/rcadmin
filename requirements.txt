@@ -1,0 +1,11 @@
+# agora vai
+django
+dynaconf
+django-crispy-forms
+pillow
+qrcode
+psycopg2-binary
+gunicorn
+pandas
+matplotlib
+requests

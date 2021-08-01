@@ -1,0 +1,15 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "workgroup/elements/workgroup_navbar.html" %}
+
+{% include "workgroup/elements/workgroup_header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    {% include 'workgroup/elements/members.html' %}
+  </div>
+</article>
+
+{% endblock %}

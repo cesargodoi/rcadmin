@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "workgroup/elements/member_navbar.html" %}
+
+{% include "workgroup/elements/member_header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+    {% if tab == "info" %}
+    {% include "workgroup/elements/member_info.html" %}
+    {% elif tab == "frequencies" %}
+    <h4>Frequencies</h4>
+    {% include "workgroup/elements/member_frequencies.html" %}
+    {% elif tab == "historic" %}
+    <h4>Historic</h4>
+    {% include "workgroup/elements/member_historic.html" %}
+    {% endif %}
+    
+  </div>
+</article>
+
+{% endblock content %}

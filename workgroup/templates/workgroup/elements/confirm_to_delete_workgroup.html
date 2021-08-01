@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Atention!</h4>
+  <p>Are you shure you want to delete: <br>
+    <strong>{{ object }}?</strong>
+  </p>
+  {% if members %}
+  <p>This working group has <strong>{{ object.membership_set.count }}</strong> members associated with it:
+  </p>
+  <ul>
+    {% for member in members %}
+    <li>
+      <em>{{ member.person.short_name }} &nbsp; {% if member.role_type == "MTR" %}<strong>
+        ({{ member.get_role_type_display }})</strong>{% endif %}</em></li>
+    {% endfor %}
+  </ul>
+  {% if object.membership_set.count > 4 %}
+  <p><small>... and <strong>{{ object.membership_set.count|add:"-4" }}</strong> other(s)</small></p>
+  {% endif %}
+  {% endif %}
+  <hr>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <button class="btn btn-outline-danger" type="submit">Confirm</button>
+      <a class="btn btn-outline-info" href="javascript:history.back()">Go back</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

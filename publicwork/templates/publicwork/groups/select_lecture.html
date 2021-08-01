@@ -1,0 +1,7 @@
+<h4>Select a lecture</h4>
+<form class="form-control-sm border-top" method="GET">
+  {% csrf_token %}
+  {% include "base/searchs/lecture.html" %}
+</form>
+<br>
+{% include 'publicwork/elements/lectures.html' %}

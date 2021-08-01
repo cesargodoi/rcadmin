@@ -1,0 +1,15 @@
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+        aria-haspopup="true" aria-expanded="false">Admin</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'activity_home' %}">Activities</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'payments' %}">Payments</a>
+        <a class="dropdown-item" href="{% url 'forms_of_payments' %}">Forms of payments</a>
+        <a class="dropdown-item" href="{% url 'paytypes' %}">Payment types</a>
+        <a class="dropdown-item" href="{% url 'bankflags' %}">Banks or Flags</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'import_persons' %}">Import Persons</a>
+    </div>
+</li>

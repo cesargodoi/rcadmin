@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="
+  {% if nav == 'detail' %}
+  {% url 'workgroup_detail' object.id %}
+  {% else %}
+  {% url 'workgroup_home' %}?init=on
+  {% endif %}
+  ">{% if nav == 'home' %}Workgroups{% else %}Workgroup{% endif %}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
+    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto">
+      <!-- <li class="nav-item">
+        <a class="nav-link { if tab == 'historic' %}active{ endif %}" 
+           href="{ url 'person_historic' person.id %}">
+          link
+        </a>
+      </li> -->
+    </ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      {% if nav == "home" %}
+      <a class="btn btn-light btn-sm" href="{% url 'workgroup_create' %}">
+        <i class="fas fa-plus"></i> 
+        Add workgroup
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+      {% endif %}
+
+      {% if nav == "detail" %}
+      <a class="btn btn-light btn-sm" href="{% url 'membership_insert' object.id %}?init=on">
+        <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+        Insert member
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'workgroup_update' object.id %}">
+        <i class="fas fa-edit"></i> 
+        Edit
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'workgroup_delete' object.id %}">
+        <i class="fas fa-trash-alt"></i> 
+        Delete
+      </a>
+      <a class="btn btn-light btn-sm" href="{% url 'workgroup_home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

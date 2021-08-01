@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "workgroup/elements/mentoring_navbar.html" %}
+
+{% include "workgroup/elements/workgroup_header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+  {% if tab == "members" %}
+    {% include "workgroup/elements/members.html" %}
+  {% elif tab == "add_frequencies" %}
+    {% if not request.session.frequencies.event %}
+      {% include "workgroup/mentoring/select_event.html" %}
+    {% else %}
+      {% include "workgroup/mentoring/who_participated.html" %}
+    {% endif %}
+  {% endif %}
+
+  </div>
+</article>
+
+{% endblock content %}

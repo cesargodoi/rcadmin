@@ -1,0 +1,64 @@
+<h4>Listeners</h4>
+
+{% if object_list %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+
+{% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.seeker.is_active %}danger{% elif obj.seeker.center != request.user.person.center %}warning{% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-4">
+      <strong>{{ obj.seeker.name }}</strong>
+      &nbsp;&nbsp;
+      <small class="text-{% if not obj.seeker.is_active %}danger{% elif obj.seeker.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+        <em>{{ obj.seeker.center }}</em>
+      </small>
+    </div>
+
+    <div class="col-sm-1 align-middle">
+      {% if not obj.seeker.is_active %}
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-1 align-middle">
+      {% if obj.ranking > 0 %}
+        {{ obj.ranking }}
+        <i class="fas fa-star"></i>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4 align-middle">
+      <small>{{ obj.observations }}</small>
+    </div>
+
+    <div class="col-sm text-right">
+      {% if obj.del_link %}
+        <a type="button" 
+          class="btn btn-outline-danger btn-sm"
+          href="{{ obj.del_link }}">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+{% if object_list.has_other_pages %}
+{% include "base/elements/paginator.html" %}
+{% endif %}
+
+{% else %}
+<div class="alert alert-secondary" role="alert">
+  <h4 class="alert-heading">no listeners found</h4>
+</div>
+{% endif %}

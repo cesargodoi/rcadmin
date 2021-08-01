@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include 'treasury/elements/treasury_navbar.html' %}
+
+<div class="row row-col-3">
+  <div class="col-lg-4 mb-4">
+    {% include "treasury/elements/payments_summary.html" %}
+  </div>
+  <div class="col-lg-4 mb-4">
+    <div class="card-treasury-new bg-light mb-3">
+      <div class="card-header-treasury-new">Actions</div>
+      <ul class="list-group list-group-flush">
+        <a type="button" 
+          class="list-group-item-treasury-new list-group-item-action text-info" 
+          href="{% url 'orders' %}?init=on">
+          <i class="fas fa-shopping-bag"></i> 
+          Orders
+        </a>
+        <a type="button" 
+          class="list-group-item-treasury-new list-group-item-action text-primary" 
+          href="{% url 'order_create' %}">
+          <i class="fas fa-plus"></i> 
+          New order
+        </a>
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-4 mb-4">
+    <div class="card-treasury-new bg-light mb-3">
+      <div class="card-header-treasury-new">Reports</div>
+      <ul class="list-group list-group-flush">
+        <a type="button" 
+          class="list-group-item-treasury-new list-group-item-action text-info" 
+          href="{% url 'cash_balance' %}">
+          <i class="fas fa-eye"></i> 
+          Cash balance
+        </a>
+        <a type="button" 
+          class="list-group-item-treasury-new list-group-item-action text-info" 
+          href="{% url 'period_payments' %}">
+          <i class="fas fa-eye"></i> 
+          Period payments
+        </a>
+        <a type="button" 
+          class="list-group-item-treasury-new list-group-item-action text-info" 
+          href="{% url 'payments_by_person' %}">
+          <i class="fas fa-eye"></i> 
+          Payments by person
+        </a>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

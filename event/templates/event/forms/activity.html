@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+<form method="POST" enctype="multipart/form-data" id="form">
+  {% csrf_token %}
+  {{ form.name | as_crispy_field }}
+  {{ form.activity_type | as_crispy_field }}
+  <div class="row">
+    <div class="col-md-3">
+      {{ form.multi_date | as_crispy_field }}
+    </div>
+    <div class="col-md-9">
+      {{ form.is_active | as_crispy_field }}
+    </div>
+  </div>
+</form>

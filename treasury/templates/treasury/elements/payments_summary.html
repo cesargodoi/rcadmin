@@ -1,0 +1,40 @@
+<div class="text-white bg-steel mb-3">
+  <div class="card-header-sumary">Summary</div>
+  <div class="card-body">
+    <h5 class="card-title text-white">
+      {% if period %}{{ period }}{% else %}last 30 days{% endif %}
+    </h5>
+    <table class="table table-sm">
+      {% for pay in last_payments %}
+      {% if pay.2 %}
+      <tr>
+        <td>
+          {{ pay.0 }}
+        </td>
+        <td>
+          <small><strong>{{ pay.1 }}</strong> payment{{ pay.1|pluralize }}</small>
+        </td>
+        <td class="text-right">{{ pay.2 }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+      <tr>
+        <th></th>
+        <th class="text-right">TOTAL</th>
+        <th class="text-right" width="80px">{{ last_payments_total }}</th>
+      </tr>
+    </table>
+    {% if self_payed %}
+    <h5 class="card-title text-white">
+      Payment made by pupil
+    </h5>
+    <table class="table table-sm">
+      <tr>
+        <td><strong>{{ self_payed }}</strong> payment{{ self_payed|pluralize }}</td>
+        <th class="text-right">TOTAL</th>
+        <th class="text-right" width="80px">{{ self_payed_total }}</th>
+      </tr>
+    </table>
+    {% endif %}
+  </div>
+</div>

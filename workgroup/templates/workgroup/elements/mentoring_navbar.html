@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="
+  {% if nav == 'detail' %}
+  {% url 'mentoring_group_detail' object.pk %}
+  {% else %}
+  {% url 'mentoring_home' %}
+  {% endif %}
+  ">{% if nav == 'home' %}Workgroups{% else %}Workgroup{% endif %}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
+    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarProfile">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto">
+      <!-- <li class="nav-item">
+        <a class="nav-link { if tab == 'historic' %}active{ endif %}" 
+           href="{ url 'person_historic' person.id %}">
+          link
+        </a>
+      </li> -->
+    </ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      {% if nav == "home" %}
+      <a class="btn btn-light btn-sm" href="{% url 'home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+      {% endif %}
+
+      {% if nav == "detail" %}
+        {% if not request.session.frequencies.event and tab == "members" %}
+        <a class="btn btn-light btn-sm" href="{% url 'mentoring_add_frequencies' object.id %}?init=on">
+          <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+          Insert frequencies
+        </a>
+        {% endif %}
+
+        {% if request.session.frequencies.event %}
+        <a class="btn btn-outline-primary btn-sm" href="#" onclick="document.getElementById('form').submit();">
+          <i class="fas fa-check"></i> 
+          Add
+        </a>
+        {% endif %}
+
+        <a class="btn btn-light btn-sm" href="{{ goback }}?init=on">
+          <i class="fas fa-chevron-left"></i> 
+          Go back
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

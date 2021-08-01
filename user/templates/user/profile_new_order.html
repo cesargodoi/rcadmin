@@ -1,0 +1,229 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="text-right mb-2 mt-4">
+  {% if request.session.my_order.total_payments != 0.0 %}
+  <button 
+    class="btn btn-primary" 
+    onclick="checkFormOfPayment()" id="pay-now">
+    <i class="fas fa-money-bill-wave-alt"></i> 
+    Pay now
+  </button>
+  {% endif %}
+  <a type="button" 
+    class="btn btn-light mr-3"
+    href="{% url 'user_payments' %}">
+    <i class="fas fa-chevron-left "></i> 
+    Go back
+  </a>
+</div>
+
+{% include "user/elements/header.html" %}
+
+{% if request.session.my_order.person %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <h5>Payments</h5>
+      </div>
+      <div class="col-sm-6">
+        <a type="button" 
+          class="btn btn-light btn-sm text-info float-right" 
+          href="{% url 'user_add_payment' %}">
+          <i class="fas fa-plus "></i> 
+          Add payment
+        </a>
+      </div>
+    </div>
+
+    {% if not request.session.my_order.payments %}
+    
+    <div class="alert alert-secondary mt-2">
+      <h4 class="profile-payments-title">Para fazer suas contribuições e pagamentos siga as instruções:</h4>
+      <div class="row">
+        <div class="col-sm-4" id="payform_type">
+          <img 
+            src="{{ object.person.center.pix_image.url }}" 
+            class="img-fluid">
+        </div>
+        <div class="col-sm-6">
+          <p><strong>Chave-pix: </strong></p>
+          {{ object.person.center.pix_key }}
+
+          <hr>
+          <ul>
+            <li>Realize a transferência, depósito ou PIX em seu banco.</li>
+            <li>Use o campo de "Descrição" no aplicativo de seu banco para identificar sua contribuição via PIX.</li>
+            <li>Pegue o comprovante digital em .pdf ou .jpg fornecido por seu banco</li>
+            <li>Neste programa você conseguirá fazer os pagamentos e contribuições apenas em seu nome.</li>
+            <li>Para pagamentos e contribuições coletivas (duas ou mais pessoas) procure a tesouraria de seu núcleo.</li>
+            <li>Para iniciar, clique em <strong>+ Add payment</strong> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% else %}
+
+    {% for object in request.session.my_order.payments %}
+    {% include "treasury/elements/payment.html" %}
+    {% endfor %}
+
+    <table class="table table-hover table-sm mt-2">
+      <tr>
+        <th class="text-right">TOTAL:</th>
+        <th class="text-right" id="totPayment" width="10%">
+          {{ request.session.my_order.total_payments|floatformat:2 }}
+        </th>
+        <th width="28px"></th>
+      </tr>
+    </table>
+
+    {% endif %}
+  </div>
+</article>
+{% endif %}
+
+{% if request.session.my_order.payments %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <h5>Form of Payment</h5>
+        <form id="form" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-lg-6" id="payform_type">
+              {{ form.type | as_crispy_field }}
+            </div>
+            <div class="col-lg-6">
+              {{ form.value | as_crispy_field }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              {{ form.bank_flag | as_crispy_field }}
+            </div>
+            <div class="col-lg-6">
+              {{ form.ctrl_number | as_crispy_field }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              {{ form.voucher_img | as_crispy_field }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" 
+              class="form-control" 
+              id="description" 
+              name="description"
+              value="{{ request.session.my_order.description }}">
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6">
+
+        <div class="alert alert-secondary">
+          <div class="row">
+            <div class="col-sm-12">
+              <p>Para concluir sua contribuição tenha o comprovante de depósito, transferência ou PIX digitalizado (.pdf ou .jpg)</p>
+              <p><strong>Voucher img: </strong>Carregue o arquivo para o sistema</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-12">
+              <p> <strong>Bank-flag: </strong>escolha a opção que corresponda ao seu banco.</p>
+              <p> <strong>Ctrl number: </strong>Número de identificação do depósito, transferência ou PIX.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-6" id="payform_type">
+              <img 
+                src="{{ object.person.center.pix_image.url }}" 
+                class="img-fluid">
+            </div>
+            <div class="col-sm-6">
+              <p>Pagamentos com PIX: use a chave-pix ou o QR-Code</p>
+              <p><strong>Chave-pix: </strong></p>
+              {{ object.person.center.pix_key }}
+              <hr>
+              <p>Use o campo de "Descrição" no aplicativo de seu banco para identificar sua contribuição via PIX.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  //faz campo de valor não ser editável no profile>payments
+  const paymentValue = document.getElementById("id_value")
+  paymentValue.setAttribute('readonly', 'readonly')
+
+  const voucherImg = document.getElementById("id_voucher_img")
+  const bancFlagField = document.getElementById("id_bank_flag")
+  const ctrlNumberField = document.getElementById("id_ctrl_number")
+
+  
+  //verifica se todos os campos estão válidos no formulário antes de salvar
+  function checkFormOfPayment(){
+    
+    if(bancFlagField.value == ''){
+      alertPaymentIdentification("id_bank_flag");
+      return false;
+    }
+    if(ctrlNumberField.value == ''){
+      alertPaymentIdentification("id_ctrl_number");
+      return false;
+    }
+    if(voucherImg.value == ''){
+          alertVoucherImg();
+          return false;
+    }
+    document.getElementById('form').submit()
+
+  }
+
+  function alertVoucherImg(){
+    var voucherImg = document.getElementById("id_voucher_img")
+    var divVoucherImg = document.getElementById("div_id_voucher_img")
+    
+    var invalideValue = document.createElement("p");
+    invalideValue.classList.add("invalid-feedback");
+    invalideValue.style.display = 'block'
+    var invalidText = document.createTextNode(
+      "Please send a voucher for your pay."
+    );
+    invalideValue.appendChild(invalidText);
+    divVoucherImg.appendChild(invalideValue)
+    divVoucherImg.classList.add("is-invalid")
+    voucherImg.focus();
+  }
+
+  function alertPaymentIdentification(id){
+    var identificationField = document.getElementById(id)
+
+    var invalidValueField = document.createElement("p");
+    invalidValueField.classList.add("invalid-feedback");
+    var invalidText = document.createTextNode(
+      "Don't forget this field."
+    );
+    invalidValueField.appendChild(invalidText);
+    identificationField.parentElement.appendChild(invalidValueField);
+    identificationField.classList.add("is-invalid");
+    identificationField.focus();
+  }
+</script>
+{% endblock %}

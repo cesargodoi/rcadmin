@@ -1,0 +1,8 @@
+<h4>Add Member</h4>
+<form class="form-control-sm border-top" method="GET">
+  {% csrf_token %}
+  {% include "base/searchs/seeker.html" %}
+</form>
+<br>
+
+{% include 'publicwork/elements/seekers.html' %}

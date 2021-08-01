@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include 'publicwork/groups/navbar.html' %}
+
+{% include "publicwork/groups/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+    {% if nav == "info" %}
+      {% include 'publicwork/elements/seekers.html' %}
+    {% elif nav == "frequencies" %}
+      <h4>Frequencies</h4>
+      {% include "publicwork/groups/frequencies.html" %}
+    {% elif nav == "add_frequencies" %}
+      {% if not request.session.frequencies.lecture %}
+        {% include "publicwork/groups/select_lecture.html" %}
+      {% else %}
+        {% include "publicwork/groups/who_participated.html" %}
+      {% endif %}
+    {% elif nav == "add_member" %}
+      {% include "publicwork/groups/add_member.html" %}
+    {% elif nav == "add_mentor" %}
+      {% include "publicwork/groups/add_mentor.html" %}
+    {% endif %}
+    
+  </div>
+</article>
+
+{% endblock content %}

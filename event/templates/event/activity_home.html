@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h2>Activities</h2>
+  </div>
+</article>
+
+<div class="text-right mb-2">
+  <div class="btn-group btn-group-sm mt-1" role="group">
+    <a type="button" 
+      class="btn btn-light text-primary" 
+      href="{% url 'activity_create' %}">
+      <i class="fas fa-plus"></i> Add
+    </a>
+    <a type="button" 
+      class="btn btn-light text-info" 
+      href="{% url 'home' %}">
+      <i class="fas fa-chevron-left "></i> Go back
+    </a>
+  </div>
+</div>
+
+{% for object in object_list %}
+{% include 'event/elements/activity_card.html' %}
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+<div class="form-row align-items-center">
+  <div class="col-sm-2 mb-1">
+    <div class="input-group">
+      <input name="pw_name"
+             class="dateinput form-control"
+             id="pw_name"
+             placeholder="group name"
+             {% if request.session.search.pw_name %}value={{ request.session.search.pw_name }}{% endif %}>
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <a href="?pw_name=+" class="text-secondary">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 mb-1">
+    <select class="form-control" name="center">
+      {% for cnt in centers %}
+      <option value="{{ cnt.0 }}"
+              {% if cnt.0 == request.session.search.center %}selected{% endif %}>
+        {{ cnt.1 }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm mb-1">
+    {% include 'base/elements/checkbox_all.html' %}
+    <button class="btn btn-outline-success" type="submit">
+      <i class="fas fa-search"></i>
+      Search
+    </button> 
+  </div>
+</div>

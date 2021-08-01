@@ -1,0 +1,38 @@
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="article-metadata">
+      <div class="row">
+        <div class="col-9">
+          {{ object.person.center }}
+          {% if object.person.aspect != "--" %}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <em>
+            {{ object.person.get_aspect_display }} <strong>in</strong>
+            {{ object.person.aspect_date|date:"d/m/Y" }}
+          </em>
+          {% endif %}
+          {% if object.person.center != request.user.person.center %}
+          &nbsp;&nbsp;&nbsp;
+          <span class="badge badge-pill badge-danger">another center - only view</span>
+          {% endif %}
+        </div>
+        <div class="col text-right">
+          <span class="badge badge-pill badge-secondary">{{ object.person.reg }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <h3>
+          {{ object.person.name }} &nbsp;&nbsp;
+          <small class="text-muted"><em>{{ object.profile.social_name }}</em></small>
+        </h3>
+      </div>
+      <div class="col text-right">
+        {% if object.person.status not in "ACT,---" %}
+        {% include "user/status/status.html" %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>

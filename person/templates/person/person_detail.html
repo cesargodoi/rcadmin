@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "person/elements/person_navbar.html" %}
+
+{% include "person/elements/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+    {% if tab == "info" %}
+    {% include "person/elements/person_info.html" %}
+    {% elif tab == "historic" %}
+    <h4>Historic</h4>
+    {% include "person/elements/person_historic.html" %}
+    {% elif tab == "frequencies" %}
+    <h4>Frequencies</h4>
+    {% include "person/elements/person_frequencies.html" %}
+    {% elif tab == "membership" %}
+    <h4>Membership</h4>
+    {% include "person/elements/person_membership.html" %}
+    {% endif %}
+    
+  </div>
+</article>
+
+{% endblock content %}

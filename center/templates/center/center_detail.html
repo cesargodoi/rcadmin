@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "center/elements/center_navbar.html" %}
+
+{% include "center/elements/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <img class="img-thumbnail rounded mx-auto d-block mb-4" src="{{ object.image.url }}">
+      </div>
+      <div class="col-md-9">
+        <article class="media content-section">
+          <div class="media-body">
+            {% include "center/elements/center_info.html" %}
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% endblock content %}

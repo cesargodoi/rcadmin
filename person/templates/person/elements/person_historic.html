@@ -1,0 +1,44 @@
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+    <div class="row border-top border-secondary pb-2 pt-2"
+        onclick="location.href='{% url 'historic_update' person.id obj.pk %}';">
+
+      <div class="col-sm-2">
+        <strong>{{ obj.date | date:"d/m/Y" }}</strong>
+      </div>
+
+      <div class="col-sm-2">
+        <strong>{{ obj.get_occurrence_display }}</strong>
+      </div>
+
+      <div class="col-sm-7 small align-middle">
+        {{ obj.description | truncatechars:50 }}
+      </div>
+
+      <div class="col-sm text-right">
+        <a type="button" 
+          class="btn btn-outline-danger btn-sm"
+          href="{% url 'historic_delete' person.id obj.pk %}">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </div>
+      
+    </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">historic not found</h4>
+  </div>
+  
+{% endif %}

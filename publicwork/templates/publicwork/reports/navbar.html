@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
+  <a class="navbar-brand" href="#">
+    Report
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#secondaryNavbar"
+    aria-controls="secondaryNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="secondaryNavbar">
+    <!-- menu items -->
+    <ul class="navbar-nav mr-auto">
+    </ul>
+
+    <!-- controlers -->
+    <div class="navbar-nav">
+      <a type="button" class="btn btn-light btn-sm controls-report" href="#" data-toggle="modal" data-target="#modal">
+        <i class="fas fa-chart-bar"></i>
+        New search
+      </a>
+      <a type="button" class="btn btn-light btn-sm controls-report" href="#" onclick="window.print()">
+        <i class="fas fa-print"></i> 
+        To print
+      </a>
+      <a type="button" class="btn btn-light btn-sm controls-report" href="#">
+        <i class="fas fa-file-csv"></i>
+        Get file
+      </a>
+      <a type="button" class="btn btn-light btn-sm controls-report" href="{% url 'publicwork_home' %}">
+        <i class="fas fa-chevron-left"></i> 
+        Go back
+      </a>
+    </div>
+  </div>
+</nav>

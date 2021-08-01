@@ -1,0 +1,31 @@
+<div class="form-row align-items-center">
+  <div class="col-sm-3 mb-1">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">from</div>
+      </div>
+      <input type="date" 
+        name="dt1" 
+        class="form-control dateinput" 
+        id="dt1" 
+        {% if request.session.search.dt1 %}value={{ request.session.search.dt1 }}{% endif %}>
+    </div>
+  </div>
+  <div class="col-sm-3 mb-1">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">to</div>
+      </div>
+      <input type="date" 
+        name="dt2" 
+        class="form-control dateinput" 
+        id="dt2" 
+        {% if request.session.search.dt2 %}value={{ request.session.search.dt2 }}{% endif %}>
+      <button 
+        class="btn btn btn-outline-success ml-2" 
+        type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+</div>
