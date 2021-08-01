@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
-from schooladmin.common import (
+from rcadmin.common import (
     paginator,
     clear_session,
     SEEKER_STATUS,

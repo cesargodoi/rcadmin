@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from event.models import Event
 from base.searchs import search_event
-from schooladmin.common import paginator, ACTIVITY_TYPES, clear_session
+from rcadmin.common import paginator, ACTIVITY_TYPES, clear_session
 
 from ..models import Person
 

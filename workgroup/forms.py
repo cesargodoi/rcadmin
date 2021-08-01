@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Workgroup, Membership
 from event.models import Frequency
-from schooladmin.common import HIDDEN_AUTH_FIELDS
+from rcadmin.common import HIDDEN_AUTH_FIELDS
 
 
 class WorkgroupForm(forms.ModelForm):

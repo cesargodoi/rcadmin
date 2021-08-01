@@ -10,7 +10,7 @@ from ..utils import (
     get_lectures_dict,
     get_seekers_dict,
 )
-from schooladmin.common import SEEKER_STATUS, LECTURE_TYPES
+from rcadmin.common import SEEKER_STATUS, LECTURE_TYPES
 
 
 @login_required

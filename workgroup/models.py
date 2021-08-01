@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from person.models import Person
-from schooladmin.common import (
+from rcadmin.common import (
     ASPECTS,
     ROLE_TYPES,
     WORKGROUP_TYPES,

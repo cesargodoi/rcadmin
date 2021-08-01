@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from schooladmin.common import paginator, clear_session
+from rcadmin.common import paginator, clear_session
 from base.searchs import search_center
 from django.http.response import Http404
 from person.models import Person

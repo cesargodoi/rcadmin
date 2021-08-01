@@ -11,7 +11,7 @@ from center.models import Center
 from user.models import User
 from person.models import Historic
 from ..forms import CenterForm
-from schooladmin.common import short_name
+from rcadmin.common import short_name
 
 
 @user_passes_test(lambda u: u.is_superuser)

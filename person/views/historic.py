@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from schooladmin.common import paginator
+from rcadmin.common import paginator
 
 from ..forms import HistoricForm
 from ..models import Historic, Person

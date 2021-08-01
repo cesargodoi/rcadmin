@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from schooladmin.common import paginator
+from rcadmin.common import paginator
 
 from ..forms import PayTypeForm
 from ..models import PayTypes

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django.db.models import Q
 from django.utils import timezone
-from schooladmin.common import LECTURE_TYPES, SEEKER_STATUS
+from rcadmin.common import LECTURE_TYPES, SEEKER_STATUS
 
 
 LECT_TYPES = dict(LECTURE_TYPES)

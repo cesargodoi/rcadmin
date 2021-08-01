@@ -1,5 +1,5 @@
 from django import forms
-from schooladmin.common import HIDDEN_AUTH_FIELDS
+from rcadmin.common import HIDDEN_AUTH_FIELDS
 
 from .models import Center
 

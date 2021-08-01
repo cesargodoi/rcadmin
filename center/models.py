@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 from PIL import Image
-from schooladmin.common import (
+from rcadmin.common import (
     get_filename,
     phone_format,
     CENTER_TYPES,

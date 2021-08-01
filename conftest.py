@@ -11,7 +11,7 @@ from factories import (
     SeekerFactory,
 )
 from person.models import Person, Historic
-from schooladmin.common import ASPECTS, STATUS, OCCURRENCES
+from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
 register(UserFactory)
 register(CenterFactory)

@@ -8,7 +8,7 @@ from django.utils import timezone
 from event.models import Event
 from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
-from schooladmin.common import PROFILE_PAYFORM_TYPES
+from rcadmin.common import PROFILE_PAYFORM_TYPES
 
 from .forms import MyFormOfPaymentForm, MyPaymentForm, ProfileForm, UserForm
 

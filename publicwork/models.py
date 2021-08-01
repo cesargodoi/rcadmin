@@ -4,7 +4,7 @@ from PIL import Image
 from django.conf import settings
 from django.utils import timezone
 from django.db import models
-from schooladmin.common import (
+from rcadmin.common import (
     us_inter_char,
     short_name,
     phone_format,

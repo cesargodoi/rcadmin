@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
     BaseUserManager,
 )
-from schooladmin.common import (
+from rcadmin.common import (
     phone_format,
     get_filename,
     GENDER_TYPES,

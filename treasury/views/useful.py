@@ -1,5 +1,5 @@
 from django.db.models import Q
-from schooladmin.common import ORDER_STATUS, PAYFORM_TYPES
+from rcadmin.common import ORDER_STATUS, PAYFORM_TYPES
 
 from ..models import Order
 

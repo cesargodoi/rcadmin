@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.urls import reverse
 
-from schooladmin.common import ASPECTS, STATUS, paginator, clear_session
+from rcadmin.common import ASPECTS, STATUS, paginator, clear_session
 from user.models import User
 from base.searchs import search_person
 

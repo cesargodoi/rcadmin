@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from event.models import Event
 from person.models import Person
-from schooladmin.common import (
+from rcadmin.common import (
     ORDER_STATUS,
     PAYFORM_TYPES,
     paginator,

@@ -10,7 +10,7 @@ from user.models import User
 from center.models import Center
 from ..forms import TempRegOfSeekerForm
 from ..models import TempRegOfSeeker, Seeker
-from schooladmin.common import clear_session, send_email
+from rcadmin.common import clear_session, send_email
 
 
 def insert_yourself(request):

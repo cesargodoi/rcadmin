@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from schooladmin.common import WORKGROUP_TYPES, paginator, clear_session
+from rcadmin.common import WORKGROUP_TYPES, paginator, clear_session
 from workgroup.forms import MembershipForm
 from workgroup.models import Membership, Workgroup
 from base.searchs import search_workgroup

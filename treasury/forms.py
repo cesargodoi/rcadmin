@@ -1,7 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from .models import PayTypes, Payment, BankFlags, FormOfPayment
-from schooladmin.common import ORDER_STATUS
+from rcadmin.common import ORDER_STATUS
 
 
 class PayTypeForm(forms.ModelForm):

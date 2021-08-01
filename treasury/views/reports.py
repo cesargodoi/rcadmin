@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from person.models import Person
-from schooladmin.common import paginator
+from rcadmin.common import paginator
 
 from .useful import OrderByPeriod, OrderToJson
 

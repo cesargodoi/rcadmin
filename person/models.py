@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from schooladmin.common import (
+from rcadmin.common import (
     ASPECTS,
     OCCURRENCES,
     PERSON_TYPES,

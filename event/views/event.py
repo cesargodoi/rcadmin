@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from schooladmin.common import paginator, ACTIVITY_TYPES, clear_session
+from rcadmin.common import paginator, ACTIVITY_TYPES, clear_session
 from base.searchs import search_event
 
 from ..forms import EventForm

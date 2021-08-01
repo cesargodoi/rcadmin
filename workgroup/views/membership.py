@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from person.models import Person
-from schooladmin.common import ASPECTS, STATUS, paginator, clear_session
+from rcadmin.common import ASPECTS, STATUS, paginator, clear_session
 
 from ..forms import MembershipForm
 from ..models import Membership, Workgroup

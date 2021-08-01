@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 from person.models import Person
 from event.models import Event
-from schooladmin.common import ORDER_STATUS, PAYFORM_TYPES, PAY_TYPES
+from rcadmin.common import ORDER_STATUS, PAYFORM_TYPES, PAY_TYPES
 
 
 #  PayTypes

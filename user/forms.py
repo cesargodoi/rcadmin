@@ -1,8 +1,8 @@
-from schooladmin.common import PAYFORM_TYPES
+from rcadmin.common import PAYFORM_TYPES
 from django import forms
 from .models import User, Profile
 from treasury.models import Payment, FormOfPayment
-from schooladmin.common import PROFILE_PAYFORM_TYPES
+from rcadmin.common import PROFILE_PAYFORM_TYPES
 
 
 class UserForm(forms.ModelForm):

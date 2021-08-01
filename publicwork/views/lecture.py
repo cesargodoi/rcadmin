@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.http.response import Http404
 from django.urls import reverse
-from schooladmin.common import paginator, LECTURE_TYPES, clear_session
+from rcadmin.common import paginator, LECTURE_TYPES, clear_session
 from base.searchs import search_lecture
 
 

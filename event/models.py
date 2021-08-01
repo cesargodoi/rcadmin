@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files import File
 from django.db import models
 from PIL import Image
-from schooladmin.common import ACTIVITY_TYPES, EVENT_STATUS, ASPECTS
+from rcadmin.common import ACTIVITY_TYPES, EVENT_STATUS, ASPECTS
 from person.models import Person
 
 
