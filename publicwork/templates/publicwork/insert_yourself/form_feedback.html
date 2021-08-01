@@ -1,4 +1,8 @@
-{% extends "user/base.html" %} {% load i18n %} {% block content %}
+{% extends "user/base.html" %} 
+{% load i18n %} 
+
+{% block content %}
+
 <div class="alert alert-info">
   {% if request.session.fbk.type in 'pupil, seeker' %}
 
@@ -7,19 +11,20 @@
       O email: <strong>{{ request.session.fbk.email }}</strong> já está cadastrado
       para um
       <strong>
-        {% if request.session.fbk.type == 'pupil' %}aluno{% else %}membro{% endif
-        %} </strong
-      >.
+        {% if request.session.fbk.type == 'pupil' %}aluno{% else %}membro{% endif %} 
+      </strong>.
     </p>
+
     {% if request.session.fbk.type == 'pupil' %}
       <p>
         Você, pode fazer o seu login no sistema
         <a href="{% url 'login' %}">clicando aqui</a>.
       </p>
-    <p>Ou envie-nos um email para:</p>
-      {% else %}
-    <p>Caso tenha encontrado algo de errado, envie-nos um email para:</p>
-      {% endif %}
+      <p>Ou envie-nos um email para:</p>
+    {% else %}
+      <p>Caso tenha encontrado algo de errado, envie-nos um email para:</p>
+    {% endif %}
+
     <p>
       <a href="mailto:​rcadmin@rosacruzaurea.org.br">rcadmin@gmail.com</a> relatando o
       problema. 
@@ -43,6 +48,7 @@
     <br />
 
   {% endif %}
+
 </div>
 <a href="#" id="close">{% translate 'This page can be closed' %}</a>
 <script>
@@ -50,4 +56,5 @@
     window.open("", "_self").close();
   });
 </script>
+
 {% endblock %}
