@@ -67,7 +67,7 @@ def insert_yourself(request):
             )
             # send email
             address = "https://rcadmin.rosacruzaurea.org.br"
-            _link = f"{address}/{reverse('confirm_email', args=[_seeker.id])}"
+            _link = f"{address}{reverse('confirm_email', args=[_seeker.id])}"
             send_email(
                 body_text="publicwork/insert_yourself/emails/to_confirm.txt",
                 body_html="publicwork/insert_yourself/emails/to_confirm.html",
