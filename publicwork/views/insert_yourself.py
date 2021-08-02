@@ -66,11 +66,8 @@ def insert_yourself(request):
                 email=form.cleaned_data.get("email")
             )
             # send email
-            _link = "{}://{}{}".format(
-                "http",
-                "localhost:8000",
-                reverse("confirm_email", args=[_seeker.id]),
-            )
+            address = "https://rcadmin.rosacruzaurea.org.br"
+            _link = f"{address}/{reverse('confirm_email', args=[_seeker.id])}"
             send_email(
                 body_text="publicwork/insert_yourself/emails/to_confirm.txt",
                 body_html="publicwork/insert_yourself/emails/to_confirm.html",
