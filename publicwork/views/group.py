@@ -52,6 +52,7 @@ def group_home(request):
         "goback_link": reverse("group_home"),
         "title": "public work - groups",
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
+        "user_center": str(request.user.person.center.pk),
         "nav": "gp_home",
     }
     return render(request, "publicwork/groups/home.html", context)
@@ -63,7 +64,7 @@ def group_detail(request, pk):
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    object_list = pw_group.members.all().order_by("name")
+    object_list = pw_group.members.exclude(status="ITD").order_by("name")
     # add action links
     for item in object_list:
         item.click_link = (
@@ -181,7 +182,9 @@ def group_frequencies(request, pk):
     page = request.GET["page"] if request.GET.get("page") else 1
 
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    frequencies = get_frequencies([mbr.id for mbr in pw_group.members.all()])
+    frequencies = get_frequencies(
+        [mbr.id for mbr in pw_group.members.exclude(status="ITD")]
+    )
 
     context = {
         "object": pw_group,
@@ -237,7 +240,9 @@ def group_add_frequencies(request, pk):
                 "lecture": {},
                 "listeners": [],
             }
-            preparing_the_session(request, pw_group.members.all(), lecture)
+            preparing_the_session(
+                request, pw_group.members.exclude(status="ITD"), lecture
+            )
 
     if request.method == "POST":
         listeners = get_listeners_dict(request)

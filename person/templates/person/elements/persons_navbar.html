@@ -7,7 +7,24 @@
 
   <div class="collapse navbar-collapse" id="navbarProfile">
     <!-- menu items -->
-    <ul class="navbar-nav mr-auto"></ul>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" 
+           href="#" 
+           id="personTools" 
+           role="button" 
+           data-toggle="dropdown" 
+           aria-haspopup="true" 
+           aria-expanded="false">
+          Tools
+        </a>
+        <div class="dropdown-menu" aria-labelledby="personTools">
+          <a class="dropdown-item" href="{% url 'import_from_seekers' %}">Import from Seekers</a>
+          <!-- <div class="dropdown-divider"></div> -->
+          <!-- <a class="dropdown-item" href="#">Other</a> -->
+        </div>
+      </li>
+    </ul>
 
     <!-- controlers -->
     <div class="navbar-nav">

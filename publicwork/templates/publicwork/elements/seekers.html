@@ -8,25 +8,27 @@
   {% endif %}
 
   {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active or obj.status == 'RST' %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+  <div class="row border-top border-secondary pb-2 pt-2 {% if obj.status == 'ITD' %}
+                                                        text-info
+                                                        {% elif not obj.is_active %}
+                                                        text-danger
+                                                        {% elif obj.center != request.user.person.center %}
+                                                        text-warning
+                                                        {% endif %}"
     {% if obj.click_link %}
-      {% if obj.center == request.user.person.center or request.user.is_superuser %}
-        onclick="location.href='{{ obj.click_link }}';"
-      {% endif %}
+
+        {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+          onclick="location.href='{{ obj.click_link }}';"
+        {% endif %}
+
     {% endif %}>
 
-    <div class="col-sm-5">
+    <div class="col-sm-4">
       <strong>{{ obj.name }}</strong>
-      &nbsp;&nbsp;
-      <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
-        <em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em>
-      </small>
     </div>
 
-    <div class="col-sm-2 align-middle">
-      {% if not obj.is_active %}
-        <small class="badge-pill badge-danger">inactive</small>
-      {% endif %}
+    <div class="col-sm-3 small align-middle">
+      <em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em>
     </div>
 
     <div class="col-sm-2 small align-middle">
@@ -38,6 +40,9 @@
     </div>
     
     <div class="col-sm-2 text-right">
+      {% if not obj.is_active and obj.status != 'ITD' %}
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
       <strong>{{ obj.get_status_display }}</strong> 
     </div>
 

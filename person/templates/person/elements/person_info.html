@@ -1,3 +1,5 @@
+{% load base_extras %}
+
 <div class="row">
   <div class="col-md-3 text-center">
 
@@ -105,10 +107,18 @@
                   {{ person.user.profile.sos_phone }}
                 </td>
               </tr>
+              {% if request.user.is_superuser or request.user|has_group:"office" %}
               <tr>
                 <th>observations</th>
-                <td>{{ person.observations }}</td>
+                <td>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="3" disabled>
+                      {{ person.observations }}
+                    </textarea>
+                  </div>
+                </td>
               </tr>
+              {% endif %}
             </table>
           </div>
           <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
@@ -147,8 +157,3 @@
   </div>
 
 </div>
-
-
-
-
-

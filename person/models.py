@@ -24,7 +24,7 @@ class Person(models.Model):
         null=True,
         blank=True,
     )
-    reg = models.CharField(max_length=10)
+    reg = models.CharField(max_length=10, null=True, blank=True)
     name = models.CharField(max_length=80)
     name_sa = models.CharField(max_length=80, editable=False)
     short_name = models.CharField(max_length=40, null=True, blank=True)

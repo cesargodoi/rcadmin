@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "person/elements/persons_navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+
+    <h4>Seekers who will become pupils</h4>
+
+    {% if object_list %}
+
+      {% if object_list.has_other_pages %}
+      {% include "base/elements/paginator.html" %}
+      {% endif %}
+
+      {% for obj in object_list %}
+      
+      <div class="row border-top border-secondary pb-2 pt-2">
+        <div class="col-sm-5">
+          <strong>{{ obj.name }}</strong>
+          &nbsp;&nbsp;
+          <small class="text-muted">
+            <em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em>
+          </small>
+        </div>
+        <div class="col-sm-2 align-middle small">
+          {% if obj.phone %}
+          <i class="fas fa-phone"></i> {{ obj.phone }}
+          {% endif %}
+        </div>
+        <div class="col-sm-3 align-middle small">
+          {% if obj.email %}
+            <i class="fas fa-envelope"></i> {{ obj.email }}
+          {% endif %}
+        </div>
+        <div class="col-sm-1 text-right">
+          <strong>{{ obj.get_status_display }}</strong> 
+        </div>
+        <div class="col-sm text-right">
+          <a type="button" 
+            href="{% url 'import_seeker' obj.id %}"
+            class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-check"></i> 
+          </a>
+        </div>
+        
+      </div>
+      
+      {% endfor %}
+
+    {% else %}
+      
+      <div class="alert alert-secondary">
+        <h4 class="alert-heading">
+          no seekers found
+        </h4> 
+      </div> 
+
+    {% endif %}
+
+  </div>
+</article>
+
+{% endblock %}

@@ -38,6 +38,7 @@ def seeker_home(request):
         "status_list": SEEKER_STATUS,
         "title": "seeker home",
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
+        "user_center": str(request.user.person.center.pk),
         "nav": "sk_home",
     }
     return render(request, "publicwork/seeker_home.html", context)

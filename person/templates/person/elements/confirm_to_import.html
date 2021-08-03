@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="alert alert-secondary" role="alert">
+  <h4 class="alert-heading">Atention!</h4>
+  <p>Are you shure you want to import: <br>
+    <strong>{{ object.name }}</strong>
+    &nbsp;&nbsp;
+    <small class="text-muted">
+      <em>{{ object.city }} ({{ object.state }}-{{ object.country }})</em>
+    </small> 
+    <br>
+    as a <strong>Pupil</strong>?
+  </p>
+  <hr>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <button class="btn btn-outline-success" type="submit">Confirm</button>
+      <a class="btn btn-outline-info" href="javascript:history.back()">Go back</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -35,7 +35,11 @@
     <select class="form-control" name="center">
       {% for cnt in centers %}
       <option value="{{ cnt.0 }}"
-              {% if cnt.0 == request.session.search.center %}selected{% endif %}>
+              {% if not request.session.search.center %}
+                {% if cnt.0 == user_center %}selected{% endif %}
+              {% else %}
+                {% if cnt.0 == request.session.search.center %}selected{% endif %}
+              {% endif %}>
         {{ cnt.1 }}
       </option>
       {% endfor %}

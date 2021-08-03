@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import frequency_ps, historic, membership_ps, person
+from .views import frequency_ps, historic, membership_ps, person, tools
 
 # person
 urlpatterns = [
@@ -79,4 +79,24 @@ urlpatterns += [
         membership_ps.membership_ps_delete,
         name="membership_ps_delete",
     ),
+]
+
+# import from seekers
+urlpatterns += [
+    path(
+        "tools/import-from-seekers",
+        tools.import_from_seekers,
+        name="import_from_seekers",
+    ),
+    path(
+        "tools/import-from-seekers/<int:id>",
+        tools.import_seeker,
+        name="import_seeker",
+    ),
+    # path("create/", person.person_create, name="person_create"),
+    # path("<uuid:id>/update/", person.person_update, name="person_update"),
+    # path("<uuid:id>/delete/", person.person_delete, name="person_delete"),
+    # path(
+    #     "<uuid:id>/reinsert/", person.person_reinsert, name="person_reinsert"
+    # ),
 ]
