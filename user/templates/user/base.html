@@ -37,10 +37,12 @@
 </head>
 
 <body class="text-center">
+  {% if not rca_logo %}
   <header class="site-header-login">
     <img class="logo_img" src="{% static 'images/logo-black.png' %}" alt="">
     <img class="logo_img_small" src="{% static 'images/logo-mini-black.png' %}" alt="">    
   </header>
+  {% endif %}
   <main role="main" class="container">
     {% block content %}{% endblock content %}
   </main>

@@ -89,7 +89,7 @@ def insert_yourself(request):
         "form_path": "publicwork/forms/seeker.html",
         "goback": reverse("seeker_home"),
         "title": "create seeker",
-        "to_create": True,
+        "rca_logo": True,
     }
     return render(request, "publicwork/insert_yourself/form.html", context)
 
