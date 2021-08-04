@@ -20,17 +20,17 @@ urlpatterns = [
 # insert yourself as a member
 urlpatterns += [
     path(
-        "i-want-to-be-a-member/",
+        "i-want-to-participate/",
         insert_yourself.insert_yourself,
         name="insert_yourself",
     ),
     path(
-        "i-want-to-be-a-member/feedback/",
+        "i-want-to-participate/feedback/",
         insert_yourself.feedback,
         name="feedback",
     ),
     path(
-        "i-want-to-be-a-member/confirm-email/<uuid:token>/",
+        "i-want-to-participate/confirm-email/<uuid:token>/",
         insert_yourself.confirm_email,
         name="confirm_email",
     ),

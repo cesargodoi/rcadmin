@@ -1,8 +1,8 @@
 {% load i18n %}{% autoescape off %}
 Saudações {{ name }}!
 
-Você está recebendo este e-mail porque se inscreveu para ser membro da
-Escola Espiritual da Rosacruz Áurea.
+Você está recebendo este e-mail porque se inscreveu para participar do 
+grupo de "Boas-vindas" da Escola Espiritual da Rosacruz Áurea.
 
 Por favor, clique no link abaixo para confirmar sua inscrição.
 {{ link }}
@@ -10,5 +10,5 @@ Por favor, clique no link abaixo para confirmar sua inscrição.
 Se você não fez essa solicitação, por favor, desconsidere este e-mail.
 
 Atenciosamente.
-equipe school@admin
+equipe rc@dmin
 {% endautoescape %}

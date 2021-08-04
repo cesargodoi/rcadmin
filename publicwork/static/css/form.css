@@ -1,28 +1,28 @@
 /* Bootstrap class changes */
-.head-jady{
+.head-jady {
   display: flex;
   justify-content: center;
   padding: 5% 0;
   width: auto;
   height: auto;
 }
-.logo-rca{
+.logo-rca {
   width: 15%;
 }
-.modal-header{
+.modal-header {
   padding: 1.5rem;
 }
-.modal-body{
+.modal-body {
   padding: 1.5rem;
 }
 .alert-jady {
-    position: relative;
-    padding: .75rem 1.25rem;
+  position: relative;
+  padding: 0.75rem 1.25rem;
 }
-.box-jady{
-  border: 2px solid #5f788a;
-  border-radius: .25rem;
-  padding: 1rem;
+.box-jady {
+  border: 1px solid #806f4a;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
 }
 .alert-primary-jady {
   color: #fff;
@@ -39,7 +39,8 @@
   background-color: #806f4a;
   border-color: #806f4a;
 }
-.btn-primary.disabled, .btn-primary:disabled {
+.btn-primary.disabled,
+.btn-primary:disabled {
   color: #fff;
   background-color: #806f4a;
   border-color: #806f4a;
@@ -51,8 +52,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-
-  .logo-rca{
+  .logo-rca {
     width: 25%;
   }
 }
