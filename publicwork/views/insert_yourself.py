@@ -163,6 +163,6 @@ def get_seeker_center(seeker):
             .first()
         )
     except Exception:
-        center = Center.objects.get(name="Web Core")
+        center = Center.objects.get(name="Web Brasil")
 
     return center
