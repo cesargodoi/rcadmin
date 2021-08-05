@@ -10,7 +10,7 @@ from user.models import User
 from center.models import Center
 from ..forms import TempRegOfSeekerForm
 from ..models import TempRegOfSeeker, Seeker
-from rcadmin.common import clear_session, send_email
+from rcadmin.common import clear_session, send_email, sanitize_name
 
 
 def insert_yourself(request):
@@ -54,6 +54,14 @@ def insert_yourself(request):
                 "email": request.POST.get("email"),
             }
             return redirect("feedback")
+
+        # adjust request.POST
+        _mutable = request.POST
+        request.POST._mutable = True
+        request.POST["name"] = sanitize_name(_mutable.get("name"))
+        request.POST["city"] = sanitize_name(_mutable.get("city"))
+        request.POST["email"] = _mutable.get("email").lower()
+        request.POST._mutable = False
 
         # populating form with request.POST
         form = TempRegOfSeekerForm(request.POST, request.FILES)
@@ -144,6 +152,10 @@ def confirm_email(request, token):
 
 # handlers
 def get_seeker_center(seeker):
+    """
+    here we need a little more intelligence to put the new seeker in
+    the right center.
+    """
     city = seeker.city
     state = seeker.state
     country = seeker.country
@@ -151,18 +163,6 @@ def get_seeker_center(seeker):
     try:
         center = Center.objects.get(city=city, state=state, country=country)
     except Exception:
-        center = (
-            Center.objects.filter(state=state, country=country)
-            .order_by("created_on")
-            .first()
-        )
-    except Exception:
-        center = (
-            Center.objects.filter(country=country)
-            .order_by("created_on")
-            .first()
-        )
-    except Exception:
-        center = Center.objects.get(name="Web Brasil")
+        center = Center.objects.filter(name__icontains="Web Brasil").first()
 
     return center

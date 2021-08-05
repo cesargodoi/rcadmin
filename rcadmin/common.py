@@ -105,6 +105,10 @@ BR_REGIONS = {
 }
 
 
+def sanitize_name(name):
+    return " ".join([w.lower().capitalize() for w in name.split()])
+
+
 def us_inter_char(txt, codif="utf-8"):
     if not isinstance(txt, str):
         txt = str(txt)
