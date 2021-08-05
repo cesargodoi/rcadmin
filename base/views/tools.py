@@ -55,7 +55,7 @@ def import_persons(request):
                         address = person["address"].split(",")
                         _profile.address = str(address[0])
                         try:
-                            number_compl = address[1].split("-")
+                            number_compl = address[1].split("-")  # usar pipe
                             _profile.number = str(number_compl[0].strip())
                             _profile.complement = str(number_compl[1].strip())
                         except Exception:
@@ -81,9 +81,7 @@ def import_persons(request):
                     _person.name = person["name"]
                     _person.short_name = short_name(person["name"])
                     _person.birth = person["birthday"]
-                    _person.observations = (
-                        f"first password: {password}\n{person['ps']}"
-                    )
+                    _person.observations = f"{person['ps']}"
                     _person.made_by = user
 
                     # list of aspects
