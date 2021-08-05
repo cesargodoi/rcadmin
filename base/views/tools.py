@@ -77,9 +77,7 @@ def import_persons(request):
                     _person = _user.person
 
                     _person.center = center
-                    _person.reg = person[
-                        "reg"
-                    ]  # need to confirm with presidium
+                    _person.reg = person["reg"]  # need to confirm - presidium
                     _person.name = person["name"]
                     _person.short_name = short_name(person["name"])
                     _person.birth = person["birthday"]

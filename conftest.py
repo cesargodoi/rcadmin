@@ -113,6 +113,11 @@ def get_perms(db):
             Permission.objects.get(codename="change_event"),
             Permission.objects.get(codename="delete_event"),
             Permission.objects.get(codename="view_event"),
+            # frequency
+            Permission.objects.get(codename="add_frequency"),
+            Permission.objects.get(codename="change_frequency"),
+            Permission.objects.get(codename="delete_frequency"),
+            Permission.objects.get(codename="view_frequency"),
             # historic
             Permission.objects.get(codename="add_historic"),
             Permission.objects.get(codename="change_historic"),
