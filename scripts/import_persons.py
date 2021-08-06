@@ -64,7 +64,7 @@ def run(*args):
                         except Exception:
                             _profile.number = str(address[1].strip())
 
-                    _profile.disctrict = person["district"]
+                    _profile.district = person["district"]
                     _profile.city = person["city"]
                     _profile.state = person["state_prov"]
                     _profile.country = center.country
