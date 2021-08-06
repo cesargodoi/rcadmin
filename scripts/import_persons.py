@@ -58,7 +58,7 @@ def run(*args):
                         address = person["address"].split(",")
                         _profile.address = str(address[0])
                         try:
-                            number_compl = address[1].split("-")  # usar pipe
+                            number_compl = address[1].split("|")  # usar pipe
                             _profile.number = str(number_compl[0].strip())
                             _profile.complement = str(number_compl[1].strip())
                         except Exception:
