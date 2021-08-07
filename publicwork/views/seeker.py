@@ -53,10 +53,6 @@ def seeker_detail(request, pk):
     if request.GET.get("pwg"):
         request.session["pwg"] = request.GET["pwg"]
 
-    # import ipdb
-
-    # ipdb.set_trace()
-
     context = {
         "object": seeker,
         "title": "seeker detail",
