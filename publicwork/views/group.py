@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from rcadmin.common import (
     paginator,
     belongs_center,
@@ -24,7 +25,13 @@ from base.searchs import (
 )
 
 from ..forms import GroupForm
-from ..models import Seeker, Lecture, Listener, PublicworkGroup
+from ..models import (
+    Seeker,
+    Lecture,
+    Listener,
+    PublicworkGroup,
+    HistoricOfSeeker,
+)
 
 
 @login_required
@@ -292,7 +299,16 @@ def group_add_member(request, pk):
 
         if request.method == "POST":
             pw_group.members.add(seeker)
+            date = timezone.now().date()
+            if seeker.status != "MBR":
+                HistoricOfSeeker.objects.create(
+                    seeker=seeker,
+                    occurrence="MBR",
+                    date=date,
+                    description=f"Entered in '{pw_group}' group.",
+                )
             seeker.status = "MBR"
+            seeker.status_date = date
             seeker.save()
             messages.success(request, "The member has been inserted on group!")
             return redirect("group_detail", pk=pk)

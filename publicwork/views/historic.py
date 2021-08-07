@@ -17,9 +17,6 @@ def create_historic(request, pk):
     if request.method == "POST":
         form = HistoricForm(request.POST)
         if form.is_valid():
-            # import ipdb
-
-            # ipdb.set_trace()
             form.save()
             if request.POST.get("occurrence") != "OBS":
                 adjust_seeker_side(
