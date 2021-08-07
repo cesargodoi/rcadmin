@@ -40,6 +40,12 @@
                 <th>email</th>
                 <td>{{ object.email }}</td>
               </tr>
+              {% if object.publicworkgroup_set %}
+              <tr>
+                <th>group</th>
+                <td>{{ object.publicworkgroup_set.first }}</td>
+              </tr>
+              {% endif %}
               <tr>
                 <th width="120rem">observations</th>
                 <td>{{ object.observations }}</td>

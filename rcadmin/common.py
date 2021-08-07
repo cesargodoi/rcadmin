@@ -94,7 +94,6 @@ SEEKER_STATUS = (
     ("OBS", "observation"),
     ("NEW", "new"),
     ("MBR", "member"),
-    ("RCP", "reception"),
     ("INS", "installing"),
     ("ITD", "installed"),
     ("RST", "restriction"),

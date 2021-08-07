@@ -33,12 +33,14 @@ def group_home(request):
     object_list = None
     clear_session(request, ["pwg", "search", "frequencies"])
 
-    if request.GET.get("init"):
+    if request.GET.get("init") or request.user.groups.filter(
+        name="publicwork_jr"
+    ):
         clear_session(request, ["search"])
-        if request.user.groups.filter(name="publicwork_jr"):
-            object_list = request.user.person.publicworkgroup_set.all()
-            for item in object_list:
-                item.click_link = reverse("group_detail", args=[item.pk])
+        # if request.user.groups.filter(name="publicwork_jr"):
+        object_list = request.user.person.publicworkgroup_set.all()
+        for item in object_list:
+            item.click_link = reverse("group_detail", args=[item.pk])
     else:
         queryset, page = search_pw_group(request, PublicworkGroup)
         object_list = paginator(queryset, page=page)
@@ -290,6 +292,8 @@ def group_add_member(request, pk):
 
         if request.method == "POST":
             pw_group.members.add(seeker)
+            seeker.status = "MBR"
+            seeker.save()
             messages.success(request, "The member has been inserted on group!")
             return redirect("group_detail", pk=pk)
 
@@ -323,6 +327,7 @@ def group_add_member(request, pk):
         "nav": "add_member",
         "goback": reverse("group_detail", args=[pk]),
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
+        "user_center": str(request.user.person.center.pk),
         "pk": pk,
     }
     return render(request, "publicwork/groups/detail.html", context)

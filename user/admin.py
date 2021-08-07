@@ -235,7 +235,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_filter = ["country", "state"]
-    search_fields = ["social_name", "user"]
+    search_fields = ["social_name"]
     list_display = [
         "social_name",
         "phone_1",

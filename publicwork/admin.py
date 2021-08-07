@@ -14,6 +14,8 @@ admin.site.register(TempRegOfSeeker)
 
 @admin.register(Seeker)
 class SeekerAdmin(admin.ModelAdmin):
+    list_filter = ["state", "country", "status"]
+    search_fields = ["name", "email"]
     list_display = [
         "name",
         "phone",

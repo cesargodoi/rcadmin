@@ -52,7 +52,7 @@
       </a>
       {% endif %}
 
-      {% if nav == 'gp_home' %}
+      {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
       <a class="btn btn-light btn-sm" href="{% url 'group_create' %}">
         <i class="fas fa-plus"></i> 
         Add group
