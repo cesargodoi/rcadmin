@@ -8,3 +8,4 @@ gunicorn
 pandas
 matplotlib
 requests
+django-extensions
