@@ -34,7 +34,7 @@
     <div class="col-md-4">
       {{ form.email | as_crispy_field }}
     </div>
-    <div class="col-md-4" {% if request.user|has_group:'publicwork_jr' %}{% endif %}>
+    <div class="col-md-4">
       {{ form.center | as_crispy_field }}
     </div>
   </div>
