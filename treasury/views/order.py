@@ -255,7 +255,7 @@ def order_register(request):
 
         # create or update order
         if request.session["order"].get("id"):
-            order = get_object_or_404(Order, id=request.session["order"]["id"])
+            order = Order.objects.get(id=request.session["order"]["id"])
             order.payments.all().delete()
             order.form_of_payments.all().delete()
             order.amount = request.session["order"]["total_payments"]

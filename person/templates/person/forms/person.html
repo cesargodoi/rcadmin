@@ -56,34 +56,34 @@
       <br>
       {% if not to_create %}
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           {{ person_form.center | as_crispy_field }}
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           {{ person_form.person_type | as_crispy_field }}
         </div>
       </div>
       {% endif %}
       <div class="row">
-        <div class="col-{% if not to_create %}8{% else %}12{% endif %}">
+        <div class="col-md-{% if not to_create %}8{% else %}12{% endif %}">
           {{ person_form.name | as_crispy_field }}
         </div>
         {% if not to_create %}
-        <div class="col-4">
+        <div class="col-md-4">
           {{ person_form.reg | as_crispy_field }}
         </div>
         {% endif %}
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.social_name | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ user_form.email | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-7">
+        <div class="col-md-7">
           {{ profile_form.image | as_crispy_field }}
         </div>
       </div>
@@ -95,18 +95,18 @@
       aria-labelledby="contact-tab">
       <br>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.phone_1 | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.phone_2 | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.sos_contact | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.sos_phone | as_crispy_field }}
         </div>
       </div>
@@ -118,34 +118,34 @@
       aria-labelledby="address-tab">
       <br>
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           {{ profile_form.address | as_crispy_field }}
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           {{ profile_form.number | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.complement | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.district | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           {{ profile_form.city | as_crispy_field }}
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           {{ profile_form.state | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.country | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.zip_code | as_crispy_field }}
         </div>
       </div>
@@ -157,21 +157,21 @@
       aria-labelledby="other-tab">
       <br>
       <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
           {{ person_form.id_card | as_crispy_field }}
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           {{ person_form.birth | as_crispy_field }}
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           {{ profile_form.gender | as_crispy_field }}
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.profession | as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           {{ profile_form.marital_status | as_crispy_field }}
         </div>
       </div>

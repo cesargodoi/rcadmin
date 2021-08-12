@@ -28,12 +28,15 @@ class SeekerForm(forms.ModelForm):
         model = Seeker
         fields = "__all__"
         widgets = {
-            "observations": forms.Textarea(attrs={"rows": 2}),
+            "observations": forms.Textarea(attrs={"rows": 3}),
             "birth": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
         }
         widgets.update(HIDDEN_AUTH_FIELDS)
+        widgets.update(
+            {"status": forms.HiddenInput(), "status_date": forms.HiddenInput()}
+        )
 
 
 class LectureForm(forms.ModelForm):

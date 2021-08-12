@@ -2,26 +2,26 @@
 <form method="POST" enctype="multipart/form-data" id="form">
   {% csrf_token %}
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.activity | as_crispy_field }}
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.center | as_crispy_field }}
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.date | as_crispy_field }}
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.end_date | as_crispy_field }}
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.deadline | as_crispy_field }}
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       {{ form.status | as_crispy_field }}
     </div>
   </div>
