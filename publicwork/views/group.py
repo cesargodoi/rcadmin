@@ -200,6 +200,7 @@ def group_frequencies(request, pk):
         "title": "group detail | frequencies",
         "object_list": paginator(
             sorted(frequencies, key=lambda x: x["rank"], reverse=True),
+            20,
             page=page,
         ),
         "nav": "frequencies",

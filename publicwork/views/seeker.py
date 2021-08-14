@@ -26,7 +26,7 @@ def seeker_home(request):
         clear_session(request, ["search"])
     else:
         queryset, page = search_seeker(request, Seeker)
-        object_list = paginator(queryset, page=page)
+        object_list = paginator(queryset, 20, page=page)
         # add action links
         for item in object_list:
             item.click_link = reverse("seeker_detail", args=[item.pk])

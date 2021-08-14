@@ -1,0 +1,98 @@
+{% load base_extras %}
+<ul class="nav nav-pills mb-4">
+  <!-- items -->
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'info' %}active{% endif %}" 
+       href="{% url 'group_detail' object.pk %}">
+      Group
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'frequencies' %}active{% endif %}" 
+       href="{% url 'group_frequencies' object.pk %}">
+      Frequencies
+    </a>
+  </li>
+
+  <!-- controlers -->
+  {% if nav == "info" %}
+    {% if not request.user|has_group:"publicwork_jr" %}
+      <li class="nav-item">
+        <a class="nav-link" 
+          href="{% url 'group_add_mentor' object.pk %}?init=on">
+          <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+          Add mentor
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" 
+          href="{% url 'group_add_member' object.pk %}?init=on">
+          <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+          Add member
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" 
+          href="{% url 'group_update' object.pk %}">
+          <i class="fas fa-edit"></i> 
+          Edit
+        </a>
+      </li>
+      {% if object.is_active %}
+        <li class="nav-item">
+          <a class="nav-link" 
+            href="{% url 'group_delete' object.pk %}">
+            <i class="fas fa-edit"></i> 
+            Delete
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="btn btn-light btn-sm" 
+            href="{% url 'group_reinsert' object.pk %}">
+            <i class="fas fa-edit"></i> 
+            Reinsert
+          </a>
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% if nav == "frequencies" %}
+    <li class="nav-item">
+      <a class="nav-link" 
+          href="{% url 'group_add_frequencies' object.pk %}">
+        <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+        Insert frequencies
+      </a>
+    </li>
+  {% endif %}
+
+  {% if request.session.frequencies.lecture %}
+    <li class="nav-item">
+      <a class="nav-link" 
+          href="#" 
+          onclick="document.getElementById('form').submit();">
+        <i class="fas fa-check"></i> 
+        Add
+      </a>
+    </li>
+  {% endif %}
+
+  <li class="nav-item">
+    <a class="nav-link" href="
+      {% if nav == 'frequencies' %}
+      {% url 'group_detail' object.pk %}
+      {% elif nav == 'add_frequencies' %}
+      {% url 'group_frequencies' object.pk %}
+      {% elif nav == 'add_mentor' or nav == 'add_member' %}
+      {% url 'group_detail' object.pk %}
+      {% else %}
+      {% url 'group_home' %}
+      {% endif %}
+      ">
+      <i class="fas fa-chevron-left"></i> 
+      Go back
+    </a>
+  </li>
+</ul>
