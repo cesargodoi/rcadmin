@@ -1,0 +1,66 @@
+{% load base_extras %}
+<!-- actions -->
+<div class="text-right mb-1">
+  {% if nav == "info" %}
+    {% if not request.user|has_group:"publicwork_jr" %}
+      <a class="btn btn-light btn-sm" 
+        href="{% url 'group_add_mentor' object.pk %}?init=on">
+        <i class="fas fa-plus"></i> <i class="fas fa-user-graduate"></i>
+        Mentor
+      </a>
+      <a class="btn btn-light btn-sm" 
+        href="{% url 'group_add_member' object.pk %}?init=on">
+        <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+        Member
+      </a>
+      <a class="btn btn-light btn-sm" 
+        href="{% url 'group_update' object.pk %}">
+        <i class="fas fa-edit"></i> 
+        <!-- Edit -->
+      </a>
+      {% if object.is_active %}
+        <a class="btn btn-light btn-sm" 
+          href="{% url 'group_delete' object.pk %}">
+          <i class="fas fa-trash-alt"></i> 
+          <!-- Delete -->
+        </a>
+      {% else %}
+        <a class="btn btn-light btn-sm" 
+          href="{% url 'group_reinsert' object.pk %}">
+          <i class="fas fa-sign-in-alt"></i> 
+          <!-- Reinsert -->
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% if nav == "frequencies" %}
+    <a class="btn btn-light btn-sm" 
+        href="{% url 'group_add_frequencies' object.pk %}">
+      <i class="fas fa-calendar-plus"></i>
+      Frequencies
+    </a>
+  {% endif %}
+
+  {% if request.session.frequencies.lecture %}
+    <a class="btn btn-light btn-sm" 
+        href="#" 
+        onclick="document.getElementById('form').submit();">
+      <i class="fas fa-check"></i> 
+      Add
+    </a>
+  {% endif %}
+
+  {% if nav == 'add_frequencies' or nav == 'add_mentor' or nav == 'add_member' %}
+  <a class="btn btn-light btn-sm" href="
+    {% if nav == 'add_frequencies' %}
+    {% url 'group_frequencies' object.pk %}
+    {% else %}
+    {% url 'group_detail' object.pk %}
+    {% endif %}
+    ">
+    <i class="fas fa-chevron-left"></i> 
+    Back
+  </a>
+  {% endif %}
+</div>
