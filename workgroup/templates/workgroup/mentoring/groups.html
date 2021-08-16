@@ -26,15 +26,15 @@
     </div>
 
     <div class="col-sm-4 small align-middle">
-      {% for mentor in obj.mentors.all %}
+      {% for mentor in obj.workgroup.mentors %}
         <i class="fas fa-user-graduate mr-1"></i>
-        {{ mentor.short_name }} &nbsp;&nbsp;
+        {{ mentor.person.short_name }} &nbsp;&nbsp;
       {% endfor %}
     </div>
 
     <div class="col-sm text-right">
-      {% if obj.workgroup.members.count > 0 %}
-        <strong>{{ obj.workgroup.members.count }}</strong> 
+      {% if obj.workgroup.num_members > 0 %}
+        <strong>{{ obj.workgroup.num_members }}</strong> 
         <i class="fas fa-users"></i>
       {% endif %}
     </div>

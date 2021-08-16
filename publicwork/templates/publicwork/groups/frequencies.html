@@ -20,27 +20,25 @@
         {% endif %}
       </div>
 
-      <div class="col-sm-1 align-middle">
+      <div class="col-sm-2 align-middle">
         <strong>{{ obj.status }}</strong>
       </div>
       
-      <div class="col-sm-3 align-middle">
+      <div class="col-sm-2 align-middle">
         <small>
-          <em>&nbsp; since &nbsp;{{ obj.date|date:'d/m/y' }}</em>
+          <em>since {{ obj.date|date:'d/m/y' }}</em>
         </small>
       </div>
       
-      <div class="col-sm-1 text-right">
+      <div class="col-sm-2 text-right">
         {% if obj.rank %}
-        <strong>{{ obj.rank }}</strong> 
-        <i class="fas fa-star ml-1"></i>
+          <strong>{{ obj.rank }}</strong> 
+          <i class="fas fa-star ml-1"></i>
         {% endif %}
-      </div>
-
-      <div class="col-sm text-right">
         {% if obj.freq %}
-        <strong>{{ obj.freq }}</strong> 
-        <i class="fas fa-calendar-check ml-1"></i>
+          &nbsp;&nbsp;
+          <strong>{{ obj.freq }}</strong> 
+          <i class="fas fa-calendar-check ml-1"></i>
         {% endif %}
       </div>
       

@@ -44,6 +44,11 @@ urlpatterns += [
         name="mentoring_group_detail",
     ),
     path(
+        "mentoring/<int:pk>/frequencies/",
+        mentoring.mentoring_group_frequencies,
+        name="mentoring_group_frequencies",
+    ),
+    path(
         "mentoring/<int:group_pk>/member/<uuid:person_pk>/detail/",
         mentoring.mentoring_member_detail,
         name="mentoring_member_detail",

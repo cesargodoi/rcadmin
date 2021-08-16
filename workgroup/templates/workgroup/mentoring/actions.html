@@ -1,0 +1,32 @@
+{% load base_extras %}
+<!-- actions -->
+<div class="text-right mb-1">
+  {% if nav == "detail" %}
+    {% if not request.session.frequencies.event and tab == "frequencies" %}
+    <a class="btn btn-light btn-sm" 
+      href="{% url 'mentoring_add_frequencies' object.id %}?init=on">
+      <i class="fas fa-calendar-plus"></i>
+      Frequencies
+    </a>
+    {% endif %}
+
+    {% if request.session.frequencies.event %}
+    <a class="btn btn-outline-primary btn-sm" 
+      href="#" 
+      onclick="document.getElementById('form').submit();">
+      <i class="fas fa-check"></i> 
+      Add
+    </a>
+    {% endif %}
+
+    {% if tab == "add_frequencies" %}
+      <a class="btn btn-light btn-sm" href="{% url 'mentoring_group_frequencies' object.id %}">
+        <i class="fas fa-chevron-left"></i> 
+        Back
+      </a>
+    {% endif %}
+
+  {% endif %}
+
+  
+</div>

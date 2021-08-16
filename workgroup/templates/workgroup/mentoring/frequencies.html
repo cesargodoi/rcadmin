@@ -1,0 +1,55 @@
+<h4>Frequencies</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2">
+
+    <div class="col-sm-6">
+      <strong>{{ obj.person.short_name }}</strong>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      <strong>{{ obj.person.get_aspect_display }}</strong>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      since {{ obj.person.aspect_date|date:'d/m/y' }}
+    </div>
+
+    <div class="col-sm-2 text-right">
+      {% if obj.rank %}
+        <strong>{{ obj.rank }}</strong> 
+        <i class="fas fa-star ml-1"></i>
+      {% endif %}
+      {% if obj.freq %}
+        &nbsp;&nbsp;
+        <strong>{{ obj.freq }}</strong> 
+        <i class="fas fa-calendar-check ml-1"></i>
+      {% endif %}
+    </div>
+
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      members not found
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}
