@@ -16,10 +16,20 @@ from ..models import Workgroup, Membership
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_home(request):
-    groups = Membership.objects.filter(
+    object_list = Membership.objects.filter(
         person=request.user.person, role_type="MTR"
     )
-    context = {"groups": groups, "title": "mentoring", "nav": "home"}
+    import ipdb
+
+    ipdb.set_trace()
+    for item in object_list:
+        item.click_link = reverse("mentoring_group_detail", args=[item.pk])
+        # item.mentors = item.
+    context = {
+        "object_list": object_list,
+        "title": "mentoring",
+        "nav": "home",
+    }
     return render(request, "workgroup/mentoring/home.html", context)
 
 

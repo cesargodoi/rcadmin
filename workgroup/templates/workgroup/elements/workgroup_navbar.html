@@ -27,18 +27,18 @@
       {% if nav == "home" %}
       <a class="btn btn-light btn-sm" href="{% url 'workgroup_create' %}">
         <i class="fas fa-plus"></i> 
-        Add workgroup
+        Workgroup
       </a>
       <a class="btn btn-light btn-sm" href="{% url 'home' %}">
         <i class="fas fa-chevron-left"></i> 
-        Go back
+        Back
       </a>
       {% endif %}
 
       {% if nav == "detail" %}
       <a class="btn btn-light btn-sm" href="{% url 'membership_insert' object.id %}?init=on">
         <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
-        Insert member
+        Member
       </a>
       <a class="btn btn-light btn-sm" href="{% url 'workgroup_update' object.id %}">
         <i class="fas fa-edit"></i> 
@@ -50,7 +50,7 @@
       </a>
       <a class="btn btn-light btn-sm" href="{% url 'workgroup_home' %}">
         <i class="fas fa-chevron-left"></i> 
-        Go back
+        Back
       </a>
       {% endif %}
     </div>
