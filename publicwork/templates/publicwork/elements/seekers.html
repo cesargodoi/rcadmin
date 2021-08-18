@@ -21,7 +21,8 @@
           onclick="location.href='{{ obj.click_link }}';"
         {% endif %}
 
-    {% endif %}>
+    {% endif %}
+    style="cursor: pointer;">
 
     <div class="col-sm-4">
       <strong>{{ obj.name }}</strong>
@@ -63,7 +64,7 @@
         {% else %}
           <a type="button" 
             href="{{ obj.add_member_link }}?seek_pk={{ obj.pk }}"
-            class="btn btn-outline-primary btn-sm">
+            class="btn btn-light text-primary btn-sm">
             <i class="fas fa-plus"></i>
           </a>
         {% endif %}
@@ -71,7 +72,7 @@
         {% if not request.user|has_group:"publicwork_jr" %}
           <a type="button" 
             href="{{ obj.del_member_link }}"
-            class="btn btn-outline-danger btn-sm">
+            class="btn btn-light text-danger btn-sm">
             <i class="fas fa-trash"></i>
           </a>
         {% endif %}

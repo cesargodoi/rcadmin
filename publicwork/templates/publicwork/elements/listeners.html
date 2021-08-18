@@ -24,7 +24,7 @@
     {% endif %}>
 
     <div class="col-sm-4">
-      <strong>{{ obj.seeker.name }}</strong>
+      <strong>{{ obj.seeker.short_name }}</strong>
       &nbsp;&nbsp;
       <small class="{% if obj.seeker.status == 'ITD' %}
                     text-info
@@ -62,7 +62,7 @@
       {% if obj.seeker.status != 'ITD' %}
         {% if obj.del_link %}
           <a type="button" 
-            class="btn btn-outline-danger btn-sm"
+            class="btn btn-light text-danger btn-sm"
             href="{{ obj.del_link }}">
             <i class="fas fa-trash-alt"></i>
           </a>

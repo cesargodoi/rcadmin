@@ -20,14 +20,16 @@
           {{ form.observations | as_crispy_field }}
         </div>
       </div>
-      <button 
-        class="btn btn-outline-success" 
-        type="submit">
+    </div>
+    <hr>
+    <div class="form-group text-right">
+      <button class="btn btn-success" type="submit">
+        <i class="fas fa-check"></i>
         Confirm
       </button>
-      <a class="btn btn-outline-info" 
-        href="javascript:history.back()">
-        Go back
+      <a class="btn btn-info" href="javascript:history.back()">
+        <i class="fas fa-chevron-left"></i>
+        Back
       </a>
     </div>
   </form>

@@ -2,12 +2,12 @@
 
 {% block content %}
 
-{% include 'publicwork/groups/navbar.html' %}
-
-{% include "publicwork/groups/header.html" %}
+{% if nav == "info" or nav == "frequencies" %}
+  {% include 'publicwork/groups/navbar.html' %}
+  {% include "publicwork/groups/header.html" %}
+{% endif %}
 
 {% include "publicwork/groups/actions.html" %}
-
 <article class="media content-section">
   <div class="media-body">
 

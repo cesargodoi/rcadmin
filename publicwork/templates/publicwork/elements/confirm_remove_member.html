@@ -9,16 +9,15 @@
     <strong>{{ group }}</strong>
   </p>
   <hr>
-  <form method="POST" enctype="multipart/form-data">
+  <form class="text-right" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
-      <button 
-        class="btn btn-outline-danger" 
-        type="submit">
+      <button class="btn btn-danger" type="submit">
+        <i class="fas fa-check"></i>
         Confirm
       </button>
-      <a class="btn btn-outline-info" 
-        href="javascript:history.back()">
+      <a class="btn btn-info" href="javascript:history.back()">
+        <i class="fas fa-chevron-left"></i>
         Go back
       </a>
     </div>

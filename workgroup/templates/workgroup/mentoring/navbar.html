@@ -27,20 +27,18 @@
     </ul>
 
     <!-- controlers -->
-    <div class="navbar-nav">
-      {% if nav == "home" %}
-      <a class="btn btn-light btn-sm" href="{% url 'home' %}">
-        <i class="fas fa-chevron-left"></i> 
-        Go back
-      </a>
-      {% endif %}
-
-      {% if nav == "detail" %}
-        <a class="btn btn-light btn-sm" href="{{ goback }}?init=on">
+    <ul class="navbar-nav ml-md-auto">    
+      <li class="nav-item">
+        <a class="btn btn-outline-info btn-sm" 
+          href="{% if nav == 'home' %}
+                  {% url 'home' %}
+                {% elif nav == 'detail' %}
+                  {{ goback }}?init=on
+                {% endif %}">
           <i class="fas fa-chevron-left"></i> 
-          Go back
+          Back
         </a>
-      {% endif %}
-    </div>
+      </li>
+    </ul>
   </div>
 </nav>

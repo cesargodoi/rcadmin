@@ -44,7 +44,6 @@ def group_home(request):
         name="publicwork_jr"
     ):
         clear_session(request, ["search"])
-        # if request.user.groups.filter(name="publicwork_jr"):
         object_list = request.user.person.publicworkgroup_set.all()
         for item in object_list:
             item.click_link = reverse("group_detail", args=[item.pk])
@@ -472,7 +471,7 @@ def preparing_the_session(request, members, lecture):
                     listener = {
                         "seeker": {
                             "id": str(seek.pk),
-                            "name": seek.name,
+                            "name": seek.short_name,
                             "center": str(seek.center),
                         },
                         "freq": "on",
@@ -484,7 +483,7 @@ def preparing_the_session(request, members, lecture):
             listener = {
                 "seeker": {
                     "id": str(seek.pk),
-                    "name": seek.name,
+                    "name": seek.short_name,
                     "center": str(seek.center),
                 },
                 "freq": "",

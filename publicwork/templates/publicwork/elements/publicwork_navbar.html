@@ -38,37 +38,38 @@
 
     <!-- controlers -->
     <div class="navbar-nav">
-      {% if nav == "sk_home" %}
-      <a class="btn btn-light btn-sm" href="{% url 'seeker_create' %}">
+      <!-- {% if nav == "sk_home" %}
+      <a class="btn btn-light text-primary btn-sm" 
+        href="{% url 'seeker_create' %}">
         <i class="fas fa-plus"></i> 
-        Add seeker
+        Seeker
       </a>
-      {% endif %}
+      {% endif %} -->
 
-      {% if nav == "lc_home" %}
-      <a class="btn btn-light btn-sm" href="{% url 'lecture_create' %}">
+      <!-- {% if nav == "lc_home" %}
+      <a class="btn btn-light text-primary btn-sm" 
+        href="{% url 'lecture_create' %}">
         <i class="fas fa-plus"></i> 
-        Add lecture
+        Lecture
       </a>
-      {% endif %}
+      {% endif %} -->
 
-      {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
-      <a class="btn btn-light btn-sm" href="{% url 'group_create' %}">
-        <i class="fas fa-plus"></i> 
-        Add group
-      </a>
-      {% endif %}
+      <!-- {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
+        <a class="btn btn-light text-primary btn-sm" 
+          href="{% url 'group_create' %}">
+          <i class="fas fa-plus"></i> 
+          Group
+        </a>
+      {% endif %} -->
 
-      <a class="btn btn-light btn-sm" 
-          href="
-          {% if nav == 'pw_home' %}
-          {% url 'home' %}
-          {% else %}
-          {% url 'publicwork_home' %}
-          {% endif %}
-          ">
+      <a class="btn btn-light text-info btn-sm" 
+        href="{% if nav == 'pw_home' %}
+                {% url 'home' %}
+              {% else %}
+                {% url 'publicwork_home' %}
+              {% endif %}">
         <i class="fas fa-chevron-left"></i> 
-        Go back
+        Back
       </a>
 
     </div>

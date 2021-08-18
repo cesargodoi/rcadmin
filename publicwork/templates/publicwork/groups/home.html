@@ -11,11 +11,16 @@
         {% csrf_token %}
         {% include "base/searchs/pw_group.html" %}
       </form>
-      <br>
     {% endif %}
-    
-    {% include 'publicwork/groups/groups.html' %}
+  </div>
+</article>
 
+{% include 'publicwork/elements/publicwork_actions.html' %}
+
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'publicwork/groups/groups.html' %}
   </div>
 </article>
 

@@ -1,9 +1,9 @@
 {% load base_extras %}
 <!-- actions -->
-<div class="text-right mb-1">
+<div class="text-right mb-2 mt-2">
   {% if nav == "detail" %}
     {% if not request.session.frequencies.event and tab == "frequencies" %}
-    <a class="btn btn-light btn-sm" 
+    <a class="btn btn-outline-primary btn-sm" 
       href="{% url 'mentoring_add_frequencies' object.id %}?init=on">
       <i class="fas fa-calendar-plus"></i>
       Frequencies

@@ -9,14 +9,14 @@
     <i class="fas fa-edit"></i> 
     Update
   </a>
-  <a class="btn btn-light mt-2 mr-3"
+  <a class="btn btn-light text-info mt-2 mr-3"
     {% if seeker_side %}
     href="{% url 'seeker_frequencies' object.pk %}" 
     {% else %}
     href="{% url 'lecture_detail' object.pk %}"
     {% endif %}>
     <i class="fas fa-chevron-left"></i> 
-    Go back
+    Back
   </a>
 </div>
 
@@ -41,9 +41,7 @@
         {{ listener.lecture.center }}
       </div>
       <div class="col-sm-1 text-right">
-        <span class="badge badge-pill badge-info">
-          {{ listener.lecture.get_type_display }}
-        </span>
+        <strong>{{ listener.lecture.get_type_display }}</strong>
       </div>
     </div>
     {% else %}

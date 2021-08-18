@@ -1,53 +1,49 @@
 {% if object_list %}
 
-{% if object_list.has_other_pages %}
-{% include "base/elements/paginator.html" %}
-{% endif %}
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
 
-{% for freq in object_list %}
-<div class="row border-top border-secondary mt-2 pt-2"
-    onclick="location.href='{% url 'update_frequency' object.pk freq.pk %}'">
-  
-  <div class="col-sm-1">
-    <small>{{ freq.lecture.date|date:'d/m/Y' }}</small>
-  </div>
-  <div class="col-sm-3">
-    {{ freq.lecture.theme }}
-  </div>
-  <div class="col-sm-1">
-    <span class="badge badge-pill badge-info">
-      {{ freq.lecture.get_type_display }}
-    </span>
-  </div>
-  <div class="col-sm-2">
-    <small>{{ freq.lecture.center }}</small>
-  </div>
-  <div class="col-sm-3">
-    <small>
-      {{ freq.observations }}
-    </small>
-  </div>
-  <div class="col-sm-1 text-right">
-    {% if freq.ranking > 0 %}
-    {{ freq.ranking }}
-    <i class="fas fa-star"></i>
-    {% endif %}
-  </div>
-  <div class="col-sm-1 text-right">
-    <a type="button" 
-      href="{% url 'remove_frequency' object.pk freq.pk %}"
-      class="btn btn-outline-light btn-sm">
-      <i class="fas fa-trash-alt text-danger"></i>
-    </a>
-  </div>
-    
-</div>
-{% endfor %}
-<br>
+  {% for freq in object_list %}
+    <div class="row border-top border-secondary mt-2 pt-2"
+        onclick="location.href='{% url 'update_frequency' object.pk freq.pk %}'"
+        style="cursor: pointer;">
+      
+      <div class="col-sm-1 font-weight-bold">
+        {{ freq.lecture.date|date:'d/m/y' }}
+      </div>
+      <div class="col-sm-3">
+        {{ freq.lecture.theme }}
+      </div>
+      <div class="col-sm-1 small">
+        <strong>{{ freq.lecture.get_type_display }}</strong>
+      </div>
+      <div class="col-sm-2 small">
+        {{ freq.lecture.center }}
+      </div>
+      <div class="col-sm-3 small">
+        {{ freq.observations }}
+      </div>
+      <div class="col-sm-1 text-right">
+        {% if freq.ranking > 0 %}
+          {{ freq.ranking }}
+          <i class="fas fa-star"></i>
+        {% endif %}
+      </div>
+      <div class="col-sm-1 text-right">
+        <a type="button" href="{% url 'remove_frequency' object.pk freq.pk %}"
+          class="btn btn-light text-danger btn-sm">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </div>   
+    </div>
+  {% endfor %}
+  <br>
+
 {% else %}
 
-<div class="alert alert-secondary" role="alert">
-  <h4 class="alert-heading">no frequencies found</h4>
-</div>
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">no frequencies found</h4>
+  </div>
 
 {% endif %}

@@ -16,12 +16,11 @@
                                                         text-warning
                                                         {% endif %}"
     {% if obj.click_link %}
-
-        {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
-          onclick="location.href='{{ obj.click_link }}';"
-        {% endif %}
-
-    {% endif %}>
+      {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}
+    style="cursor: pointer;">
 
     <div class="col-sm-4">
       <strong>{{ obj.short_name }}</strong>
@@ -62,7 +61,7 @@
           &nbsp;&nbsp;
           <a type="button" 
             href="{{ obj.add_link }}?seek_pk={{ obj.pk }}"
-            class="btn btn-outline-primary btn-sm">
+            class="btn btn-light text-primary btn-sm">
             <i class="fas fa-plus"></i> 
           </a>
         {% endif %}
@@ -73,7 +72,7 @@
           &nbsp;&nbsp;
           <a type="button" 
             href="{{ obj.add_member_link }}?seek_pk={{ obj.pk }}"
-            class="btn btn-outline-primary btn-sm">
+            class="btn btn-light text-primary btn-sm">
             <i class="fas fa-plus"></i>
           </a>
         {% endif %}
@@ -82,8 +81,8 @@
           &nbsp;&nbsp;
           <a type="button" 
             href="{{ obj.del_member_link }}"
-            class="btn btn-outline-danger btn-sm">
-            <i class="fas fa-trash"></i>
+            class="btn btn-light text-danger btn-sm">
+            <i class="fas fa-trash-alt"></i>
           </a>
         {% endif %}
       {% endif %}

@@ -22,7 +22,7 @@
       {% if not listener.frequency %}
       <input type="hidden" value="{{ listener.seeker.id }}" name="id-{{ forloop.counter }}">
       {% endif %}
-      {{ listener.seeker.name }} 
+      <strong>{{ listener.seeker.name }}</strong> 
       <small class="text-muted">
         &nbsp;&nbsp;
         <em>

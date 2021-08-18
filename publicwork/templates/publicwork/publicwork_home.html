@@ -9,7 +9,8 @@
 <div class="row-pg-initial">
   {% if not request.user|has_group:"publicwork_jr" %}
     <div class="col-lg-3 card-principal-col-lg-3"
-        onclick="location.href='{% url 'seeker_home' %}?init=on';">
+        onclick="location.href='{% url 'seeker_home' %}?init=on';"
+        style="cursor: pointer;">
       <div class="card h-100 card-principal-backimage">
         <img src="{% static 'images/seekers.png' %}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -19,7 +20,8 @@
     </div>
 
     <div class="col-lg-3 card-principal-col-lg-3"
-        onclick="location.href='{% url 'lecture_home' %}?init=on';">
+        onclick="location.href='{% url 'lecture_home' %}?init=on';"
+        style="cursor: pointer;">
       <div class="card h-100 card-principal-backimage">
         <img src="{% static 'images/lectures.png' %}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -30,7 +32,8 @@
   {% endif %}
 
   <div class="col-lg-3 card-principal-col-lg-3"
-      onclick="location.href='{% url 'group_home' %}?init=on';">
+      onclick="location.href='{% url 'group_home' %}?init=on';"
+      style="cursor: pointer;">
     <div class="card h-100 card-principal-backimage">
       <img src="{% static 'images/groups.png' %}" class="card-img-top" alt="...">
       <div class="card-body">

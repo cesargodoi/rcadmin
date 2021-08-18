@@ -14,22 +14,6 @@
 
     <!-- controlers -->
     <div class="navbar-nav">
-      <a class="btn btn-light btn-sm" href="{% url 'add_listener' object.pk %}?init=on">
-        <i class="fas fa-plus"></i> <i class="fas fa-users"></i> 
-        Add
-      </a>
-      {% if object.center == request.user.person.center or request.user.is_superuser %}
-        <a class="btn btn-light btn-sm" href="{% url 'lecture_update' object.pk %}">
-          <i class="fas fa-edit"></i> 
-          Edit
-        </a>
-        {% if object.listeners.all|length == 0 %}
-        <a class="btn btn-light btn-sm" href="{% url 'lecture_delete' object.pk %}">
-          <i class="fas fa-edit"></i> 
-          Delete
-        </a>
-        {% endif %}
-      {% endif %}
 
       {% if object.is_active %}
         {% if tab == "info" %}

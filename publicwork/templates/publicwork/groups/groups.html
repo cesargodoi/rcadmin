@@ -12,7 +12,8 @@
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
       {% endif %}
-    {% endif %}>
+    {% endif %}
+    style="cursor: pointer;">
 
     <div class="col-sm-5">
       <strong>{{ obj.name }}</strong>
