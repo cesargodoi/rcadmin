@@ -8,11 +8,12 @@
 {% endif %}
 
 {% include "publicwork/groups/actions.html" %}
+
 <article class="media content-section">
   <div class="media-body">
 
     {% if nav == "info" %}
-      {% include 'publicwork/elements/group_seekers.html' %}
+      {% include 'publicwork/groups/seekers.html' %}
     {% elif nav == "frequencies" %}
       <h4>Frequencies</h4>
       {% include "publicwork/groups/frequencies.html" %}

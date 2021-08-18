@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="alert alert-primary" role="alert">
+<div class="alert alert-secondary" role="alert">
   <h4 class="alert-heading">Atention!</h4>
   <p>Are you shure you want to reinsert: <br>
     <strong>{{ object }}</strong>
@@ -10,16 +10,14 @@
   <hr>
   <form method="POST">
     {% csrf_token %}
-    <div class="form-group">
-      <button 
-        class="btn btn-outline-primary" 
-        type="submit">
+    <div class="form-group text-right">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-check"></i>
         Confirm
       </button>
-      <a 
-        class="btn btn-outline-info" 
-        href="javascript:history.back()">
-        Go back
+      <a class="btn btn-info" href="javascript:history.back()">
+        <i class="fas fa-chevron-left"></i>
+        Back
       </a>
     </div>
   </form>

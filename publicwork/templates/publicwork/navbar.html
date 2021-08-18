@@ -38,40 +38,19 @@
 
     <!-- controlers -->
     <div class="navbar-nav">
-      <!-- {% if nav == "sk_home" %}
-      <a class="btn btn-light text-primary btn-sm" 
-        href="{% url 'seeker_create' %}">
-        <i class="fas fa-plus"></i> 
-        Seeker
-      </a>
-      {% endif %} -->
-
-      <!-- {% if nav == "lc_home" %}
-      <a class="btn btn-light text-primary btn-sm" 
-        href="{% url 'lecture_create' %}">
-        <i class="fas fa-plus"></i> 
-        Lecture
-      </a>
-      {% endif %} -->
-
-      <!-- {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
-        <a class="btn btn-light text-primary btn-sm" 
-          href="{% url 'group_create' %}">
-          <i class="fas fa-plus"></i> 
-          Group
+      <ul class="navbar-nav ml-md-auto">    
+        <li class="nav-item">
+          <a class="btn btn-light text-info btn-sm" 
+          href="{% if nav == 'pw_home' %}
+                  {% url 'home' %}
+                {% else %}
+                  {% url 'publicwork_home' %}
+                {% endif %}">
+          <i class="fas fa-chevron-left"></i> 
+          Back
         </a>
-      {% endif %} -->
-
-      <a class="btn btn-light text-info btn-sm" 
-        href="{% if nav == 'pw_home' %}
-                {% url 'home' %}
-              {% else %}
-                {% url 'publicwork_home' %}
-              {% endif %}">
-        <i class="fas fa-chevron-left"></i> 
-        Back
-      </a>
-
+        </li>
+      </ul> 
     </div>
   </div>
 </nav>

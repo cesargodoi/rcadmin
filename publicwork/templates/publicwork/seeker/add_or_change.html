@@ -7,7 +7,7 @@
   <a class="btn btn-{% if add %}primary{% else %}warning{% endif %} mt-2" href="#"
     onclick="document.getElementById('form').submit();">
     <i class="fas fa-check"></i>
-    {% if add %} Add {% else %} Edit {% endif %}
+    {% if add %} Add {% else %} Update {% endif %}
   </a>
   {% endif %}
 
@@ -18,15 +18,13 @@
   </a>
 </div>
 
-{% include "publicwork/elements/seeker_header.html" %}
-
 <article class="media content-section">
   <div class="media-body">
 
     {% if tab == "frequencies" %}
-    {% include "publicwork/elements/seeker_add_frequency.html" %}
+    {% include "publicwork/seeker/add_frequency.html" %}
     {% elif tab == "historic" %}
-    {% include "publicwork/elements/seeker_create_historic.html" %}
+    {% include "publicwork/seeker/create_historic.html" %}
     {% endif %}
     
   </div>

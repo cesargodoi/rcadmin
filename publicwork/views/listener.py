@@ -46,7 +46,7 @@ def add_listener(request, lect_pk):
         }
         return render(
             request,
-            "publicwork/elements/confirm_add_listener.html",
+            "publicwork/listener/confirm.html",
             context,
         )
 
@@ -68,8 +68,9 @@ def add_listener(request, lect_pk):
         "title": "add listener",
         "object": lecture,
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
+        "user_center": str(request.user.person.center.pk),
     }
-    return render(request, "publicwork/listener_add.html", context)
+    return render(request, "publicwork/listener/add.html", context)
 
 
 @login_required
@@ -91,7 +92,7 @@ def update_listener(request, lect_pk, lstn_pk):
         "listener": listener,
         "object": listener.lecture,
     }
-    return render(request, "publicwork/listener_update.html", context)
+    return render(request, "publicwork/listener/update.html", context)
 
 
 @login_required
@@ -138,7 +139,7 @@ def add_frequency(request, pk):
         }
         return render(
             request,
-            "publicwork/elements/confirm_add_listener.html",
+            "publicwork/listener/confirm.html",
             context,
         )
 
@@ -163,7 +164,7 @@ def add_frequency(request, pk):
         "add": True,
         "goback": reverse("seeker_frequencies", args=[pk]),
     }
-    return render(request, "publicwork/seeker_add_or_change.html", context)
+    return render(request, "publicwork/seeker/add_or_change.html", context)
 
 
 @login_required
@@ -188,7 +189,7 @@ def update_frequency(request, seek_pk, freq_pk):
         "seeker_side": True,
         "goback": reverse("seeker_frequencies", args=[seek_pk]),
     }
-    return render(request, "publicwork/listener_update.html", context)
+    return render(request, "publicwork/listener/update.html", context)
 
 
 @login_required

@@ -11,6 +11,7 @@
     {% if obj.click_link %}
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
       {% endif %}
     {% endif %}>
 
@@ -52,7 +53,7 @@
       {% elif obj.is_active %}
         <a type="button" 
           href="{{ obj.add_link }}"
-          class="btn btn-outline-primary btn-sm">
+          class="btn btn-light text-primary btn-sm">
           <i class="fas fa-plus"></i> 
         </a>
       {% endif %}

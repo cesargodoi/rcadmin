@@ -177,7 +177,7 @@ def group_reinsert(request, pk):
 
     context = {"object": pw_group, "title": "confirm to reinsert"}
     return render(
-        request, "publicwork/elements/confirm_to_reinsert_seeker.html", context
+        request, "publicwork/seeker/confirm_to_reinsert.html", context
     )
 
 
@@ -320,7 +320,7 @@ def group_add_member(request, pk):
         }
         return render(
             request,
-            "publicwork/elements/confirm_add_member.html",
+            "publicwork/groups/confirm_add_member_or_mentor.html",
             context,
         )
 
@@ -365,7 +365,7 @@ def group_remove_member(request, group_pk, member_pk):
         "title": "confirm to remove",
     }
     return render(
-        request, "publicwork/elements/confirm_remove_member.html", context
+        request, "publicwork/groups/confirm_remove_member.html", context
     )
 
 
@@ -391,7 +391,7 @@ def group_add_mentor(request, pk):
         }
         return render(
             request,
-            "publicwork/elements/confirm_add_member.html",
+            "publicwork/groups/confirm_add_member_or_mentor.html",
             context,
         )
 

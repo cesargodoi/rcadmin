@@ -2,17 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-secondary" role="alert">
   <h4 class="alert-heading">Atention!</h4>
-  <p>Are you shure you want to remove: <br>
-    <strong>{{ member }}</strong> from
-    <strong>{{ group }}</strong>
+  <p>Are you shure you want to insert: <br>
+    <strong>{{ member }}</strong> in
+    <strong>{{ insert_to }}</strong>
   </p>
   <hr>
-  <form class="text-right" method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="form-group">
-      <button class="btn btn-danger" type="submit">
+    <div class="form-group text-right">
+      <button class="btn btn-success" type="submit">
         <i class="fas fa-check"></i>
         Confirm
       </button>

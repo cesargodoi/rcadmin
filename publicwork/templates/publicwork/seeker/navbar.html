@@ -30,16 +30,20 @@
     </ul>
 
     <!-- controlers -->
-    <div class="navbar-nav">     
-      <a class="btn btn-light text-info btn-sm" 
-        href="{% if request.session.pwg %}
-                {% url 'group_detail' request.session.pwg %}
-              {% else %}
-                {% url 'seeker_home' %}
-              {% endif %}">
-        <i class="fas fa-chevron-left"></i> 
-        Back
-      </a>
+    <div class="navbar-nav">
+      <ul class="navbar-nav ml-md-auto">    
+        <li class="nav-item">
+          <a class="btn btn-light text-info btn-sm" 
+            href="{% if request.session.pwg %}
+                    {% url 'group_detail' request.session.pwg %}
+                  {% else %}
+                    {% url 'seeker_home' %}
+                  {% endif %}">
+            <i class="fas fa-chevron-left"></i> 
+            Back
+          </a>
+        </li>
+      </ul> 
     </div>
   </div>
 </nav>

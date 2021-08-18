@@ -50,11 +50,14 @@
 
       {% endif %}
 
-      <a class="btn btn-light btn-sm" href="{% url 'lecture_home' %}">
-        <i class="fas fa-chevron-left"></i> 
-        Go back
-      </a>
-
+      <ul class="navbar-nav ml-md-auto">    
+        <li class="nav-item">
+          <a class="btn btn-light text-info btn-sm" href="{% url 'lecture_home' %}">
+            <i class="fas fa-chevron-left"></i> 
+            Back
+          </a>
+        </li>
+      </ul> 
     </div>
   </div>
 </nav>

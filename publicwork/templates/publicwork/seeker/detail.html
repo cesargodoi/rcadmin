@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% if tab == "info" or tab == "frequencies" or tab == "historic" %}
+  {% include 'publicwork/seeker/navbar.html' %}
+  {% include "publicwork/seeker/header.html" %}
+{% endif %}
+
+{% include "publicwork/seeker/actions.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+    {% if tab == "info" %}
+      <h4>Info</h4>
+      {% include "publicwork/seeker/info.html" %}
+    {% elif tab == "frequencies" %}
+      <h4>Frequencies</h4>
+      {% include "publicwork/seeker/frequencies.html" %}
+    {% elif tab == "historic" %}
+      <h4>Historic</h4>
+      {% include "publicwork/seeker/historic.html" %}
+    {% endif %}
+    
+  </div>
+</article>
+
+{% endblock content %}

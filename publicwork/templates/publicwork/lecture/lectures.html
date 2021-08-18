@@ -11,6 +11,7 @@
     {% if obj.click_link %}
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
       {% endif %}
     {% endif %}>
 

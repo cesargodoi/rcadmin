@@ -13,9 +13,7 @@
           {% if not object.is_active %}
           <span class="badge badge-pill badge-danger">inactive</span>
           {% endif %}
-          <span class="badge badge-pill badge-secondary">
-            {{ object.get_type_display }}
-          </span>
+          <strong>{{ object.get_type_display }}</strong>
         </div>
       </div>
     </div>
