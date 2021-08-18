@@ -1,0 +1,74 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load base_extras %}
+
+{% block content %}
+
+{% include 'publicwork/navbar.html' %}
+
+<div class="row-pg-initial">
+  {% if not request.user|has_group:"publicwork_jr" %}
+    <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'seeker_home' %}?init=on';"
+        style="cursor: pointer;">
+      <div class="card h-100 card-principal-backimage">
+        <img src="{% static 'images/seekers.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-principal-title">Seekers</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 card-principal-col-lg-3"
+        onclick="location.href='{% url 'lecture_home' %}?init=on';"
+        style="cursor: pointer;">
+      <div class="card h-100 card-principal-backimage">
+        <img src="{% static 'images/lectures.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-principal-title">Lectures</h5>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="col-lg-3 card-principal-col-lg-3"
+      onclick="location.href='{% url 'group_home' %}?init=on';"
+      style="cursor: pointer;">
+    <div class="card h-100 card-principal-backimage">
+      <img src="{% static 'images/groups.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-principal-title">Groups</h5>
+      </div>
+    </div>
+  </div>
+
+  {% if not request.user|has_group:"publicwork_jr" %}
+    <div class="col-lg-3 mb-4">
+      <div class="card-treasury-new bg-light mb-3">
+        <div class="card-header-treasury-new">Reports</div>
+        <ul class="list-group list-group-flush">
+          <a type="button" 
+            class="list-group-item-treasury-new list-group-item-action text-info" 
+            href="{% url 'frequencies_per_period' %}">
+            <i class="fas fa-eye"></i> 
+            Frequencies per period
+          </a>
+          <a type="button" 
+            class="list-group-item-treasury-new list-group-item-action text-info" 
+            href="{% url 'lectures_per_period' %}">
+            <i class="fas fa-eye"></i> 
+            Lectures per period
+          </a>
+          <a type="button" 
+            class="list-group-item-treasury-new list-group-item-action text-info" 
+            href="{% url 'status_per_center' %}">
+            <i class="fas fa-eye"></i> 
+            Status per center
+          </a>
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock content %}

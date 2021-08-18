@@ -1,0 +1,54 @@
+<h4>Groups</h4>
+
+{% if object_list %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2" style="cursor: pointer;"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-3">
+      <strong>{{ obj.workgroup.name }}</strong>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      <strong>{{ obj.workgroup.get_workgroup_type_display }}</strong>
+      {% if obj.workgroup.aspect != "--" %}
+        | {{ obj.workgroup.get_aspect_display }}
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {{ obj.workgroup.center }}
+    </div>
+
+    <div class="col-sm-4 small align-middle">
+      {% for mentor in obj.workgroup.mentors %}
+        <i class="fas fa-user-graduate mr-1"></i>
+        {{ mentor.person.short_name }} &nbsp;&nbsp;
+      {% endfor %}
+    </div>
+
+    <div class="col-sm text-right">
+      {% if obj.workgroup.num_members > 0 %}
+        <strong>{{ obj.workgroup.num_members }}</strong> 
+        <i class="fas fa-users"></i>
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      groups not found
+    </h4> 
+  </div>  
+
+{% endif %}

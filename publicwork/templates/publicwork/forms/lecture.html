@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 
 <form method="POST" enctype="multipart/form-data" id="form">
   {% csrf_token %}
@@ -27,5 +28,4 @@
 
 </form>
 
-{% load static %}
 <script type="text/javascript" src="{% static 'js/lecture.js' %}"></script>

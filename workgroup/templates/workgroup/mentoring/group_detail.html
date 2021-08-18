@@ -2,15 +2,19 @@
 
 {% block content %}
 
-{% include "workgroup/elements/mentoring_navbar.html" %}
+{% include "workgroup/mentoring/navbar.html" %}
 
-{% include "workgroup/elements/workgroup_header.html" %}
+{% include "workgroup/mentoring/header.html" %}
+
+{% include "workgroup/mentoring/actions.html" %}
 
 <article class="media content-section">
   <div class="media-body">
 
   {% if tab == "members" %}
-    {% include "workgroup/elements/members.html" %}
+    {% include "workgroup/mentoring/members.html" %}
+  {% elif tab == "frequencies" %}
+    {% include "workgroup/mentoring/frequencies.html" %}
   {% elif tab == "add_frequencies" %}
     {% if not request.session.frequencies.event %}
       {% include "workgroup/mentoring/select_event.html" %}

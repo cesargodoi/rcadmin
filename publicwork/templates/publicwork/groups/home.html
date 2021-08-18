@@ -2,7 +2,7 @@
 {% load base_extras %}
 {% block content %}
 
-{% include 'publicwork/elements/publicwork_navbar.html' %}
+{% include 'publicwork/navbar.html' %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
@@ -11,11 +11,16 @@
         {% csrf_token %}
         {% include "base/searchs/pw_group.html" %}
       </form>
-      <br>
     {% endif %}
-    
-    {% include 'publicwork/groups/groups.html' %}
+  </div>
+</article>
 
+{% include 'publicwork/actions.html' %}
+
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'publicwork/groups/groups.html' %}
   </div>
 </article>
 

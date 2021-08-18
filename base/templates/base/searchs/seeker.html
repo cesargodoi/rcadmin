@@ -1,5 +1,5 @@
 <div class="form-row align-items-center">
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <div class="input-group">
       <input name="sk_name"
              class="dateinput form-control"
@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <div class="input-group">
       <input name="sk_city"
              class="dateinput form-control"
@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <select class="form-control" name="center">
       {% for cnt in centers %}
       <option value="{{ cnt.0 }}"
@@ -45,7 +45,7 @@
       {% endfor %}
     </select>
   </div>
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <select class="form-control" name="sk_status">
       <option value="all"
               {% if request.session.search.sk_status == 'all' %}selected{% endif %}>
@@ -59,9 +59,9 @@
       {% endfor %}
     </select>
   </div>
-  <div class="col-sm mb-1">
+  <div class="col-sm mb-2">
     {% include 'base/elements/checkbox_all.html' %}
-    <button class="btn btn btn-outline-success" type="submit">
+    <button class="btn btn btn-success" type="submit">
       <i class="fas fa-search"></i>
       Search
     </button>

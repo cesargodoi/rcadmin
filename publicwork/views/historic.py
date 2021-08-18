@@ -46,7 +46,7 @@ def create_historic(request, pk):
         "add": True,
         "goback": reverse("seeker_historic", args=[pk]),
     }
-    return render(request, "publicwork/seeker_add_or_change.html", context)
+    return render(request, "publicwork/seeker/add_or_change.html", context)
 
 
 @login_required
@@ -75,7 +75,7 @@ def update_historic(request, seek_pk, hist_pk):
         "tab": "historic",
         "goback": reverse("seeker_historic", args=[seek_pk]),
     }
-    return render(request, "publicwork/seeker_add_or_change.html", context)
+    return render(request, "publicwork/seeker/add_or_change.html", context)
 
 
 @login_required

@@ -10,7 +10,7 @@ from base.searchs import search_lecture
 from ..forms import LectureForm
 from ..models import Lecture
 
-###############################################################################
+
 @login_required
 @permission_required("publicwork.view_lecture")
 def lecture_home(request):
@@ -31,7 +31,7 @@ def lecture_home(request):
         "type_list": LECTURE_TYPES,
         "nav": "lc_home",
     }
-    return render(request, "publicwork/lecture_home.html", context)
+    return render(request, "publicwork/lecture/home.html", context)
 
 
 @login_required
@@ -51,7 +51,7 @@ def lecture_detail(request, pk):
         "object_list": object_list,
         "title": "lecture detail",
     }
-    return render(request, "publicwork/lecture_detail.html", context)
+    return render(request, "publicwork/lecture/detail.html", context)
 
 
 @login_required

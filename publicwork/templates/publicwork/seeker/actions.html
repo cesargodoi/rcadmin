@@ -1,0 +1,43 @@
+{% load base_extras %}
+<!-- actions -->
+<div class="text-right mb-2 mt-2">
+  <!-- controlers -->
+  {% if tab == "info" %}
+    <a class="btn btn-light text-warning btn-sm" 
+      href="{% url 'seeker_update' object.id %}">
+      <i class="fas fa-edit"></i> 
+      Edit
+    </a>
+    {% if not request.session.pwg %}
+      {% if object.is_active %}
+        <a class="btn btn-light text-danger btn-sm" 
+          href="{% url 'seeker_delete' object.id %}">
+          <i class="fas fa-trash-alt"></i> 
+          Delete
+        </a>
+      {% else %}
+        <a class="btn btn-light text-success btn-sm" 
+          href="{% url 'seeker_reinsert' object.pk %}">
+          <i class="fas fa-sign-in-alt"></i> 
+          Reinsert
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% if tab == "frequencies" %}
+    <a class="btn btn-light text-primary btn-sm" href="{% url 'add_frequency' object.id %}?init=on">
+      <i class="fas fa-plus"></i> 
+      Frequency
+    </a>
+  {% endif %}
+
+  {% if tab == "historic" %}
+    <a class="btn btn-light text-primary btn-sm" 
+      href="{% url 'create_historic' object.id %}">
+      <i class="fas fa-plus"></i> 
+      Historic
+    </a>
+  {% endif %}
+
+</div>

@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include 'publicwork/navbar.html' %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <form class="form-control-sm mt-1" method="GET">
+      {% csrf_token %}
+      {% include "base/searchs/lecture.html" %}
+    </form>
+  </div>
+</article>
+
+{% include 'publicwork/actions.html' %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'publicwork/lecture/lectures.html' %}
+  </div>
+</article>
+
+{% endblock %}

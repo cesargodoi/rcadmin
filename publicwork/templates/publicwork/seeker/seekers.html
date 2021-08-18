@@ -1,0 +1,99 @@
+{% load base_extras %}
+<h4>{% if table_title %}{{ table_title }}{% else %}Seekers{% endif %}</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2 {% if obj.status == 'ITD' %}
+                                                        text-info
+                                                        {% elif not obj.is_active %}
+                                                        text-danger
+                                                        {% elif obj.center != request.user.person.center %}
+                                                        text-warning
+                                                        {% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
+      {% endif %}
+    {% endif %}>
+
+    <div class="col-sm-4">
+      <strong>{{ obj.name }}</strong>
+    </div>
+
+    <div class="col-sm-3 small align-middle">
+      <em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {{ obj.center }}
+      {% if obj.center != request.user.person.center %}
+        &nbsp;&nbsp;
+        <span class="badge badge-pill badge-warning">only view</span>
+      {% endif %}
+    </div>
+    
+    <div class="col-sm-2 text-right">
+      {% if not obj.is_active and obj.status != 'ITD' %}
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
+      <strong>{{ obj.get_status_display }}</strong> 
+    </div>
+
+    <div class="col-sm text-right">
+      {% if obj.add_link %}
+        {% if obj.pk in pre_listeners %}
+          <i class="fas fa-user-check mr-1"></i>
+        {% else %}
+          <a type="button" 
+            href="{{ obj.add_link }}?seek_pk={{ obj.pk }}"
+            class="btn btn-light text-primary btn-sm">
+            <i class="fas fa-plus"></i> 
+          </a>
+        {% endif %}
+      {% elif obj.add_member_link %}
+        {% if obj.publicworkgroup_set.count %}
+          <i class="fas fa-user-check mr-1"></i>
+        {% else %}
+          <a type="button" 
+            href="{{ obj.add_member_link }}?seek_pk={{ obj.pk }}"
+            class="btn btn-light text-primary btn-sm">
+            <i class="fas fa-plus"></i>
+          </a>
+        {% endif %}
+      {% elif obj.del_member_link %}
+        {% if not request.user|has_group:"publicwork_jr" %}
+          <a type="button" 
+            href="{{ obj.del_member_link }}"
+            class="btn btn-light text-danger btn-sm">
+            <i class="fas fa-trash"></i>
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+    
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+  {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      choose your search terms
+      {% else %}
+      seekers not found
+      {% endif %}
+    </h4> 
+  </div>  
+
+{% endif %}

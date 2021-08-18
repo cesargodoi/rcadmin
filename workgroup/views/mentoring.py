@@ -16,10 +16,26 @@ from ..models import Workgroup, Membership
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_home(request):
-    groups = Membership.objects.filter(
+    object_list = Membership.objects.filter(
         person=request.user.person, role_type="MTR"
     )
-    context = {"groups": groups, "title": "mentoring", "nav": "home"}
+    for item in object_list:
+        item.click_link = reverse("mentoring_group_detail", args=[item.pk])
+        mentors = [
+            mtr
+            for mtr in item.workgroup.membership_set.all()
+            if mtr.role_type == "MTR"
+        ]
+        item.workgroup.mentors = mentors
+        item.workgroup.num_members = (
+            item.workgroup.membership_set.count() - len(mentors)
+        )
+
+    context = {
+        "object_list": object_list,
+        "title": "mentoring",
+        "nav": "home",
+    }
     return render(request, "workgroup/mentoring/home.html", context)
 
 
@@ -31,9 +47,13 @@ def mentoring_group_detail(request, pk):
 
     workgroup = Workgroup.objects.get(pk=pk)
 
-    queryset = workgroup.membership_set.all().order_by("person__name_sa")
+    _members = workgroup.membership_set.all().order_by("person__name_sa")
+    mentors = [
+        mtr.person.short_name for mtr in _members if mtr.role_type == "MTR"
+    ]
+    members = [mbr for mbr in _members if mbr.role_type == "MBR"]
 
-    object_list = paginator(queryset, 25, request.GET.get("page"))
+    object_list = paginator(members, 25, request.GET.get("page"))
     # add action links
     for member in object_list:
         member.click_link = reverse(
@@ -43,6 +63,7 @@ def mentoring_group_detail(request, pk):
     context = {
         "object": workgroup,
         "object_list": object_list,
+        "mentors": mentors,
         "title": "workgroup detail",
         "nav": "detail",
         "tab": "members",
@@ -53,11 +74,48 @@ def mentoring_group_detail(request, pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
-def mentoring_member_detail(request, group_pk, person_pk):
-    object = Person.objects.get(pk=person_pk)
-    age = (date.today() - object.birth).days // 365
+def mentoring_group_frequencies(request, pk):
+    if request.session.get("frequencies"):
+        del request.session["frequencies"]
+
+    workgroup = Workgroup.objects.get(pk=pk)
+
+    _members = workgroup.membership_set.all().order_by("person__name_sa")
+    mentors = [
+        mtr.person.short_name for mtr in _members if mtr.role_type == "MTR"
+    ]
+    members = [mbr for mbr in _members if mbr.role_type == "MBR"]
+
+    object_list = paginator(members, 25, request.GET.get("page"))
+
+    # add action links
+    for member in object_list:
+        member.click_link = reverse(
+            "mentoring_member_detail", args=[pk, member.person.pk]
+        )
+        _freqs = [f.ranking for f in member.person.frequency_set.all()]
+        member.freq = len(_freqs)
+        member.rank = sum(_freqs)
+
     context = {
-        "object": object,
+        "object": workgroup,
+        "object_list": object_list,
+        "mentors": mentors,
+        "title": "workgroup detail",
+        "nav": "detail",
+        "tab": "frequencies",
+        "goback": reverse("mentoring_home"),
+    }
+    return render(request, "workgroup/mentoring/group_detail.html", context)
+
+
+@login_required
+@permission_required("workgroup.view_workgroup")
+def mentoring_member_detail(request, group_pk, person_pk):
+    obj = Person.objects.get(pk=person_pk)
+    age = (date.today() - obj.birth).days // 365
+    context = {
+        "object": obj,
         "title": "member detail",
         "nav": "detail",
         "tab": "info",
@@ -71,12 +129,12 @@ def mentoring_member_detail(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_frequencies(request, group_pk, person_pk):
-    object = Person.objects.get(pk=person_pk)
+    obj = Person.objects.get(pk=person_pk)
     page = request.GET["page"] if request.GET.get("page") else 1
-    object_list = object.frequency_set.all().order_by("-event__date")
+    object_list = obj.frequency_set.all().order_by("-event__date")
     ranking = sum([f.ranking for f in object_list])
     context = {
-        "object": object,
+        "object": obj,
         "title": "member detail | frequencies",
         "object_list": paginator(object_list, page=page),
         "nav": "detail",
@@ -91,11 +149,11 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_historic(request, group_pk, person_pk):
-    object = Person.objects.get(pk=person_pk)
+    obj = Person.objects.get(pk=person_pk)
     page = request.GET["page"] if request.GET.get("page") else 1
-    object_list = object.historic_set.all().order_by("-date")
+    object_list = obj.historic_set.all().order_by("-date")
     context = {
-        "object": object,
+        "object": obj,
         "title": "member detail | historic",
         "object_list": paginator(object_list, page=page),
         "nav": "detail",
@@ -230,7 +288,13 @@ def mentoring_add_frequencies(request, group_pk):
                 "event": {},
                 "listeners": [],
             }
-            preparing_the_session(request, workgroup.members.all(), event)
+            _members = workgroup.membership_set.all().order_by(
+                "person__name_sa"
+            )
+            members = [
+                mbr.person for mbr in _members if mbr.role_type == "MBR"
+            ]
+            preparing_the_session(request, members, event)
 
     if request.method == "POST":
         listeners = get_listeners_dict(request)
@@ -253,8 +317,15 @@ def mentoring_add_frequencies(request, group_pk):
         queryset, page = search_event(request, Event)
         object_list = paginator(queryset, page=page)
 
+    mentors = [
+        mtr.person.short_name
+        for mtr in workgroup.membership_set.all().order_by("person__name_sa")
+        if mtr.role_type == "MTR"
+    ]
+
     context = {
         "object": workgroup,
+        "mentors": mentors,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_detail", args=[group_pk]),

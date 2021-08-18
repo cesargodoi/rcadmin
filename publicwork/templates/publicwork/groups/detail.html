@@ -2,9 +2,10 @@
 
 {% block content %}
 
-{% include 'publicwork/groups/navbar.html' %}
-
-{% include "publicwork/groups/header.html" %}
+{% if nav == "info" or nav == "frequencies" %}
+  {% include 'publicwork/groups/navbar.html' %}
+  {% include "publicwork/groups/header.html" %}
+{% endif %}
 
 {% include "publicwork/groups/actions.html" %}
 
@@ -12,7 +13,7 @@
   <div class="media-body">
 
     {% if nav == "info" %}
-      {% include 'publicwork/elements/group_seekers.html' %}
+      {% include 'publicwork/groups/seekers.html' %}
     {% elif nav == "frequencies" %}
       <h4>Frequencies</h4>
       {% include "publicwork/groups/frequencies.html" %}

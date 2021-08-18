@@ -41,7 +41,7 @@ def seeker_home(request):
         "user_center": str(request.user.person.center.pk),
         "nav": "sk_home",
     }
-    return render(request, "publicwork/seeker_home.html", context)
+    return render(request, "publicwork/seeker/home.html", context)
 
 
 @login_required
@@ -60,7 +60,7 @@ def seeker_detail(request, pk):
         "tab": "info",
         "age": age,
     }
-    return render(request, "publicwork/seeker_detail.html", context)
+    return render(request, "publicwork/seeker/detail.html", context)
 
 
 @login_required
@@ -150,7 +150,7 @@ def seeker_reinsert(request, pk):
 
     context = {"object": seeker, "title": "confirm to reinsert"}
     return render(
-        request, "publicwork/elements/confirm_to_reinsert_seeker.html", context
+        request, "publicwork/seeker/confirm_to_reinsert.html", context
     )
 
 
@@ -174,7 +174,7 @@ def seeker_frequencies(request, pk):
         "ranking": ranking,
     }
 
-    return render(request, "publicwork/seeker_detail.html", context)
+    return render(request, "publicwork/seeker/detail.html", context)
 
 
 # seeker historic
@@ -187,12 +187,17 @@ def seeker_historic(request, pk):
     seeker = Seeker.objects.get(pk=pk)
     historics = seeker.historicofseeker_set.all().order_by("-date")
 
+    object_list = paginator(historics, page=page)
+    # add action links
+    for item in object_list:
+        item.click_link = reverse("update_historic", args=[pk, item.pk])
+
     context = {
         "object": seeker,
         "title": "seeker detail | historic",
-        "object_list": paginator(historics, page=page),
+        "object_list": object_list,
         "nav": "seeker",
         "tab": "historic",
     }
 
-    return render(request, "publicwork/seeker_detail.html", context)
+    return render(request, "publicwork/seeker/detail.html", context)
