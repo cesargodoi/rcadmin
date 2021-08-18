@@ -1,5 +1,5 @@
 <div class="form-row align-items-center">
-  <div class="col-sm-3 mb-1">
+  <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
         <div class="input-group-text">from</div>
@@ -11,7 +11,7 @@
         {% if request.session.search.dt1 %}value={{ request.session.search.dt1 }}{% endif %}>
     </div>
   </div>
-  <div class="col-sm-3 mb-1">
+  <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
         <div class="input-group-text">to</div>
@@ -23,7 +23,7 @@
         {% if request.session.search.dt2 %}value={{ request.session.search.dt2 }}{% endif %}>
     </div>
   </div>
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <div class="input-group">
       <input name="od_name" 
             class="form-control" 
@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-2 mb-1">
+  <div class="col-sm-2 mb-2">
     <select class="form-control" name="od_status" id="od_status">
       <option value="all"
               {% if request.session.search.od_status == 'all' %}selected{% endif %}>
@@ -54,8 +54,8 @@
       {% endfor %}
     </select>
   </div>
-  <div class="col-sm mb-1">     
-    <button class="btn btn btn-outline-success ml-2" type="submit">
+  <div class="col-sm mb-2">     
+    <button class="btn btn btn-success ml-2" type="submit">
       <i class="fas fa-search"></i>
       Search
     </button>
