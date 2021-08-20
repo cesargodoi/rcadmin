@@ -14,7 +14,10 @@ from ..models import Person
 @permission_required("event.view_event")
 def frequency_ps_list(request, person_id):
     person = Person.objects.get(id=person_id)
-    queryset = person.frequency_set.all()
+    queryset = person.frequency_set.all().order_by("-event__date")
+    # import ipdb
+
+    # ipdb.set_trace()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
     context = {

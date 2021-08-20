@@ -33,11 +33,13 @@
     </div>
 
     <div class="col-sm-2 small align-middle">
+      <i class="fas fa-phone"></i> 
       {{ obj.phone }}
     </div>
 
     <div class="col-sm-3 small align-middle">
       {% if request.user|has_group:"publicwork_jr" %}
+        <i class="fas fa-envelope"></i> 
         {{ obj.email }}
       {% else %}
         {{ obj.center }}

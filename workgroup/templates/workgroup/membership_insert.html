@@ -4,14 +4,12 @@
 {% block content %}
 
 <div class="text-right mb-2 mt-4">
-  <a class="btn btn-light mt-2 mr-3"
+  <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'workgroup_detail' object.pk %}">
     <i class="fas fa-chevron-left"></i> 
     Back
   </a>
 </div>
-
-{% include "workgroup/elements/workgroup_header.html" %}
 
 <article class="media content-section">
   <div class="media-body">

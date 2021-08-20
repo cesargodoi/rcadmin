@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
   <a class="navbar-brand" href="#">
-    {% if nav == 'home' %}Mentoring{% else %}Workgroup{% endif %}
+    {% if nav == 'home' %}Mentoring{% else %}Group{% endif %}
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
     aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
     <!-- controlers -->
     <ul class="navbar-nav ml-md-auto">    
       <li class="nav-item">
-        <a class="btn btn-outline-info btn-sm" 
+        <a class="btn btn-lighr text-info btn-sm" 
           href="{% if nav == 'home' %}
                   {% url 'home' %}
                 {% elif nav == 'detail' %}

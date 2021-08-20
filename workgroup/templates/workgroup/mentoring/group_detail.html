@@ -2,9 +2,10 @@
 
 {% block content %}
 
-{% include "workgroup/mentoring/navbar.html" %}
-
-{% include "workgroup/mentoring/header.html" %}
+{% if tab == "members" or tab == "frequencies" %}
+  {% include "workgroup/mentoring/navbar.html" %}
+  {% include "workgroup/mentoring/header.html" %}
+{% endif %}
 
 {% include "workgroup/mentoring/actions.html" %}
 

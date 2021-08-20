@@ -24,13 +24,12 @@
       <div class="col-sm-3 small">
         {{ freq.observations }}
       </div>
-      <div class="col-sm-1 text-right">
+      <div class="col-sm-2 text-right">
         {% if freq.ranking > 0 %}
           {{ freq.ranking }}
           <i class="fas fa-star"></i>
         {% endif %}
-      </div>
-      <div class="col-sm-1 text-right">
+        &nbsp;&nbsp;
         <a type="button" href="{% url 'remove_frequency' object.pk freq.pk %}"
           class="btn btn-light text-danger btn-sm">
           <i class="fas fa-trash-alt"></i>

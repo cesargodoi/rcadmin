@@ -11,6 +11,7 @@
     {% if obj.click_link %}
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
       {% endif %}
     {% endif %}>
 
@@ -23,7 +24,7 @@
     </div>
 
     <div class="col-sm-2 small align-middle">
-      <small><em>{{ obj.center }}</em></small>
+      <em>{{ obj.center }}</em>
     </div>
 
     <div class="col-sm-2 text-right">
@@ -34,14 +35,15 @@
       {% if tab == "add_frequencies" and obj.is_active %}
         <a type="button" 
           href="{% url 'mentoring_add_frequencies' group_pk %}?event_pk={{ obj.pk }}"
-          class="btn btn-outline-primary btn-sm">
-          <i class="fas fa-plus"></i>
+          class="btn btn-light text-primary btn-sm">
+          <i class="fas fa-check"></i>
+          Select
         </a>
       {% elif not nav == "home" and obj.is_active %}
         {% if obj.pk not in pre_freqs %}
           <a type="button" 
             href="{{ obj.add_link }}?pk={{ obj.pk }}"
-            class="btn btn-outline-primary btn-sm">
+            class="btn btn-light text-primary btn-sm">
             <i class="fas fa-plus"></i>
           </a>
         {% else %}

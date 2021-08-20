@@ -19,7 +19,7 @@
       <strong>{{ obj.short_name }}</strong>
       &nbsp;&nbsp; 
       <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
-        <em>{{ obj.center }}</em>
+        <em>{{ obj.user.profile.city }} ({{ obj.user.profile.state }}-{{ obj.user.profile.country }})</em> 
       </small>
     </div>
 
@@ -29,15 +29,18 @@
 
     <div class="col-sm-2 small align-middle">
       {% if obj.user.profile.phone_1 %}
-        <i class="fas fa-phone"></i> {{ obj.user.profile.phone_1 }}
+        <i class="fas fa-phone"></i> 
+        {{ obj.user.profile.phone_1 }}
       {% elif obj.user.profile.phone_2 %}
-        <i class="fas fa-phone"></i> {{ obj.user.profile.phone_2 }}
+        <i class="fas fa-phone"></i> 
+        {{ obj.user.profile.phone_2 }}
       {% endif %}
     </div>
 
     <div class="col-sm-3 small align-middle">
       {% if obj.user.email %}
-        <i class="fas fa-envelope"></i> {{ obj.user.email }}
+        <i class="fas fa-envelope"></i> 
+        {{ obj.user.email }}
       {% endif %}
     </div>
 

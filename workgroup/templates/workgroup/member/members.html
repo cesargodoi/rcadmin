@@ -11,30 +11,31 @@
     {% if obj.click_link %}
       {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
       {% endif %}
     {% endif %}>
 
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <strong>{{ obj.person.short_name }}</strong>
-        &nbsp;&nbsp;
-        <small class="text-muted">
-          <em>{{ obj.person.center }}</em>
-        </small>
+    </div>
+
+    <div class="col-sm-2 small align-middle">
+      {{ obj.person.center }}
     </div>
 
     <div class="col-sm-2 small align-middle">
       {{ obj.person.get_aspect_display }}
     </div>
 
-    <div class="col-sm-2 small align-middle">
-      {{ obj.get_role_type_display }}
+    <div class="col-sm-2 align-middle">
+      <strong>{{ obj.get_role_type_display }}</strong>
     </div>
 
     <div class="col-sm text-right">
       {% if obj.del_link %}
         <a type="button" 
           href="{{ obj.del_link }}"
-          class="btn btn-outline-danger btn-sm">
+          class="btn btn-light text-danger btn-sm">
           <i class="fas fa-trash-alt"></i>
         </a>
       {% endif %}

@@ -1,0 +1,11 @@
+{% load base_extras %}
+<!-- actions -->
+<div class="text-right mb-2 mt-2">
+  {% if nav == "detail" and tab == "frequencies" and object.is_active %}
+    <a class="btn btn-light text-primary btn-sm" href="{% url 'membership_add_frequency' group_pk object.id %}?init=on">
+      <i class="fas fa-plus"></i> 
+      Frequency
+    </a>
+  {% endif %}
+  
+</div>

@@ -2,21 +2,24 @@
 
 {% block content %}
 
-{% include "workgroup/elements/member_navbar.html" %}
+{% include "workgroup/member/navbar.html" %}
 
-{% include "workgroup/elements/member_header.html" %}
+{% include "workgroup/member/header.html" %}
+
+{% include "workgroup/member/actions.html" %}
 
 <article class="media content-section">
   <div class="media-body">
 
     {% if tab == "info" %}
-    {% include "workgroup/elements/member_info.html" %}
+      <h4>Info</h4>
+      {% include "workgroup/member/info.html" %}
     {% elif tab == "frequencies" %}
-    <h4>Frequencies</h4>
-    {% include "workgroup/elements/member_frequencies.html" %}
+      <h4>Frequencies</h4>
+      {% include "workgroup/member/frequencies.html" %}
     {% elif tab == "historic" %}
-    <h4>Historic</h4>
-    {% include "workgroup/elements/member_historic.html" %}
+      <h4>Historic</h4>
+      {% include "workgroup/member/historic.html" %}
     {% endif %}
     
   </div>
