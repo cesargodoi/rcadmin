@@ -1,0 +1,54 @@
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for freq in object_list %}
+  <div class="row border-top border-secondary mt-2 pt-2"
+      onclick="location.href='{% url 'membership_update_frequency' group_pk object.pk freq.pk %}'"
+      style="cursor: pointer;">
+    
+    <div class="col-sm-1">
+      <small>{{ freq.event.date|date:'d/m/y' }}</small>
+    </div>
+    <div class="col-sm-3">
+      {{ freq.event.activity.name }}
+    </div>
+    <div class="col-sm-1 small">
+      <strong>{{ freq.event.activity.get_activity_type_display }}</strong>
+    </div>
+    <div class="col-sm-2 small">
+      {{ freq.event.center }}
+    </div>
+    <div class="col-sm-3 small">
+      {% if freq.observations %}
+        {{ freq.observations }}
+      {% endif%}
+    </div>
+    <div class="col-sm-2 text-right">
+      {% if freq.ranking > 0 %}
+        {{ freq.ranking }}
+        <i class="fas fa-star"></i>
+      {% endif %}
+      &nbsp;&nbsp;
+      <a type="button" 
+        href="{% url 'membership_remove_frequency' group_pk object.pk freq.pk %}"
+        class="btn btn-light text-danger btn-sm">
+        <i class="fas fa-trash-alt text-danger"></i>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">no frequencies found</h4>
+  </div>
+
+{% endif %}

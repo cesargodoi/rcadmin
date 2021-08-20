@@ -19,29 +19,28 @@
     </div>
 
     <div class="col-sm-2 small align-middle">
-      <small><em>{{ obj.center }}</em></small>
+      <em>{{ obj.center }}</em>
     </div>
 
-    <div class="col-sm-1 small align-middle">
-      <small><em>{{ obj.get_workgroup_type_display }}</em></small>
+    <div class="col-sm-2 align-middle text-right">
+      <em>{{ obj.get_workgroup_type_display }}</em>
     </div>
 
-    <div class="col-sm-2 text-right">
+    <div class="col-sm text-right">
       <strong>{{ obj.get_aspect_display }}</strong>
-    </div>
-
-    <div class="col-sm-2 text-right">
       {% if not nav == "home" %}
+        &nbsp;&nbsp;&nbsp;&nbsp;
         {% if obj.pk in pre_groups %}
           <i class="fas fa-user-check mr-1"></i>
         {% else %}
         <a type="button" 
           href="{{ obj.add_link }}?pk={{ obj.pk }}"
-          class="btn btn-outline-primary btn-sm">
+          class="btn btn-light text-primary btn-sm">
           <i class="fas fa-plus"></i>
         </a>
         {% endif %}
       {% else %}
+        &nbsp;&nbsp;&nbsp;&nbsp;
         {% if obj.members.all|length > 0 %}
           <strong>{{ obj.members.all|length }}</strong> 
           <i class="fas fa-users"></i> 

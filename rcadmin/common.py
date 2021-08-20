@@ -120,19 +120,22 @@ def us_inter_char(txt, codif="utf-8"):
 
 
 def short_name(name):
-    name = name.split(" ")
-    words = [word for word in name if len(word) > 3]
-    to_join = []
-    if len(words) >= 3:
-        for n, word in enumerate(words):
-            if n == 0:
-                to_join.append(word)
-            if n == 1:
-                to_join.append(f"{word[0]}.")
-            if n == len(words) - 1:
-                to_join.append(word)
-    else:
-        to_join = words
+    words = name.split(" ")
+    if len(words) <= 2:
+        return name
+    # get first and last words of name
+    first_word = words[0]
+    words.pop(0)
+    last_word = words[-1]
+    words.pop()
+    # make a list to join
+    to_join = [first_word]
+    for word in words:
+        if len(word) <= 3:
+            to_join.append(word.lower())
+        else:
+            to_join.append(f"{word[0]}.")
+    to_join.append(last_word)
     return " ".join(to_join)
 
 

@@ -3,7 +3,7 @@
 <div class="text-right mb-2 mt-2">
   {% if nav == "detail" %}
     {% if not request.session.frequencies.event and tab == "frequencies" %}
-    <a class="btn btn-outline-primary btn-sm" 
+    <a class="btn btn-light text-primary btn-sm" 
       href="{% url 'mentoring_add_frequencies' object.id %}?init=on">
       <i class="fas fa-calendar-plus"></i>
       Frequencies
@@ -11,7 +11,7 @@
     {% endif %}
 
     {% if request.session.frequencies.event %}
-    <a class="btn btn-outline-primary btn-sm" 
+    <a class="btn btn-primary" 
       href="#" 
       onclick="document.getElementById('form').submit();">
       <i class="fas fa-check"></i> 
@@ -20,13 +20,12 @@
     {% endif %}
 
     {% if tab == "add_frequencies" %}
-      <a class="btn btn-light btn-sm" href="{% url 'mentoring_group_frequencies' object.id %}">
+      <a class="btn btn-light text-info" href="{% url 'mentoring_group_frequencies' object.id %}">
         <i class="fas fa-chevron-left"></i> 
         Back
       </a>
     {% endif %}
 
   {% endif %}
-
   
 </div>
