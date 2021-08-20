@@ -93,13 +93,13 @@ def mentoring_group_frequencies(request, pk):
         member.click_link = reverse(
             "mentoring_member_detail", args=[pk, member.person.pk]
         )
-        _freqs = [f.ranking for f in member.person.frequency_set.all()]
-        member.freq = len(_freqs)
-        member.rank = sum(_freqs)
+        ranks = [f.ranking for f in member.person.frequency_set.all()]
+        member.freq = len(ranks)
+        member.rank = sum(ranks)
 
     context = {
         "object": workgroup,
-        "object_list": object_list,
+        "object_list": sorted(object_list, key=lambda x: x.rank, reverse=True),
         "mentors": mentors,
         "title": "workgroup detail",
         "nav": "detail",
