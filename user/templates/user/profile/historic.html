@@ -1,0 +1,33 @@
+<h4>Historic</h4>
+
+{% if historic %}
+
+  {% for hist in historic %}
+    <div class="row border-top border-secondary pt-2">
+      <div class="col-sm-2">
+        {{ hist.date|date:"d/m/y" }}
+      </div>
+      <div class="col-sm">
+        <strong>{{ hist.get_occurrence_display }}</strong>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if historic|length < count %}
+    <div class="alert alert-secondary mt-4">
+      <small>
+        <p>
+          Here showing your last <strong>{{ historic|length }}</strong> occurrences. &nbsp;
+          To find out more, contact the <strong>{{ object.person.center.name }}</strong> secretariat.
+        </p>
+      </small>
+    </div>
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">no historic found</h4>
+  </div>
+  
+{% endif %}

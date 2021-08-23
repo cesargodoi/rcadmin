@@ -1,0 +1,33 @@
+<h4>Frequencies</h4>
+
+{% if frequencies %}
+
+  {% for freq in frequencies %}
+    <div class="row border-top border-secondary pt-2">
+      <div class="col-sm-2">
+        {{ freq.date|date:"d/m/y" }}
+      </div>
+      <div class="col-sm">
+        <strong>{{ freq.activity }} {{ freq.center }}</strong>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if frequencies|length < count %}
+    <div class="alert alert-secondary mt-4">
+      <small>
+        <p>
+          Here showing your last <strong>{{ frequencies|length }}</strong> frequencies. &nbsp;
+          To find out more, contact the <strong>{{ object.person.center.name }}</strong> secretariat.
+        </p>
+      </small>
+    </div>
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">no frequencies found</h4>
+  </div>
+  
+{% endif %}

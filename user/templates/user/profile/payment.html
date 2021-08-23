@@ -1,0 +1,36 @@
+<div class="row border-top border-secondary pt-2">
+  <div class="col-sm-2">
+    {{ pay.created_on|date:"d/m/y" }}
+  </div>
+  <div class="col-sm-4">
+    {{ pay.paytype }}
+  </div>
+  <div class="col-sm-3">
+    {% if pay.ref_month %}
+      {{ pay.ref_month|date:"M/y" }}
+    {% endif %}
+    {% if pay.event %}
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      {{ pay.event.center }}
+    {% endif %}
+  </div>
+  <div class="col-sm-2 text-right {% if pay.order_set.all.0.status == 'PND' %}
+                                    text-info
+                                  {% elif pay.order_set.all.0.status == 'CCL' %}
+                                    text-danger
+                                  {% else %}
+                                    text-success
+                                  {% endif %}">
+    <strong>{{ pay.order_set.all.0.get_status_display }}</strong>
+  </div>
+  <div class="col-sm-1 text-right {% if pay.order_set.all.0.status == 'PND' %}
+                                    text-info
+                                  {% elif pay.order_set.all.0.status == 'CCL' %}
+                                    text-danger
+                                  {% else %}
+                                    text-success
+                                  {% endif %}">
+    <strong>{{ pay.value }}</strong>
+  </div>
+
+</div>

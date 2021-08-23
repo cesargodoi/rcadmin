@@ -5,15 +5,15 @@
         <div class="col-9">
           {{ object.person.center }}
           {% if object.person.aspect != "--" %}
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <em>
-            {{ object.person.get_aspect_display }} <strong>in</strong>
-            {{ object.person.aspect_date|date:"d/m/Y" }}
-          </em>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <em>
+              {{ object.person.get_aspect_display }} <strong>in</strong>
+              {{ object.person.aspect_date|date:"d/m/Y" }}
+            </em>
           {% endif %}
           {% if object.person.center != request.user.person.center %}
-          &nbsp;&nbsp;&nbsp;
-          <span class="badge badge-pill badge-danger">another center - only view</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="badge badge-pill badge-danger">another center - only view</span>
           {% endif %}
         </div>
         <div class="col text-right">
@@ -30,7 +30,7 @@
       </div>
       <div class="col text-right">
         {% if object.person.status not in "ACT,---" %}
-        {% include "user/status/status.html" %}
+          {% include "user/profile/status.html" %}
         {% endif %}
       </div>
     </div>

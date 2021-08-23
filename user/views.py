@@ -17,7 +17,7 @@ from .forms import MyFormOfPaymentForm, MyPaymentForm, ProfileForm, UserForm
 @permission_required("user.view_profile")
 def profile_detail(request):
     context = {"object": request.user, "tab": "detail"}
-    return render(request, "user/profile_detail.html", context)
+    return render(request, "user/profile/detail.html", context)
 
 
 @login_required
@@ -44,7 +44,7 @@ def profile_update(request):
         "object": request.user,
     }
 
-    return render(request, "user/profile_form.html", context)
+    return render(request, "user/forms/form.html", context)
 
 
 @login_required
@@ -57,7 +57,7 @@ def user_frequencies(request):
         "object": request.user,
         "tab": "frequencies",
     }
-    return render(request, "user/profile_detail.html", context)
+    return render(request, "user/profile/detail.html", context)
 
 
 @login_required
@@ -68,11 +68,11 @@ def user_historic(request):
     )
     context = {
         "historic": historic[:20],
-        "count": historic.count(),
+        "count": len(historic),
         "object": request.user,
         "tab": "historic",
     }
-    return render(request, "user/profile_detail.html", context)
+    return render(request, "user/profile/detail.html", context)
 
 
 @login_required
@@ -87,7 +87,7 @@ def scan_qrcode_event(request):
     context = {
         "object": request.user,
     }
-    return render(request, "user/scan_qrcode_event.html", context)
+    return render(request, "user/profile/scan_qrcode_event.html", context)
 
 
 @login_required
@@ -98,10 +98,11 @@ def user_payments(request):
 
     context = {
         "payments": payments[:20],
+        "count": len(payments),
         "object": request.user,
         "tab": "payments",
     }
-    return render(request, "user/profile_detail.html", context)
+    return render(request, "user/profile/detail.html", context)
 
 
 @login_required
@@ -173,7 +174,7 @@ def user_new_order(request):
         ),
         "from_user": True,
     }
-    return render(request, "user/profile_new_order.html", context)
+    return render(request, "user/profile/new_order.html", context)
 
 
 @login_required
@@ -241,7 +242,7 @@ def add_payment(request):
         "title": "Create my order - add payment",
         "object": request.user,
     }
-    return render(request, "user/profile_add_payment.html", context)
+    return render(request, "user/profile/add_payment.html", context)
 
 
 @login_required
@@ -261,4 +262,4 @@ def del_payment(request, pay_id):
         return redirect("user_new_order")
 
     context = {"title": "confirm delete"}
-    return render(request, "user/elements/confirm_del.html", context)
+    return render(request, "user/profile/confirm_del.html", context)

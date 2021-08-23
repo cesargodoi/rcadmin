@@ -1,0 +1,38 @@
+{% load base_extras %}
+<!-- actions -->
+<div class="text-right mb-2 mt-2">
+  <!-- controlers -->
+  {% if tab == "detail" %}
+  <a class="btn btn-light text-warning btn-sm" 
+      href="{% url 'profile_update' %}">
+    <i class="fas fa-edit"></i> 
+    Edit profile
+  </a>
+  <a class="btn btn-light text-warning btn-sm" 
+      href="{% url 'password_change' %}">
+    <i class="fas fa-key"></i> 
+    Change password
+  </a>
+  {% endif %}
+
+  {% if tab == "frequencies" %}
+  <a class="btn btn-light text-info btn-sm" 
+      href="{% url 'scan_qrcode_event' %}">
+    <i class="fas fa-qrcode "></i> 
+    Scan QR-CODE
+  </a>
+  {% endif %}
+
+  {% if tab == "payments" %}
+  <a class="btn btn-light text-primary btn-sm" 
+      href="{% url 'user_new_order' %}">
+    <i class="fas fa-money-bill-wave-alt"></i> 
+    New order
+  </a>
+  {% endif %}
+  
+</div>
+
+  
+
+
