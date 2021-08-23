@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% include "center/elements/center_navbar.html" %}
+{% include "center/navbar.html" %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
@@ -10,8 +10,14 @@
       {% csrf_token %}
       {% include "base/searchs/center.html" %}
     </form>
-    <br>
-    {% include 'center/elements/centers.html' %}
+  </div>
+</article>
+
+{% include "center/actions.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'center/centers.html' %}
   </div>
 </article>
 

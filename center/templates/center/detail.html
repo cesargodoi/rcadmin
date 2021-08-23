@@ -2,9 +2,11 @@
 
 {% block content %}
 
-{% include "center/elements/center_navbar.html" %}
+{% include "center/navbar.html" %}
 
-{% include "center/elements/header.html" %}
+{% include "center/header.html" %}
+
+{% include "center/actions.html" %}
 
 <article class="media content-section">
   <div class="media-body">
@@ -15,7 +17,7 @@
       <div class="col-md-9">
         <article class="media content-section">
           <div class="media-body">
-            {% include "center/elements/center_info.html" %}
+            {% include "center/info.html" %}
           </div>
         </article>
       </div>
