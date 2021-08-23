@@ -29,7 +29,7 @@ def membership_ps_list(request, person_id):
         "nav": "detail",
         "tab": "membership",
     }
-    return render(request, "person/person_detail.html", context)
+    return render(request, "person/detail.html", context)
 
 
 @login_required

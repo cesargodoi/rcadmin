@@ -11,9 +11,15 @@
   <hr>
   <form method="POST">
     {% csrf_token %}
-    <div class="form-group">
-      <button class="btn btn-outline-danger" type="submit">Confirm</button>
-      <a class="btn btn-outline-info" href="javascript:history.back()">Go back</a>
+    <div class="form-group text-right">
+      <button class="btn btn-danger" type="submit">
+        <i class="fas fa-check"></i>
+        Confirm
+      </button>
+      <a class="btn btn-info" href="javascript:history.back()">
+        <i class="fas fa-chevron-left"></i>
+        Back
+      </a>
     </div>
   </form>
 </div>

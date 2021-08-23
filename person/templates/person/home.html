@@ -2,15 +2,21 @@
 
 {% block content %}
 
-{% include "person/elements/persons_navbar.html" %}
+{% include "person/navbar.html" %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
     <form class="form-control-sm mt-1" method="GET">
       {% include "base/searchs/person.html" %}
     </form>
-    <br>
-    {% include 'person/elements/persons.html' %}
+  </div>
+</article>
+
+{% include "person/actions.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'person/persons.html' %}
   </div>
 </article>
 
