@@ -1,12 +1,11 @@
-<span class="badge badge-pill 
-             {% if object.person.status == 'LIC' %}
-             badge-success
+<span class="{% if object.person.status == 'LIC' %}
+               text-success
              {% elif object.person.status == 'DIS' %}
-             badge-warning
+               text-warning
              {% elif object.person.status == 'REM' %}
-             badge-danger
+               text-danger
              {% elif object.person.status == 'DEA' %}
-             badge-dark
+               text-secondary
              {% endif %}">
   {{ object.person.get_status_display }}
 </span>

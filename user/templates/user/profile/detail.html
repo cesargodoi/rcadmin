@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "user/profile/navbar.html" %}
+
+{% include "user/profile/header.html" %}
+
+{% include "user/profile/actions.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+    {% if tab == "detail" %}
+      <h4>Info</h4>
+      {% include "user/profile/info.html" %}
+    {% elif tab == "frequencies" %}
+      {% include "user/profile/frequencies.html" %}
+    {% elif tab == "historic" %}
+      {% include "user/profile/historic.html" %}
+    {% elif tab == "payments" %}
+      {% include "user/profile/payments.html" %}
+    {% endif %}
+  </div>
+</article>
+
+{% endblock content %}

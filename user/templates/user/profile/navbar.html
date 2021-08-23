@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
-  <a class="navbar-brand" href="{% url 'profile_detail' %}">Profile</a>
+  <a class="navbar-brand" href="#">Profile</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
     aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,6 +7,9 @@
 
   <div class="collapse navbar-collapse" id="navbarProfile">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link {% if tab == 'detail' %}active{% endif %}" href="{% url 'profile_detail' %}">Info</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" href="{% url 'user_frequencies' %}">Frequencies</a>
       </li>
@@ -17,36 +20,6 @@
         <a class="nav-link {% if tab == 'payments' %}active{% endif %}" href="{% url 'user_payments' %}">Payments</a>
       </li>
     </ul>
-    <div class="navbar-nav">
-      {% if tab == "detail" %}
-      <a class="btn btn-light btn-sm" 
-         href="{% url 'profile_update' %}">
-        <i class="fas fa-edit"></i> 
-        Edit profile
-      </a>
-      <a class="btn btn-light btn-sm" 
-         href="{% url 'password_change' %}">
-        <i class="fas fa-key"></i> 
-        Change password
-      </a>
-      {% endif %}
-
-      {% if tab == "frequencies" %}
-      <a class="btn btn-light btn-sm" 
-         href="{% url 'scan_qrcode_event' %}">
-        <i class="fas fa-qrcode "></i> 
-        Scan QR-CODE
-      </a>
-      {% endif %}
-
-      {% if tab == "payments" %}
-      <a class="btn btn-light btn-sm" 
-         href="{% url 'user_new_order' %}">
-        <i class="fas fa-money-bill-wave-alt"></i> 
-        New order
-      </a>
-      {% endif %}
-
-    </div>
+    <div class="navbar-nav"></div>
   </div>
 </nav>
