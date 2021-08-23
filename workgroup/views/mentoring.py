@@ -20,7 +20,9 @@ def mentoring_home(request):
         person=request.user.person, role_type="MTR"
     )
     for item in object_list:
-        item.click_link = reverse("mentoring_group_detail", args=[item.pk])
+        item.click_link = reverse(
+            "mentoring_group_detail", args=[item.workgroup.pk]
+        )
         mentors = [
             mtr
             for mtr in item.workgroup.membership_set.all()
