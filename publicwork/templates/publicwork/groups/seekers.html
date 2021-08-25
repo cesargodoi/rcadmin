@@ -26,6 +26,10 @@
       <strong>{{ obj.short_name }}</strong>
       &nbsp;&nbsp;
       <small><em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em></small>
+      {% if not obj.is_active and obj.status != 'ITD' %}
+        &nbsp;&nbsp;
+        <small class="badge-pill badge-danger">inactive</small>
+      {% endif %}
     </div>
 
     <div class="col-sm-1 small align-middle">
@@ -51,9 +55,6 @@
     </div>
     
     <div class="col-sm text-right">
-      {% if not obj.is_active and obj.status != 'ITD' %}
-        <small class="badge-pill badge-danger">inactive</small>
-      {% endif %}
       <strong>{{ obj.get_status_display }}</strong> 
     
       {% if obj.add_link %}

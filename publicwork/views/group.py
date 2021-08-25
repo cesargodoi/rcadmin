@@ -440,7 +440,7 @@ def group_remove_mentor(request, group_pk, mentor_pk):
         "title": "confirm to remove",
     }
     return render(
-        request, "publicwork/elements/confirm_remove_member.html", context
+        request, "publicwork/groups/confirm_remove_member.html", context
     )
 
 

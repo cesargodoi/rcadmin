@@ -1,22 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
-  <a class="navbar-brand" href="#">Member</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
-    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<div class="skippy overflow-hidden">
+  <div class="container-xl">
+    <a class="sr-only sr-only-focusable d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+    <a class="sr-only sr-only-focusable d-none d-md-inline-flex p-2 m-1" href="#bd-docs-nav">Skip to docs navigation</a>
+  </div>
+</div>
+{% load base_extras %}
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand mr-0 mr-md-2" 
+     href="#" aria-label="Bootstrap">
+    Member
+  </a>
 
-  <div class="collapse navbar-collapse" id="navbarProfile">
-    <!-- menu items -->
-    <ul class="navbar-nav mr-auto">
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
       <li class="nav-item">
         <a class="nav-link {% if tab == 'info' %}active{% endif %}" 
-           href="{% url 'mentoring_member_detail' group_pk object.pk %}">
+          href="{% url 'mentoring_member_detail' group_pk object.pk %}">
           Info
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" 
-           href="{% url 'mentoring_member_frequencies' group_pk object.pk %}">
+          href="{% url 'mentoring_member_frequencies' group_pk object.pk %}">
           Frequencies
         </a>
       </li>
@@ -27,13 +32,28 @@
         </a>
       </li>
     </ul>
+  </div>
 
-    <!-- controlers -->
-    <div class="navbar-nav">
-      <a class="btn btn-light text-info btn-sm" href="{{ goback }}">
+  <!-- actions -->
+  <ul class="navbar-nav ml-md-auto">
+    {% if nav == "detail" and tab == "frequencies" and object.is_active %}
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary"
+           href="{% url 'membership_add_frequency' group_pk object.id %}?init=on">
+          <i class="fas fa-plus"></i> 
+          Frequency
+        </a>
+      </li>
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link pl-2 px-1 mx-1 py-3 my-n2 text-info" 
+         href="{{ goback }}">
         <i class="fas fa-chevron-left"></i> 
         Back
       </a>
-    </div>
-  </div>
-</nav>
+    </li>
+    
+  </ul>
+
+</header>

@@ -30,7 +30,7 @@ def center_home(request):
         "title": "center home",
         "nav": "home",
     }
-    return render(request, "center/center_home.html", context)
+    return render(request, "center/home.html", context)
 
 
 @login_required
@@ -49,7 +49,7 @@ def center_detail(request, pk):
         "nav": "detail",
         "goback": goback,
     }
-    return render(request, "center/center_detail.html", context)
+    return render(request, "center/detail.html", context)
 
 
 @login_required

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="alert alert-secondary" role="alert">
+<div class="alert alert-danger" role="alert">
   <h4 class="alert-heading">Atention!</h4>
   <p>Are you sure you want to delete the center: <br>
     <strong>{{ object }}?</strong>
@@ -13,9 +13,15 @@
     {% if new_center %}
     {{ new_center | crispy }}
     {% endif %}
-    <div class="form-group">
-      <button class="btn btn-outline-danger" type="submit">Confirm</button>
-      <a class="btn btn-outline-info" href="javascript:history.back()">Go back</a>
+    <div class="form-group text-right">
+      <button class="btn btn-danger" type="submit">
+        <i class="fas fa-check"></i>
+        Confirm
+      </button>
+      <a class="btn btn-info" href="javascript:history.back()">
+        <i class="fas fa-chevron-left"></i>
+        Back
+      </a>
     </div>
   </form>
 </div>

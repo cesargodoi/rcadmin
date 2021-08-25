@@ -27,7 +27,7 @@ def person_historic(request, person_id):
         "nav": "detail",
         "tab": "historic",
     }
-    return render(request, "person/person_detail.html", context)
+    return render(request, "person/detail.html", context)
 
 
 @login_required

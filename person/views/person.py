@@ -50,7 +50,7 @@ def person_home(request):
         "nav": "home",
         "flag": "person",
     }
-    return render(request, "person/person_home.html", context)
+    return render(request, "person/home.html", context)
 
 
 @login_required
@@ -75,7 +75,7 @@ def person_detail(request, id):
         "tab": "info",
         "date": timezone.now().date(),
     }
-    return render(request, "person/person_detail.html", context)
+    return render(request, "person/detail.html", context)
 
 
 @login_required

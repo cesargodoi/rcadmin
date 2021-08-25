@@ -15,7 +15,7 @@
         </div>
         <div class="col text-right">
           {% if person.reg %}
-          <span class="badge badge-pill badge-secondary">{{ person.reg }}</span>
+          <strong>{{ person.reg }}</strong>
           {% endif %}
         </div>
       </div>
@@ -29,18 +29,17 @@
       </div>
       <div class="col text-right">
         {% if person.status not in "ACT,---" %}
-        <span class="badge badge-pill 
-             {% if person.status == 'LIC' %}
-             badge-success
-             {% elif person.status == 'DIS' %}
-             badge-warning
-             {% elif person.status == 'REM' %}
-             badge-danger
-             {% elif person.status == 'DEA' %}
-             badge-dark
-             {% endif %}">
+        <strong class="{% if person.status == 'LIC' %}
+                       text-success
+                     {% elif person.status == 'DIS' %}
+                       text-warning
+                     {% elif person.status == 'REM' %}
+                       text-danger
+                     {% elif person.status == 'DEA' %}
+                       text-secondary
+                     {% endif %}">
           {{ person.get_status_display }}
-        </span>
+        </strong>
         {% endif %}
       </div>
     </div>

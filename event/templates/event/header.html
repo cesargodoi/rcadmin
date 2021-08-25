@@ -3,7 +3,7 @@
     <div class="article-metadata">
       <div class="row">
         <div class="col-10">
-          {{ object.date|date:'d/m/Y'}}
+          {{ object.date|date:'d/m/y'}}
           {% if object.activity.multi_date %}
           <small class="text-muted">
             &nbsp;&nbsp; <strong>to</strong> {{ object.end_date|date:'d/m/Y'}}
@@ -16,11 +16,11 @@
             <span class="badge badge-pill badge-danger">
               inactive
             </span>
+            &nbsp;&nbsp;
           {% endif %}
-          <span 
-            class="badge badge-pill badge-{% if object.status == 'OPN' %}success{% else %}secondary{% endif %}">
+          <strong>
             {{ object.get_status_display }}
-          </span>
+          </strong>
         </div>
       </div>
     </div>
@@ -34,14 +34,14 @@
         </h4>
       </div>
       <div class="col text-right">
-        {% if object.frequencies.all|length > 0 %}
-          <strong>{{ object.frequencies.all|length }}</strong> 
+        {% if object.frequencies.count > 0 %}
+          <strong>{{ object.frequencies.count }}</strong> 
           <i class="fas fa-users"></i>  
         {% endif %}
       </div>
     </div>
     {% if object.description %}
-    <p><small class="text-muted">{{ object.description }}</small></p>
+      <p><small class="text-muted">{{ object.description }}</small></p>
     {% endif %}
   </div>
 </article>

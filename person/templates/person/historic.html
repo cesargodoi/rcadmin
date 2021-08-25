@@ -1,12 +1,13 @@
 {% if object_list %}
 
   {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
+    {% include "base/elements/paginator.html" %}
   {% endif %}
 
   {% for obj in object_list %}
     <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'historic_update' person.id obj.pk %}';">
+        onclick="location.href='{% url 'historic_update' person.id obj.pk %}';"
+        style="cursor: pointer;">
 
       <div class="col-sm-2">
         <strong>{{ obj.date | date:"d/m/Y" }}</strong>
@@ -32,7 +33,7 @@
   {% endfor %}
 
   {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
+    {% include "base/elements/paginator.html" %}
   {% endif %}
 
 {% else %}

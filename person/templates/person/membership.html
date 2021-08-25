@@ -6,7 +6,8 @@
 
   {% for wg_obj in object_list %}
     <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'membership_ps_update' person.id wg_obj.pk %}';">
+        onclick="location.href='{% url 'membership_ps_update' person.id wg_obj.pk %}';"
+        style="cursor: pointer;">
 
       <div class="col-sm-4">
         <strong>{{ wg_obj.workgroup.name }}</strong>

@@ -61,4 +61,4 @@ def frequencies_add(request, pk):
         "form": FrequenciesAddForm(),
         "title": "insert frequencies",
     }
-    return render(request, "event/frequencies_add.html", context)
+    return render(request, "event/frequencies-add.html", context)

@@ -2,16 +2,20 @@
 
 {% block content %}
 
-{% include "event/elements/event_navbar.html" %}
+{% include "workgroup/navbar.html" %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
     <form class="form-control-sm mt-1" method="GET">
       {% csrf_token %}
-      {% include "base/searchs/event.html" %}
+      {% include "base/searchs/workgroup.html" %}
     </form>
-    <br>
-    {% include 'event/elements/events.html' %}
+  </div>
+</article>
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'workgroup/workgroups.html' %}
   </div>
 </article>
 

@@ -7,7 +7,9 @@
   {% include "publicwork/groups/header.html" %}
 {% endif %}
 
+{% if nav == "add_frequencies" or nav == "add_member" or nav == "add_mentor" %}
 {% include "publicwork/groups/actions.html" %}
+{% endif %}
 
 <article class="media content-section">
   <div class="media-body">

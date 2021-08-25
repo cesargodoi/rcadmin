@@ -30,7 +30,7 @@ def workgroup_home(request):
         "workgroup_types": WORKGROUP_TYPES,
         "nav": "home",
     }
-    return render(request, "workgroup/workgroup_home.html", context)
+    return render(request, "workgroup/home.html", context)
 
 
 @login_required
@@ -52,7 +52,7 @@ def workgroup_detail(request, pk):
         "title": "workgroup detail",
         "nav": "detail",
     }
-    return render(request, "workgroup/workgroup_detail.html", context)
+    return render(request, "workgroup/detail.html", context)
 
 
 @login_required

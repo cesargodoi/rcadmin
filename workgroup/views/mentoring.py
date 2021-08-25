@@ -71,7 +71,7 @@ def mentoring_group_detail(request, pk):
         "tab": "members",
         "goback": reverse("mentoring_home"),
     }
-    return render(request, "workgroup/mentoring/group_detail.html", context)
+    return render(request, "workgroup/mentoring/detail.html", context)
 
 
 @login_required
@@ -108,7 +108,7 @@ def mentoring_group_frequencies(request, pk):
         "tab": "frequencies",
         "goback": reverse("mentoring_home"),
     }
-    return render(request, "workgroup/mentoring/group_detail.html", context)
+    return render(request, "workgroup/mentoring/detail.html", context)
 
 
 @login_required
@@ -125,7 +125,7 @@ def mentoring_member_detail(request, group_pk, person_pk):
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/mentoring/member_detail.html", context)
+    return render(request, "workgroup/member/detail.html", context)
 
 
 @login_required
@@ -145,7 +145,7 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/mentoring/member_detail.html", context)
+    return render(request, "workgroup/member/detail.html", context)
 
 
 @login_required
@@ -163,7 +163,7 @@ def mentoring_member_historic(request, group_pk, person_pk):
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/mentoring/member_detail.html", context)
+    return render(request, "workgroup/member/detail.html", context)
 
 
 @login_required
@@ -220,9 +220,7 @@ def membership_add_frequency(request, group_pk, person_pk):
         "pre_freqs": [obj.event.pk for obj in person.frequency_set.all()],
         "group_pk": group_pk,
     }
-    return render(
-        request, "workgroup/mentoring/member_add_frequency.html", context
-    )
+    return render(request, "workgroup/member/add_frequency.html", context)
 
 
 @login_required
@@ -253,9 +251,7 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
             "mentoring_member_frequencies", args=[group_pk, person_pk]
         ),
     }
-    return render(
-        request, "workgroup/mentoring/update_frequency.html", context
-    )
+    return render(request, "workgroup/member/update_frequency.html", context)
 
 
 @login_required
@@ -337,7 +333,7 @@ def mentoring_add_frequencies(request, group_pk):
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/mentoring/group_detail.html", context)
+    return render(request, "workgroup/mentoring/add_frequencies.html", context)
 
 
 # handlers

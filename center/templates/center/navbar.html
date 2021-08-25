@@ -8,58 +8,41 @@
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
-    Group
+    {% if nav == 'home' %}Centers{% else %}Center{% endif %}
   </a>
 
   <div class="navbar-nav-scroll">
     <ul class="navbar-nav bd-navbar-nav flex-row">
-      <li class="nav-item">
-        <a class="nav-link {% if nav == 'info' %}active{% endif %}" 
-           href="{% url 'group_detail' object.pk %}">
-          Members
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {% if nav == 'frequencies' %}active{% endif %}" 
-           href="{% url 'group_frequencies' object.pk %}">
-          Frequencies
-        </a>
-      </li>
     </ul>
   </div>
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-
-    {% if nav == "sk_home" %}
+    {% if nav == "home" and request.user.is_superuser %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'seeker_create' %}">
-          <i class="fas fa-plus"></i> 
-          Seeker
+           href="{% url 'center_create' %}">
+          <i class="fas fa-plus"></i>
+          Center 
         </a>
       </li>
     {% endif %}
-  
-    {% if nav == "info" %}
-      {% if not request.user|has_group:"publicwork_jr" %}
-        <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_mentor' object.pk %}?init=on">
-            <i class="fas fa-plus"></i> <i class="fas fa-user-graduate"></i>
-            <!-- Mentor -->
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_member' object.pk %}?init=on">
-            <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
-            <!-- Member -->
-          </a>
-        </li>
+
+    {% if nav == "detail" %}
+      {% if request.user|has_group:"office" and request.user.person.center_id == object.id %}
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-            href="{% url 'group_update' object.pk %}">
+            href="{% url 'center_update' object.id %}">
+            <i class="fas fa-edit"></i> 
+            Edit
+          </a>
+        </li>
+      {% endif %}
+
+      {% if request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+            href="{% url 'center_update' object.id %}">
             <i class="fas fa-edit"></i> 
             Edit
           </a>
@@ -67,15 +50,15 @@
         {% if object.is_active %}
           <li class="nav-item">
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-              href="{% url 'group_delete' object.pk %}">
+              href="{% url 'center_delete' object.id %}">
               <i class="fas fa-trash-alt"></i> 
-              Del
+              Delete
             </a>
           </li>
         {% else %}
           <li class="nav-item">
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
-              href="{% url 'group_reinsert' object.pk %}">
+              href="{% url 'center_reinsert' object.id %}">
               <i class="fas fa-sign-in-alt"></i> 
               Reinsert
             </a>
@@ -84,24 +67,18 @@
       {% endif %}
     {% endif %}
 
-    {% if nav == "frequencies" %}
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_frequencies' object.pk %}">
-          <i class="fas fa-calendar-plus"></i>
-          Frequencies
-        </a>
-      </li>
-    {% endif %}
-
     <li class="nav-item">
       <a class="nav-link px-1 mx-1 py-3 my-n2 text-info" 
-          href="{% url 'group_home' %}">
+          href="{% if nav == 'detail' %}
+                  {{ goback }}
+                {% else %}
+                  {% url 'home' %}
+                {% endif %}">
         <i class="fas fa-chevron-left"></i> 
         Back
       </a>
     </li>
-
+    
   </ul>
 
 </header>

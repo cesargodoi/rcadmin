@@ -4,14 +4,12 @@
 {% block content %}
 
 <div class="text-right mb-3">
-  <a class="btn btn-light mt-2 mr-3"
+  <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'membership_ps_list' person.id %}">
     <i class="fas fa-chevron-left"></i> 
-    Go back
+    Back
   </a>
 </div>
-
-{% include "person/elements/header.html" %}
 
 <article class="media content-section">
   <div class="media-body">

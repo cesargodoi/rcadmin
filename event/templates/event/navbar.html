@@ -8,7 +8,7 @@
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
-    {% if nav == 'home' %}Workgroups{% else %}Workgroup{% endif %}
+    {% if nav == 'home' %}Events{% else %}Event{% endif %}
   </a>
 
   <div class="navbar-nav-scroll">
@@ -21,9 +21,9 @@
     {% if nav == "home" %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-           href="{% url 'workgroup_create' %}">
+           href="{% url 'event_create' %}">
           <i class="fas fa-plus"></i>
-          Workgroup 
+          Event 
         </a>
       </li>
     {% endif %}
@@ -31,34 +31,36 @@
     {% if nav == "detail" %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'membership_insert' object.id %}?init=on">
-          <i class="fas fa-plus"></i> 
-          Member
+           href="{% url 'frequencies_add' object.pk %}">
+          <i class="fas fa-plus"></i>
+          Frequencies
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-          href="{% url 'workgroup_update' object.id %}">
+           href="{% url 'event_update' object.id %}">
           <i class="fas fa-edit"></i> 
           Edit
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-          href="{% url 'workgroup_delete' object.id %}">
-          <i class="fas fa-trash-alt"></i> 
-          Del
-        </a>
-      </li>
+      {% if not object_list %}
+        <li class="nav-item">
+          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+            href="{% url 'event_delete' object.id %}">
+            <i class="fas fa-trash-alt"></i> 
+            Delete
+          </a>
+        </li>
+      {% endif %}
     {% endif %}
 
     <li class="nav-item">
-      <a class="nav-link pl-2 px-1 mx-1 py-3 my-n2 text-info" 
-         href="{% if nav == 'home' %}
-                 {% url 'home' %}
-               {% elif nav == 'detail' %}
-                 {% url 'workgroup_home' %}
-               {% endif %}">
+      <a class="nav-link px-1 mx-1 py-3 my-n2 text-info" 
+          href="{%if nav == 'home' %}
+                  {% url 'home' %}
+                {% else %}
+                  {% url 'event_home' %}
+                {% endif %}">
         <i class="fas fa-chevron-left"></i> 
         Back
       </a>

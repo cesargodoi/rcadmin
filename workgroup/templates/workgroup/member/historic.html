@@ -5,8 +5,7 @@
 {% endif %}
 
 {% for hist in object_list %}
-<div class="row border-top border-secondary mt-2 pt-2"
-    onclick="location.href='{ url 'update_historic' object.pk hist.pk %}'">
+<div class="row border-top border-secondary mt-2 pt-2">
   <div class="col-sm-1">
     <small>{{ hist.date|date:'d/m/Y' }}</small>
   </div>
@@ -14,7 +13,9 @@
     {{ hist.get_occurrence_display }}
   </div>
   <div class="col-sm-8">
-    {{ hist.description }}
+    {% if hist.description %}
+      {{ hist.description }}
+    {% endif %}
   </div> 
 </div>
 {% endfor %}

@@ -8,9 +8,9 @@
     <strong>{{ object }}?</strong>
   </p>
   <hr>
-  <form class="text-right" method="POST">
+  <form method="POST">
     {% csrf_token %}
-    <div class="form-group">
+    <div class="form-group text-right">
       <button class="btn btn-danger" type="submit">
         <i class="fas fa-check"></i>
         Confirm

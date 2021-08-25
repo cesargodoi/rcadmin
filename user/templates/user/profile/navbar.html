@@ -1,25 +1,80 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
-  <a class="navbar-brand" href="#">Profile</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
-    aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarProfile">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link {% if tab == 'detail' %}active{% endif %}" href="{% url 'profile_detail' %}">Info</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" href="{% url 'user_frequencies' %}">Frequencies</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {% if tab == 'historic' %}active{% endif %}" href="{% url 'user_historic' %}">Historic</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {% if tab == 'payments' %}active{% endif %}" href="{% url 'user_payments' %}">Payments</a>
-      </li>
-    </ul>
-    <div class="navbar-nav"></div>
+<div class="skippy overflow-hidden">
+  <div class="container-xl">
+    <a class="sr-only sr-only-focusable d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+    <a class="sr-only sr-only-focusable d-none d-md-inline-flex p-2 m-1" href="#bd-docs-nav">Skip to docs navigation</a>
   </div>
-</nav>
+</div>
+{% load base_extras %}
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand mr-0 mr-md-2" 
+     href="{% url 'profile_detail' %}" aria-label="Bootstrap">
+    Profile
+  </a>
+
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+
+      <li class="nav-item">
+        <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" 
+           href="{% url 'user_frequencies' %}">
+           Frequencies
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if tab == 'historic' %}active{% endif %}" 
+           href="{% url 'user_historic' %}">
+           Historic
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if tab == 'payments' %}active{% endif %}" 
+           href="{% url 'user_payments' %}">
+           Payments
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- actions -->
+  <ul class="navbar-nav ml-md-auto">
+    {% if tab == "detail" %}
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+            href="{% url 'profile_update' %}">
+          <i class="fas fa-edit"></i> 
+          Edit
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+          href="{% url 'password_change' %}">
+          <i class="fas fa-key"></i> 
+          Change
+        </a>
+      </li>
+    {% endif %}
+
+    {% if tab == "frequencies" %}
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-info" 
+          href="{% url 'scan_qrcode_event' %}">
+          <i class="fas fa-qrcode "></i> 
+          Scan QR-CODE
+        </a>
+      </li>
+    {% endif %}
+
+    {% if tab == "payments" %}
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          href="{% url 'user_new_order' %}">
+          <i class="fas fa-money-bill-wave-alt"></i> 
+          New order
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+
+</header>
