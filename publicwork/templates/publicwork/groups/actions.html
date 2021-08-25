@@ -1,47 +1,6 @@
 {% load base_extras %}
 <!-- actions -->
 <div class="text-right mb-2 mt-2">
-  {% if nav == "info" %}
-    {% if not request.user|has_group:"publicwork_jr" %}
-      <a class="btn btn-light text-primary btn-sm" 
-        href="{% url 'group_add_mentor' object.pk %}?init=on">
-        <i class="fas fa-plus"></i>
-        Mentor
-      </a>
-      <a class="btn btn-light text-primary btn-sm" 
-        href="{% url 'group_add_member' object.pk %}?init=on">
-        <i class="fas fa-plus"></i>
-        Member
-      </a>
-      <a class="btn btn-light text-warning btn-sm" 
-        href="{% url 'group_update' object.pk %}">
-        <i class="fas fa-edit"></i> 
-        Edit
-      </a>
-      {% if object.is_active %}
-        <a class="btn btn-light text-danger btn-sm" 
-          href="{% url 'group_delete' object.pk %}">
-          <i class="fas fa-trash-alt"></i> 
-          Delete
-        </a>
-      {% else %}
-        <a class="btn btn-light text-success btn-sm" 
-          href="{% url 'group_reinsert' object.pk %}">
-          <i class="fas fa-sign-in-alt"></i> 
-          Reinsert
-        </a>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-
-  {% if nav == "frequencies" %}
-    <a class="btn btn-light text-primary btn-sm" 
-        href="{% url 'group_add_frequencies' object.pk %}">
-      <i class="fas fa-calendar-plus"></i>
-      Frequencies
-    </a>
-  {% endif %}
-
   {% if request.session.frequencies.lecture %}
     <a class="btn btn-primary" 
         href="#" 
