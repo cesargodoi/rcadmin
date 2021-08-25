@@ -1,75 +1,151 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
-  <a class="navbar-brand" href="{% url 'person_home' %}?init=on">Persons</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPersons"
-    aria-controls="navbarPersons" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<div class="skippy overflow-hidden">
+  <div class="container-xl">
+    <a class="sr-only sr-only-focusable d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+    <a class="sr-only sr-only-focusable d-none d-md-inline-flex p-2 m-1" href="#bd-docs-nav">Skip to docs navigation</a>
+  </div>
+</div>
+{% load base_extras %}
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand mr-0 mr-md-2" 
+     href="#" aria-label="Bootstrap">
+    {% if nav == 'detail' %}Person{% else %}Persons{% endif %}
+  </a>
 
-  <div class="collapse navbar-collapse" id="navbarPersons">
-    <!-- menu items -->
-    <ul class="navbar-nav mr-auto">
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+
       {% if nav == 'home' %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" 
-            href="#" 
-            id="personTools" 
-            role="button" 
-            data-toggle="dropdown" 
-            aria-haspopup="true" 
-            aria-expanded="false">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" 
+             href="#" 
+             id="person-tools" 
+             data-toggle="dropdown" 
+             aria-haspopup="true" 
+             aria-expanded="false">
             Tools
           </a>
-          <div class="dropdown-menu" aria-labelledby="personTools">
+          <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
             <a class="dropdown-item" href="{% url 'import_from_seekers' %}">Import from Seekers</a>
             <!-- <div class="dropdown-divider"></div> -->
-            <!-- <a class="dropdown-item" href="#">Other</a> -->
           </div>
         </li>
       {% endif %}
-
+      
       {% if nav == 'detail' %}
         <li class="nav-item">
           <a class="nav-link {% if tab == 'info' %}active{% endif %}" 
-            href="{% url 'person_detail' person.id %}">
+             href="{% url 'person_detail' person.id %}">
             Info
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'historic' %}active{% endif %}" 
-            href="{% url 'person_historic' person.id %}">
+             href="{% url 'person_historic' person.id %}">
             Historic
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" 
-            href="{% url 'frequency_ps_list' person.id %}">
+             href="{% url 'frequency_ps_list' person.id %}">
             Frequencies
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'membership' %}active{% endif %}" 
-            href="{% url 'membership_ps_list' person.id %}">
+             href="{% url 'membership_ps_list' person.id %}">
             Membership
           </a>
         </li>
       {% endif %}
 
     </ul>
+  </div>
 
-    <!-- controlers -->
-    <div class="navbar-nav">
-      <ul class="navbar-nav ml-md-auto">    
+  <!-- actions -->
+  <ul class="navbar-nav ml-md-auto">
+    {% if nav == "home" and request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+           href="{% url 'person_create' %}">
+          <i class="fas fa-plus"></i>
+          Person  
+        </a>
+      </li>
+    {% endif %}
+
+    {% if nav == "detail" %}
+      {% if tab == "info" %}
         <li class="nav-item">
-          <a class="btn btn-light text-info btn-sm" href="{% if nav == 'detail' %}
-                                                            {% url 'person_home' %}
-                                                          {% else %}
-                                                            {% url 'home' %}
-                                                          {% endif %}">
-            <i class="fas fa-chevron-left"></i> 
-            Back
+          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+             href="{% url 'person_update' object.id %}">
+            <i class="fas fa-edit"></i> 
+            Edit
           </a>
         </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+        {% if object.user.is_active %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+               href="{% url 'person_delete' object.id %}">
+              <i class="fas fa-trash-alt"></i> 
+              Delete
+            </a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
+               href="{% url 'person_reinsert' object.id %}">
+              <i class="fas fa-sign-in-alt"></i> 
+              Reinsert
+            </a>
+          </li>
+        {% endif %}
+      {% endif %}
+
+      {% if person.is_active %}
+        {% if tab == "historic" %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+               href="{% url 'historic_create' person.id %}">
+              <i class="fas fa-plus"></i> 
+              Historic
+            </a>
+          </li>
+        {% endif %}
+
+        {% if tab == "frequencies" %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+               href="{% url 'frequency_ps_insert' person.id %}">
+              <i class="fas fa-plus"></i> 
+              Frequency
+            </a>
+          </li>
+        {% endif %}
+
+        {% if tab == "membership" %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+               href="{% url 'membership_ps_create' person.id %}">
+              <i class="fas fa-plus"></i> 
+              Membership
+            </a>
+          </li>
+        {% endif %}
+      {% endif %}
+
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link px-1 mx-1 py-3 my-n2 text-info" 
+          href="{% if nav == 'home' %}
+                  {% url 'home' %}
+                {% else %}
+                  {% url 'person_home' %}
+                {% endif %}">
+        <i class="fas fa-chevron-left"></i> 
+        Back
+      </a>
+    </li>
+  </ul>
+
+</header>

@@ -7,7 +7,11 @@
   {% endif %}
 
   {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+  <div class="row border-top border-secondary pb-2 pt-2 {% if not obj.is_active %}
+                                                          text-danger
+                                                        {% elif obj.center != request.user.person.center %}
+                                                          text-secondary
+                                                        {% endif %}"
     {% if obj.click_link %}
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
         onclick="location.href='{{ obj.click_link }}';"
@@ -18,7 +22,7 @@
     <div class="col-sm-4">
       <strong>{{ obj.short_name }}</strong>
       &nbsp;&nbsp; 
-      <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+      <small>
         <em>{{ obj.user.profile.city }} ({{ obj.user.profile.state }}-{{ obj.user.profile.country }})</em> 
       </small>
     </div>

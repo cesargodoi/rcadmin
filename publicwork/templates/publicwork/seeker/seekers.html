@@ -9,11 +9,11 @@
 
   {% for obj in object_list %}
   <div class="row border-top border-secondary pb-2 pt-2 {% if obj.status == 'ITD' %}
-                                                        text-info
+                                                          text-info
                                                         {% elif not obj.is_active %}
-                                                        text-danger
+                                                          text-danger
                                                         {% elif obj.center != request.user.person.center %}
-                                                        text-warning
+                                                          text-secondary
                                                         {% endif %}"
     {% if obj.click_link %}
       {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
@@ -34,20 +34,20 @@
       {{ obj.center }}
       {% if obj.center != request.user.person.center %}
         &nbsp;&nbsp;
-        <span class="badge badge-pill badge-warning">only view</span>
+        <span class="badge badge-pill badge-secondary">only view</span>
       {% endif %}
     </div>
     
-    <div class="col-sm-2 text-right">
+    <div class="col-sm text-right">
       {% if not obj.is_active and obj.status != 'ITD' %}
         <small class="badge-pill badge-danger">inactive</small>
+        &nbsp;&nbsp;
       {% endif %}
       <strong>{{ obj.get_status_display }}</strong> 
-    </div>
 
-    <div class="col-sm text-right">
       {% if obj.add_link %}
         {% if obj.pk in pre_listeners %}
+          &nbsp;
           <i class="fas fa-user-check mr-1"></i>
         {% else %}
           <a type="button" 
@@ -58,6 +58,7 @@
         {% endif %}
       {% elif obj.add_member_link %}
         {% if obj.publicworkgroup_set.count %}
+          &nbsp;
           <i class="fas fa-user-check mr-1"></i>
         {% else %}
           <a type="button" 

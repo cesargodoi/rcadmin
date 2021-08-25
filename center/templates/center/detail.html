@@ -6,8 +6,6 @@
 
 {% include "center/header.html" %}
 
-{% include "center/actions.html" %}
-
 <article class="media content-section">
   <div class="media-body">
     <div class="row">
@@ -15,11 +13,7 @@
         <img class="img-thumbnail rounded mx-auto d-block mb-4" src="{{ object.image.url }}">
       </div>
       <div class="col-md-9">
-        <article class="media content-section">
-          <div class="media-body">
-            {% include "center/info.html" %}
-          </div>
-        </article>
+        {% include "center/info.html" %}
       </div>
     </div>
   </div>

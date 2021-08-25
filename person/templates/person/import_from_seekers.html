@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% include "person/elements/persons_navbar.html" %}
+{% include "person/navbar.html" %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
@@ -41,7 +41,7 @@
         <div class="col-sm text-right">
           <a type="button" 
             href="{% url 'import_seeker' obj.id %}"
-            class="btn btn-outline-primary btn-sm">
+            class="btn btn-light text-primary btn-sm">
             <i class="fas fa-check"></i> 
           </a>
         </div>

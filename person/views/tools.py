@@ -18,7 +18,10 @@ def import_from_seekers(request):
     )
     object_list = paginator(queryset, page=request.GET.get("page") or 1)
 
-    context = {"object_list": object_list, "title": "import from seekers"}
+    context = {
+        "object_list": object_list,
+        "title": "import from seekers",
+    }
     return render(request, "person/import_from_seekers.html", context)
 
 
