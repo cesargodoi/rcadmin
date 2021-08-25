@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% include "event/elements/event_navbar.html" %}
+{% include "event/navbar.html" %}
 
 <article class="media content-section mb-1">
   <div class="media-body">
@@ -10,7 +10,11 @@
       {% csrf_token %}
       {% include "base/searchs/event.html" %}
     </form>
-    <br>
+  </div>
+</article>
+
+<article class="media content-section mb-1">
+  <div class="media-body">
     {% include 'event/elements/events.html' %}
   </div>
 </article>

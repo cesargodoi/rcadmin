@@ -11,14 +11,12 @@
     <i class="fas fa-plus"></i> <i class="fas fa-users"></i>
     Insert
   </button>
-  <a class="btn btn-light mt-2 mr-3"
+  <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'event_detail' object.pk %}">
     <i class="fas fa-chevron-left"></i> 
-    Go back
+    Back
   </a>
 </div>
-
-{% include 'event/elements/event_header.html' %}
 
 <article class="media content-section">
   <div class="media-body">

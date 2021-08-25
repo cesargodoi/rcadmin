@@ -1,5 +1,3 @@
-import os
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
@@ -31,7 +29,7 @@ def event_home(request):
         "type_list": ACTIVITY_TYPES,
         "nav": "home",
     }
-    return render(request, "event/event_home.html", context)
+    return render(request, "event/home.html", context)
 
 
 @login_required
@@ -47,7 +45,7 @@ def event_detail(request, pk):
         "title": "event detail",
         "nav": "detail",
     }
-    return render(request, "event/event_detail.html", context)
+    return render(request, "event/detail.html", context)
 
 
 @login_required

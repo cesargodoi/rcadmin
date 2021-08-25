@@ -6,12 +6,10 @@
 
 {% include "user/profile/header.html" %}
 
-{% include "user/profile/actions.html" %}
-
 <article class="media content-section">
   <div class="media-body">
     {% if tab == "detail" %}
-      <h4>Info</h4>
+      <h4>Profile</h4>
       {% include "user/profile/info.html" %}
     {% elif tab == "frequencies" %}
       {% include "user/profile/frequencies.html" %}
