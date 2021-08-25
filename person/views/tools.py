@@ -51,8 +51,6 @@ def import_seeker(request, id):
         new_user.person.name = seeker.name
         new_user.person.center = seeker.center
         new_user.person.birth = seeker.birth
-        # add password in observations
-        new_user.person.observations = f"first password: {password}"
         # put old historic from publicwork to person observations
         new_user.person.observations += "\n*** Public Work Historic ***"
         seeker_historic = seeker.historicofseeker_set.all()
@@ -67,6 +65,7 @@ def import_seeker(request, id):
         # inactive seeker
         seeker.status = "ITD"
         seeker.is_active = False
+        seeker.save()
 
         return redirect("person_detail", id=new_user.person.pk)
 

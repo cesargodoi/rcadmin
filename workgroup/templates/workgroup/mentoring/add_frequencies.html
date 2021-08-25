@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="text-right mb-2 mt-4">
+  {% if request.session.frequencies.event %}
+    <a class="btn btn-primary mt-2" 
+        href="#" 
+        onclick="document.getElementById('form').submit();">
+      <i class="fas fa-check"></i> 
+      Add
+    </a>
+  {% endif %}
+  <a class="btn btn-light mt-2 mr-3 text-info"
+      href="{% url 'mentoring_group_frequencies' object.id %}">
+    <i class="fas fa-chevron-left"></i> 
+    Back
+  </a>
+</div>
+
+<article class="media content-section">
+  <div class="media-body">
+    {% if not request.session.frequencies.event %}
+      {% include "workgroup/mentoring/select_event.html" %}
+    {% else %}
+      {% include "workgroup/mentoring/who_participated.html" %}
+    {% endif %}
+  </div>
+</article>
+
+{% endblock content %}

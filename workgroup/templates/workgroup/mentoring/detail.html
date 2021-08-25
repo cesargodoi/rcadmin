@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% include "workgroup/mentoring/navbar.html" %}
+
+{% include "workgroup/mentoring/header.html" %}
+
+<article class="media content-section">
+  <div class="media-body">
+
+  {% if tab == "members" %}
+    {% include "workgroup/mentoring/members.html" %}
+  {% elif tab == "frequencies" %}
+    {% include "workgroup/mentoring/frequencies.html" %}
+  {% endif %}
+
+  </div>
+</article>
+
+{% endblock content %}

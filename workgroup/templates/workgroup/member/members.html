@@ -17,14 +17,14 @@
 
     <div class="col-sm-5">
       <strong>{{ obj.person.short_name }}</strong>
+      &nbsp;&nbsp;
+      <small>{{ obj.person.center }}</small>
     </div>
 
-    <div class="col-sm-2 small align-middle">
-      {{ obj.person.center }}
-    </div>
-
-    <div class="col-sm-2 small align-middle">
+    <div class="col-sm-3 align-middle">
       {{ obj.person.get_aspect_display }}
+      &nbsp;&nbsp;
+      <small>since: <strong>{{ obj.person.aspect_date|date:"d/m/y" }}</strong></small>
     </div>
 
     <div class="col-sm-2 align-middle">
