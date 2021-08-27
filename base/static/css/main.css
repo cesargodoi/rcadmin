@@ -297,8 +297,16 @@ th:nth-child(3) {
 
 /* navbar */
 #submenu .nav-link {
-  color: var(--color-font);
+  color: rgba(var(--nav-font), 0.7);
 }
+#submenu .nav-link.active {
+  color: rgba(var(--nav-font), 1);
+  font-weight: bold;
+}
+#submenu .nav-link:hover {
+  color: rgba(var(--nav-font), 1);
+}
+
 
 #submenu .navbar-brand{
   color: var(--color-font);
