@@ -295,6 +295,15 @@ th:nth-child(3) {
   text-align: left;
 }
 
+/* navbar */
+#submenu .nav-link {
+  color: var(--color-font);
+}
+
+#submenu .navbar-brand{
+  color: var(--color-font);
+}
+
 /* profile */
 .bg-transp {
   background-color: transparent !important;
