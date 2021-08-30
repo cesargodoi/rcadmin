@@ -11,7 +11,13 @@ from person.models import Historic
 from rcadmin.common import short_name
 
 
-# Aquarius_2020-8-5_persons.csv
+"""
+pra rodar via:
+./manage.py runscript import_persons --script-args <núcleo> <arquivo_sem_ ext>
+O arquivo vai ter que ser copiado para a pasta imports no servidor.
+"""
+
+
 def run(*args):
     # get args
     center_name, file_name = args[0], args[1]
@@ -27,7 +33,6 @@ def run(*args):
     # read file as a dict
     with open(file_path, newline="") as csvfile:
         _dict = csv.DictReader(csvfile)
-
         for person in _dict:
             if not person.get("email"):
                 not_email.append(f"{person['name']}")
@@ -52,7 +57,7 @@ def run(*args):
 
                     _profile.social_name = short_name(person["name"])
                     _profile.gender = person["gender"]
-                    _profile.profession = person["profession"]
+                    _profile.profession = person["profession"] or ""
 
                     if person.get("address"):
                         address = person["address"].split(",")
@@ -68,23 +73,22 @@ def run(*args):
                     _profile.city = person["city"]
                     _profile.state = person["state_prov"]
                     _profile.country = center.country
-                    _profile.zip_code = person["zip"].strip()
-                    _profile.phone_1 = person["cell_phone"]
-                    _profile.phone_2 = person["phone"]
-                    _profile.sos_contact = person["sos_contact"]
-                    _profile.sos_phone = person["sos_phone"]
-
+                    _profile.zip_code = person["zip"].strip() or ""
+                    _profile.phone_1 = person["cell_phone"] or ""
+                    _profile.phone_2 = person["phone"] or ""
+                    _profile.sos_contact = person["sos_contact"] or ""
+                    _profile.sos_phone = person["sos_phone"] or ""
                     _profile.save()
 
                     # updating the user.person
                     _person = _user.person
 
                     _person.center = center
-                    _person.reg = person["reg"]  # need to confirm - presidium
+                    _person.reg = person["reg"] or ""
                     _person.name = person["name"]
                     _person.short_name = short_name(person["name"])
                     _person.birth = person["birthday"]
-                    _person.observations = f"{person['ps']}"
+                    _person.observations = f"{person['ps']}" or ""
                     _person.made_by = user
 
                     # list of aspects
