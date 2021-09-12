@@ -10,6 +10,8 @@
   {% for obj in object_list %}
   <div class="row border-top border-secondary pb-2 pt-2 {% if obj.status == 'ITD' %}
                                                           text-info
+                                                        {% elif obj.status == 'STD' %}
+                                                          text-success
                                                         {% elif not obj.is_active %}
                                                           text-danger
                                                         {% elif obj.center != request.user.person.center %}
