@@ -24,7 +24,7 @@ def create_historic(request, pk):
                     request.POST.get("occurrence"),
                     request.POST.get("date"),
                 )
-            if request.POST["occurrence"] == "RST":
+            if request.POST["occurrence"] in ("RST", "STD"):
                 seeker.is_active = False
                 seeker.save()
             messages.success(request, "The Historic has been created!")
@@ -83,7 +83,10 @@ def update_historic(request, seek_pk, hist_pk):
 def delete_historic(request, seek_pk, hist_pk):
     historic = HistoricOfSeeker.objects.get(pk=hist_pk)
     if request.method == "POST":
+        occur = historic.occurrence
         historic.delete()
+        if occur not in ("OBS", "NEW"):
+            adjust_seeker_side(historic.seeker, reverse=True)
         return redirect("seeker_historic", pk=seek_pk)
 
     context = {"object": historic, "title": "confirm to delete"}
@@ -91,9 +94,15 @@ def delete_historic(request, seek_pk, hist_pk):
 
 
 # handlers
-def adjust_seeker_side(seeker, occur, dt):
-    date = datetime.strptime(dt, "%Y-%m-%d").date()
-    if not seeker.status_date or date >= seeker.status_date:
-        seeker.status = occur
-        seeker.status_date = date
+def adjust_seeker_side(seeker, occur=None, dt=None, reverse=False):
+    if reverse:
+        old_historic = HistoricOfSeeker.objects.filter(seeker=seeker).last()
+        seeker.status = old_historic.occurrence
+        seeker.status_date = old_historic.date
         seeker.save()
+    else:
+        date = datetime.strptime(dt, "%Y-%m-%d").date()
+        if not seeker.status_date or date >= seeker.status_date:
+            seeker.status = occur
+            seeker.status_date = date
+            seeker.save()

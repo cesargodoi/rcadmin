@@ -96,6 +96,7 @@ SEEKER_STATUS = (
     ("MBR", "member"),
     ("INS", "installing"),
     ("ITD", "installed"),
+    ("STD", "stand by"),
     ("RST", "restriction"),
 )
 BR_REGIONS = {

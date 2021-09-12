@@ -72,7 +72,9 @@ def group_detail(request, pk):
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    object_list = pw_group.members.exclude(status="ITD").order_by("name")
+    object_list = pw_group.members.exclude(
+        status__in=("ITD", "RST", "STD")
+    ).order_by("name")
     # add action links
     for item in object_list:
         item.click_link = (
