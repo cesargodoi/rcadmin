@@ -46,12 +46,14 @@ def group_home(request):
         clear_session(request, ["search"])
         object_list = request.user.person.publicworkgroup_set.all()
         for item in object_list:
+            item.actives = item.members.filter(is_active=True).count()
             item.click_link = reverse("group_detail", args=[item.pk])
     else:
         queryset, page = search_pw_group(request, PublicworkGroup)
         object_list = paginator(queryset, page=page)
         # add action links
         for item in object_list:
+            item.actives = item.members.filter(is_active=True).count()
             item.click_link = reverse("group_detail", args=[item.pk])
 
     context = {
@@ -87,6 +89,7 @@ def group_detail(request, pk):
     context = {
         "object": pw_group,
         "object_list": object_list,
+        "active_members": len(object_list),
         "title": "group detail",
         "nav": "info",
         "table_title": "Members",
@@ -192,9 +195,8 @@ def group_frequencies(request, pk):
     page = request.GET["page"] if request.GET.get("page") else 1
 
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    frequencies = get_frequencies(
-        [mbr.id for mbr in pw_group.members.exclude(status="ITD")]
-    )
+    active_members = pw_group.members.exclude(status__in=("ITD", "RST", "STD"))
+    frequencies = get_frequencies([mbr.id for mbr in active_members])
 
     context = {
         "object": pw_group,
@@ -204,6 +206,7 @@ def group_frequencies(request, pk):
             20,
             page=page,
         ),
+        "active_members": len(active_members),
         "nav": "frequencies",
         "now": datetime.now().date(),
     }

@@ -24,8 +24,8 @@
         </h4>
       </div>
       <div class="col text-right">
-        {% if object.members.all|length > 0 %}
-          <strong>{{ object.members.all|length }}</strong> 
+        {% if active_members %}
+          <strong>{{ active_members }}</strong> 
           <i class="fas fa-users"></i>  
         {% endif %}
       </div>
