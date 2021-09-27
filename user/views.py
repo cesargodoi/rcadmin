@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
+from django.utils.translation import get_language, activate
 from event.models import Event
 from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
@@ -16,7 +18,10 @@ from .forms import MyFormOfPaymentForm, MyPaymentForm, ProfileForm, UserForm
 @login_required
 @permission_required("user.view_profile")
 def profile_detail(request):
-    context = {"object": request.user, "tab": "detail"}
+    context = {
+        "object": request.user,
+        "tab": "detail",
+    }
     return render(request, "user/profile/detail.html", context)
 
 
@@ -32,7 +37,7 @@ def profile_update(request):
         )
         if profile_form.is_valid():
             profile_form.save()
-            message = "My Profile has been updated!"
+            message = _("My Profile has been updated!")
             messages.success(request, message)
 
         return redirect(reverse("profile_detail"))
@@ -40,7 +45,7 @@ def profile_update(request):
     context = {
         "user_form": UserForm(instance=request.user),
         "profile_form": ProfileForm(instance=request.user.profile),
-        "title": "update profile",
+        "title": _("update profile"),
         "object": request.user,
     }
 
@@ -80,7 +85,7 @@ def scan_qrcode_event(request):
     if request.method == "POST":
         event = get_object_or_404(Event, id=request.POST.get("id"))
         event.frequencies.add(request.user.person)
-        message = f"You are registered for the event: {event}"
+        message = _(f"You are registered for the event: {event}")
         messages.success(request, message)
         return redirect(reverse("user_frequencies"))
 
@@ -167,7 +172,7 @@ def user_new_order(request):
         return redirect("user_payments")
 
     context = {
-        "title": "Create my order",
+        "title": _("Create my order"),
         "object": request.user,
         "form": MyFormOfPaymentForm(
             initial={"value": request.session["my_order"]["total_payments"]}
@@ -239,7 +244,7 @@ def add_payment(request):
                 "ref_month": timezone.now().date(),
             }
         ),
-        "title": "Create my order - add payment",
+        "title": _("Create my order - add payment"),
         "object": request.user,
     }
     return render(request, "user/profile/add_payment.html", context)
@@ -261,5 +266,5 @@ def del_payment(request, pay_id):
         request.session.modified = True
         return redirect("user_new_order")
 
-    context = {"title": "confirm delete"}
+    context = {"title": _("confirm delete")}
     return render(request, "user/profile/confirm_del.html", context)

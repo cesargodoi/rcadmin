@@ -1,37 +1,38 @@
 {% load base_extras %}
+{% load i18n %}
 
 {% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"treasury" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'center_home' %}?init=on">Centers</a>
+    <a class="nav-link" href="{% url 'center_home' %}?init=on">{% trans 'Centers' %}</a>
   </li>
 {% endif %}
 {% if request.user.is_superuser or request.user|has_group:"office" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'person_home' %}?init=on">Persons</a>
+    <a class="nav-link" href="{% url 'person_home' %}?init=on">{% trans 'Persons' %}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'event_home' %}?init=on">Events</a>
+    <a class="nav-link" href="{% url 'event_home' %}?init=on">{% trans 'Events' %}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'workgroup_home' %}?init=on">Workgroups</a>
+    <a class="nav-link" href="{% url 'workgroup_home' %}?init=on">{% trans 'Workgroups' %}</a>
   </li>
 {% endif %}
 
 {% if request.user.is_superuser or request.user|has_group:"mentoring" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'mentoring_home' %}?init=on">Mentoring</a>
+    <a class="nav-link" href="{% url 'mentoring_home' %}?init=on">{% trans 'Mentoring' %}</a>
   </li>
 {% endif %}
 
 {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'publicwork_home' %}?init=on">Public Work</a>
+    <a class="nav-link" href="{% url 'publicwork_home' %}?init=on">{% trans 'Public Work' %}</a>
   </li>
 {% endif %}
 
 {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'treasury_home' %}">Treasury</a>
+    <a class="nav-link" href="{% url 'treasury_home' %}">{% trans 'Treasury' %}</a>
   </li>
 {% endif %}
 

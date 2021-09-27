@@ -2,11 +2,13 @@ from django.http.response import Http404
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.utils import translation
 from center.models import Center
 
 
 @login_required
 def home(request):
+    # translation.activate("pt-br")
     if request.user.person.center:
         center = Center.objects.get(id=request.user.person.center.id)
     elif Center.objects.count() > 0:
