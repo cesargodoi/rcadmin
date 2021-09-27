@@ -1,4 +1,6 @@
 {% extends "user/base.html" %}
+{% load i18n %}
+
 {% load static %}
 {% block content %}
 
@@ -13,11 +15,11 @@
 <article class="media content-section">
     <div class="media-body content-box" >
         <aside class="aside-box">
-            <h1>Uh!</h1>
-            <h2>Internal error.</h2>
-            <h2>Please, try again later...</h2>
+            <h1>{% trans 'Uh!' %}</h1>
+            <h2>{% trans 'Internal error.' %}</h2>
+            <h2>{% trans 'Please, try again later...' %}</h2>
             <div class="contact">
-                <p class="contact-link"><strong>or contact our support:</strong></p>
+                <p class="contact-link"><strong>{% trans 'or contact our support:' %}</strong></p>
             </div>
             <p id="mail">school@admin.com</p>
         </aside>

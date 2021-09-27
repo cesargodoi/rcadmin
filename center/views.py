@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from rcadmin.common import paginator, clear_session
 from base.searchs import search_center
 from django.http.response import Http404
@@ -27,7 +28,7 @@ def center_home(request):
     context = {
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "title": "center home",
+        "title": _("center home"),
         "nav": "home",
     }
     return render(request, "center/home.html", context)
@@ -44,7 +45,7 @@ def center_detail(request, pk):
 
     context = {
         "object": center,
-        "title": "center detail",
+        "title": _("center detail"),
         "users": users,
         "nav": "detail",
         "goback": goback,
@@ -73,7 +74,7 @@ def center_create(request):
         "form_name": "Center",
         "form_path": "center/forms/center.html",
         "goback": reverse("center_home"),
-        "title": "create center",
+        "title": _("create center"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -103,7 +104,7 @@ def center_update(request, pk):
         "form_name": "Center",
         "form_path": "center/forms/center.html",
         "goback": reverse("center_detail", args=[pk]),
-        "title": "update center",
+        "title": _("update center"),
         "id": pk,
     }
     return render(request, "base/form.html", context)
@@ -127,7 +128,7 @@ def center_delete(request, pk):
     context = {
         "object": center,
         "new_center": SelectNewCenterForm() if center.person_set.all() else "",
-        "title": "confirm to delete",
+        "title": _("confirm to delete"),
     }
     return render(request, "center/confirm_delete.html", context)
 
@@ -141,5 +142,8 @@ def center_reinsert(request, pk):
         center.save()
         return redirect(reverse("center_home") + "?init=on")
 
-    context = {"object": center, "title": "confirm to reinsert"}
+    context = {
+        "object": center,
+        "title": _("confirm to reinsert"),
+    }
     return render(request, "center/confirm_reinsert.html", context)

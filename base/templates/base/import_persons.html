@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% load static %}
 
@@ -32,20 +33,20 @@
         class="btn btn-light text-success controls-report" 
         data-toggle="modal" data-target="#modal">
         <i class="fas fa-chart-bar"></i> 
-        New import
+        {% trans 'New import' %}
       </a>
       <a type="button" 
         class="btn btn-light text-warning controls-report" 
         href="#"
         onclick="window.print()">
         <i class="fas fa-print"></i> 
-        To print
+        {% trans 'To print' %}
       </a>
       <a type="button" 
         class="btn btn-light text-info controls-report" 
         href="{% url 'home' %}">
         <i class="fas fa-chevron-left "></i> 
-        Go back
+        {% trans 'Go back' %}
       </a>
     </div>
   </div>
@@ -53,39 +54,39 @@
   {% if report_data %}
 
   <article class="content-section mb-1">
-    <h4>Summary</h4>
+    <h4>{% trans 'Summary' %}</h4>
     <table class="table table-sm table-striped">
       <tr>
-        <th>center to insert</th>
+        <th>{% trans 'center to insert' %}</th>
         <td>{{ report_data.center }}</td>
       </tr>
       <tr>
-        <th>file name</th>
+        <th>{% trans 'file name' %}</th>
         <td>{{ report_data.file }} &nbsp;&nbsp;
         </td>
       </tr>
       <tr>
-        <th>importeds</th>
+        <th>{% trans 'importeds' %}</th>
         <td>{{ report_data.importeds|length }}</td>
       </tr>
       <tr>
-        <th>without email</th>
+        <th>{% trans 'without email' %}</th>
         <td>{{ report_data.no_email|length }}</td>
       </tr>
       <tr>
-        <th>already in db</th>
+        <th>{% trans 'already in db' %}</th>
         <td>{{ report_data.used_email|length }}</td>
       </tr>
       <tr>
-        <th>total</th>
-        <td>{{ report_data.total }} objects</td>
+        <th>{% trans 'total' %}</th>
+        <td>{{ report_data.total }} {% trans 'objects' %}</td>
       </tr>
     </table>
 
-    <h4>Detail</h4>
+    <h4>{% trans 'Detail' %}</h4>
     <table class="table table-sm">
       <tr>
-        <th>importeds</th>
+        <th>{% trans 'importeds' %}</th>
         <td>
           {% for obj in report_data.importeds %}
           {{ obj }} &nbsp;&nbsp;
@@ -93,7 +94,7 @@
         </td>
       </tr>
       <tr>
-        <th>without email</th>
+        <th>{% trans 'without email' %}</th>
         <td>
           {% for obj in report_data.no_email %}
           {{ obj }} &nbsp;&nbsp;
@@ -101,7 +102,7 @@
         </td>
       </tr>
       <tr>
-        <th>already in db</th>
+        <th>{% trans 'already in db' %}</th>
         <td>
           {% for obj in report_data.used_email %}
           {{ obj }} &nbsp;&nbsp;
@@ -114,7 +115,7 @@
   {% else %}
 
   <div class="alert alert-info" role="alert">
-    <h4 class="alert-heading">select file (.csv) to import</h4>
+    <h4 class="alert-heading">{% trans 'select file (.csv) to import' %}</h4>
   </div>
 
   {% endif %}

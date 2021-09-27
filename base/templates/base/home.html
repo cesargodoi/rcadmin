@@ -1,12 +1,13 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% load base_extras %}
+{% load i18n %}
 
 {% block content %}
 
 <div class="content-section mb-1" 
      onclick="location.href='{% url 'center_detail' object.pk %}?from=home'">
-  <div class="article-metadata">Welcome to</div>
+  <div class="article-metadata">{% trans 'Welcome to' %}</div>
   <div class="row">
     <div class="col-lg-2">
         <img src="{{ object.image.url }}" class="round-circle article-img" >
@@ -40,7 +41,7 @@
       <div class="card h-100 card-principal-backimage ">
         <img src="{% static 'images/center.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Centers</h5>
+        <h5 class="card-principal-title">{% trans 'Centers' %}</h5>
       </div>
     </div>
   </div>
@@ -50,7 +51,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/persons.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Persons</h5>
+        <h5 class="card-principal-title">{% trans 'Persons' %}</h5>
       </div>
     </div>
   </div>
@@ -59,7 +60,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/events.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Events</h5>
+        <h5 class="card-principal-title">{% trans 'Events' %}</h5>
       </div>
     </div>
   </div>
@@ -68,7 +69,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/workgroups.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Workgroups</h5>
+        <h5 class="card-principal-title">{% trans 'Workgroups' %}</h5>
       </div>
     </div>
   </div>
@@ -80,7 +81,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/mentoring.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Mentoring</h5>
+        <h5 class="card-principal-title">{% trans 'Mentoring' %}</h5>
       </div>
     </div>
   </div>
@@ -92,7 +93,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/publicwork.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Public Work</h5>
+        <h5 class="card-principal-title">{% trans 'Public Work' %}</h5>
       </div>
     </div>
   </div>
@@ -104,7 +105,7 @@
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/reports.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title" onclick="location.href='{% url 'treasury_home' %}';">Treasury</h5>
+        <h5 class="card-principal-title" onclick="location.href='{% url 'treasury_home' %}';">{% trans 'Treasury' %}</h5>
       </div>
     </div>
   </div>

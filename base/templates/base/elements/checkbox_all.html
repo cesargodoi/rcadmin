@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="form-check form-check-inline">
   <input
         onclick="toggleCheckBox()" 
@@ -7,7 +9,7 @@
         id="on" 
         name="all" 
         {% if request.session.search.all == "on" %}checked{% endif %}>
-  <label class="form-check-label" for="on">all</label>
+  <label class="form-check-label" for="on">{% trans 'all' %}</label>
 </div>
   <input 
         class="form-check-input" 

@@ -1,4 +1,6 @@
 {% load crispy_forms_tags %}
+{% load i18n %}
+
 <form method="POST" enctype="multipart/form-data" id="form">
   {% csrf_token %}
   <ul class="nav nav-pills" id="myTab" role="tablist">
@@ -9,7 +11,7 @@
         href="#basic" 
         role="tab" 
         aria-controls="basic"
-        aria-selected="true">Basic</a>
+        aria-selected="true">{% trans 'Basic' %}</a>
     </li>
     <li class="nav-item" role="presentation">
       <a class="nav-link" 
@@ -18,7 +20,7 @@
         href="#contacts" 
         role="tab" 
         aria-controls="contacts"
-        aria-selected="true">Contacts</a>
+        aria-selected="true">{% trans 'Contacts' %}</a>
     </li>
     <li class="nav-item" role="presentation">
       <a class="nav-link" 
@@ -27,7 +29,7 @@
         href="#address" 
         role="tab" 
         aria-controls="address"
-        aria-selected="false">Address</a>
+        aria-selected="false">{% trans 'Address' %}</a>
     </li>
     <li class="nav-item" role="presentation">
       <a class="nav-link" 
@@ -36,7 +38,7 @@
         href="#other" 
         role="tab" 
         aria-controls="other"
-        aria-selected="false">Others</a>
+        aria-selected="false">{% trans 'Others' %}</a>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">

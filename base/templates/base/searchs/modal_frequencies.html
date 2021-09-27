@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -5,7 +7,7 @@
       <form class="form-control-sm border-top" method="GET">
         {% csrf_token %}
         <div class="modal-header">
-          <h5 class="modal-title text-secondary" id="modalLabel">Frequencies per period</h5>
+          <h5 class="modal-title text-secondary" id="modalLabel">{% trans 'Frequencies per period' %}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -15,7 +17,7 @@
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">
-                <div class="input-group-text">from</div>
+                <div class="input-group-text">{% trans 'from' %}</div>
               </div>
               <input type="date" 
                     name="dt1" 
@@ -25,7 +27,7 @@
             </div>
             <div class="input-group mt-3">
               <div class="input-group-prepend">
-                <div class="input-group-text">to</div>
+                <div class="input-group-text">{% trans 'to' %}</div>
               </div>
               <input type="date" 
                     name="dt2" 
@@ -35,10 +37,10 @@
             </div>
             <div class="input-group mt-3">
               <div class="input-group-prepend">
-                <div class="input-group-text">status</div>
+                <div class="input-group-text">{% trans 'status' %}</div>
               </div>
               <select class="form-control" name="status">
-                <option value="" {% if stt.1 == request.session.search.status %}selected{% endif %}>all</option>
+                <option value="" {% if stt.1 == request.session.search.status %}selected{% endif %}>{% trans 'all' %}</option>
                 {% for stt in status %}
                 <option value="{{ stt.1 }}"
                         {% if stt.1 == request.session.search.status %}selected{% endif %}>
@@ -54,14 +56,14 @@
                       id="all"
                       name="all"
                       {% if request.session.search.all %}checked{% endif %}>
-                <label class="form-check-label text-secondary" for="all">all</label>
+                <label class="form-check-label text-secondary" for="all">{% trans 'all' %}</label>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn btn-success ml-2" type="submit"><i class="fas fa-chart-bar"></i> Generate</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
+          <button class="btn btn btn-success ml-2" type="submit"><i class="fas fa-chart-bar"></i> {% trans 'Generate' %}</button>
         </div>
       </form>
     </div>

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="article-metadata">
@@ -7,7 +9,7 @@
         </div>
         <div class="col text-right">
           {% if users %}
-          <span class="badge badge-pill badge-primary">{{ users }} pupils</span>
+          <span class="badge badge-pill badge-primary">{{ users }} {% trans 'pupils' %}</span>
           {% endif %}
         </div>
       </div>
@@ -17,13 +19,13 @@
       {% if object.center_type != 'CNF' and object.conf_center %}
       &nbsp;&nbsp;
       <small class="text-muted">
-        conference center: {{ object.conf_center.name }}
+        {% trans 'conference center'%}: {{ object.conf_center.name }}
         ({{ object.conf_center.get_country_display }})
       </small>
       {% endif %}
       {% if not object.is_active %}
       &nbsp;&nbsp;
-      <span class="badge badge-pill badge-danger"> inactive </span>
+      <span class="badge badge-pill badge-danger"> {% trans 'inactive' %} </span>
       {% endif %}
     </h3>
   </div>

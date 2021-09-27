@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -5,7 +7,7 @@
       <form class="form-control-sm border-top" method="GET">
         {% csrf_token %}
         <div class="modal-header">
-          <h5 class="modal-title text-secondary" id="modalLabel">Status per center</h5>
+          <h5 class="modal-title text-secondary" id="modalLabel">{% trans 'Status per center' %}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -15,10 +17,10 @@
           <div class="form-group">
             <div class="input-group mt-3">
               <div class="input-group-prepend">
-                <div class="input-group-text">status</div>
+                <div class="input-group-text">{% trans 'status' %}</div>
               </div>
               <select class="form-control" name="status">
-                <option value="all" {% if stt.1 == request.session.search.status %}selected{% endif %}>all</option>
+                <option value="all" {% if stt.1 == request.session.search.status %}selected{% endif %}>{% trans 'all' %}</option>
                 {% for stt in status %}
                 <option value="{{ stt.0 }}"
                         {% if stt.0 == request.session.search.status %}selected{% endif %}>
@@ -30,8 +32,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn btn-success ml-2" type="submit"><i class="fas fa-chart-bar"></i> Generate</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
+          <button class="btn btn btn-success ml-2" type="submit"><i class="fas fa-chart-bar"></i> {% trans 'Generate' %}</button>
         </div>
       </form>
     </div>

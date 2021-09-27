@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 16:14-0300\n"
-"PO-Revision-Date: 2021-09-24 16:22-0306\n"
-"Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
+"POT-Creation-Date: 2021-09-27 19:43-0300\n"
+"PO-Revision-Date: 2021-09-27 19:35-0306\n"
+"Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,31 +19,117 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.7\n"
 
-#: base/templates/base/elements/menu.html:6
+#: base/templates/base/404.html:18
+msgid "Oops!"
+msgstr "Oops!"
+
+#: base/templates/base/404.html:19
+msgid "I think we lost this page."
+msgstr "Acho que perdemos esta página."
+
+#: base/templates/base/404.html:20
+msgid "But, we can still help you..."
+msgstr "Mas, ainda podemos ajudá-lo ..."
+
+#: base/templates/base/404.html:22
+msgid "Click"
+msgstr "Clique"
+
+#: base/templates/base/404.html:22
+msgid "here"
+msgstr "aqui"
+
+#: base/templates/base/404.html:22
+msgid "to return"
+msgstr "para voltar"
+
+#: base/templates/base/404.html:23
+msgid "or contact our support"
+msgstr "ou contate nosso suporte"
+
+#: base/templates/base/500.html:18
+msgid "Uh!"
+msgstr "Oh!"
+
+#: base/templates/base/500.html:19
+msgid "Internal error."
+msgstr "Erro Interno."
+
+#: base/templates/base/500.html:20
+msgid "Please, try again later..."
+msgstr "Por favor, tente novamente mais tarde..."
+
+#: base/templates/base/500.html:22
+msgid "or contact our support:"
+msgstr "ou entre em contato com nosso suporte:"
+
+#: base/templates/base/action_not_allowed.html:8
+msgid "Action not allowed!"
+msgstr "Ação não permitida!"
+
+#: base/templates/base/action_not_allowed.html:11
+#: base/templates/base/import_persons.html:49
+msgid "Go back"
+msgstr "Voltar"
+
+#: base/templates/base/confirm_delete.html:8
+#: center/templates/center/confirm_delete.html:7
+#: center/templates/center/confirm_reinsert.html:8
+msgid "Atention!"
+msgstr "Atenção!"
+
+#: base/templates/base/confirm_delete.html:9
+msgid "Are you sure you want to delete"
+msgstr "Tem certeza que deseja apagar"
+
+#: base/templates/base/confirm_delete.html:18
+#: center/templates/center/confirm_delete.html:20
+#: center/templates/center/confirm_reinsert.html:18
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: base/templates/base/confirm_delete.html:22 base/templates/base/form.html:17
+#: center/templates/center/confirm_delete.html:24
+#: center/templates/center/confirm_reinsert.html:22
+#: center/templates/center/navbar.html:73
+#: user/templates/user/auth/password_change_form.html:18
+msgid "Back"
+msgstr "Voltar"
+
+#: base/templates/base/elements/checkbox_all.html:12
+#: base/templates/base/searchs/modal_frequencies.html:43
+#: base/templates/base/searchs/modal_frequencies.html:59
+#: base/templates/base/searchs/modal_lectures.html:59
+#: base/templates/base/searchs/modal_status.html:23
+msgid "all"
+msgstr "todos"
+
+#: base/templates/base/elements/menu.html:6 base/templates/base/home.html:44
+#: center/templates/center/centers.html:4 center/templates/center/navbar.html:6
 msgid "Centers"
 msgstr "Núcleos"
 
-#: base/templates/base/elements/menu.html:11
+#: base/templates/base/elements/menu.html:11 base/templates/base/home.html:54
 msgid "Persons"
 msgstr "Alunos"
 
-#: base/templates/base/elements/menu.html:14
+#: base/templates/base/elements/menu.html:14 base/templates/base/home.html:63
 msgid "Events"
 msgstr "Eventos"
 
-#: base/templates/base/elements/menu.html:17
+#: base/templates/base/elements/menu.html:17 base/templates/base/home.html:72
 msgid "Workgroups"
 msgstr "Grupos"
 
-#: base/templates/base/elements/menu.html:23
+#: base/templates/base/elements/menu.html:23 base/templates/base/home.html:84
 msgid "Mentoring"
 msgstr "Mentoria"
 
-#: base/templates/base/elements/menu.html:29
+#: base/templates/base/elements/menu.html:29 base/templates/base/home.html:96
 msgid "Public Work"
 msgstr "Trabalho Público"
 
-#: base/templates/base/elements/menu.html:35
+#: base/templates/base/elements/menu.html:35 base/templates/base/home.html:108
 msgid "Treasury"
 msgstr "Tesouraria"
 
@@ -72,19 +158,309 @@ msgstr "Tipos de Pagamentos"
 msgid "Banks or Flags"
 msgstr "Bancos e Cartões"
 
-#: base/templates/base/elements/navbar.html:26
+#: base/templates/base/elements/navbar.html:31
 #: user/templates/user/profile/detail.html:13
 #: user/templates/user/profile/navbar.html:7
 msgid "Profile"
 msgstr "Perfil"
 
-#: base/templates/base/elements/navbar.html:28
+#: base/templates/base/elements/navbar.html:32
 msgid "Logout"
 msgstr "Sair"
 
-#: base/templates/base/elements/navbar.html:31
+#: base/templates/base/elements/navbar.html:50
 msgid "Login"
 msgstr "Entrar"
+
+#: base/templates/base/form.html:12
+msgid "Save"
+msgstr "Salvar"
+
+#: base/templates/base/form.html:23
+msgid "Create"
+msgstr "Criar"
+
+#: base/templates/base/form.html:23
+msgid "Update"
+msgstr "Atualizar"
+
+#: base/templates/base/home.html:10
+msgid "Welcome to"
+msgstr "Bem-vindo"
+
+#: base/templates/base/import_persons.html:36
+msgid "New import"
+msgstr "Nova importação"
+
+#: base/templates/base/import_persons.html:43
+msgid "To print"
+msgstr "Imprimir"
+
+#: base/templates/base/import_persons.html:57
+msgid "Summary"
+msgstr "Resumo"
+
+#: base/templates/base/import_persons.html:60
+msgid "center to insert"
+msgstr "núcleo para inserir"
+
+#: base/templates/base/import_persons.html:64
+msgid "file name"
+msgstr "nome do arquivo"
+
+#: base/templates/base/import_persons.html:69
+#: base/templates/base/import_persons.html:89
+msgid "importeds"
+msgstr "importados"
+
+#: base/templates/base/import_persons.html:73
+#: base/templates/base/import_persons.html:97
+msgid "without email"
+msgstr "sem e-mail"
+
+#: base/templates/base/import_persons.html:77
+#: base/templates/base/import_persons.html:105
+msgid "already in db"
+msgstr "já no banco de dados"
+
+#: base/templates/base/import_persons.html:81
+msgid "total"
+msgstr "total"
+
+#: base/templates/base/import_persons.html:82
+msgid "objects"
+msgstr "objetos"
+
+#: base/templates/base/import_persons.html:86
+msgid "Detail"
+msgstr "detalhe"
+
+#: base/templates/base/import_persons.html:118
+msgid "select file (.csv) to import"
+msgstr "selecionar arquivo (.csv) para importar"
+
+#: base/templates/base/searchs/center.html:24
+#: base/templates/base/searchs/event.html:46
+#: base/templates/base/searchs/lecture.html:46
+#: base/templates/base/searchs/orders.html:62
+#: base/templates/base/searchs/person.html:44
+#: base/templates/base/searchs/pw_group.html:38
+#: base/templates/base/searchs/seeker.html:68
+#: base/templates/base/searchs/workgroup.html:35
+msgid "Search"
+msgstr "Buscar"
+
+#: base/templates/base/searchs/event.html:7
+#: base/templates/base/searchs/lecture.html:7
+#: base/templates/base/searchs/modal_frequencies.html:20
+#: base/templates/base/searchs/modal_lectures.html:20
+#: base/templates/base/searchs/orders.html:7
+msgid "from"
+msgstr "de"
+
+#: base/templates/base/searchs/event.html:19
+#: base/templates/base/searchs/lecture.html:19
+#: base/templates/base/searchs/modal_frequencies.html:30
+#: base/templates/base/searchs/modal_lectures.html:30
+#: base/templates/base/searchs/orders.html:19
+msgid "to"
+msgstr "para"
+
+#: base/templates/base/searchs/event.html:32
+#: base/templates/base/searchs/workgroup.html:24
+msgid "all types"
+msgstr "todos os tipos"
+
+#: base/templates/base/searchs/event.html:37
+#: base/templates/base/searchs/modal_lectures.html:40
+#: user/templates/user/profile/info.html:53
+msgid "type"
+msgstr "tipo"
+
+#: base/templates/base/searchs/lecture.html:32
+msgid "types"
+msgstr "tipos"
+
+#: base/templates/base/searchs/modal_frequencies.html:10
+msgid "Frequencies per period"
+msgstr "Frequências por período"
+
+#: base/templates/base/searchs/modal_frequencies.html:40
+#: base/templates/base/searchs/modal_status.html:20
+#: base/templates/base/searchs/person.html:35
+#: base/templates/base/searchs/seeker.html:54
+#: base/templates/base/searchs/seeker.html:59
+msgid "status"
+msgstr "status"
+
+#: base/templates/base/searchs/modal_frequencies.html:65
+#: base/templates/base/searchs/modal_import_persons.html:21
+#: base/templates/base/searchs/modal_lectures.html:65
+#: base/templates/base/searchs/modal_status.html:35
+#: center/templates/center/info.html:148
+msgid "Close"
+msgstr "Fechar"
+
+#: base/templates/base/searchs/modal_frequencies.html:66
+#: base/templates/base/searchs/modal_lectures.html:66
+#: base/templates/base/searchs/modal_status.html:36
+msgid "Generate"
+msgstr "Gerar"
+
+#: base/templates/base/searchs/modal_import_persons.html:11
+msgid "Import persons"
+msgstr "Importar pessoas"
+
+#: base/templates/base/searchs/modal_import_persons.html:22
+msgid "Import"
+msgstr "Importar"
+
+#: base/templates/base/searchs/modal_lectures.html:10
+msgid "Lectures per period"
+msgstr "Palestras por período"
+
+#: base/templates/base/searchs/modal_status.html:10
+msgid "Status per center"
+msgstr "Status por núcleo"
+
+#: base/templates/base/searchs/orders.html:48
+msgid "all status"
+msgstr "todos status"
+
+#: base/templates/base/searchs/person.html:25
+msgid "aspect"
+msgstr "discipulado"
+
+#: center/templates/center/centers.html:70
+msgid "choose your search terms"
+msgstr "escolha seus termos da pesquisa"
+
+#: center/templates/center/centers.html:72
+msgid "centers not found"
+msgstr "núcleos não encontrados"
+
+#: center/templates/center/confirm_delete.html:8
+msgid "Are you sure you want to delete the center"
+msgstr "Tem certeza que deseja apagar o núcleo"
+
+#: center/templates/center/confirm_reinsert.html:9
+msgid "Are you shure you want to reinsert the Center"
+msgstr "Tem certeza que deseja reinserir o Núcleo"
+
+#: center/templates/center/forms/center.html:14
+#: user/templates/user/profile/info.html:19
+msgid "Basic"
+msgstr "Básico"
+
+#: center/templates/center/forms/center.html:23
+#: center/templates/center/info.html:11
+msgid "Contacts"
+msgstr "Contatos"
+
+#: center/templates/center/forms/center.html:32
+#: center/templates/center/info.html:20
+#: user/templates/user/profile/info.html:41
+msgid "Address"
+msgstr "Endereço"
+
+#: center/templates/center/forms/center.html:41
+#: center/templates/center/info.html:29
+#: user/templates/user/profile/info.html:30
+msgid "Others"
+msgstr "Outros"
+
+#: center/templates/center/header.html:12
+msgid "pupils"
+msgstr "alunos"
+
+#: center/templates/center/header.html:22
+msgid "conference center"
+msgstr "centro de conferência"
+
+#: center/templates/center/header.html:28
+msgid "inactive"
+msgstr "inativo"
+
+#: center/templates/center/info.html:41
+#: user/templates/user/profile/info.html:57
+msgid "phone"
+msgstr "telefone"
+
+#: center/templates/center/info.html:45
+msgid "backup phone"
+msgstr "telefone 2"
+
+#: center/templates/center/info.html:49
+#: user/templates/user/profile/info.html:65
+msgid "email"
+msgstr "email"
+
+#: center/templates/center/info.html:53
+msgid "secretary"
+msgstr "secretário(a)"
+
+#: center/templates/center/info.html:72
+#: user/templates/user/profile/info.html:109
+msgid "address"
+msgstr "endereço"
+
+#: center/templates/center/info.html:102
+msgid "short name"
+msgstr "apelido"
+
+#: center/templates/center/info.html:106
+msgid "pix key"
+msgstr "chave pix"
+
+#: center/templates/center/info.html:117
+msgid "observations"
+msgstr "observações"
+
+#: center/templates/center/info.html:134
+msgid "Center PIX"
+msgstr "Núcleo PIX"
+
+#: center/templates/center/navbar.html:6 center/templates/center/navbar.html:21
+msgid "Center"
+msgstr "Núcleo"
+
+#: center/templates/center/navbar.html:32
+#: center/templates/center/navbar.html:42
+#: user/templates/user/profile/navbar.html:42
+msgid "Edit"
+msgstr "Editar"
+
+#: center/templates/center/navbar.html:50
+msgid "Delete"
+msgstr "Apagar"
+
+#: center/templates/center/navbar.html:58
+msgid "Reinsert"
+msgstr "Reinserir"
+
+#: center/views.py:31
+msgid "center home"
+msgstr "Núcleo"
+
+#: center/views.py:48
+msgid "center detail"
+msgstr "detalhes do núcleo"
+
+#: center/views.py:77
+msgid "create center"
+msgstr "criar núcleo"
+
+#: center/views.py:107
+msgid "update center"
+msgstr "atualizar núcleo"
+
+#: center/views.py:131
+msgid "confirm to delete"
+msgstr "confirme para deletar"
+
+#: center/views.py:147
+msgid "confirm to reinsert"
+msgstr "confirme para reinserir"
 
 #: event/admin.py:18
 #, python-format
@@ -174,11 +550,11 @@ msgstr "ativo"
 
 #: user/models.py:65
 msgid ""
-"Designates whether this user should be treated as active."
-"                     Unselect this instead of deleting accounts."
+"Designates whether this user should be treated as "
+"active.                     Unselect this instead of deleting accounts."
 msgstr ""
-"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de"
-" deletar contas."
+"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de "
+"deletar contas."
 
 #: user/models.py:69
 msgid "date joined"
@@ -206,8 +582,8 @@ msgstr "Seu e-mail e/ou senha não conferem. Por favor, tente novamente."
 
 #: user/templates/user/auth/login.html:16
 msgid ""
-"Your account doesn't have access to this page. To proceed, please login with"
-" an account that has access."
+"Your account doesn't have access to this page. To proceed, please login with "
+"an account that has access."
 msgstr ""
 "Sua conta não tem acesso a esta página. Para continuar, faça login com uma "
 "conta que tenha acesso."
@@ -254,10 +630,6 @@ msgstr "Sua senha foi modificada."
 msgid "Change my password"
 msgstr "Mudar minha senha"
 
-#: user/templates/user/auth/password_change_form.html:18
-msgid "Back"
-msgstr "Voltar"
-
 #: user/templates/user/auth/password_change_form.html:24
 msgid "Change password"
 msgstr "Mudar senha"
@@ -272,8 +644,8 @@ msgstr "Por favor corrija os erros abaixo."
 
 #: user/templates/user/auth/password_change_form.html:38
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new"
-" password twice so we can verify you typed it in correctly."
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
 msgstr ""
 "Por favor, digite sua senha antiga, por questões de segurança, e depois "
 "digite sua novasenha duas vezes para que possamos verificar se você digitou "
@@ -311,10 +683,12 @@ msgstr "Enviamos por e-mail instruções para definir sua senha."
 #, python-format
 msgid ""
 "\n"
-"You're receiving this email because you requested a password reset for your user account at %(site_name)s.\n"
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s.\n"
 msgstr ""
 "\n"
-"Você está recebendo este e-mail porque solicitou uma redefinição de senha para a suaconta de usuário no site %(site_name)s. \n"
+"Você está recebendo este e-mail porque solicitou uma redefinição de senha "
+"para a suaconta de usuário no site %(site_name)s. \n"
 
 #: user/templates/user/auth/password_reset_email.html:8
 msgid "Please go to the following page and choose a new password:"
@@ -341,45 +715,19 @@ msgstr "Digite seu e-mail"
 msgid "Reset password"
 msgstr "Redefinir senha"
 
-#: user/templates/user/profile/info.html:19
-msgid "Basic"
-msgstr "Básico"
-
-#: user/templates/user/profile/info.html:30
-msgid "Others"
-msgstr "Outros"
-
-#: user/templates/user/profile/info.html:41
-msgid "Address"
-msgstr "Endereço"
-
-#: user/templates/user/profile/info.html:53
-msgid "type"
-msgstr "tipo"
-
-#: user/templates/user/profile/info.html:57
-msgid "phone"
-msgstr "telefone"
-
 #: user/templates/user/profile/info.html:61
 msgid "phone 2"
 msgstr "telefone 2"
-
-#: user/templates/user/profile/info.html:65
-msgid "email"
-msgstr "email"
 
 #: user/templates/user/profile/info.html:77
 msgid "birth"
 msgstr "nasc."
 
 #: user/templates/user/profile/info.html:81
-#| msgid "profiles"
 msgid "profession"
 msgstr "profissão"
 
 #: user/templates/user/profile/info.html:85
-#| msgid "staff status"
 msgid "marital status"
 msgstr "estado civil"
 
@@ -391,11 +739,6 @@ msgstr "contato (sos)"
 msgid "sos phone"
 msgstr "telefone (sos)"
 
-#: user/templates/user/profile/info.html:109
-#| msgid "email address"
-msgid "address"
-msgstr "endereço"
-
 #: user/templates/user/profile/navbar.html:16
 msgid "Frequencies"
 msgstr "Frequencias"
@@ -403,10 +746,6 @@ msgstr "Frequencias"
 #: user/templates/user/profile/navbar.html:22
 msgid "Historic"
 msgstr "Histórico"
-
-#: user/templates/user/profile/navbar.html:42
-msgid "Edit"
-msgstr "Editar"
 
 #: user/templates/user/profile/navbar.html:49
 msgid "Change"
