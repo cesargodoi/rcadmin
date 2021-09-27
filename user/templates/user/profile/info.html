@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="row border-top border-secondary pt-3">
   <div class="col-md-3 text-center">
     <img 
@@ -15,7 +16,7 @@
           role="tab" 
           aria-controls="basic"
           aria-selected="true">
-          Basic
+          {% trans 'Basic' %}
         </a>
       </li>
       <li class="nav-item" role="presentation">
@@ -26,7 +27,7 @@
           role="tab" 
           aria-controls="other"
           aria-selected="false">
-          Others
+          {% trans 'Others' %}
         </a>
       </li>
       <li class="nav-item" role="presentation">
@@ -37,7 +38,7 @@
           role="tab" 
           aria-controls="address"
           aria-selected="false">
-          Address
+          {% trans 'Address' %}
         </a>
       </li>
     </ul>
@@ -49,19 +50,19 @@
         <br>
         <table class="table table-hover table-sm">
           <tr>
-            <th>type</th>
+            <th>{% trans 'type' %}</th>
             <td>{{ object.person.get_person_type_display }}</td>
           </tr>
           <tr>
-            <th>phone</th>
+            <th>{% trans 'phone' %}</th>
             <td>{{ object.profile.phone_1 }}</td>
           </tr>
           <tr>
-            <th>phone 2</th>
+            <th>{% trans 'phone 2' %}</th>
             <td>{{ object.profile.phone_2 }}</td>
           </tr>
           <tr>
-            <th>email</th>
+            <th>{% trans 'email' %}</th>
             <td>{{ object.email }}</td>
           </tr>
         </table>
@@ -73,25 +74,25 @@
         <br>
         <table class="table table-hover table-sm">
           <tr>
-            <th>birth</th>
+            <th>{% trans 'birth' %}</th>
             <td>{{ object.person.birth|date:"d/m/Y" }}</td>
           </tr>
           <tr>
-            <th>profession</th>
+            <th>{% trans 'profession' %}</th>
             <td>{{ object.profile.profession }}</td>
           </tr>
           <tr>
-            <th>marital status</th>
+            <th>{% trans 'marital status' %}</th>
             <td>{{ object.profile.marital_status }}</td>
           </tr>
           <tr class="text-danger">
-            <th>sos contact</th>
+            <th>{% trans 'sos contact' %}</th>
             <td>
               {{ object.profile.sos_contact }}
             </td>
           </tr>
           <tr class="text-danger">
-            <th>sos phone</th>
+            <th>{% trans 'sos phone' %}</th>
             <td>
               {{ object.profile.sos_phone }}
             </td>
@@ -105,7 +106,7 @@
         <br>
         <table class="table table-hover table-sm">
           <tr>
-            <th>address</th>
+            <th>{% trans 'address' %}</th>
             <td>
               <address>
                 {{ object.profile.address }}, {{ object.profile.number }}

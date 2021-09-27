@@ -30,6 +30,7 @@ django-debug-toolbar = "^3.2.2"
 ipython = "^7.27.0"
 jupyter = "^1.0.0"
 pytest-factoryboy = "^2.1.0"
+django-rosetta = "^0.9.7"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
