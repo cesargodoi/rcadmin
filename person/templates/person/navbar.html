@@ -1,8 +1,10 @@
 {% load base_extras %}
+{% load i18n %}
+
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
-    {% if nav == 'detail' %}Person{% else %}Persons{% endif %}
+    {% if nav == 'detail' %}{% trans 'Person' %}{% else %}{% trans 'Persons' %}{% endif %}
   </a>
 
   <div class="navbar-nav-scroll">
@@ -16,10 +18,10 @@
              data-toggle="dropdown" 
              aria-haspopup="true" 
              aria-expanded="false">
-            Tools
+             {% trans 'Tools' %}
           </a>
           <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
-            <a class="dropdown-item" href="{% url 'import_from_seekers' %}">Import from Seekers</a>
+            <a class="dropdown-item" href="{% url 'import_from_seekers' %}">{% trans 'Import from Seekers' %}</a>
             <!-- <div class="dropdown-divider"></div> -->
           </div>
         </li>
@@ -29,25 +31,25 @@
         <li class="nav-item">
           <a class="nav-link {% if tab == 'info' %}active{% endif %}" 
              href="{% url 'person_detail' person.id %}">
-            Info
+             {% trans 'Info' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'historic' %}active{% endif %}" 
              href="{% url 'person_historic' person.id %}">
-            Historic
+             {% trans 'Historic' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" 
              href="{% url 'frequency_ps_list' person.id %}">
-            Frequencies
+             {% trans 'Frequencies' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'membership' %}active{% endif %}" 
              href="{% url 'membership_ps_list' person.id %}">
-            Membership
+             {% trans 'Membership' %}
           </a>
         </li>
       {% endif %}
@@ -62,7 +64,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
            href="{% url 'person_create' %}">
           <i class="fas fa-plus"></i>
-          Person  
+          {% trans 'Person' %}  
         </a>
       </li>
     {% endif %}
@@ -73,7 +75,7 @@
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
              href="{% url 'person_update' object.id %}">
             <i class="fas fa-edit"></i> 
-            Edit
+            {% trans 'Edit' %}
           </a>
         </li>
         {% if object.user.is_active %}
@@ -81,7 +83,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
                href="{% url 'person_delete' object.id %}">
               <i class="fas fa-trash-alt"></i> 
-              Delete
+              {% trans 'Delete' %}
             </a>
           </li>
         {% else %}
@@ -89,7 +91,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
                href="{% url 'person_reinsert' object.id %}">
               <i class="fas fa-sign-in-alt"></i> 
-              Reinsert
+              {% trans 'Reinsert' %}
             </a>
           </li>
         {% endif %}
@@ -101,7 +103,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
                href="{% url 'historic_create' person.id %}">
               <i class="fas fa-plus"></i> 
-              Historic
+              {% trans 'Historic' %}
             </a>
           </li>
         {% endif %}
@@ -111,7 +113,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
                href="{% url 'frequency_ps_insert' person.id %}">
               <i class="fas fa-plus"></i> 
-              Frequency
+              {% trans 'Frequency' %}
             </a>
           </li>
         {% endif %}
@@ -121,7 +123,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
                href="{% url 'membership_ps_create' person.id %}">
               <i class="fas fa-plus"></i> 
-              Membership
+              {% trans 'Membership' %}
             </a>
           </li>
         {% endif %}
@@ -137,7 +139,7 @@
                   {% url 'person_home' %}
                 {% endif %}">
         <i class="fas fa-chevron-left"></i> 
-        Back
+        {% trans 'Back' %}
       </a>
     </li>
   </ul>

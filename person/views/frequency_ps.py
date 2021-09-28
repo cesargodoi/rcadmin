@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from event.models import Event
 from base.searchs import search_event
@@ -22,7 +23,7 @@ def frequency_ps_list(request, person_id):
 
     context = {
         "object_list": object_list,
-        "title": "frequencies list",
+        "title": _("frequencies list"),
         "person": person,  # to header element,
         "nav": "detail",
         "tab": "frequencies",
@@ -51,7 +52,7 @@ def frequency_ps_insert(request, person_id):
         context = {
             "person": person,
             "insert_to": f"{event.activity.name} {event.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request, "person/elements/confirm_to_insert.html", context
@@ -69,7 +70,7 @@ def frequency_ps_insert(request, person_id):
     context = {
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "title": "insert frequencies",
+        "title": _("insert frequencies"),
         "person": person,  # to header element
         "type_list": ACTIVITY_TYPES,
         "pre_freqs": [
@@ -92,7 +93,7 @@ def frequency_ps_delete(request, person_id, event_id):
     context = {
         "person": person,
         "event": event,
-        "title": "confirm to delete",
+        "title": _("confirm to delete"),
     }
     return render(
         request, "person/elements/confirm_to_delete_freq.html", context

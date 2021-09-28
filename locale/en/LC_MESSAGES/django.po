@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 19:43-0300\n"
+"POT-Creation-Date: 2021-09-28 15:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,7 @@ msgstr ""
 
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_persons.html:49
+#: person/templates/person/elements/confirm_to_import.html:23
 msgid "Go back"
 msgstr ""
 
@@ -84,6 +85,11 @@ msgstr ""
 #: base/templates/base/confirm_delete.html:18
 #: center/templates/center/confirm_delete.html:20
 #: center/templates/center/confirm_reinsert.html:18
+#: person/templates/person/elements/confirm_to_delete_freq.html:19
+#: person/templates/person/elements/confirm_to_delete_member.html:17
+#: person/templates/person/elements/confirm_to_import.html:22
+#: person/templates/person/elements/confirm_to_insert.html:19
+#: person/templates/person/elements/confirm_to_reinsert_person.html:18
 msgid "Confirm"
 msgstr ""
 
@@ -91,6 +97,15 @@ msgstr ""
 #: center/templates/center/confirm_delete.html:24
 #: center/templates/center/confirm_reinsert.html:22
 #: center/templates/center/navbar.html:73
+#: person/templates/person/elements/confirm_to_delete_freq.html:23
+#: person/templates/person/elements/confirm_to_delete_member.html:21
+#: person/templates/person/elements/confirm_to_insert.html:23
+#: person/templates/person/elements/confirm_to_reinsert_person.html:22
+#: person/templates/person/forms/historic.html:17
+#: person/templates/person/forms/membership.html:17
+#: person/templates/person/frequency_insert.html:11
+#: person/templates/person/membership_ps_insert.html:12
+#: person/templates/person/navbar.html:142
 #: user/templates/user/auth/password_change_form.html:18
 msgid "Back"
 msgstr ""
@@ -109,6 +124,7 @@ msgid "Centers"
 msgstr ""
 
 #: base/templates/base/elements/menu.html:11 base/templates/base/home.html:54
+#: person/templates/person/navbar.html:7 person/templates/person/persons.html:3
 msgid "Persons"
 msgstr ""
 
@@ -172,14 +188,19 @@ msgid "Login"
 msgstr ""
 
 #: base/templates/base/form.html:12
+#: person/templates/person/forms/historic.html:12
 msgid "Save"
 msgstr ""
 
 #: base/templates/base/form.html:23
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/forms/membership.html:23
 msgid "Create"
 msgstr ""
 
 #: base/templates/base/form.html:23
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/forms/membership.html:23
 msgid "Update"
 msgstr ""
 
@@ -272,6 +293,7 @@ msgstr ""
 
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:40
+#: person/templates/person/info.html:44
 #: user/templates/user/profile/info.html:53
 msgid "type"
 msgstr ""
@@ -327,10 +349,17 @@ msgid "all status"
 msgstr ""
 
 #: base/templates/base/searchs/person.html:25
+#: person/templates/person/info.html:48 rcadmin/common.py:72
 msgid "aspect"
 msgstr ""
 
+#: base/views/tools.py:169 base/views/tools.py:177
+msgid "import persons"
+msgstr ""
+
 #: center/templates/center/centers.html:70
+#: person/templates/person/membership.html:48
+#: person/templates/person/persons.html:83
 msgid "choose your search terms"
 msgstr ""
 
@@ -347,23 +376,30 @@ msgid "Are you shure you want to reinsert the Center"
 msgstr ""
 
 #: center/templates/center/forms/center.html:14
+#: person/templates/person/forms/person.html:14
+#: person/templates/person/info.html:22
 #: user/templates/user/profile/info.html:19
 msgid "Basic"
 msgstr ""
 
 #: center/templates/center/forms/center.html:23
 #: center/templates/center/info.html:11
+#: person/templates/person/forms/person.html:25
 msgid "Contacts"
 msgstr ""
 
 #: center/templates/center/forms/center.html:32
 #: center/templates/center/info.html:20
+#: person/templates/person/forms/person.html:36
+#: person/templates/person/info.html:34
 #: user/templates/user/profile/info.html:41
 msgid "Address"
 msgstr ""
 
 #: center/templates/center/forms/center.html:41
 #: center/templates/center/info.html:29
+#: person/templates/person/forms/person.html:47
+#: person/templates/person/info.html:28
 #: user/templates/user/profile/info.html:30
 msgid "Others"
 msgstr ""
@@ -372,7 +408,7 @@ msgstr ""
 msgid "pupils"
 msgstr ""
 
-#: center/templates/center/header.html:22
+#: center/templates/center/header.html:22 rcadmin/common.py:30
 msgid "conference center"
 msgstr ""
 
@@ -380,7 +416,7 @@ msgstr ""
 msgid "inactive"
 msgstr ""
 
-#: center/templates/center/info.html:41
+#: center/templates/center/info.html:41 person/templates/person/info.html:59
 #: user/templates/user/profile/info.html:57
 msgid "phone"
 msgstr ""
@@ -389,7 +425,7 @@ msgstr ""
 msgid "backup phone"
 msgstr ""
 
-#: center/templates/center/info.html:49
+#: center/templates/center/info.html:49 person/templates/person/info.html:67
 #: user/templates/user/profile/info.html:65
 msgid "email"
 msgstr ""
@@ -398,7 +434,7 @@ msgstr ""
 msgid "secretary"
 msgstr ""
 
-#: center/templates/center/info.html:72
+#: center/templates/center/info.html:72 person/templates/person/info.html:130
 #: user/templates/user/profile/info.html:109
 msgid "address"
 msgstr ""
@@ -411,7 +447,7 @@ msgstr ""
 msgid "pix key"
 msgstr ""
 
-#: center/templates/center/info.html:117
+#: center/templates/center/info.html:117 person/templates/person/info.html:114
 msgid "observations"
 msgstr ""
 
@@ -425,15 +461,18 @@ msgstr ""
 
 #: center/templates/center/navbar.html:32
 #: center/templates/center/navbar.html:42
+#: person/templates/person/navbar.html:78
 #: user/templates/user/profile/navbar.html:42
 msgid "Edit"
 msgstr ""
 
 #: center/templates/center/navbar.html:50
+#: person/templates/person/navbar.html:86
 msgid "Delete"
 msgstr ""
 
 #: center/templates/center/navbar.html:58
+#: person/templates/person/navbar.html:94
 msgid "Reinsert"
 msgstr ""
 
@@ -453,11 +492,13 @@ msgstr ""
 msgid "update center"
 msgstr ""
 
-#: center/views.py:131
+#: center/views.py:131 person/views/frequency_ps.py:96
+#: person/views/historic.py:98 person/views/membership_ps.py:112
+#: person/views/person.py:211
 msgid "confirm to delete"
 msgstr ""
 
-#: center/views.py:147
+#: center/views.py:147 person/views/person.py:231
 msgid "confirm to reinsert"
 msgstr ""
 
@@ -489,6 +530,222 @@ msgid_plural "%d persons were successfully marked as 'actives'."
 msgstr[0] ""
 msgstr[1] ""
 
+#: person/templates/person/detail.html:14
+#: person/templates/person/navbar.html:34
+msgid "Info"
+msgstr ""
+
+#: person/templates/person/detail.html:17
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/navbar.html:40
+#: person/templates/person/navbar.html:106
+#: user/templates/user/profile/navbar.html:22
+msgid "Historic"
+msgstr ""
+
+#: person/templates/person/detail.html:20
+#: person/templates/person/navbar.html:46
+#: user/templates/user/profile/navbar.html:16
+msgid "Frequencies"
+msgstr ""
+
+#: person/templates/person/detail.html:23
+#: person/templates/person/forms/membership.html:23
+#: person/templates/person/navbar.html:52
+#: person/templates/person/navbar.html:126
+msgid "Membership"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_delete_freq.html:8
+#: person/templates/person/elements/confirm_to_delete_member.html:8
+#: person/templates/person/elements/confirm_to_import.html:8
+#: person/templates/person/elements/confirm_to_insert.html:8
+#: person/templates/person/elements/confirm_to_reinsert_person.html:8
+msgid "Atention"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_delete_freq.html:9
+#: person/templates/person/elements/confirm_to_delete_member.html:9
+msgid "Are you shure you want to remove"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_import.html:9
+msgid "Are you shure you want to import"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_import.html:16
+msgid "as a"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_import.html:16
+msgid "Pupil"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_insert.html:9
+msgid "Are you shure you want to insert"
+msgstr ""
+
+#: person/templates/person/elements/confirm_to_reinsert_person.html:9
+msgid "Are you shure you want to reinsert"
+msgstr ""
+
+#: person/templates/person/frequencies.html:45
+msgid "frequency not found"
+msgstr ""
+
+#: person/templates/person/frequency_insert.html:17
+msgid "Insert Frequency"
+msgstr ""
+
+#: person/templates/person/header.html:15
+msgid "only view"
+msgstr ""
+
+#: person/templates/person/historic.html:44
+msgid "historic not found"
+msgstr ""
+
+#: person/templates/person/import_from_seekers.html:11
+msgid "Seekers who will become pupils"
+msgstr ""
+
+#: person/templates/person/import_from_seekers.html:58
+msgid "no seekers found"
+msgstr ""
+
+#: person/templates/person/info.html:63
+msgid "phone alt"
+msgstr ""
+
+#: person/templates/person/info.html:71
+#: user/templates/user/profile/info.html:77
+msgid "birth"
+msgstr ""
+
+#: person/templates/person/info.html:74
+msgid "age"
+msgstr ""
+
+#: person/templates/person/info.html:75
+msgid "years"
+msgstr ""
+
+#: person/templates/person/info.html:79
+msgid "id card"
+msgstr ""
+
+#: person/templates/person/info.html:89
+msgid "gender"
+msgstr ""
+
+#: person/templates/person/info.html:93
+#: user/templates/user/profile/info.html:81
+msgid "profession"
+msgstr ""
+
+#: person/templates/person/info.html:97
+#: user/templates/user/profile/info.html:85
+msgid "marital status"
+msgstr ""
+
+#: person/templates/person/info.html:101
+#: user/templates/user/profile/info.html:89
+msgid "sos contact"
+msgstr ""
+
+#: person/templates/person/info.html:107
+#: user/templates/user/profile/info.html:95
+msgid "sos phone"
+msgstr ""
+
+#: person/templates/person/membership.html:50
+msgid "membership not found"
+msgstr ""
+
+#: person/templates/person/membership_ps_insert.html:18
+msgid "Insert Membership"
+msgstr ""
+
+#: person/templates/person/navbar.html:7 person/templates/person/navbar.html:67
+msgid "Person"
+msgstr ""
+
+#: person/templates/person/navbar.html:21
+msgid "Tools"
+msgstr ""
+
+#: person/templates/person/navbar.html:24
+msgid "Import from Seekers"
+msgstr ""
+
+#: person/templates/person/navbar.html:116
+msgid "Frequency"
+msgstr ""
+
+#: person/templates/person/persons.html:85
+msgid "persons not found in the search"
+msgstr ""
+
+#: person/views/frequency_ps.py:26
+msgid "frequencies list"
+msgstr ""
+
+#: person/views/frequency_ps.py:55 person/views/membership_ps.py:54
+msgid "confirm to insert"
+msgstr ""
+
+#: person/views/frequency_ps.py:73
+msgid "insert frequencies"
+msgstr ""
+
+#: person/views/historic.py:26
+msgid "historic list"
+msgstr ""
+
+#: person/views/historic.py:56
+msgid "create historic"
+msgstr ""
+
+#: person/views/historic.py:81
+msgid "update historic"
+msgstr ""
+
+#: person/views/membership_ps.py:28
+msgid "membership list"
+msgstr ""
+
+#: person/views/membership_ps.py:69
+msgid "insert membership"
+msgstr ""
+
+#: person/views/membership_ps.py:96
+msgid "update membership"
+msgstr ""
+
+#: person/views/person.py:51
+msgid "person home"
+msgstr ""
+
+#: person/views/person.py:73
+msgid "person detail"
+msgstr ""
+
+#: person/views/person.py:133
+msgid "create person"
+msgstr ""
+
+#: person/views/person.py:187
+msgid "update person"
+msgstr ""
+
+#: person/views/tools.py:24
+msgid "import from seekers"
+msgstr ""
+
+#: person/views/tools.py:75
+msgid "confirm to import"
+msgstr ""
+
 #: publicwork/templates/publicwork/insert_yourself/form.html:79
 msgid "Register"
 msgstr ""
@@ -511,6 +768,244 @@ msgstr ""
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:53
 #: publicwork/templates/publicwork/insert_yourself/pos_email_feedback.html:10
 msgid "This page can be closed"
+msgstr ""
+
+#: rcadmin/common.py:21
+msgid "Golden Rosycross"
+msgstr ""
+
+#: rcadmin/common.py:25
+msgid "male"
+msgstr ""
+
+#: rcadmin/common.py:26
+msgid "female"
+msgstr ""
+
+#: rcadmin/common.py:29
+msgid "center"
+msgstr ""
+
+#: rcadmin/common.py:31
+msgid "contact room"
+msgstr ""
+
+#: rcadmin/common.py:35
+msgid "1st. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:36
+msgid "2nd. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:37
+msgid "3rd. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:38
+msgid "4th. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:39
+msgid "Grail"
+msgstr ""
+
+#: rcadmin/common.py:40
+msgid "5th. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:41
+msgid "6th. Aspect"
+msgstr ""
+
+#: rcadmin/common.py:45 user/models.py:62
+msgid "active"
+msgstr ""
+
+#: rcadmin/common.py:46
+msgid "licensed"
+msgstr ""
+
+#: rcadmin/common.py:47
+msgid "dead"
+msgstr ""
+
+#: rcadmin/common.py:48
+msgid "disconnected"
+msgstr ""
+
+#: rcadmin/common.py:49
+msgid "removed"
+msgstr ""
+
+#: rcadmin/common.py:52
+msgid "transfered"
+msgstr ""
+
+#: rcadmin/common.py:53
+msgid "regressed"
+msgstr ""
+
+#: rcadmin/common.py:54 rcadmin/common.py:84
+msgid "other"
+msgstr ""
+
+#: rcadmin/common.py:55
+msgid "preparatório"
+msgstr ""
+
+#: rcadmin/common.py:56
+msgid "probatório"
+msgstr ""
+
+#: rcadmin/common.py:57
+msgid "professo"
+msgstr ""
+
+#: rcadmin/common.py:62
+msgid "pupil"
+msgstr ""
+
+#: rcadmin/common.py:63
+msgid "web pupil"
+msgstr ""
+
+#: rcadmin/common.py:64
+msgid "gest"
+msgstr ""
+
+#: rcadmin/common.py:67
+msgid "mentor"
+msgstr ""
+
+#: rcadmin/common.py:68 rcadmin/common.py:114
+msgid "contact"
+msgstr ""
+
+#: rcadmin/common.py:69 rcadmin/common.py:120
+msgid "member"
+msgstr ""
+
+#: rcadmin/common.py:73
+msgid "maintenance"
+msgstr ""
+
+#: rcadmin/common.py:74
+msgid "admin"
+msgstr ""
+
+#: rcadmin/common.py:77
+msgid "open"
+msgstr ""
+
+#: rcadmin/common.py:78
+msgid "close"
+msgstr ""
+
+#: rcadmin/common.py:81
+msgid "service"
+msgstr ""
+
+#: rcadmin/common.py:82
+msgid "conference"
+msgstr ""
+
+#: rcadmin/common.py:83 rcadmin/common.py:115
+msgid "meeting"
+msgstr ""
+
+#: rcadmin/common.py:87
+msgid "canceled"
+msgstr ""
+
+#: rcadmin/common.py:88
+msgid "pending"
+msgstr ""
+
+#: rcadmin/common.py:89
+msgid "concluded"
+msgstr ""
+
+#: rcadmin/common.py:92
+msgid "monthly"
+msgstr ""
+
+#: rcadmin/common.py:93
+msgid "by event"
+msgstr ""
+
+#: rcadmin/common.py:94
+msgid "campaign"
+msgstr ""
+
+#: rcadmin/common.py:97 rcadmin/common.py:108
+msgid "pix"
+msgstr ""
+
+#: rcadmin/common.py:98
+msgid "cash"
+msgstr ""
+
+#: rcadmin/common.py:99
+msgid "check"
+msgstr ""
+
+#: rcadmin/common.py:100
+msgid "pre check"
+msgstr ""
+
+#: rcadmin/common.py:101
+msgid "debit"
+msgstr ""
+
+#: rcadmin/common.py:102
+msgid "credit"
+msgstr ""
+
+#: rcadmin/common.py:103 rcadmin/common.py:109
+msgid "deposit"
+msgstr ""
+
+#: rcadmin/common.py:104 rcadmin/common.py:110
+msgid "transfer"
+msgstr ""
+
+#: rcadmin/common.py:105
+msgid "bank slip"
+msgstr ""
+
+#: rcadmin/common.py:112
+msgid "Brazil"
+msgstr ""
+
+#: rcadmin/common.py:118
+msgid "observation"
+msgstr ""
+
+#: rcadmin/common.py:119
+msgid "new"
+msgstr ""
+
+#: rcadmin/common.py:121
+msgid "installing"
+msgstr ""
+
+#: rcadmin/common.py:122
+msgid "installed"
+msgstr ""
+
+#: rcadmin/common.py:123
+msgid "stand by"
+msgstr ""
+
+#: rcadmin/common.py:124
+msgid "restriction"
+msgstr ""
+
+#: rcadmin/common.py:175
+msgid ""
+"Phone number must be entered in the format: '+1234567890'.             Up to "
+"15 digits allowed."
 msgstr ""
 
 #: user/admin.py:152
@@ -541,10 +1036,6 @@ msgstr ""
 
 #: user/models.py:58
 msgid "Designates whether the user can log into this admin site."
-msgstr ""
-
-#: user/models.py:62
-msgid "active"
 msgstr ""
 
 #: user/models.py:65
@@ -704,34 +1195,6 @@ msgstr ""
 
 #: user/templates/user/profile/info.html:61
 msgid "phone 2"
-msgstr ""
-
-#: user/templates/user/profile/info.html:77
-msgid "birth"
-msgstr ""
-
-#: user/templates/user/profile/info.html:81
-msgid "profession"
-msgstr ""
-
-#: user/templates/user/profile/info.html:85
-msgid "marital status"
-msgstr ""
-
-#: user/templates/user/profile/info.html:89
-msgid "sos contact"
-msgstr ""
-
-#: user/templates/user/profile/info.html:95
-msgid "sos phone"
-msgstr ""
-
-#: user/templates/user/profile/navbar.html:16
-msgid "Frequencies"
-msgstr ""
-
-#: user/templates/user/profile/navbar.html:22
-msgid "Historic"
 msgstr ""
 
 #: user/templates/user/profile/navbar.html:49

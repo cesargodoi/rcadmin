@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 19:43-0300\n"
-"PO-Revision-Date: 2021-09-27 19:35-0306\n"
+"POT-Creation-Date: 2021-09-28 15:34-0300\n"
+"PO-Revision-Date: 2021-09-28 15:36-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -69,6 +69,7 @@ msgstr "Ação não permitida!"
 
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_persons.html:49
+#: person/templates/person/elements/confirm_to_import.html:23
 msgid "Go back"
 msgstr "Voltar"
 
@@ -85,6 +86,11 @@ msgstr "Tem certeza que deseja apagar"
 #: base/templates/base/confirm_delete.html:18
 #: center/templates/center/confirm_delete.html:20
 #: center/templates/center/confirm_reinsert.html:18
+#: person/templates/person/elements/confirm_to_delete_freq.html:19
+#: person/templates/person/elements/confirm_to_delete_member.html:17
+#: person/templates/person/elements/confirm_to_import.html:22
+#: person/templates/person/elements/confirm_to_insert.html:19
+#: person/templates/person/elements/confirm_to_reinsert_person.html:18
 msgid "Confirm"
 msgstr "Confirmar"
 
@@ -92,6 +98,15 @@ msgstr "Confirmar"
 #: center/templates/center/confirm_delete.html:24
 #: center/templates/center/confirm_reinsert.html:22
 #: center/templates/center/navbar.html:73
+#: person/templates/person/elements/confirm_to_delete_freq.html:23
+#: person/templates/person/elements/confirm_to_delete_member.html:21
+#: person/templates/person/elements/confirm_to_insert.html:23
+#: person/templates/person/elements/confirm_to_reinsert_person.html:22
+#: person/templates/person/forms/historic.html:17
+#: person/templates/person/forms/membership.html:17
+#: person/templates/person/frequency_insert.html:11
+#: person/templates/person/membership_ps_insert.html:12
+#: person/templates/person/navbar.html:142
 #: user/templates/user/auth/password_change_form.html:18
 msgid "Back"
 msgstr "Voltar"
@@ -105,11 +120,14 @@ msgid "all"
 msgstr "todos"
 
 #: base/templates/base/elements/menu.html:6 base/templates/base/home.html:44
-#: center/templates/center/centers.html:4 center/templates/center/navbar.html:6
+#: center/templates/center/centers.html:4
+#: center/templates/center/navbar.html:6
 msgid "Centers"
 msgstr "Núcleos"
 
 #: base/templates/base/elements/menu.html:11 base/templates/base/home.html:54
+#: person/templates/person/navbar.html:7
+#: person/templates/person/persons.html:3
 msgid "Persons"
 msgstr "Alunos"
 
@@ -173,14 +191,19 @@ msgid "Login"
 msgstr "Entrar"
 
 #: base/templates/base/form.html:12
+#: person/templates/person/forms/historic.html:12
 msgid "Save"
 msgstr "Salvar"
 
 #: base/templates/base/form.html:23
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/forms/membership.html:23
 msgid "Create"
 msgstr "Criar"
 
 #: base/templates/base/form.html:23
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/forms/membership.html:23
 msgid "Update"
 msgstr "Atualizar"
 
@@ -273,6 +296,7 @@ msgstr "todos os tipos"
 
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:40
+#: person/templates/person/info.html:44
 #: user/templates/user/profile/info.html:53
 msgid "type"
 msgstr "tipo"
@@ -328,10 +352,17 @@ msgid "all status"
 msgstr "todos status"
 
 #: base/templates/base/searchs/person.html:25
+#: person/templates/person/info.html:48 rcadmin/common.py:72
 msgid "aspect"
 msgstr "discipulado"
 
+#: base/views/tools.py:169 base/views/tools.py:177
+msgid "import persons"
+msgstr "importar pessoas"
+
 #: center/templates/center/centers.html:70
+#: person/templates/person/membership.html:48
+#: person/templates/person/persons.html:83
 msgid "choose your search terms"
 msgstr "escolha seus termos da pesquisa"
 
@@ -348,23 +379,30 @@ msgid "Are you shure you want to reinsert the Center"
 msgstr "Tem certeza que deseja reinserir o Núcleo"
 
 #: center/templates/center/forms/center.html:14
+#: person/templates/person/forms/person.html:14
+#: person/templates/person/info.html:22
 #: user/templates/user/profile/info.html:19
 msgid "Basic"
 msgstr "Básico"
 
 #: center/templates/center/forms/center.html:23
 #: center/templates/center/info.html:11
+#: person/templates/person/forms/person.html:25
 msgid "Contacts"
 msgstr "Contatos"
 
 #: center/templates/center/forms/center.html:32
 #: center/templates/center/info.html:20
+#: person/templates/person/forms/person.html:36
+#: person/templates/person/info.html:34
 #: user/templates/user/profile/info.html:41
 msgid "Address"
 msgstr "Endereço"
 
 #: center/templates/center/forms/center.html:41
 #: center/templates/center/info.html:29
+#: person/templates/person/forms/person.html:47
+#: person/templates/person/info.html:28
 #: user/templates/user/profile/info.html:30
 msgid "Others"
 msgstr "Outros"
@@ -373,7 +411,7 @@ msgstr "Outros"
 msgid "pupils"
 msgstr "alunos"
 
-#: center/templates/center/header.html:22
+#: center/templates/center/header.html:22 rcadmin/common.py:30
 msgid "conference center"
 msgstr "centro de conferência"
 
@@ -381,7 +419,7 @@ msgstr "centro de conferência"
 msgid "inactive"
 msgstr "inativo"
 
-#: center/templates/center/info.html:41
+#: center/templates/center/info.html:41 person/templates/person/info.html:59
 #: user/templates/user/profile/info.html:57
 msgid "phone"
 msgstr "telefone"
@@ -390,7 +428,7 @@ msgstr "telefone"
 msgid "backup phone"
 msgstr "telefone 2"
 
-#: center/templates/center/info.html:49
+#: center/templates/center/info.html:49 person/templates/person/info.html:67
 #: user/templates/user/profile/info.html:65
 msgid "email"
 msgstr "email"
@@ -399,7 +437,7 @@ msgstr "email"
 msgid "secretary"
 msgstr "secretário(a)"
 
-#: center/templates/center/info.html:72
+#: center/templates/center/info.html:72 person/templates/person/info.html:130
 #: user/templates/user/profile/info.html:109
 msgid "address"
 msgstr "endereço"
@@ -412,7 +450,7 @@ msgstr "apelido"
 msgid "pix key"
 msgstr "chave pix"
 
-#: center/templates/center/info.html:117
+#: center/templates/center/info.html:117 person/templates/person/info.html:114
 msgid "observations"
 msgstr "observações"
 
@@ -420,21 +458,25 @@ msgstr "observações"
 msgid "Center PIX"
 msgstr "Núcleo PIX"
 
-#: center/templates/center/navbar.html:6 center/templates/center/navbar.html:21
+#: center/templates/center/navbar.html:6
+#: center/templates/center/navbar.html:21
 msgid "Center"
 msgstr "Núcleo"
 
 #: center/templates/center/navbar.html:32
 #: center/templates/center/navbar.html:42
+#: person/templates/person/navbar.html:78
 #: user/templates/user/profile/navbar.html:42
 msgid "Edit"
 msgstr "Editar"
 
 #: center/templates/center/navbar.html:50
+#: person/templates/person/navbar.html:86
 msgid "Delete"
 msgstr "Apagar"
 
 #: center/templates/center/navbar.html:58
+#: person/templates/person/navbar.html:94
 msgid "Reinsert"
 msgstr "Reinserir"
 
@@ -454,11 +496,13 @@ msgstr "criar núcleo"
 msgid "update center"
 msgstr "atualizar núcleo"
 
-#: center/views.py:131
+#: center/views.py:131 person/views/frequency_ps.py:96
+#: person/views/historic.py:98 person/views/membership_ps.py:112
+#: person/views/person.py:211
 msgid "confirm to delete"
 msgstr "confirme para deletar"
 
-#: center/views.py:147
+#: center/views.py:147 person/views/person.py:231
 msgid "confirm to reinsert"
 msgstr "confirme para reinserir"
 
@@ -473,22 +517,245 @@ msgstr[1] "%d eventos foram marcados com sucesso como 'inativos'."
 #, python-format
 msgid "%d event was successfully marked as 'active'."
 msgid_plural "%d events were successfully marked as 'actives'."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d evento foi marcado com sucesso como 'ativo'."
+msgstr[1] "%d eventos foram marcados com sucesso como 'ativos'."
 
 #: person/admin.py:15
 #, python-format
 msgid "%d person was successfully marked as 'inactive'."
 msgid_plural "%d persons were successfully marked as 'inactives'."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pessoa foi marcada com sucesso como 'inativa'."
+msgstr[1] "%d pessoas foram marcadas com sucesso como 'inativas'."
 
 #: person/admin.py:28
 #, python-format
 msgid "%d person was successfully marked as 'active'."
 msgid_plural "%d persons were successfully marked as 'actives'."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pessoa foi marcada com sucesso como 'ativa'."
+msgstr[1] "%d pessoas foram marcadas com sucesso como 'ativas'."
+
+#: person/templates/person/detail.html:14
+#: person/templates/person/navbar.html:34
+msgid "Info"
+msgstr "Info"
+
+#: person/templates/person/detail.html:17
+#: person/templates/person/forms/historic.html:24
+#: person/templates/person/navbar.html:40
+#: person/templates/person/navbar.html:106
+#: user/templates/user/profile/navbar.html:22
+msgid "Historic"
+msgstr "Histórico"
+
+#: person/templates/person/detail.html:20
+#: person/templates/person/navbar.html:46
+#: user/templates/user/profile/navbar.html:16
+msgid "Frequencies"
+msgstr "Frequencias"
+
+#: person/templates/person/detail.html:23
+#: person/templates/person/forms/membership.html:23
+#: person/templates/person/navbar.html:52
+#: person/templates/person/navbar.html:126
+msgid "Membership"
+msgstr "Membros"
+
+#: person/templates/person/elements/confirm_to_delete_freq.html:8
+#: person/templates/person/elements/confirm_to_delete_member.html:8
+#: person/templates/person/elements/confirm_to_import.html:8
+#: person/templates/person/elements/confirm_to_insert.html:8
+#: person/templates/person/elements/confirm_to_reinsert_person.html:8
+#| msgid "Atention!"
+msgid "Atention"
+msgstr "Atenção"
+
+#: person/templates/person/elements/confirm_to_delete_freq.html:9
+#: person/templates/person/elements/confirm_to_delete_member.html:9
+#| msgid "Are you sure you want to delete"
+msgid "Are you shure you want to remove"
+msgstr "Você tem certeza que deseja remover"
+
+#: person/templates/person/elements/confirm_to_import.html:9
+#| msgid "Are you sure you want to delete"
+msgid "Are you shure you want to import"
+msgstr "Tem certeza que deseja importar"
+
+#: person/templates/person/elements/confirm_to_import.html:16
+msgid "as a"
+msgstr "como um"
+
+#: person/templates/person/elements/confirm_to_import.html:16
+#| msgid "pupil"
+msgid "Pupil"
+msgstr "Aluno"
+
+#: person/templates/person/elements/confirm_to_insert.html:9
+#| msgid "Are you sure you want to delete"
+msgid "Are you shure you want to insert"
+msgstr "Tem certeza que deseja inserir"
+
+#: person/templates/person/elements/confirm_to_reinsert_person.html:9
+#| msgid "Are you sure you want to delete"
+msgid "Are you shure you want to reinsert"
+msgstr "Tem certeza que deseja reinserir"
+
+#: person/templates/person/frequencies.html:45
+msgid "frequency not found"
+msgstr "frequência não encontrada"
+
+#: person/templates/person/frequency_insert.html:17
+msgid "Insert Frequency"
+msgstr "Inserir frequência"
+
+#: person/templates/person/header.html:15
+msgid "only view"
+msgstr "apenas ver"
+
+#: person/templates/person/historic.html:44
+msgid "historic not found"
+msgstr "histórico não encontrado"
+
+#: person/templates/person/import_from_seekers.html:11
+msgid "Seekers who will become pupils"
+msgstr "Buscadores que se tornarão alunos"
+
+#: person/templates/person/import_from_seekers.html:58
+msgid "no seekers found"
+msgstr "nenhum buscador encontrado"
+
+#: person/templates/person/info.html:63
+msgid "phone alt"
+msgstr "telefone 2"
+
+#: person/templates/person/info.html:71
+#: user/templates/user/profile/info.html:77
+msgid "birth"
+msgstr "nasc."
+
+#: person/templates/person/info.html:74
+msgid "age"
+msgstr "idade"
+
+#: person/templates/person/info.html:75
+msgid "years"
+msgstr "anos"
+
+#: person/templates/person/info.html:79
+msgid "id card"
+msgstr "RG."
+
+#: person/templates/person/info.html:89
+msgid "gender"
+msgstr "gênero"
+
+#: person/templates/person/info.html:93
+#: user/templates/user/profile/info.html:81
+msgid "profession"
+msgstr "profissão"
+
+#: person/templates/person/info.html:97
+#: user/templates/user/profile/info.html:85
+msgid "marital status"
+msgstr "estado civil"
+
+#: person/templates/person/info.html:101
+#: user/templates/user/profile/info.html:89
+msgid "sos contact"
+msgstr "contato (sos)"
+
+#: person/templates/person/info.html:107
+#: user/templates/user/profile/info.html:95
+msgid "sos phone"
+msgstr "telefone (sos)"
+
+#: person/templates/person/membership.html:50
+msgid "membership not found"
+msgstr "membro não encontrado"
+
+#: person/templates/person/membership_ps_insert.html:18
+msgid "Insert Membership"
+msgstr "Inserir Membro"
+
+#: person/templates/person/navbar.html:7
+#: person/templates/person/navbar.html:67
+msgid "Person"
+msgstr "Aluno"
+
+#: person/templates/person/navbar.html:21
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: person/templates/person/navbar.html:24
+msgid "Import from Seekers"
+msgstr "Importar de Buscadores"
+
+#: person/templates/person/navbar.html:116
+msgid "Frequency"
+msgstr "Frequência"
+
+#: person/templates/person/persons.html:85
+msgid "persons not found in the search"
+msgstr "pessoas não encontradas na pesquisa"
+
+#: person/views/frequency_ps.py:26
+msgid "frequencies list"
+msgstr "lista de frequências"
+
+#: person/views/frequency_ps.py:55 person/views/membership_ps.py:54
+msgid "confirm to insert"
+msgstr "confirme para inserir"
+
+#: person/views/frequency_ps.py:73
+msgid "insert frequencies"
+msgstr "inserir frequências"
+
+#: person/views/historic.py:26
+msgid "historic list"
+msgstr "lista de histórico"
+
+#: person/views/historic.py:56
+msgid "create historic"
+msgstr "criar histórico"
+
+#: person/views/historic.py:81
+msgid "update historic"
+msgstr "atualizar histórico"
+
+#: person/views/membership_ps.py:28
+msgid "membership list"
+msgstr "lista de membros"
+
+#: person/views/membership_ps.py:69
+msgid "insert membership"
+msgstr "inserir membro"
+
+#: person/views/membership_ps.py:96
+msgid "update membership"
+msgstr "atualizar membro"
+
+#: person/views/person.py:51
+msgid "person home"
+msgstr "aluno"
+
+#: person/views/person.py:73
+msgid "person detail"
+msgstr "detalhes do aluno"
+
+#: person/views/person.py:133
+msgid "create person"
+msgstr "criar aluno"
+
+#: person/views/person.py:187
+msgid "update person"
+msgstr "atualizar aluno"
+
+#: person/views/tools.py:24
+msgid "import from seekers"
+msgstr "importar de buscadores"
+
+#: person/views/tools.py:75
+msgid "confirm to import"
+msgstr "confirme para importar"
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:79
 msgid "Register"
@@ -496,23 +763,265 @@ msgstr "Registro"
 
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:40
 msgid "We send a confirmation link to the email:"
-msgstr ""
+msgstr "Enviamos um link de confirmação para o e-mail:"
 
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:43
 msgid ""
 "Please check your email inbox and click on the link to continue with your "
 "registration."
 msgstr ""
+"Por favor, verifique sua caixa de entrada de e-mail e clique no link para "
+"continuar com o seu registro."
 
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:46
 #: user/templates/user/auth/password_reset_done.html:7
 msgid "If they haven't arrived in a few minutes, check your spam folder."
-msgstr ""
+msgstr "Se eles não chegarem em alguns minutos, verifique sua caixa de spam."
 
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:53
 #: publicwork/templates/publicwork/insert_yourself/pos_email_feedback.html:10
 msgid "This page can be closed"
+msgstr "Esta página pode ser fechada"
+
+#: rcadmin/common.py:21
+msgid "Golden Rosycross"
+msgstr "Rosacruz Áurea"
+
+#: rcadmin/common.py:25
+msgid "male"
+msgstr "masculino"
+
+#: rcadmin/common.py:26
+msgid "female"
+msgstr "femenino"
+
+#: rcadmin/common.py:29
+msgid "center"
+msgstr "núcleo"
+
+#: rcadmin/common.py:31
+msgid "contact room"
+msgstr "sala de contato"
+
+#: rcadmin/common.py:35
+msgid "1st. Aspect"
+msgstr "1o Aspecto"
+
+#: rcadmin/common.py:36
+msgid "2nd. Aspect"
+msgstr "2o Aspecto"
+
+#: rcadmin/common.py:37
+msgid "3rd. Aspect"
+msgstr "3o Aspecto"
+
+#: rcadmin/common.py:38
+msgid "4th. Aspect"
+msgstr "4o Aspecto"
+
+#: rcadmin/common.py:39
+msgid "Grail"
+msgstr "Graal"
+
+#: rcadmin/common.py:40
+msgid "5th. Aspect"
+msgstr "5o Aspecto"
+
+#: rcadmin/common.py:41
+msgid "6th. Aspect"
+msgstr "6o Aspecto"
+
+#: rcadmin/common.py:45 user/models.py:62
+msgid "active"
+msgstr "ativo"
+
+#: rcadmin/common.py:46
+msgid "licensed"
+msgstr "licenciado"
+
+#: rcadmin/common.py:47
+msgid "dead"
+msgstr "morto"
+
+#: rcadmin/common.py:48
+msgid "disconnected"
+msgstr "desconectado"
+
+#: rcadmin/common.py:49
+msgid "removed"
+msgstr "removido"
+
+#: rcadmin/common.py:52
+msgid "transfered"
+msgstr "transferido"
+
+#: rcadmin/common.py:53
+msgid "regressed"
+msgstr "retrogradado"
+
+#: rcadmin/common.py:54 rcadmin/common.py:84
+msgid "other"
+msgstr "outro"
+
+#: rcadmin/common.py:55
+msgid "preparatório"
+msgstr "preparatório"
+
+#: rcadmin/common.py:56
+msgid "probatório"
+msgstr "probatório"
+
+#: rcadmin/common.py:57
+msgid "professo"
+msgstr "professo"
+
+#: rcadmin/common.py:62
+msgid "pupil"
+msgstr "aluno"
+
+#: rcadmin/common.py:63
+msgid "web pupil"
+msgstr "aluno web"
+
+#: rcadmin/common.py:64
+msgid "gest"
+msgstr "convidado"
+
+#: rcadmin/common.py:67
+msgid "mentor"
+msgstr "mentor"
+
+#: rcadmin/common.py:68 rcadmin/common.py:114
+msgid "contact"
+msgstr "contato"
+
+#: rcadmin/common.py:69 rcadmin/common.py:120
+msgid "member"
+msgstr "membro"
+
+#: rcadmin/common.py:73
+msgid "maintenance"
+msgstr "manutenção"
+
+#: rcadmin/common.py:74
+msgid "admin"
+msgstr "admin"
+
+#: rcadmin/common.py:77
+msgid "open"
+msgstr "aberto"
+
+#: rcadmin/common.py:78
+msgid "close"
+msgstr "fechar"
+
+#: rcadmin/common.py:81
+msgid "service"
+msgstr "serviço"
+
+#: rcadmin/common.py:82
+msgid "conference"
+msgstr "conferência"
+
+#: rcadmin/common.py:83 rcadmin/common.py:115
+msgid "meeting"
+msgstr "reunião"
+
+#: rcadmin/common.py:87
+msgid "canceled"
+msgstr "cancelado"
+
+#: rcadmin/common.py:88
+msgid "pending"
+msgstr "pendente"
+
+#: rcadmin/common.py:89
+msgid "concluded"
+msgstr "concluído"
+
+#: rcadmin/common.py:92
+msgid "monthly"
+msgstr "mensal"
+
+#: rcadmin/common.py:93
+msgid "by event"
+msgstr "por evento"
+
+#: rcadmin/common.py:94
+msgid "campaign"
+msgstr "campanha"
+
+#: rcadmin/common.py:97 rcadmin/common.py:108
+msgid "pix"
+msgstr "pix"
+
+#: rcadmin/common.py:98
+msgid "cash"
+msgstr "dinheiro"
+
+#: rcadmin/common.py:99
+msgid "check"
+msgstr "cheque"
+
+#: rcadmin/common.py:100
+msgid "pre check"
+msgstr "cheque-pré"
+
+#: rcadmin/common.py:101
+msgid "debit"
+msgstr "débito"
+
+#: rcadmin/common.py:102
+msgid "credit"
+msgstr "crédito"
+
+#: rcadmin/common.py:103 rcadmin/common.py:109
+msgid "deposit"
+msgstr "depósito"
+
+#: rcadmin/common.py:104 rcadmin/common.py:110
+msgid "transfer"
+msgstr "transferência"
+
+#: rcadmin/common.py:105
+msgid "bank slip"
+msgstr "boleto bancário"
+
+#: rcadmin/common.py:112
+msgid "Brazil"
+msgstr "Brasil"
+
+#: rcadmin/common.py:118
+msgid "observation"
+msgstr "observação"
+
+#: rcadmin/common.py:119
+msgid "new"
+msgstr "novo"
+
+#: rcadmin/common.py:121
+msgid "installing"
+msgstr "instalando"
+
+#: rcadmin/common.py:122
+msgid "installed"
+msgstr "instalado"
+
+#: rcadmin/common.py:123
+msgid "stand by"
+msgstr "em espera"
+
+#: rcadmin/common.py:124
+msgid "restriction"
+msgstr "restrição"
+
+#: rcadmin/common.py:175
+msgid ""
+"Phone number must be entered in the format: '+1234567890'.             Up to"
+" 15 digits allowed."
 msgstr ""
+"O número de telefone deve ser inserido no formato: '+1234567890'. São "
+"permitidos até 15 dígitos."
 
 #: user/admin.py:152
 #, python-format
@@ -544,17 +1053,13 @@ msgstr "status da equipe"
 msgid "Designates whether the user can log into this admin site."
 msgstr "Designa se o usuário pode fazer login neste site de administração."
 
-#: user/models.py:62
-msgid "active"
-msgstr "ativo"
-
 #: user/models.py:65
 msgid ""
-"Designates whether this user should be treated as "
-"active.                     Unselect this instead of deleting accounts."
+"Designates whether this user should be treated as active."
+"                     Unselect this instead of deleting accounts."
 msgstr ""
-"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de "
-"deletar contas."
+"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de"
+" deletar contas."
 
 #: user/models.py:69
 msgid "date joined"
@@ -582,8 +1087,8 @@ msgstr "Seu e-mail e/ou senha não conferem. Por favor, tente novamente."
 
 #: user/templates/user/auth/login.html:16
 msgid ""
-"Your account doesn't have access to this page. To proceed, please login with "
-"an account that has access."
+"Your account doesn't have access to this page. To proceed, please login with"
+" an account that has access."
 msgstr ""
 "Sua conta não tem acesso a esta página. Para continuar, faça login com uma "
 "conta que tenha acesso."
@@ -644,8 +1149,8 @@ msgstr "Por favor corrija os erros abaixo."
 
 #: user/templates/user/auth/password_change_form.html:38
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+"Please enter your old password, for security’s sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
 msgstr ""
 "Por favor, digite sua senha antiga, por questões de segurança, e depois "
 "digite sua novasenha duas vezes para que possamos verificar se você digitou "
@@ -683,12 +1188,10 @@ msgstr "Enviamos por e-mail instruções para definir sua senha."
 #, python-format
 msgid ""
 "\n"
-"You're receiving this email because you requested a password reset for your "
-"user account at %(site_name)s.\n"
+"You're receiving this email because you requested a password reset for your user account at %(site_name)s.\n"
 msgstr ""
 "\n"
-"Você está recebendo este e-mail porque solicitou uma redefinição de senha "
-"para a suaconta de usuário no site %(site_name)s. \n"
+"Você está recebendo este e-mail porque solicitou uma redefinição de senha para a suaconta de usuário no site %(site_name)s. \n"
 
 #: user/templates/user/auth/password_reset_email.html:8
 msgid "Please go to the following page and choose a new password:"
@@ -718,34 +1221,6 @@ msgstr "Redefinir senha"
 #: user/templates/user/profile/info.html:61
 msgid "phone 2"
 msgstr "telefone 2"
-
-#: user/templates/user/profile/info.html:77
-msgid "birth"
-msgstr "nasc."
-
-#: user/templates/user/profile/info.html:81
-msgid "profession"
-msgstr "profissão"
-
-#: user/templates/user/profile/info.html:85
-msgid "marital status"
-msgstr "estado civil"
-
-#: user/templates/user/profile/info.html:89
-msgid "sos contact"
-msgstr "contato (sos)"
-
-#: user/templates/user/profile/info.html:95
-msgid "sos phone"
-msgstr "telefone (sos)"
-
-#: user/templates/user/profile/navbar.html:16
-msgid "Frequencies"
-msgstr "Frequencias"
-
-#: user/templates/user/profile/navbar.html:22
-msgid "Historic"
-msgstr "Histórico"
 
 #: user/templates/user/profile/navbar.html:49
 msgid "Change"

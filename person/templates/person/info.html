@@ -1,4 +1,6 @@
 {% load base_extras %}
+{% load i18n %}
+
 
 <div class="row border-top border-secondary pt-3">
   <div class="col-md-3 text-center">
@@ -17,19 +19,19 @@
           <li class="nav-item" role="presentation">
             <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic"
               aria-selected="true">
-              Basic
+              {% trans 'Basic' %}
             </a>
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other"
               aria-selected="false">
-              Others
+              {% trans 'Others' %}
             </a>
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address"
               aria-selected="false">
-              Address
+              {% trans 'Address' %}
             </a>
           </li>
         </ul>
@@ -39,11 +41,11 @@
             <br>
             <table class="table table-hover table-sm">
               <tr>
-                <th width="120px">type</th>
+                <th width="120px">{% trans 'type' %}</th>
                 <td>{{ person.get_person_type_display }}</td>
               </tr>
               <tr>
-                <th>aspect</th>
+                <th>{% trans 'aspect' %}</th>
                 <td>
                   {{ person.get_aspect_display }}
                   {% if person.aspect_date %}
@@ -54,27 +56,27 @@
                 </td>
               </tr>
               <tr>
-                <th>phone</th>
+                <th>{% trans 'phone' %}</th>
                 <td>{{ person.user.profile.phone_1 }}</td>
               </tr>
               <tr>
-                <th>phone alt</th>
+                <th>{% trans 'phone alt' %}</th>
                 <td>{{ person.user.profile.phone_2 }}</td>
               </tr>
               <tr>
-                <th>email</th>
+                <th>{% trans 'email' %}</th>
                 <td>{{ person.user.email }}</td>
               </tr>
               <tr>
-                <th>birth</th>
+                <th>{% trans 'birth' %}</th>
                 <td>
                   {{ person.birth|date:"d/m/Y" }}
-                  &nbsp;&nbsp; <small class="text-mute">age</small> &nbsp;&nbsp;
-                  {{ age }} years
+                  &nbsp;&nbsp; <small class="text-mute">{% trans 'age' %}</small> &nbsp;&nbsp;
+                  {{ age }} {% trans 'years' %}
                 </td>
               </tr>
               <tr>
-                <th>id card</th>
+                <th>{% trans 'id card' %}</th>
                 <td>{{ person.id_card }}</td>
               </tr>
             </table>
@@ -84,32 +86,32 @@
             <table class="table table-hover table-sm">
   
               <tr>
-                <th width="120px">gender</th>
+                <th width="120px">{% trans 'gender' %}</th>
                 <td>{{ person.user.profile.get_gender_display }}</td>
               </tr>
               <tr>
-                <th>profession</th>
+                <th>{% trans 'profession' %}</th>
                 <td>{{ person.user.profile.profession }}</td>
               </tr>
               <tr>
-                <th>marital status</th>
+                <th>{% trans 'marital status' %}</th>
                 <td>{{ person.user.profile.marital_status }}</td>
               </tr>
               <tr class="text-danger">
-                <th>sos contact</th>
+                <th>{% trans 'sos contact' %}</th>
                 <td>
                   {{ person.user.profile.sos_contact }}
                 </td>
               </tr>
               <tr class="text-danger">
-                <th>sos phone</th>
+                <th>{% trans 'sos phone' %}</th>
                 <td>
                   {{ person.user.profile.sos_phone }}
                 </td>
               </tr>
               {% if request.user.is_superuser or request.user|has_group:"office" %}
               <tr>
-                <th>observations</th>
+                <th>{% trans 'observations' %}</th>
                 <td>
                   <div class="form-group">
                     <textarea class="form-control" rows="3" disabled>
@@ -125,7 +127,7 @@
             <br>
             <table class="table table-hover table-sm">
               <tr>
-                <th width="120px">address</th>
+                <th width="120px">{% trans 'address' %}</th>
                 <td>
                   <address>
                     {{ person.user.profile.address }}, {{ person.user.profile.number }}
