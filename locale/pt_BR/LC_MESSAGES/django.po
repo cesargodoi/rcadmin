@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 15:34-0300\n"
-"PO-Revision-Date: 2021-09-28 15:36-0306\n"
+"POT-Creation-Date: 2021-09-28 16:03-0300\n"
+"PO-Revision-Date: 2021-09-28 16:11-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -69,6 +69,7 @@ msgstr "Ação não permitida!"
 
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_persons.html:49
+#: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
 msgid "Go back"
 msgstr "Voltar"
@@ -98,6 +99,8 @@ msgstr "Confirmar"
 #: center/templates/center/confirm_delete.html:24
 #: center/templates/center/confirm_reinsert.html:22
 #: center/templates/center/navbar.html:73
+#: event/templates/event/frequencies-add.html:18
+#: event/templates/event/navbar.html:61
 #: person/templates/person/elements/confirm_to_delete_freq.html:23
 #: person/templates/person/elements/confirm_to_delete_member.html:21
 #: person/templates/person/elements/confirm_to_insert.html:23
@@ -132,6 +135,8 @@ msgid "Persons"
 msgstr "Alunos"
 
 #: base/templates/base/elements/menu.html:14 base/templates/base/home.html:63
+#: event/templates/event/elements/events.html:3
+#: event/templates/event/navbar.html:7
 msgid "Events"
 msgstr "Eventos"
 
@@ -156,6 +161,7 @@ msgid "Admin"
 msgstr "Admin"
 
 #: base/templates/base/elements/menu_admin.html:6
+#: event/templates/event/activity_home.html:7 event/views/activity.py:18
 msgid "Activities"
 msgstr "Atividades"
 
@@ -286,6 +292,7 @@ msgstr "de"
 #: base/templates/base/searchs/modal_frequencies.html:30
 #: base/templates/base/searchs/modal_lectures.html:30
 #: base/templates/base/searchs/orders.html:19
+#: event/templates/event/header.html:11
 msgid "to"
 msgstr "para"
 
@@ -361,6 +368,7 @@ msgid "import persons"
 msgstr "importar pessoas"
 
 #: center/templates/center/centers.html:70
+#: event/templates/event/elements/events.html:74
 #: person/templates/person/membership.html:48
 #: person/templates/person/persons.html:83
 msgid "choose your search terms"
@@ -415,7 +423,7 @@ msgstr "alunos"
 msgid "conference center"
 msgstr "centro de conferência"
 
-#: center/templates/center/header.html:28
+#: center/templates/center/header.html:28 event/templates/event/header.html:19
 msgid "inactive"
 msgstr "inativo"
 
@@ -464,13 +472,13 @@ msgid "Center"
 msgstr "Núcleo"
 
 #: center/templates/center/navbar.html:32
-#: center/templates/center/navbar.html:42
+#: center/templates/center/navbar.html:42 event/templates/event/navbar.html:39
 #: person/templates/person/navbar.html:78
 #: user/templates/user/profile/navbar.html:42
 msgid "Edit"
 msgstr "Editar"
 
-#: center/templates/center/navbar.html:50
+#: center/templates/center/navbar.html:50 event/templates/event/navbar.html:47
 #: person/templates/person/navbar.html:86
 msgid "Delete"
 msgstr "Apagar"
@@ -496,7 +504,8 @@ msgstr "criar núcleo"
 msgid "update center"
 msgstr "atualizar núcleo"
 
-#: center/views.py:131 person/views/frequency_ps.py:96
+#: center/views.py:131 event/views/activity.py:83 event/views/event.py:123
+#: event/views/frequencies.py:26 person/views/frequency_ps.py:96
 #: person/views/historic.py:98 person/views/membership_ps.py:112
 #: person/views/person.py:211
 msgid "confirm to delete"
@@ -519,6 +528,167 @@ msgid "%d event was successfully marked as 'active'."
 msgid_plural "%d events were successfully marked as 'actives'."
 msgstr[0] "%d evento foi marcado com sucesso como 'ativo'."
 msgstr[1] "%d eventos foram marcados com sucesso como 'ativos'."
+
+#: event/templates/event/activity_home.html:16
+#| msgid "Address"
+msgid "Add"
+msgstr "Adicionar"
+
+#: event/templates/event/detail.html:22
+#: event/templates/event/elements/frequencies.html:3
+#: event/templates/event/navbar.html:32 person/templates/person/detail.html:20
+#: person/templates/person/navbar.html:46
+#: user/templates/user/profile/navbar.html:16
+msgid "Frequencies"
+msgstr "Frequencias"
+
+#: event/templates/event/detail.html:33
+msgid "QR - Code"
+msgstr "QR - Code"
+
+#: event/templates/event/detail.html:52
+msgid "Scan this QR-Code to sign-in Event"
+msgstr "Leia este QR - Code para fazer login no evento"
+
+#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:45
+#: user/models.py:62
+msgid "active"
+msgstr "ativo"
+
+#: event/templates/event/elements/activity_card.html:22
+msgid "is multi date"
+msgstr "é multi-data"
+
+#: event/templates/event/elements/events.html:42
+msgid "Select"
+msgstr "Selecionar"
+
+#: event/templates/event/elements/events.html:76
+#| msgid "centers not found"
+msgid "events not found"
+msgstr "eventos não encontrados"
+
+#: event/templates/event/elements/frequencies.html:53
+#| msgid "no seekers found"
+msgid "no frequencies found"
+msgstr "nenhuma frequência encontrada"
+
+#: event/templates/event/frequencies-add.html:13
+#| msgid "Reinsert"
+msgid "Insert"
+msgstr "Inserir"
+
+#: event/templates/event/frequencies-add.html:24
+#| msgid "insert frequencies"
+msgid "Insert Frequencies"
+msgstr "Inserir Frequências"
+
+#: event/templates/event/frequencies-add.html:31
+#| msgid "Import"
+msgid "Important"
+msgstr "Importante"
+
+#: event/templates/event/frequencies-add.html:33
+msgid "Enter pupils registration numbers, separated by commas."
+msgstr "Digite os números de registro dos alunos, separados por vírgulas."
+
+#: event/templates/event/frequencies-add.html:34
+msgid "Example"
+msgstr "Exemplo"
+
+#: event/templates/event/header.html:12
+#| msgid "dead"
+msgid "deadline"
+msgstr "prazo final"
+
+#: event/templates/event/navbar.html:7 event/templates/event/navbar.html:22
+#| msgid "Events"
+msgid "Event"
+msgstr "Evento"
+
+#: event/views/activity.py:30
+#| msgid "The password has been changed!"
+msgid "The Activity has been created!"
+msgstr "A atividade foi criada!"
+
+#: event/views/activity.py:40
+msgid "Create Activity"
+msgstr "Criar Atividade"
+
+#: event/views/activity.py:53
+#| msgid "My Profile has been updated!"
+msgid "The Activity has been updated!"
+msgstr "A atividade foi atualizada!"
+
+#: event/views/activity.py:62
+msgid "Update Activity"
+msgstr "Atualizar Atividade"
+
+#: event/views/activity.py:77
+msgid "The Activity has been deleted!"
+msgstr "A atividade foi excluída!"
+
+#: event/views/event.py:30
+#| msgid "center home"
+msgid "event home"
+msgstr "evento"
+
+#: event/views/event.py:47
+#| msgid "center detail"
+msgid "event detail"
+msgstr "detalhes do evento"
+
+#: event/views/event.py:60
+#| msgid "The password has been changed!"
+msgid "The Event has been created!"
+msgstr "O evento foi criado!"
+
+#: event/views/event.py:69
+#| msgid "create center"
+msgid "create event"
+msgstr "criar evento"
+
+#: event/views/event.py:83
+#| msgid "My Profile has been updated!"
+msgid "The Event has been updated!"
+msgstr "O evento foi atualizado!"
+
+#: event/views/event.py:92
+#| msgid "update center"
+msgid "update event"
+msgstr "atualizar evento"
+
+#: event/views/event.py:104
+msgid ""
+"\n"
+"        You cannot delete an event if it has frequencies launched.\n"
+"\n"
+"        Remove all frequencies and try again.\n"
+"        "
+msgstr ""
+"\n"
+"Você não pode excluir um evento se ele tiver frequências lançadas.\n"
+"\n"
+"Remova todas as frequências e tente novamente."
+
+#: event/views/event.py:110
+#| msgid "Action not allowed!"
+msgid "action not allowed"
+msgstr "ação não permitida"
+
+#: event/views/event.py:117
+#| msgid "My Profile has been updated!"
+msgid "The Event has been deleted!"
+msgstr "O evento foi apagado!"
+
+#: event/views/frequencies.py:20
+#| msgid "My Profile has been updated!"
+msgid "The Frequency has been deleted!"
+msgstr "A frequência foi excluída!"
+
+#: event/views/frequencies.py:67 person/views/frequency_ps.py:73
+msgid "insert frequencies"
+msgstr "inserir frequências"
 
 #: person/admin.py:15
 #, python-format
@@ -547,12 +717,6 @@ msgstr "Info"
 msgid "Historic"
 msgstr "Histórico"
 
-#: person/templates/person/detail.html:20
-#: person/templates/person/navbar.html:46
-#: user/templates/user/profile/navbar.html:16
-msgid "Frequencies"
-msgstr "Frequencias"
-
 #: person/templates/person/detail.html:23
 #: person/templates/person/forms/membership.html:23
 #: person/templates/person/navbar.html:52
@@ -565,18 +729,15 @@ msgstr "Membros"
 #: person/templates/person/elements/confirm_to_import.html:8
 #: person/templates/person/elements/confirm_to_insert.html:8
 #: person/templates/person/elements/confirm_to_reinsert_person.html:8
-#| msgid "Atention!"
 msgid "Atention"
 msgstr "Atenção"
 
 #: person/templates/person/elements/confirm_to_delete_freq.html:9
 #: person/templates/person/elements/confirm_to_delete_member.html:9
-#| msgid "Are you sure you want to delete"
 msgid "Are you shure you want to remove"
 msgstr "Você tem certeza que deseja remover"
 
 #: person/templates/person/elements/confirm_to_import.html:9
-#| msgid "Are you sure you want to delete"
 msgid "Are you shure you want to import"
 msgstr "Tem certeza que deseja importar"
 
@@ -585,17 +746,14 @@ msgid "as a"
 msgstr "como um"
 
 #: person/templates/person/elements/confirm_to_import.html:16
-#| msgid "pupil"
 msgid "Pupil"
 msgstr "Aluno"
 
 #: person/templates/person/elements/confirm_to_insert.html:9
-#| msgid "Are you sure you want to delete"
 msgid "Are you shure you want to insert"
 msgstr "Tem certeza que deseja inserir"
 
 #: person/templates/person/elements/confirm_to_reinsert_person.html:9
-#| msgid "Are you sure you want to delete"
 msgid "Are you shure you want to reinsert"
 msgstr "Tem certeza que deseja reinserir"
 
@@ -704,10 +862,6 @@ msgstr "lista de frequências"
 #: person/views/frequency_ps.py:55 person/views/membership_ps.py:54
 msgid "confirm to insert"
 msgstr "confirme para inserir"
-
-#: person/views/frequency_ps.py:73
-msgid "insert frequencies"
-msgstr "inserir frequências"
 
 #: person/views/historic.py:26
 msgid "historic list"
@@ -830,10 +984,6 @@ msgstr "5o Aspecto"
 #: rcadmin/common.py:41
 msgid "6th. Aspect"
 msgstr "6o Aspecto"
-
-#: rcadmin/common.py:45 user/models.py:62
-msgid "active"
-msgstr "ativo"
 
 #: rcadmin/common.py:46
 msgid "licensed"

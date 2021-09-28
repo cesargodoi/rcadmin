@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
+
 from person.models import Person
 
 from ..forms import FrequenciesAddForm
@@ -15,11 +17,14 @@ def frequency_delete(request, pk, person_id):
     object = f"Remove: {person.name} from: {event}"
     if request.method == "POST":
         event.frequencies.remove(person)
-        message = "The Frequency has been deleted!"
+        message = _("The Frequency has been deleted!")
         messages.success(request, message)
         return redirect("event_detail", pk=pk)
 
-    context = {"object": object, "title": "confirm to delete"}
+    context = {
+        "object": object,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -59,6 +64,6 @@ def frequencies_add(request, pk):
     context = {
         "object": obj,
         "form": FrequenciesAddForm(),
-        "title": "insert frequencies",
+        "title": _("insert frequencies"),
     }
     return render(request, "event/frequencies-add.html", context)

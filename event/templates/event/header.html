@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="article-metadata">
@@ -6,15 +8,15 @@
           {{ object.date|date:'d/m/y'}}
           {% if object.activity.multi_date %}
           <small class="text-muted">
-            &nbsp;&nbsp; <strong>to</strong> {{ object.end_date|date:'d/m/Y'}}
-            &nbsp;&nbsp; <strong>deadline</strong> {{ object.deadline|date:'d/m/Y H:i'}}
+            &nbsp;&nbsp; <strong>{% trans 'to' %}</strong> {{ object.end_date|date:'d/m/Y'}}
+            &nbsp;&nbsp; <strong>{% trans 'deadline' %}</strong> {{ object.deadline|date:'d/m/Y H:i'}}
           </small>
           {% endif %}
         </div>
         <div class="col text-right">
           {% if not object.is_active %}
             <span class="badge badge-pill badge-danger">
-              inactive
+              {% trans 'inactive' %}
             </span>
             &nbsp;&nbsp;
           {% endif %}

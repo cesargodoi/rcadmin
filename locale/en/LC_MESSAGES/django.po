@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 15:34-0300\n"
+"POT-Creation-Date: 2021-09-28 16:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,7 @@ msgstr ""
 
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_persons.html:49
+#: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
 msgid "Go back"
 msgstr ""
@@ -97,6 +98,8 @@ msgstr ""
 #: center/templates/center/confirm_delete.html:24
 #: center/templates/center/confirm_reinsert.html:22
 #: center/templates/center/navbar.html:73
+#: event/templates/event/frequencies-add.html:18
+#: event/templates/event/navbar.html:61
 #: person/templates/person/elements/confirm_to_delete_freq.html:23
 #: person/templates/person/elements/confirm_to_delete_member.html:21
 #: person/templates/person/elements/confirm_to_insert.html:23
@@ -129,6 +132,8 @@ msgid "Persons"
 msgstr ""
 
 #: base/templates/base/elements/menu.html:14 base/templates/base/home.html:63
+#: event/templates/event/elements/events.html:3
+#: event/templates/event/navbar.html:7
 msgid "Events"
 msgstr ""
 
@@ -153,6 +158,7 @@ msgid "Admin"
 msgstr ""
 
 #: base/templates/base/elements/menu_admin.html:6
+#: event/templates/event/activity_home.html:7 event/views/activity.py:18
 msgid "Activities"
 msgstr ""
 
@@ -283,6 +289,7 @@ msgstr ""
 #: base/templates/base/searchs/modal_frequencies.html:30
 #: base/templates/base/searchs/modal_lectures.html:30
 #: base/templates/base/searchs/orders.html:19
+#: event/templates/event/header.html:11
 msgid "to"
 msgstr ""
 
@@ -358,6 +365,7 @@ msgid "import persons"
 msgstr ""
 
 #: center/templates/center/centers.html:70
+#: event/templates/event/elements/events.html:74
 #: person/templates/person/membership.html:48
 #: person/templates/person/persons.html:83
 msgid "choose your search terms"
@@ -412,7 +420,7 @@ msgstr ""
 msgid "conference center"
 msgstr ""
 
-#: center/templates/center/header.html:28
+#: center/templates/center/header.html:28 event/templates/event/header.html:19
 msgid "inactive"
 msgstr ""
 
@@ -460,13 +468,13 @@ msgid "Center"
 msgstr ""
 
 #: center/templates/center/navbar.html:32
-#: center/templates/center/navbar.html:42
+#: center/templates/center/navbar.html:42 event/templates/event/navbar.html:39
 #: person/templates/person/navbar.html:78
 #: user/templates/user/profile/navbar.html:42
 msgid "Edit"
 msgstr ""
 
-#: center/templates/center/navbar.html:50
+#: center/templates/center/navbar.html:50 event/templates/event/navbar.html:47
 #: person/templates/person/navbar.html:86
 msgid "Delete"
 msgstr ""
@@ -492,7 +500,8 @@ msgstr ""
 msgid "update center"
 msgstr ""
 
-#: center/views.py:131 person/views/frequency_ps.py:96
+#: center/views.py:131 event/views/activity.py:83 event/views/event.py:123
+#: event/views/frequencies.py:26 person/views/frequency_ps.py:96
 #: person/views/historic.py:98 person/views/membership_ps.py:112
 #: person/views/person.py:211
 msgid "confirm to delete"
@@ -515,6 +524,144 @@ msgid "%d event was successfully marked as 'active'."
 msgid_plural "%d events were successfully marked as 'actives'."
 msgstr[0] ""
 msgstr[1] ""
+
+#: event/templates/event/activity_home.html:16
+msgid "Add"
+msgstr ""
+
+#: event/templates/event/detail.html:22
+#: event/templates/event/elements/frequencies.html:3
+#: event/templates/event/navbar.html:32 person/templates/person/detail.html:20
+#: person/templates/person/navbar.html:46
+#: user/templates/user/profile/navbar.html:16
+msgid "Frequencies"
+msgstr ""
+
+#: event/templates/event/detail.html:33
+msgid "QR - Code"
+msgstr ""
+
+#: event/templates/event/detail.html:52
+msgid "Scan this QR-Code to sign-in Event"
+msgstr ""
+
+#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:45
+#: user/models.py:62
+msgid "active"
+msgstr ""
+
+#: event/templates/event/elements/activity_card.html:22
+msgid "is multi date"
+msgstr ""
+
+#: event/templates/event/elements/events.html:42
+msgid "Select"
+msgstr ""
+
+#: event/templates/event/elements/events.html:76
+msgid "events not found"
+msgstr ""
+
+#: event/templates/event/elements/frequencies.html:53
+msgid "no frequencies found"
+msgstr ""
+
+#: event/templates/event/frequencies-add.html:13
+msgid "Insert"
+msgstr ""
+
+#: event/templates/event/frequencies-add.html:24
+msgid "Insert Frequencies"
+msgstr ""
+
+#: event/templates/event/frequencies-add.html:31
+msgid "Important"
+msgstr ""
+
+#: event/templates/event/frequencies-add.html:33
+msgid "Enter pupils registration numbers, separated by commas."
+msgstr ""
+
+#: event/templates/event/frequencies-add.html:34
+msgid "Example"
+msgstr ""
+
+#: event/templates/event/header.html:12
+msgid "deadline"
+msgstr ""
+
+#: event/templates/event/navbar.html:7 event/templates/event/navbar.html:22
+msgid "Event"
+msgstr ""
+
+#: event/views/activity.py:30
+msgid "The Activity has been created!"
+msgstr ""
+
+#: event/views/activity.py:40
+msgid "Create Activity"
+msgstr ""
+
+#: event/views/activity.py:53
+msgid "The Activity has been updated!"
+msgstr ""
+
+#: event/views/activity.py:62
+msgid "Update Activity"
+msgstr ""
+
+#: event/views/activity.py:77
+msgid "The Activity has been deleted!"
+msgstr ""
+
+#: event/views/event.py:30
+msgid "event home"
+msgstr ""
+
+#: event/views/event.py:47
+msgid "event detail"
+msgstr ""
+
+#: event/views/event.py:60
+msgid "The Event has been created!"
+msgstr ""
+
+#: event/views/event.py:69
+msgid "create event"
+msgstr ""
+
+#: event/views/event.py:83
+msgid "The Event has been updated!"
+msgstr ""
+
+#: event/views/event.py:92
+msgid "update event"
+msgstr ""
+
+#: event/views/event.py:104
+msgid ""
+"\n"
+"        You cannot delete an event if it has frequencies launched.\n"
+"\n"
+"        Remove all frequencies and try again.\n"
+"        "
+msgstr ""
+
+#: event/views/event.py:110
+msgid "action not allowed"
+msgstr ""
+
+#: event/views/event.py:117
+msgid "The Event has been deleted!"
+msgstr ""
+
+#: event/views/frequencies.py:20
+msgid "The Frequency has been deleted!"
+msgstr ""
+
+#: event/views/frequencies.py:67 person/views/frequency_ps.py:73
+msgid "insert frequencies"
+msgstr ""
 
 #: person/admin.py:15
 #, python-format
@@ -541,12 +688,6 @@ msgstr ""
 #: person/templates/person/navbar.html:106
 #: user/templates/user/profile/navbar.html:22
 msgid "Historic"
-msgstr ""
-
-#: person/templates/person/detail.html:20
-#: person/templates/person/navbar.html:46
-#: user/templates/user/profile/navbar.html:16
-msgid "Frequencies"
 msgstr ""
 
 #: person/templates/person/detail.html:23
@@ -694,10 +835,6 @@ msgstr ""
 msgid "confirm to insert"
 msgstr ""
 
-#: person/views/frequency_ps.py:73
-msgid "insert frequencies"
-msgstr ""
-
 #: person/views/historic.py:26
 msgid "historic list"
 msgstr ""
@@ -816,10 +953,6 @@ msgstr ""
 
 #: rcadmin/common.py:41
 msgid "6th. Aspect"
-msgstr ""
-
-#: rcadmin/common.py:45 user/models.py:62
-msgid "active"
 msgstr ""
 
 #: rcadmin/common.py:46
