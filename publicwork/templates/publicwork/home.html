@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load static %}
 {% load base_extras %}
 
@@ -14,7 +16,7 @@
       <div class="card h-100 card-principal-backimage">
         <img src="{% static 'images/seekers.png' %}" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-principal-title">Seekers</h5>
+          <h5 class="card-principal-title">{% trans 'Seekers' %}</h5>
         </div>
       </div>
     </div>
@@ -25,7 +27,7 @@
       <div class="card h-100 card-principal-backimage">
         <img src="{% static 'images/lectures.png' %}" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-principal-title">Lectures</h5>
+          <h5 class="card-principal-title">{% trans 'Lectures' %}</h5>
         </div>
       </div>
     </div>
@@ -37,7 +39,7 @@
     <div class="card h-100 card-principal-backimage">
       <img src="{% static 'images/groups.png' %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-principal-title">Groups</h5>
+        <h5 class="card-principal-title">{% trans 'Groups' %}</h5>
       </div>
     </div>
   </div>
@@ -45,25 +47,25 @@
   {% if not request.user|has_group:"publicwork_jr" %}
     <div class="col-lg-3 mb-4">
       <div class="card-treasury-new bg-light mb-3">
-        <div class="card-header-treasury-new">Reports</div>
+        <div class="card-header-treasury-new">{% trans 'Reports' %}</div>
         <ul class="list-group list-group-flush">
           <a type="button" 
             class="list-group-item-treasury-new list-group-item-action text-info" 
             href="{% url 'frequencies_per_period' %}">
             <i class="fas fa-eye"></i> 
-            Frequencies per period
+            {% trans 'Frequencies per period' %}
           </a>
           <a type="button" 
             class="list-group-item-treasury-new list-group-item-action text-info" 
             href="{% url 'lectures_per_period' %}">
             <i class="fas fa-eye"></i> 
-            Lectures per period
+            {% trans 'Lectures per period' %}
           </a>
           <a type="button" 
             class="list-group-item-treasury-new list-group-item-action text-info" 
             href="{% url 'status_per_center' %}">
             <i class="fas fa-eye"></i> 
-            Status per center
+            {% trans 'Status per center' %}
           </a>
         </ul>
       </div>

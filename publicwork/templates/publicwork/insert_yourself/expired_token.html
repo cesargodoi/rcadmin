@@ -1,14 +1,15 @@
+{% load i18n %} 
+
 <div class="jumbotron text-justify">
-  <h1 class="text-center border-bottom">O token expirou</h1>
-  <p>A solicitação do seu cadastro expirou.</p>
-  <p>Caso seja de seu interesse, refaça o seu cadastro através do link:</p>
-  <a href="{% url 'insert_yourself' %}">Eu quero participar!</a>
-  <p>Caso queira relatar algum problema, entre em
-    contato conosco através do email: 
+  <h1 class="text-center border-bottom">{% trans 'Token expired' %}</h1>
+  <p>{% trans 'Your registration request has expired. '%}</p>
+  <p>{% trans 'If it is of interest to you, re-register through the link:' %}</p>
+  <a href="{% url 'insert_yourself' %}">{% trans 'I want to participate!' %}</a>
+  <p>{% trans 'If you want to report a problem, please contact us via email: '%} 
     <a href="mailto:rcadmin@rosacruzaurea.org.br">rcadmin@rosacruzaurea.org.br</a> </p>
   <br>
-  <p class="text-right">Atenciosamente</p>
-  <h4 class="text-right">equipe rc@dmin</h4>
+  <p class="text-right">{% trans 'Best regards' %}</p>
+    <h4 class="text-right">{% trans 'team rc@dmin' %}</h4>
 </div>
 
 

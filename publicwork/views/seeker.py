@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import (
     paginator,
     belongs_center,
@@ -36,7 +38,7 @@ def seeker_home(request):
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
         "status_list": SEEKER_STATUS,
-        "title": "seeker home",
+        "title": _("seeker home"),
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
         "nav": "sk_home",
@@ -55,7 +57,7 @@ def seeker_detail(request, pk):
 
     context = {
         "object": seeker,
-        "title": "seeker detail",
+        "title": _("seeker detail"),
         "nav": "seeker",
         "tab": "info",
         "age": age,
@@ -84,7 +86,7 @@ def seeker_create(request):
         "form_name": "Seeker",
         "form_path": "publicwork/forms/seeker.html",
         "goback": reverse("seeker_home"),
-        "title": "create seeker",
+        "title": _("create seeker"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -115,7 +117,7 @@ def seeker_update(request, pk):
         "form_name": "Seeker",
         "form_path": "publicwork/forms/seeker.html",
         "goback": reverse("seeker_detail", args=[pk]),
-        "title": "update seeker",
+        "title": _("update seeker"),
         "pk": pk,
     }
     return render(request, "base/form.html", context)
@@ -135,7 +137,10 @@ def seeker_delete(request, pk):
             seeker.delete()
         return redirect("seeker_home")
 
-    context = {"object": seeker, "title": "confirm to delete"}
+    context = {
+        "object": seeker,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -148,7 +153,7 @@ def seeker_reinsert(request, pk):
         seeker.save()
         return redirect(reverse("seeker_home") + "?init=on")
 
-    context = {"object": seeker, "title": "confirm to reinsert"}
+    context = {"object": seeker, "title": _("confirm to reinsert")}
     return render(
         request, "publicwork/seeker/confirm_to_reinsert.html", context
     )
@@ -167,7 +172,7 @@ def seeker_frequencies(request, pk):
 
     context = {
         "object": seeker,
-        "title": "seeker detail | frequencies",
+        "title": _("seeker detail | frequencies"),
         "object_list": paginator(frequencies, page=page),
         "nav": "seeker",
         "tab": "frequencies",
@@ -194,7 +199,7 @@ def seeker_historic(request, pk):
 
     context = {
         "object": seeker,
-        "title": "seeker detail | historic",
+        "title": _("seeker detail | historic"),
         "object_list": object_list,
         "nav": "seeker",
         "tab": "historic",

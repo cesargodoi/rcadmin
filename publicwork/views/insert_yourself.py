@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 from user.models import User
 from center.models import Center
@@ -96,14 +97,14 @@ def insert_yourself(request):
         "form_name": "Seeker",
         "form_path": "publicwork/forms/seeker.html",
         "goback": reverse("seeker_home"),
-        "title": "create seeker",
+        "title": _("create seeker"),
         "rca_logo": True,
     }
     return render(request, "publicwork/insert_yourself/form.html", context)
 
 
 def feedback(request):
-    context = {"title": "insert yourself as a seeker"}
+    context = {"title": _("insert yourself as a seeker")}
     return render(
         request, "publicwork/insert_yourself/form_feedback.html", context
     )
