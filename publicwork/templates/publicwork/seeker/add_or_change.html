@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -7,14 +8,14 @@
   <a class="btn btn-{% if add %}primary{% else %}warning{% endif %} mt-2" href="#"
     onclick="document.getElementById('form').submit();">
     <i class="fas fa-check"></i>
-    {% if add %} Add {% else %} Update {% endif %}
+    {% if add %} {% trans 'Add' %} {% else %} {% trans 'Update' %} {% endif %}
   </a>
   {% endif %}
 
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{{ goback }}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 

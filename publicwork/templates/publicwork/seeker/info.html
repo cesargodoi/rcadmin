@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="row border-top border-secondary pt-3">
   <div class="col-md-3 text-center">
     <img 
@@ -13,41 +15,41 @@
             <br>
             <table class="table table-hover table-sm">
               <tr>
-                <th>status</th>
+                <th>{% trans 'status' %}</th>
                 <td>
                   {{ object.get_status_display }}
-                  &nbsp;&nbsp; <small class="text-mute">since</small> &nbsp;&nbsp;
+                  &nbsp;&nbsp; <small class="text-mute">{% trans 'since' %}</small> &nbsp;&nbsp;
                   {{ object.status_date | date:"d/m/Y" }}
                 </td>
               </tr>
               <tr>
-                <th width="120rem">birth</th>
+                <th width="120rem">{% trans 'birth' %}</th>
                 <td>
                   {{ object.birth|date:"d/m/Y" }}
-                  &nbsp;&nbsp; <small class="text-mute">age</small> &nbsp;&nbsp;
-                  {{ age }} years
+                  &nbsp;&nbsp; <small class="text-mute">{% trans 'age' %}</small> &nbsp;&nbsp;
+                  {{ age }} {% trans 'years' %}
                 </td>
               </tr>
               <tr>
-                <th>gender</th>
+                <th>{% trans 'gender' %}</th>
                 <td>{{ object.get_gender_display }}</td>
               </tr>
               <tr>
-                <th>phone</th>
+                <th>{% trans 'phone' %}</th>
                 <td>{{ object.phone }}</td>
               </tr>
               <tr>
-                <th>email</th>
+                <th>{% trans 'email' %}</th>
                 <td>{{ object.email }}</td>
               </tr>
               {% if object.publicworkgroup_set %}
               <tr>
-                <th>group</th>
+                <th>{% trans 'group' %}</th>
                 <td>{{ object.publicworkgroup_set.first }}</td>
               </tr>
               {% endif %}
               <tr>
-                <th width="120rem">observations</th>
+                <th width="120rem">{% trans 'observations' %}</th>
                 <td>{{ object.observations }}</td>
               </tr>
             </table>

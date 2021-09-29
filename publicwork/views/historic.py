@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from ..forms import HistoricForm
 from ..models import Seeker, HistoricOfSeeker
@@ -27,7 +28,7 @@ def create_historic(request, pk):
             if request.POST["occurrence"] in ("RST", "STD"):
                 seeker.is_active = False
                 seeker.save()
-            messages.success(request, "The Historic has been created!")
+            messages.success(request, _("The Historic has been created!"))
 
         return redirect("seeker_historic", pk=pk)
 
@@ -41,7 +42,7 @@ def create_historic(request, pk):
                 "made_by": request.user,
             }
         ),
-        "title": "add historic",
+        "title": _("add historic"),
         "tab": "historic",
         "add": True,
         "goback": reverse("seeker_historic", args=[pk]),
@@ -64,14 +65,14 @@ def update_historic(request, seek_pk, hist_pk):
                     request.POST.get("occurrence"),
                     request.POST.get("date"),
                 )
-            messages.success(request, "The Historic has been updated!")
+            messages.success(request, _("The Historic has been updated!"))
 
         return redirect("seeker_historic", pk=seek_pk)
 
     context = {
         "object": seeker,
         "form": HistoricForm(instance=historic),
-        "title": "change historic",
+        "title": _("change historic"),
         "tab": "historic",
         "goback": reverse("seeker_historic", args=[seek_pk]),
     }
@@ -89,7 +90,10 @@ def delete_historic(request, seek_pk, hist_pk):
             adjust_seeker_side(historic.seeker, reverse=True)
         return redirect("seeker_historic", pk=seek_pk)
 
-    context = {"object": historic, "title": "confirm to delete"}
+    context = {
+        "object": historic,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 

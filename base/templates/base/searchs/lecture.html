@@ -1,8 +1,10 @@
+{% load i18n %}
+
 <div class="form-row align-items-center">
   <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
-        <div class="input-group-text">from</div>
+        <div class="input-group-text">{% trans 'from' %}</div>
       </div>
       <input type="date" 
             name="dt1" 
@@ -14,7 +16,7 @@
   <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
-        <div class="input-group-text">to</div>
+        <div class="input-group-text">{% trans 'to' %}</div>
       </div>
       <input type="date" 
              name="dt2" 
@@ -27,7 +29,7 @@
     <select class="form-control" name="lc_type">
       <option value="all"
               {% if request.session.search.lc_type == 'all' %}selected{% endif %}>
-              types
+              {% trans 'types' %}
       </option>
       {% for key, value in type_list %}
       <option value="{{ key }}"
@@ -41,7 +43,7 @@
     {% include 'base/elements/checkbox_all.html' %}
     <button class="btn btn-success" type="submit">
       <i class="fas fa-search"></i>
-      Search
+      {% trans 'Search' %}
     </button> 
   </div>
 </div>

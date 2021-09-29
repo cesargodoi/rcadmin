@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from rcadmin.common import paginator
 
 from ..forms import HistoricForm
@@ -22,7 +23,7 @@ def person_historic(request, person_id):
 
     context = {
         "object_list": object_list,
-        "title": "historic list",
+        "title": _("historic list"),
         "person": person,  # to header element
         "nav": "detail",
         "tab": "historic",
@@ -52,7 +53,7 @@ def historic_create(request, person_id):
                 "date": timezone.now(),
             }
         ),
-        "title": "create historic",
+        "title": _("create historic"),
         "to_create": True,
         "person": person,  # to header element
     }
@@ -77,7 +78,7 @@ def historic_update(request, person_id, pk):
 
     context = {
         "form": HistoricForm(instance=historic),
-        "title": "update historic",
+        "title": _("update historic"),
         "person": historic.person,  # to header element
     }
     return render(request, "person/forms/historic.html", context)
@@ -92,7 +93,10 @@ def historic_delete(request, person_id, pk):
         historic.delete()
         return redirect("person_historic", person_id=person_id)
 
-    context = {"object": historic, "title": "confirm to delete"}
+    context = {
+        "object": historic,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 

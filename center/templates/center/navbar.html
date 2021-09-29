@@ -1,8 +1,9 @@
 {% load base_extras %}
+{% load i18n %}
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
-    {% if nav == 'home' %}Centers{% else %}Center{% endif %}
+    {% if nav == 'home' %}{% trans 'Centers' %}{% else %}{% trans 'Center' %}{% endif %}
   </a>
 
   <div class="navbar-nav-scroll">
@@ -17,7 +18,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
            href="{% url 'center_create' %}">
           <i class="fas fa-plus"></i>
-          Center 
+          {% trans 'Center' %} 
         </a>
       </li>
     {% endif %}
@@ -28,7 +29,7 @@
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
             href="{% url 'center_update' object.id %}">
             <i class="fas fa-edit"></i> 
-            Edit
+            {% trans 'Edit' %}
           </a>
         </li>
       {% endif %}
@@ -38,7 +39,7 @@
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
             href="{% url 'center_update' object.id %}">
             <i class="fas fa-edit"></i> 
-            Edit
+            {% trans 'Edit' %}
           </a>
         </li>
         {% if object.is_active %}
@@ -46,7 +47,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
               href="{% url 'center_delete' object.id %}">
               <i class="fas fa-trash-alt"></i> 
-              Delete
+              {% trans 'Delete' %}
             </a>
           </li>
         {% else %}
@@ -54,7 +55,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
               href="{% url 'center_reinsert' object.id %}">
               <i class="fas fa-sign-in-alt"></i> 
-              Reinsert
+              {% trans 'Reinsert' %}
             </a>
           </li>
         {% endif %}
@@ -69,7 +70,7 @@
                   {% url 'home' %}
                 {% endif %}">
         <i class="fas fa-chevron-left"></i> 
-        Back
+        {% trans 'Back' %}
       </a>
     </li>
     

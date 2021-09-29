@@ -1,4 +1,6 @@
-<h4>Add Mentor</h4>
+{% load i18n %}
+
+<h4>{% trans 'Add Mentor' %}</h4>
 <form class="form-control-sm border-top" method="GET">
   {% csrf_token %}
   {% include "base/searchs/person.html" %}

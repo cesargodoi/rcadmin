@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 
 from rcadmin.common import paginator
 from user.models import User
@@ -20,7 +21,7 @@ def import_from_seekers(request):
 
     context = {
         "object_list": object_list,
-        "title": "import from seekers",
+        "title": _("import from seekers"),
     }
     return render(request, "person/import_from_seekers.html", context)
 
@@ -69,5 +70,8 @@ def import_seeker(request, id):
 
         return redirect("person_detail", id=new_user.person.pk)
 
-    context = {"object": seeker, "title": "confirm to import"}
+    context = {
+        "object": seeker,
+        "title": _("confirm to import"),
+    }
     return render(request, "person/elements/confirm_to_import.html", context)

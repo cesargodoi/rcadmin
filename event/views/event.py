@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator, ACTIVITY_TYPES, clear_session
 from base.searchs import search_event
 
@@ -25,7 +27,7 @@ def event_home(request):
     context = {
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "title": "event home",
+        "title": _("event home"),
         "type_list": ACTIVITY_TYPES,
         "nav": "home",
     }
@@ -42,7 +44,7 @@ def event_detail(request, pk):
     context = {
         "object": object,
         "object_list": object_list,
-        "title": "event detail",
+        "title": _("event detail"),
         "nav": "detail",
     }
     return render(request, "event/detail.html", context)
@@ -55,7 +57,7 @@ def event_create(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The Event has been created!"
+            message = _("The Event has been created!")
             messages.success(request, message)
             return redirect(reverse("event_home") + "?init=on")
 
@@ -64,7 +66,7 @@ def event_create(request):
         "form_name": "Event",
         "form_path": "event/forms/event.html",
         "goback": reverse("event_home"),
-        "title": "create event",
+        "title": _("create event"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -78,7 +80,7 @@ def event_update(request, pk):
         form = EventForm(request.POST, instance=object)
         if form.is_valid():
             form.save()
-            message = "The Event has been updated!"
+            message = _("The Event has been updated!")
             messages.success(request, message)
             return redirect("event_detail", pk=pk)
 
@@ -87,7 +89,7 @@ def event_update(request, pk):
         "form_name": "Event",
         "form_path": "event/forms/event.html",
         "goback": reverse("event_detail", args=[pk]),
-        "title": "update event",
+        "title": _("update event"),
         "pk": pk,
     }
     return render(request, "base/form.html", context)
@@ -98,21 +100,26 @@ def event_update(request, pk):
 def event_delete(request, pk):
     object = Event.objects.get(pk=pk)
     if object.frequencies.all():
-        message = """
+        message = _(
+            """
         You cannot delete an event if it has frequencies launched.\n
         Remove all frequencies and try again.
         """
-        context = {"title": "action not allowed", "message": message}
+        )
+        context = {
+            "title": _("action not allowed"),
+            "message": message,
+        }
         return render(request, "base/action_not_allowed.html", context)
 
     if request.method == "POST":
         object.delete()
-        message = "The Event has been deleted!"
+        message = _("The Event has been deleted!")
         messages.success(request, message)
         return redirect(reverse("event_home") + "?init=on")
 
     context = {
         "object": object,
-        "title": "confirm to delete",
+        "title": _("confirm to delete"),
     }
     return render(request, "base/confirm_delete.html", context)

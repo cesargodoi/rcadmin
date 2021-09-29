@@ -1,8 +1,10 @@
 {% load base_extras %}
+{% load i18n %}
+
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
-    Group
+     {% trans 'Group' %}
   </a>
 
   <div class="navbar-nav-scroll">
@@ -10,13 +12,13 @@
       <li class="nav-item">
         <a class="nav-link {% if nav == 'info' %}active{% endif %}" 
            href="{% url 'group_detail' object.pk %}">
-          Members
+           {% trans 'Members' %}
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link {% if nav == 'frequencies' %}active{% endif %}" 
            href="{% url 'group_frequencies' object.pk %}">
-          Frequencies
+           {% trans 'Frequencies' %}
         </a>
       </li>
     </ul>
@@ -30,7 +32,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
           href="{% url 'seeker_create' %}">
           <i class="fas fa-plus"></i> 
-          Seeker
+          {% trans 'Seeker' %}
         </a>
       </li>
     {% endif %}
@@ -55,7 +57,7 @@
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
             href="{% url 'group_update' object.pk %}">
             <i class="fas fa-edit"></i> 
-            Edit
+            {% trans 'Edit' %}
           </a>
         </li>
         {% if object.is_active %}
@@ -63,7 +65,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
               href="{% url 'group_delete' object.pk %}">
               <i class="fas fa-trash-alt"></i> 
-              Del
+              {% trans 'Del' %}
             </a>
           </li>
         {% else %}
@@ -71,7 +73,7 @@
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
               href="{% url 'group_reinsert' object.pk %}">
               <i class="fas fa-sign-in-alt"></i> 
-              Reinsert
+              {% trans 'Reinsert' %}
             </a>
           </li>
         {% endif %}
@@ -83,7 +85,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
             href="{% url 'group_add_frequencies' object.pk %}">
           <i class="fas fa-calendar-plus"></i>
-          Frequencies
+          {% trans 'Frequencies' %}
         </a>
       </li>
     {% endif %}
@@ -92,7 +94,7 @@
       <a class="nav-link px-1 mx-1 py-3 my-n2 text-info" 
           href="{% url 'group_home' %}">
         <i class="fas fa-chevron-left"></i> 
-        Back
+        {% trans 'Back' %}
       </a>
     </li>
 

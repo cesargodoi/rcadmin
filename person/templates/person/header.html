@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="article-metadata">
@@ -10,7 +12,7 @@
           {% endif %}
           {% if person.center != request.user.person.center %}
           &nbsp;&nbsp;&nbsp;
-          <span class="badge badge-pill badge-warning">only view</span>
+          <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
           {% endif %}
         </div>
         <div class="col text-right">

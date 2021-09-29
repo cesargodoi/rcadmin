@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="form-row align-items-center">
   <div class="col-sm-2 mb-2">
     <div class="input-group">
@@ -19,7 +21,7 @@
     <select class="form-control" name="wg_type">
       <option value="all"
               {% if request.session.search.wg_type == 'all' %}selected{% endif %}>
-              all types
+              {% trans 'all types' %}
       </option>
       {% for wgtp in workgroup_types %}
         <option value="{{ wgtp.0 }}" {% if wgtp.0 == request.session.search.wg_type %}selected{% endif %}>{{ wgtp.1 }}</option>
@@ -30,7 +32,7 @@
     {% include 'base/elements/checkbox_all.html' %}
     <button class="btn btn-success" type="submit">
       <i class="fas fa-search"></i>
-      Search
+      {% trans 'Search' %}
     </button> 
   </div>
 </div>

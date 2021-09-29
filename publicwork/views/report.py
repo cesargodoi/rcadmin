@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from ..models import Lecture, Seeker
 from ..utils import (
@@ -18,7 +19,10 @@ from rcadmin.common import SEEKER_STATUS, LECTURE_TYPES
 def publicwork_home(request):
     if request.session.get("search"):
         del request.session["search"]
-    context = {"title": "Public work", "nav": "pw_home"}
+    context = {
+        "title": _("Public work"),
+        "nav": "pw_home",
+    }
     return render(request, "publicwork/home.html", context)
 
 
@@ -83,7 +87,7 @@ def frequencies_per_period(request):
             report_data = report_data.rename(columns=rename, inplace=False)
 
             context = {
-                "title": "frequencies per period",
+                "title": _("frequencies per period"),
                 "subtitle": "from: {} to: {}".format(
                     datetime.strftime(
                         datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
@@ -104,7 +108,7 @@ def frequencies_per_period(request):
             )
 
     context = {
-        "title": "frequencies per period",
+        "title": _("frequencies per period"),
         "status": SEEKER_STATUS,
         "search": "base/searchs/modal_frequencies.html",
     }
@@ -139,7 +143,7 @@ def lectures_per_period(request):
             dataframe.index += 1
 
             context = {
-                "title": "lectures per period",
+                "title": _("lectures per period"),
                 "subtitle": "from: {} to: {}".format(
                     datetime.strftime(
                         datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
@@ -159,7 +163,7 @@ def lectures_per_period(request):
             )
 
     context = {
-        "title": "lectures per period",
+        "title": _("lectures per period"),
         "type": LECTURE_TYPES,
         "search": "base/searchs/modal_lectures.html",
     }
@@ -198,7 +202,7 @@ def status_per_center(request):
             report_data.index += 1
 
             context = {
-                "title": "status per center",
+                "title": _("status per center"),
                 "subtitle": request.user.person.center,
                 "status": SEEKER_STATUS,
                 "report_data": report_data.to_html(),
@@ -210,7 +214,7 @@ def status_per_center(request):
             )
 
     context = {
-        "title": "status per center",
+        "title": _("status per center"),
         "status": SEEKER_STATUS,
         "search": "base/searchs/modal_status.html",
     }

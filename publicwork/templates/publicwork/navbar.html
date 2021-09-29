@@ -1,8 +1,10 @@
+{% load i18n %}
+
 {% load base_extras %}
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="{% url 'publicwork_home' %}" aria-label="Bootstrap">
-    Public Work
+     {% trans 'Public Work' %}
   </a>
 
   <div class="navbar-nav-scroll">
@@ -11,20 +13,20 @@
         <li class="nav-item">
           <a class="nav-link {% if nav == 'sk_home' %}active{% endif %}" 
             href="{% url 'seeker_home' %}?init=on">
-            Seekers
+            {% trans 'Seekers' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if nav == 'lc_home' %}active{% endif %}" 
             href="{% url 'lecture_home' %}?init=on">
-            Lectures
+            {% trans 'Lectures' %}
           </a>
         </li>
       {% endif %}
       <li class="nav-item">
         <a class="nav-link {% if nav == 'gp_home' %}active{% endif %}" 
           href="{% url 'group_home' %}?init=on">
-          Groups
+          {% trans 'Groups' %}
         </a>
       </li>
 
@@ -43,7 +45,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
           href="{% url 'seeker_create' %}">
           <i class="fas fa-plus"></i> 
-          Seeker
+          {% trans 'Seeker' %}
         </a>
       </li>
     {% endif %}
@@ -53,7 +55,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
           href="{% url 'lecture_create' %}">
           <i class="fas fa-plus"></i> 
-          Lecture
+          {% trans 'Lecture' %}
         </a>
       </li>
     {% endif %}
@@ -63,7 +65,7 @@
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary"
           href="{% url 'group_create' %}">
           <i class="fas fa-plus"></i> 
-          Group
+          {% trans 'Group' %}
         </a>
       </li>
     {% endif %}
@@ -76,7 +78,7 @@
                   {% url 'publicwork_home' %}
                 {% endif %}">
         <i class="fas fa-chevron-left"></i> 
-        Back
+        {% trans 'Back' %}
       </a>
     </li>
 

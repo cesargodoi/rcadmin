@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from ..forms import ActivityForm
 from ..models import Activity
@@ -12,7 +13,10 @@ from ..models import Activity
 def activity_home(request):
     activities = Activity.objects.all()
 
-    context = {"object_list": activities, "title": "Activities"}
+    context = {
+        "object_list": activities,
+        "title": _("Activities"),
+    }
     return render(request, "event/activity_home.html", context)
 
 
@@ -23,7 +27,7 @@ def activity_create(request):
         form = ActivityForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The Activity has been created!"
+            message = _("The Activity has been created!")
             messages.success(request, message)
             return redirect("activity_home")
 
@@ -33,7 +37,7 @@ def activity_create(request):
         "form_path": "event/forms/activity.html",
         "goback": reverse("activity_home"),
         "to_create": True,
-        "title": "Create Activity",
+        "title": _("Create Activity"),
     }
     return render(request, "base/form.html", context)
 
@@ -46,7 +50,7 @@ def activity_update(request, pk):
         form = ActivityForm(request.POST, instance=activity)
         if form.is_valid():
             form.save()
-            message = "The Activity has been updated!"
+            message = _("The Activity has been updated!")
             messages.success(request, message)
             return redirect("activity_home")
 
@@ -55,7 +59,7 @@ def activity_update(request, pk):
         "form_name": "Activity",
         "form_path": "event/forms/activity.html",
         "goback": reverse("activity_home"),
-        "title": "Update Activity",
+        "title": _("Update Activity"),
     }
     return render(request, "base/form.html", context)
 
@@ -70,9 +74,12 @@ def activity_delete(request, pk):
             object.save()
         else:
             object.delete()
-        message = "The Activity has been deleted!"
+        message = _("The Activity has been deleted!")
         messages.success(request, message)
         return redirect("activity_home")
 
-    context = {"object": object, "title": "confirm to delete"}
+    context = {
+        "object": object,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)

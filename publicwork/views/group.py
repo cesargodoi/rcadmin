@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
+
 from rcadmin.common import (
     paginator,
     belongs_center,
@@ -60,7 +62,7 @@ def group_home(request):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_home"),
-        "title": "public work - groups",
+        "title": _("public work - groups"),
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
         "nav": "gp_home",
@@ -90,7 +92,7 @@ def group_detail(request, pk):
         "object": pw_group,
         "object_list": object_list,
         "active_members": len(object_list),
-        "title": "group detail",
+        "title": _("group detail"),
         "nav": "info",
         "table_title": "Members",
     }
@@ -105,6 +107,7 @@ def group_create(request):
         if pw_group_form.is_valid():
             pw_group_form.save()
             message = f"The Group '{request.POST['name']}' has been created!"
+
             messages.success(request, message)
             return redirect(reverse("group_home") + "?init=on")
 
@@ -118,7 +121,7 @@ def group_create(request):
         "form_name": "Group",
         "form_path": "publicwork/forms/group.html",
         "goback": reverse("group_home"),
-        "title": "create goup",
+        "title": _("create goup"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -149,7 +152,7 @@ def group_update(request, pk):
         "form_name": "Group",
         "form_path": "publicwork/forms/group.html",
         "goback": reverse("group_detail", args=[pk]),
-        "title": "update group",
+        "title": _("update group"),
         "pk": pk,
     }
     return render(request, "base/form.html", context)
@@ -167,7 +170,10 @@ def group_delete(request, pk):
             pw_group.delete()
         return redirect(reverse("group_home") + "?init=on")
 
-    context = {"object": pw_group, "title": "confirm to delete"}
+    context = {
+        "object": pw_group,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -180,7 +186,10 @@ def group_reinsert(request, pk):
         pw_group.save()
         return redirect(reverse("group_home") + "?init=on")
 
-    context = {"object": pw_group, "title": "confirm to reinsert"}
+    context = {
+        "object": pw_group,
+        "title": _("confirm to reinsert"),
+    }
     return render(
         request, "publicwork/seeker/confirm_to_reinsert.html", context
     )
@@ -200,7 +209,7 @@ def group_frequencies(request, pk):
 
     context = {
         "object": pw_group,
-        "title": "group detail | frequencies",
+        "title": _("group detail | frequencies"),
         "object_list": paginator(
             sorted(frequencies, key=lambda x: x["rank"], reverse=True),
             20,
@@ -282,7 +291,7 @@ def group_add_frequencies(request, pk):
     context = {
         "object": pw_group,
         "object_list": object_list,
-        "title": "add frequencies",
+        "title": _("add frequencies"),
         "nav": "add_frequencies",
         "goback": reverse("group_detail", args=[pk]),
         "type_list": LECTURE_TYPES,
@@ -321,7 +330,7 @@ def group_add_member(request, pk):
         context = {
             "member": seeker.name,
             "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request,
@@ -344,7 +353,7 @@ def group_add_member(request, pk):
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_member", args=[pw_group.pk]),
         "status_list": SEEKER_STATUS,
-        "title": "group add member",
+        "title": _("group add member"),
         "nav": "add_member",
         "goback": reverse("group_detail", args=[pk]),
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
@@ -367,7 +376,7 @@ def group_remove_member(request, group_pk, member_pk):
     context = {
         "member": member.name,
         "group": pw_group,
-        "title": "confirm to remove",
+        "title": _("confirm to remove"),
     }
     return render(
         request, "publicwork/groups/confirm_remove_member.html", context
@@ -386,13 +395,15 @@ def group_add_mentor(request, pk):
 
         if request.method == "POST":
             pw_group.mentors.add(person)
-            messages.success(request, "The mentor has been inserted on group!")
+            messages.success(
+                request, _("The mentor has been inserted on group!")
+            )
             return redirect("group_detail", pk=pk)
 
         context = {
             "member": person.name,
             "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request,
@@ -420,7 +431,7 @@ def group_add_mentor(request, pk):
         "goback_link": reverse("group_add_mentor", args=[pw_group.pk]),
         "aspect_list": ASPECTS,
         "status_list": STATUS,
-        "title": "group add mentor",
+        "title": _("group add mentor"),
         "nav": "add_mentor",
         "goback": reverse("group_detail", args=[pk]),
         "pk": pk,
@@ -442,7 +453,7 @@ def group_remove_mentor(request, group_pk, mentor_pk):
     context = {
         "member": mentor.name,
         "group": pw_group,
-        "title": "confirm to remove",
+        "title": _("confirm to remove"),
     }
     return render(
         request, "publicwork/groups/confirm_remove_member.html", context

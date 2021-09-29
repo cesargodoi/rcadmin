@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,13 +9,13 @@
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'lecture_detail' object.pk %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
 <article class="media content-section">
   <div class="media-body">
-    <h4>Add listener</h4>
+    <h4>{% trans 'Add listener' %}</h4>
     <form class="form-control-sm border-top" method="GET">
       {% csrf_token %}
       {% include "base/searchs/seeker.html" %}

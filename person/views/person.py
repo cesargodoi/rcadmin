@@ -8,6 +8,8 @@ from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 
 from rcadmin.common import (
     ASPECTS,
@@ -46,7 +48,7 @@ def person_home(request):
         "init": True if request.GET.get("init") else False,
         "aspect_list": ASPECTS,
         "status_list": STATUS,
-        "title": "person home",
+        "title": _("person home"),
         "nav": "home",
         "flag": "person",
     }
@@ -68,7 +70,7 @@ def person_detail(request, id):
 
     context = {
         "object": person,
-        "title": "person detail",
+        "title": _("person detail"),
         "person": person,  # to header element
         "age": age,
         "nav": "detail",
@@ -128,7 +130,7 @@ def person_create(request):
         "form_name": "Person",
         "form_path": "person/forms/person.html",
         "goback": reverse("person_home"),
-        "title": "create person",
+        "title": _("create person"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -182,7 +184,7 @@ def person_update(request, id):
         "form_name": "Person",
         "form_path": "person/forms/person.html",
         "goback": reverse("person_detail", args=[id]),
-        "title": "update person",
+        "title": _("update person"),
         "id": id,
     }
     return render(request, "base/form.html", context)
@@ -204,7 +206,10 @@ def person_delete(request, id):
             person.user.delete()
         return redirect(reverse("person_home") + "?init=on")
 
-    context = {"object": person, "title": "confirm to delete"}
+    context = {
+        "object": person,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -221,7 +226,10 @@ def person_reinsert(request, id):
         add_historic(person, "ACT", request.user)
         return redirect(reverse("person_home") + "?init=on")
 
-    context = {"object": person, "title": "confirm to reinsert"}
+    context = {
+        "object": person,
+        "title": _("confirm to reinsert"),
+    }
     return render(
         request, "person/elements/confirm_to_reinsert_person.html", context
     )

@@ -1,10 +1,12 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="alert alert-danger" role="alert">
-  <h4 class="alert-heading">Atention!</h4>
-  <p>Are you sure you want to delete: <br>
+  <h4 class="alert-heading">{% trans 'Atention!' %}</h4>
+  <p>{% trans 'Are you sure you want to delete' %}: <br>
     <strong>{{ object }}?</strong>
   </p>
   <hr>
@@ -13,11 +15,11 @@
     <div class="form-group text-right">
       <button class="btn btn-danger" type="submit">
         <i class="fas fa-check"></i>
-        Confirm
+        {% trans 'Confirm' %}
       </button>
       <a class="btn btn-info" href="javascript:history.back()">
         <i class="fas fa-chevron-left"></i>
-        Back
+        {% trans 'Back' %}
       </a>
     </div>
   </form>

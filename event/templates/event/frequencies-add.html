@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% load crispy_forms_tags %}
 
@@ -9,28 +10,28 @@
     class="btn btn-primary mt-2"
     onclick="document.getElementById('form').submit();">
     <i class="fas fa-plus"></i> <i class="fas fa-users"></i>
-    Insert
+    {% trans 'Insert' %}
   </button>
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'event_detail' object.pk %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
 <article class="media content-section">
   <div class="media-body">
-    <h4>Insert Frequencies</h4>
+    <h4>{% trans 'Insert Frequencies' %}</h4>
 
     <form method="POST" id="form">
       {% csrf_token %}
       {{ form|crispy }}
     </form>
     <div class="alert alert-secondary">
-      <h5 class="border-bottom font-title">Important!</h5>
+      <h5 class="border-bottom font-title">{% trans 'Important' %}!</h5>
       <small>
-        Enter pupils registration numbers, separated by commas. <br>
-        Example: &nbsp;
+        {% trans 'Enter pupils registration numbers, separated by commas.' %} <br>
+        {% trans 'Example' %}: &nbsp;
         <code>432, 345, 165, 675, 1276, 1021</code>
       </small>
     </div>

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="form-row align-items-center">
   <div class="col-sm-2 mb-2">
     <div class="input-group">
@@ -20,7 +22,7 @@
       {% for asp in aspect_list %}
       <option value="{% if asp.0 == '--' %}all{% else %}{{ asp.0 }}{% endif %}"
               {% if asp.0 == request.session.search.ps_aspect %}selected{% endif %}>
-        {% if asp.0 == "--" %}aspect{% else %}{{ asp.1 }}{% endif %}
+        {% if asp.0 == "--" %}{% trans 'aspect' %}{% else %}{{ asp.1 }}{% endif %}
       </option>
       {% endfor %}
     </select>
@@ -30,7 +32,7 @@
       {% for stt in status_list %}
       <option value="{% if stt.0 == '---' %}all{% else %}{{ stt.0 }}{% endif %}"
               {% if stt.0 == request.session.search.ps_status %}selected{% endif %}>
-        {% if stt.0 == "---" %}status{% else %}{{ stt.1 }}{% endif %}
+        {% if stt.0 == "---" %}{% trans 'status' %}{% else %}{{ stt.1 }}{% endif %}
       </option>
       {% endfor %}
     </select>
@@ -39,7 +41,7 @@
     {% include 'base/elements/checkbox_all.html' %}
     <button class="btn btn-success" type="submit">
       <i class="fas fa-search"></i>
-      Search
+      {% trans 'Search' %}
     </button> 
   </div>
 </div>

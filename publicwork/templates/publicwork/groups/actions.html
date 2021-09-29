@@ -1,4 +1,6 @@
 {% load base_extras %}
+{% load i18n %}
+
 <!-- actions -->
 <div class="text-right mb-2 mt-2">
   {% if request.session.frequencies.lecture %}
@@ -6,7 +8,7 @@
         href="#" 
         onclick="document.getElementById('form').submit();">
       <i class="fas fa-check"></i> 
-      Register
+      {% trans 'Register' %}
     </a>
   {% endif %}
 
@@ -18,7 +20,7 @@
             {% url 'group_detail' object.pk %}
           {% endif %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
   {% endif %}
 </div>

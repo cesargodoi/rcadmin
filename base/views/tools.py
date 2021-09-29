@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from center.models import Center
 from user.models import User
 from person.models import Historic
@@ -165,7 +166,7 @@ def import_persons(request):
         message = f"{len(importeds)} Persons has been imported!"
         messages.success(request, message)
         context = {
-            "title": "import persons",
+            "title": _("import persons"),
             "form": CenterForm(),
             "report_data": report_data,
             "search": "base/searchs/modal_import_persons.html",
@@ -173,7 +174,7 @@ def import_persons(request):
         return render(request, "base/import_persons.html", context)
 
     context = {
-        "title": "import persons",
+        "title": _("import persons"),
         "form": CenterForm(),
         "search": "base/searchs/modal_import_persons.html",
     }

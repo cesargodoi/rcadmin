@@ -1,4 +1,6 @@
-<h4>Frequencies</h4>
+{% load i18n %}
+
+<h4>{% trans 'Frequencies' %}</h4>
 
 {% if object_list %}
 
@@ -48,7 +50,7 @@
 {% else %}
 
   <div class="alert alert-secondary" role="alert">
-    <h4 class="alert-heading">no frequencies found</h4>
+    <h4 class="alert-heading">{% trans 'no frequencies found' %}</h4>
   </div>
 
 {% endif %}

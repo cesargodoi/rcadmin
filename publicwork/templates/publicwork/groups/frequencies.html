@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% if object_list %}
 
   {% if object_list.has_other_pages %}
@@ -10,13 +12,13 @@
         <strong>{{ obj.name }}</strong>
         {% if obj.center != request.user.person.center %}
           &nbsp;&nbsp;
-          <span class="badge badge-pill badge-warning">only view</span>
+          <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
         {% endif %}
       </div>
 
       <div class="col-sm-2 align-middle">
         {% if not obj.is_active %}
-          <small class="badge-pill badge-danger">inactive</small>
+          <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
         {% endif %}
       </div>
 
@@ -26,7 +28,7 @@
       
       <div class="col-sm-2 align-middle">
         <small>
-          <em>since {{ obj.date|date:'d/m/y' }}</em>
+          <em>{% trans 'since' %} {{ obj.date|date:'d/m/y' }}</em>
         </small>
       </div>
       
@@ -48,7 +50,7 @@
 {% else %}
 
   <div class="alert alert-secondary" role="alert">
-    <h4 class="alert-heading">no frequencies found</h4>
+    <h4 class="alert-heading">{% trans 'no frequencies found' %}</h4>
   </div>
 
 {% endif %}

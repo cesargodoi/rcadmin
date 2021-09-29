@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from rcadmin.common import WORKGROUP_TYPES, paginator, clear_session
 from workgroup.forms import MembershipForm
@@ -24,7 +25,7 @@ def membership_ps_list(request, person_id):
 
     context = {
         "object_list": object_list,
-        "title": "membership list",
+        "title": _("membership list"),
         "person": person,  # to header element
         "nav": "detail",
         "tab": "membership",
@@ -50,7 +51,7 @@ def membership_ps_create(request, person_id):
 
         context = {
             "insert_to": f"{workgroup.name} {workgroup.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
             "person": person,  # to header element
         }
         return render(
@@ -65,7 +66,7 @@ def membership_ps_create(request, person_id):
 
     context = {
         "object_list": object_list,
-        "title": "insert membership",
+        "title": _("insert membership"),
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("membership_ps_create", args=[person_id]),
         "person": person,  # to header element
@@ -92,7 +93,7 @@ def membership_ps_update(request, person_id, pk):
 
     context = {
         "form": MembershipForm(instance=membership),
-        "title": "update membership",
+        "title": _("update membership"),
         "person": membership.person,  # to header element
     }
     return render(request, "person/forms/membership.html", context)
@@ -106,7 +107,10 @@ def membership_ps_delete(request, person_id, pk):
         membership.delete()
         return redirect("membership_ps_list", person_id=person_id)
 
-    context = {"object": membership, "title": "confirm to delete"}
+    context = {
+        "object": membership,
+        "title": _("confirm to delete"),
+    }
     return render(
         request, "person/elements/confirm_to_delete_member.html", context
     )

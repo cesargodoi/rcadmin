@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.http.response import Http404
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator, LECTURE_TYPES, clear_session
 from base.searchs import search_lecture
 
@@ -27,7 +29,7 @@ def lecture_home(request):
     context = {
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "title": "lecture home",
+        "title": _("lecture home"),
         "type_list": LECTURE_TYPES,
         "nav": "lc_home",
     }
@@ -49,7 +51,7 @@ def lecture_detail(request, pk):
     context = {
         "object": lect_object,
         "object_list": object_list,
-        "title": "lecture detail",
+        "title": _("lecture detail"),
     }
     return render(request, "publicwork/lecture/detail.html", context)
 
@@ -79,7 +81,7 @@ def lecture_create(request):
         "form_name": "Lecture",
         "form_path": "publicwork/forms/lecture.html",
         "goback": reverse("lecture_home"),
-        "title": "create lecture",
+        "title": _("create lecture"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -111,7 +113,7 @@ def lecture_update(request, pk):
         "form_name": "Lecture",
         "form_path": "publicwork/forms/lecture.html",
         "goback": reverse("lecture_detail", args=[pk]),
-        "title": "update lecture",
+        "title": _("update lecture"),
         "pk": pk,
     }
     return render(request, "base/form.html", context)
@@ -125,12 +127,12 @@ def lecture_delete(request, pk):
         raise Http404
     if request.method == "POST":
         lect_object.delete()
-        message = "The lecture has been deleted!"
+        message = _("The lecture has been deleted!")
         messages.success(request, message)
         return redirect(reverse("lecture_home") + "?init=on")
 
     context = {
         "object": lect_object,
-        "title": "confirm to delete",
+        "title": _("confirm to delete"),
     }
     return render(request, "base/confirm_delete.html", context)

@@ -1,6 +1,7 @@
 {% load base_extras %}
+{% load i18n %}
 
-<h4>Centers</h4>
+<h4>{% trans 'Centers' %}</h4>
 
 {% if object_list %}
 
@@ -66,9 +67,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-        choose your search terms
+        {% trans 'choose your search terms' %}
       {% else %}
-        centers not found
+        {% trans 'centers not found' %}
       {% endif %}
     </h4> 
   </div> 

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% if object_list %}
 
   {% if object_list.has_other_pages %}
@@ -39,7 +41,7 @@
 {% else %}
 
   <div class="alert alert-secondary" role="alert">
-    <h4 class="alert-heading">historic not found</h4>
+    <h4 class="alert-heading">{% trans 'historic not found' %}</h4>
   </div>
   
 {% endif %}

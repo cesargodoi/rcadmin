@@ -1,8 +1,10 @@
+{% load i18n %}
+
 <div class="form-row align-items-center">
   <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
-        <div class="input-group-text">from</div>
+        <div class="input-group-text">{% trans 'from' %}</div>
       </div>
       <input type="date" 
         name="dt1" 
@@ -14,7 +16,7 @@
   <div class="col-sm-3 mb-2">
     <div class="input-group">
       <div class="input-group-prepend">
-        <div class="input-group-text">to</div>
+        <div class="input-group-text">{% trans 'to' %}</div>
       </div>
       <input type="date" 
         name="dt2" 
@@ -43,7 +45,7 @@
     <select class="form-control" name="od_status" id="od_status">
       <option value="all"
               {% if request.session.search.od_status == 'all' %}selected{% endif %}>
-        all status
+              {% trans 'all status' %}
       </option>
       {% for stt in status_list %}
       <option 
@@ -57,7 +59,7 @@
   <div class="col-sm mb-2">     
     <button class="btn btn btn-success ml-2" type="submit">
       <i class="fas fa-search"></i>
-      Search
+      {% trans 'Search' %}
     </button>
   </div>
 </div>

@@ -1,4 +1,6 @@
 {% extends "user/base.html" %}
+{% load i18n %}
+
 {% load static %}
 {% block content %}
 
@@ -13,12 +15,12 @@
 <article class="media content-section">
     <div class="media-body content-box" >
         <aside class="aside-box">
-            <h1>Oops!</h1>
-            <h2>I think we lost this page.</h2>
-            <p id="but">But, we can still help you...</p>
+            <h1>{% trans 'Oops!' %}</h1>
+            <h2>{% trans 'I think we lost this page.' %}</h2>
+            <p id="but">{% trans 'But, we can still help you...' %}</p>
             <div class="contact">
-                <p class="contact-link"><strong>Click <a href="{% url 'home' %}">here</a> to return,</strong></p>
-                <p class="contact-link"><strong>or contact our support:</strong></p>
+                <p class="contact-link"><strong>{% trans 'Click' %} <a href="{% url 'home' %}">{% trans 'here' %}</a> {% trans 'to return' %},</strong></p>
+                <p class="contact-link"><strong>{% trans 'or contact our support' %}:</strong></p>
             </div>
             <p id="mail">school@admin.com</p>
         </aside>

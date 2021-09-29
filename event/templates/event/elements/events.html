@@ -1,4 +1,6 @@
-<h4>Events</h4>
+{% load i18n %}
+
+<h4>{% trans 'Events' %}</h4>
 
 {% if object_list %}
 
@@ -37,7 +39,7 @@
           href="{% url 'mentoring_add_frequencies' group_pk %}?event_pk={{ obj.pk }}"
           class="btn btn-light text-primary btn-sm">
           <i class="fas fa-check"></i>
-          Select
+          {% trans 'Select' %}
         </a>
       {% elif not nav == "home" and obj.is_active %}
         {% if obj.pk not in pre_freqs %}
@@ -69,9 +71,9 @@
 <div class="alert alert-secondary">
   <h4 class="alert-heading">
     {% if init %}
-    choose your search terms
+    {% trans 'choose your search terms' %}
     {% else %}
-    events not found
+    {% trans 'events not found' %}
     {% endif %}
   </h4> 
 </div> 

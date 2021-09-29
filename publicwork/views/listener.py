@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
+
 from rcadmin.common import (
     paginator,
     clear_session,
@@ -34,7 +36,7 @@ def add_listener(request, lect_pk):
                 observations=request.POST["observations"],
             )
             messages.success(
-                request, "The seeker has been inserted on lecture!"
+                request, _("The seeker has been inserted on lecture!")
             )
             return redirect("lecture_detail", pk=lect_pk)
 
@@ -42,7 +44,7 @@ def add_listener(request, lect_pk):
             "seeker": seeker,
             "form": ListenerForm,
             "insert_to": f"{lecture.theme} {lecture.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request,
@@ -65,7 +67,7 @@ def add_listener(request, lect_pk):
         "goback_link": reverse("add_listener", args=[lecture.pk]),
         "status_list": SEEKER_STATUS,
         "pre_listeners": [seek.pk for seek in lecture.listeners.all()],
-        "title": "add listener",
+        "title": _("add listener"),
         "object": lecture,
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
@@ -82,13 +84,13 @@ def update_listener(request, lect_pk, lstn_pk):
         listener.ranking = int(request.POST["ranking"])
         listener.observations = request.POST["observations"]
         listener.save()
-        messages.success(request, "The Listener has been updated!")
+        messages.success(request, _("The Listener has been updated!"))
 
         return redirect("lecture_detail", pk=lect_pk)
 
     context = {
         "form": ListenerForm(instance=listener),
-        "title": "update listener",
+        "title": _("update listener"),
         "listener": listener,
         "object": listener.lecture,
     }
@@ -104,7 +106,10 @@ def remove_listener(request, lect_pk, lstn_pk):
         listener.delete()
         return redirect("lecture_detail", pk=lect_pk)
 
-    context = {"object": listener, "title": "confirm to delete"}
+    context = {
+        "object": listener,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -127,7 +132,7 @@ def add_frequency(request, pk):
                 observations=request.POST["observations"],
             )
             messages.success(
-                request, "The seeker has been inserted on lecture!"
+                request, _("The seeker has been inserted on lecture!")
             )
             return redirect("seeker_frequencies", pk=pk)
 
@@ -135,7 +140,7 @@ def add_frequency(request, pk):
             "seeker": seeker,
             "form": ListenerForm,
             "insert_to": f"{lecture.theme} - {lecture.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request,
@@ -157,7 +162,7 @@ def add_frequency(request, pk):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
-        "title": "add frequency",
+        "title": _("add frequency"),
         "type_list": LECTURE_TYPES,
         "pre_freqs": [lect.pk for lect in seeker.lecture_set.all()],
         "tab": "frequencies",
@@ -178,14 +183,14 @@ def update_frequency(request, seek_pk, freq_pk):
         )
         listener.observations = request.POST["observations"]
         listener.save()
-        messages.success(request, "The Listener has been updated!")
+        messages.success(request, _("The Listener has been updated!"))
         return redirect("seeker_frequencies", pk=seek_pk)
 
     context = {
         "object": seeker,
         "listener": listener,
         "form": ListenerForm(instance=listener),
-        "title": "update frequency | seeker side",
+        "title": _("update frequency | seeker side"),
         "seeker_side": True,
         "goback": reverse("seeker_frequencies", args=[seek_pk]),
     }
@@ -201,5 +206,8 @@ def remove_frequency(request, seek_pk, freq_pk):
         listener.delete()
         return redirect("seeker_frequencies", pk=seek_pk)
 
-    context = {"object": listener, "title": "confirm to delete"}
+    context = {
+        "object": listener,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)

@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import Http404
 from django.core.validators import RegexValidator
+from django.utils.translation import gettext as _
 
 
 # hidden auth fields
@@ -17,87 +18,110 @@ HIDDEN_AUTH_FIELDS = {
     "made_by": forms.HiddenInput(),
 }
 
+GRC = _("Golden Rosycross")
+
 # choices for some fields
-GENDER_TYPES = (("M", "male"), ("F", "female"))
+GENDER_TYPES = (
+    ("M", _("male")),
+    ("F", _("female")),
+)
 CENTER_TYPES = (
-    ("CNT", "center"),
-    ("CNF", "conference center"),
-    ("CTT", "contact room"),
+    ("CNT", _("center")),
+    ("CNF", _("conference center")),
+    ("CTT", _("contact room")),
 )
 ASPECTS = (
     ("--", "--"),
-    ("A1", "1st. Aspect"),
-    ("A2", "2nd. Aspect"),
-    ("A3", "3rd. Aspect"),
-    ("A4", "4th. Aspect"),
-    ("GR", "Grail"),
-    ("A5", "5th. Aspect"),
-    ("A6", "6th. Aspect"),
+    ("A1", _("1st. Aspect")),
+    ("A2", _("2nd. Aspect")),
+    ("A3", _("3rd. Aspect")),
+    ("A4", _("4th. Aspect")),
+    ("GR", _("Grail")),
+    ("A5", _("5th. Aspect")),
+    ("A6", _("6th. Aspect")),
 )
 STATUS = (
     ("---", "---"),
-    ("ACT", "active"),
-    ("LIC", "licensed"),
-    ("DEA", "dead"),
-    ("DIS", "disconnected"),
-    ("REM", "removed"),
+    ("ACT", _("active")),
+    ("LIC", _("licensed")),
+    ("DEA", _("dead")),
+    ("DIS", _("disconnected")),
+    ("REM", _("removed")),
 )
 OCCURRENCES = (
-    ("TRF", "transfered"),
-    ("RGS", "regressed"),
-    ("OTH", "other"),
-    ("PRP", "preparatório"),
-    ("PRB", "probatório"),
-    ("PRF", "professo"),
+    ("TRF", _("transfered")),
+    ("RGS", _("regressed")),
+    ("OTH", _("other")),
+    ("PRP", _("preparatório")),
+    ("PRB", _("probatório")),
+    ("PRF", _("professo")),
 )
 OCCURRENCES += ASPECTS
 OCCURRENCES += STATUS
-PERSON_TYPES = (("PUP", "pupil"), ("WEB", "web pupil"), ("GST", "gest"))
-ROLE_TYPES = (("MTR", "mentor"), ("CTT", "contact"), ("MBR", "member"))
-WORKGROUP_TYPES = (("ASP", "aspect"), ("MNT", "maintenance"), ("ADM", "admin"))
-EVENT_STATUS = (("OPN", "open"), ("CLS", "close"))
+PERSON_TYPES = (
+    ("PUP", _("pupil")),
+    ("WEB", _("web pupil")),
+    ("GST", _("gest")),
+)
+ROLE_TYPES = (
+    ("MTR", _("mentor")),
+    ("CTT", _("contact")),
+    ("MBR", _("member")),
+)
+WORKGROUP_TYPES = (
+    ("ASP", _("aspect")),
+    ("MNT", _("maintenance")),
+    ("ADM", _("admin")),
+)
+EVENT_STATUS = (
+    ("OPN", _("open")),
+    ("CLS", _("close")),
+)
 ACTIVITY_TYPES = (
-    ("SRV", "service"),
-    ("CNF", "conference"),
-    ("MET", "meeting"),
-    ("OTH", "other"),
+    ("SRV", _("service")),
+    ("CNF", _("conference")),
+    ("MET", _("meeting")),
+    ("OTH", _("other")),
 )
 ORDER_STATUS = (
-    ("CCL", "canceled"),
-    ("PND", "pending"),
-    ("CCD", "concluded"),
+    ("CCL", _("canceled")),
+    ("PND", _("pending")),
+    ("CCD", _("concluded")),
 )
 PAY_TYPES = (
-    ("MON", "monthly"),
-    ("EVE", "by event"),
-    ("CAM", "campaign"),
+    ("MON", _("monthly")),
+    ("EVE", _("by event")),
+    ("CAM", _("campaign")),
 )
 PAYFORM_TYPES = (
-    ("PIX", "pix"),
-    ("CSH", "cash"),
-    ("CHK", "check"),
-    ("PRE", "pre check"),
-    ("DBT", "debit"),
-    ("CDT", "credit"),
-    ("DPT", "deposit"),
-    ("TRF", "transfer"),
-    ("SLP", "bank slip"),
+    ("PIX", _("pix")),
+    ("CSH", _("cash")),
+    ("CHK", _("check")),
+    ("PRE", _("pre check")),
+    ("DBT", _("debit")),
+    ("CDT", _("credit")),
+    ("DPT", _("deposit")),
+    ("TRF", _("transfer")),
+    ("SLP", _("bank slip")),
 )
 PROFILE_PAYFORM_TYPES = (
-    ("PIX", "pix"),
-    ("DPT", "deposit"),
-    ("TRF", "transfer"),
+    ("PIX", _("pix")),
+    ("DPT", _("deposit")),
+    ("TRF", _("transfer")),
 )
-COUNTRIES = (("BR", "Brasil"),)
-LECTURE_TYPES = (("CTT", "contact"), ("MET", "meeting"))
+COUNTRIES = (("BR", _("Brazil")),)
+LECTURE_TYPES = (
+    ("CTT", _("contact")),
+    ("MET", _("meeting")),
+)
 SEEKER_STATUS = (
-    ("OBS", "observation"),
-    ("NEW", "new"),
-    ("MBR", "member"),
-    ("INS", "installing"),
-    ("ITD", "installed"),
-    ("STD", "stand by"),
-    ("RST", "restriction"),
+    ("OBS", _("observation")),
+    ("NEW", _("new")),
+    ("MBR", _("member")),
+    ("INS", _("installing")),
+    ("ITD", _("installed")),
+    ("STD", _("stand by")),
+    ("RST", _("restriction")),
 )
 BR_REGIONS = {
     "SP": ["SP"],
@@ -140,49 +164,6 @@ def short_name(name):
     return " ".join(to_join)
 
 
-def cpf_validation(num):
-    cpf = "".join(re.findall(r"\d", num))
-
-    if len(cpf) != 11:
-        return False
-    if cpf in (
-        "00000000000",
-        "11111111111",
-        "22222222222",
-        "33333333333",
-        "44444444444",
-        "55555555555",
-        "66666666666",
-        "77777777777",
-        "88888888888",
-        "99999999999",
-    ):
-        return False
-
-    weight1 = [10, 9, 8, 7, 6, 5, 4, 3, 2]
-    digit1 = 11 - (
-        sum([int(d) * weight1[n] for n, d in enumerate(cpf[:9])]) % 11
-    )
-    if digit1 > 9:
-        digit1 = 0
-
-    if cpf[9:10] != f"{digit1}":
-        return False
-
-    weight2 = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-    digit2 = 11 - (
-        sum([int(d) * weight2[n] for n, d in enumerate(cpf[:9] + str(digit1))])
-        % 11
-    )
-    if digit2 > 9:
-        digit2 = 0
-
-    if cpf[9:] != f"{digit1}{digit2}":
-        return False
-
-    return True
-
-
 def cpf_format(num):
     cpf = "".join(re.findall(r"\d", num))
     return f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
@@ -190,8 +171,10 @@ def cpf_format(num):
 
 phone_regex = RegexValidator(
     regex=r"^\+?1?\d{9,15}$",
-    message="Phone number must be entered in the format: '+999999999'. \
-        Up to 15 digits allowed.",
+    message=_(
+        "Phone number must be entered in the format: '+1234567890'. \
+            Up to 15 digits allowed."
+    ),
 )
 
 
@@ -260,7 +243,7 @@ def send_email(
     text_content = render_to_string(body_text, _context)
     html_content = render_to_string(body_html, _context)
 
-    subject = f"Rosacruz Áurea - {_subject}"
+    subject = f"{GRC} - {_subject}"
 
     send_mail(
         subject=subject,

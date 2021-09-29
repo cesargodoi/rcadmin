@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load crispy_forms_tags %}
 <form method="POST" enctype="multipart/form-data" id="form">
   {% csrf_token %}
@@ -10,7 +11,7 @@
         role="tab" 
         aria-controls="basic"
         aria-selected="true">
-        Basic
+        {% trans 'Basic' %}
       </a>
     </li>
     <li class="nav-item" role="presentation">
@@ -21,7 +22,7 @@
         role="tab" 
         aria-controls="contact"
         aria-selected="false">
-        Contacts
+        {% trans 'Contacts' %}
       </a>
     </li>
     <li class="nav-item" role="presentation">
@@ -32,7 +33,7 @@
         role="tab" 
         aria-controls="address"
         aria-selected="false">
-        Address
+        {% trans 'Address' %}
       </a>
     </li>
     <li class="nav-item" role="presentation">
@@ -43,7 +44,7 @@
         role="tab" 
         aria-controls="other"
         aria-selected="false">
-        Others
+        {% trans 'Others' %}
       </a>
     </li>
   </ul>

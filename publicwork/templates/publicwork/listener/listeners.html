@@ -1,4 +1,6 @@
-<h4>Listeners</h4>
+{% load i18n %}
+
+<h4>{% trans 'Listeners' %}</h4>
 
 {% if object_list %}
 
@@ -42,9 +44,9 @@
 
     <div class="col-sm-1 align-middle">
       {% if obj.seeker.status == 'ITD' %}
-        <small class="badge-pill badge-info">installed</small>
+        <small class="badge-pill badge-info">{% trans 'installed' %}</small>
       {% elif not obj.seeker.is_active %}
-        <small class="badge-pill badge-danger">inactive</small>
+        <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
       {% endif %}
     </div>
 
@@ -80,6 +82,6 @@
 
 {% else %}
 <div class="alert alert-secondary" role="alert">
-  <h4 class="alert-heading">no listeners found</h4>
+  <h4 class="alert-heading">{% trans 'no listeners found' %}</h4>
 </div>
 {% endif %}
