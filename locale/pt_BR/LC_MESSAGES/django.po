@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-29 16:53-0300\n"
-"PO-Revision-Date: 2021-09-29 16:53-0306\n"
+"POT-Creation-Date: 2021-09-29 17:31-0300\n"
+"PO-Revision-Date: 2021-09-29 17:33-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -79,6 +79,7 @@ msgstr "Ação não permitida!"
 #: treasury/templates/treasury/confirm_del.html:18
 #: treasury/templates/treasury/confirm_delete.html:31
 #: treasury/templates/treasury/confirm_register.html:20
+#: treasury/templates/treasury/elements/treasury_navbar.html:53
 #: treasury/templates/treasury/forms_of_payments.html:23
 #: treasury/templates/treasury/order_add_payform.html:18
 #: treasury/templates/treasury/order_add_payment.html:19
@@ -187,6 +188,7 @@ msgid "Public Work"
 msgstr "Trabalho Público"
 
 #: base/templates/base/elements/menu.html:35 base/templates/base/home.html:108
+#: treasury/templates/treasury/elements/treasury_navbar.html:5
 msgid "Treasury"
 msgstr "Tesouraria"
 
@@ -202,8 +204,9 @@ msgstr "Atividades"
 #: base/templates/base/elements/menu_admin.html:8
 #: treasury/templates/treasury/order_create.html:60
 #: treasury/templates/treasury/order_detail.html:70
-#: treasury/templates/treasury/payments.html:7 treasury/views/payments.py:21
-#: user/templates/user/profile/navbar.html:28
+#: treasury/templates/treasury/payments.html:7
+#: treasury/templates/treasury/reports/payments_by_person.html:32
+#: treasury/views/payments.py:21 user/templates/user/profile/navbar.html:28
 msgid "Payments"
 msgstr "Pagamentos"
 
@@ -269,6 +272,7 @@ msgid "To print"
 msgstr "Imprimir"
 
 #: base/templates/base/import_persons.html:57
+#: treasury/templates/treasury/elements/payments_summary.html:4
 msgid "Summary"
 msgstr "Resumo"
 
@@ -327,6 +331,7 @@ msgstr "Buscar"
 #: base/templates/base/searchs/modal_frequencies.html:20
 #: base/templates/base/searchs/modal_lectures.html:20
 #: base/templates/base/searchs/orders.html:7
+#: treasury/templates/treasury/elements/search_dates.html:7
 msgid "from"
 msgstr "de"
 
@@ -336,6 +341,7 @@ msgstr "de"
 #: base/templates/base/searchs/modal_lectures.html:30
 #: base/templates/base/searchs/orders.html:19
 #: event/templates/event/header.html:11
+#: treasury/templates/treasury/elements/search_dates.html:19
 msgid "to"
 msgstr "para"
 
@@ -378,6 +384,7 @@ msgstr "status"
 #: base/templates/base/searchs/modal_status.html:35
 #: center/templates/center/info.html:148
 #: publicwork/templates/publicwork/insert_yourself/modal_data_policy.html:29
+#: treasury/templates/treasury/elements/modal.html:26
 msgid "Close"
 msgstr "Fechar"
 
@@ -1039,6 +1046,7 @@ msgid "Add Mentor"
 msgstr "Adicionar mentor"
 
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
+#: treasury/templates/treasury/elements/person_card.html:10
 msgid "in"
 msgstr "em"
 
@@ -1110,6 +1118,7 @@ msgstr "Palestras"
 
 #: publicwork/templates/publicwork/home.html:50
 #: publicwork/templates/publicwork/reports/menu.html:5
+#: treasury/templates/treasury/reports/menu.html:5
 #: treasury/templates/treasury/treasury_home.html:35
 msgid "Reports"
 msgstr "Relatórios"
@@ -1705,6 +1714,10 @@ msgid "canceled"
 msgstr "cancelado"
 
 #: rcadmin/common.py:88
+#: treasury/templates/treasury/elements/cash_balance.html:21
+#: treasury/templates/treasury/elements/payform_by_type.html:19
+#: treasury/templates/treasury/elements/payment_by_paytype.html:19
+#: treasury/templates/treasury/elements/period_payments.html:23
 msgid "pending"
 msgstr "pendente"
 
@@ -1821,8 +1834,68 @@ msgstr "Tem certeza que deseja apagar"
 msgid "Do you confirm the registration procedure?"
 msgstr "Você confirma o procedimento de registro?"
 
+#: treasury/templates/treasury/elements/modal.html:20
+msgid "Modal body text goes here"
+msgstr "Texto do corpo modal vai aqui"
+
+#: treasury/templates/treasury/elements/modal.html:30
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+#: treasury/templates/treasury/elements/order.html:17
+#: treasury/templates/treasury/order_detail.html:34
+msgid "made by the pupil"
+msgstr "feito pelo aluno"
+
+#: treasury/templates/treasury/elements/payform_by_type.html:12
+#: treasury/templates/treasury/elements/payment_by_paytype.html:12
+msgid "partial"
+msgstr "parcial"
+
+#: treasury/templates/treasury/elements/payform_by_type.html:27
+#: treasury/templates/treasury/elements/payment_by_paytype.html:27
+#: treasury/templates/treasury/elements/payments_summary.html:25
+#: treasury/templates/treasury/elements/payments_summary.html:36
+#: treasury/templates/treasury/order_create.html:80
+#: treasury/templates/treasury/order_create.html:118
+#: treasury/templates/treasury/order_detail.html:79
+#: treasury/templates/treasury/order_detail.html:97
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: treasury/templates/treasury/elements/payments_summary.html:7
+msgid "last 30 days"
+msgstr "ultimos 30 dias"
+
+#: treasury/templates/treasury/elements/payments_summary.html:17
+#: treasury/templates/treasury/elements/payments_summary.html:35
+#| msgid "Payments"
+msgid "payment"
+msgstr "pagamento"
+
+#: treasury/templates/treasury/elements/payments_summary.html:31
+#| msgid "made by the pupil"
+msgid "Payment made by pupil"
+msgstr "Pagamento feito pelo aluno"
+
+#: treasury/templates/treasury/elements/search_person.html:12
+msgid "Use"
+msgstr "Usar"
+
+#: treasury/templates/treasury/elements/treasury_navbar.html:18
+#: treasury/templates/treasury/treasury_home.html:22
+#: treasury/views/order.py:41
+msgid "Orders"
+msgstr "Pedidos"
+
+#: treasury/templates/treasury/elements/treasury_navbar.html:30
+#: treasury/templates/treasury/elements/treasury_navbar.html:39
+#: treasury/templates/treasury/treasury_home.html:28
+#: user/templates/user/profile/navbar.html:69
+msgid "New order"
+msgstr "Novo pedido"
+
 #: treasury/templates/treasury/forms_of_payments.html:7
-#| msgid "Forms of Payment"
 msgid "Forms of Payments"
 msgstr "Formas de Pagamentos"
 
@@ -1868,13 +1941,6 @@ msgstr "Pagar"
 msgid "Order"
 msgstr "Pedido"
 
-#: treasury/templates/treasury/order_create.html:80
-#: treasury/templates/treasury/order_create.html:118
-#: treasury/templates/treasury/order_detail.html:79
-#: treasury/templates/treasury/order_detail.html:97
-msgid "TOTAL"
-msgstr "TOTAL"
-
 #: treasury/templates/treasury/order_create.html:98
 #: treasury/templates/treasury/order_detail.html:89
 msgid "Forms of Payment"
@@ -1895,10 +1961,6 @@ msgstr "Status"
 #: treasury/templates/treasury/order_detail.html:32
 msgid "Order Detail"
 msgstr "Detalhe do pedido"
-
-#: treasury/templates/treasury/order_detail.html:34
-msgid "made by the pupil"
-msgstr "feito pelo aluno"
 
 #: treasury/templates/treasury/order_detail.html:45
 msgid "person"
@@ -1932,32 +1994,47 @@ msgstr "Pagamentos não encontrados"
 msgid "PayTypes"
 msgstr "Tipos de Pagamentos"
 
-#: treasury/templates/treasury/treasury_home.html:16
-msgid "Actions"
-msgstr "Ações"
+#: treasury/templates/treasury/reports/cash_balance.html:10
+#: treasury/views/reports.py:77
+msgid "Cash Balance"
+msgstr "Balanço de Caixa"
 
-#: treasury/templates/treasury/treasury_home.html:22
-#: treasury/views/order.py:41
-msgid "Orders"
-msgstr "Pedidos"
+#: treasury/templates/treasury/reports/cash_balance.html:24
+#: treasury/templates/treasury/reports/period_payments.html:24
+#| msgid "Detail"
+msgid "Details"
+msgstr "Detalhes"
 
-#: treasury/templates/treasury/treasury_home.html:28
-#: user/templates/user/profile/navbar.html:69
-msgid "New order"
-msgstr "Novo pedido"
-
+#: treasury/templates/treasury/reports/menu.html:7
 #: treasury/templates/treasury/treasury_home.html:41
 msgid "Cash balance"
 msgstr "Balaço de caixa"
 
+#: treasury/templates/treasury/reports/menu.html:8
+#: treasury/templates/treasury/reports/period_payments.html:10
 #: treasury/templates/treasury/treasury_home.html:47
 #: treasury/views/reports.py:109
 msgid "Period payments"
 msgstr "Período do pagamentos"
 
+#: treasury/templates/treasury/reports/menu.html:9
+#: treasury/views/reports.py:151
+msgid "Payment by person"
+msgstr "Pagamento por pessoa"
+
+#: treasury/templates/treasury/reports/payments_by_person.html:12
 #: treasury/templates/treasury/treasury_home.html:53
 msgid "Payments by person"
 msgstr "Pagamentos por pessoa"
+
+#: treasury/templates/treasury/reports/payments_by_person.html:46
+#| msgid "create person"
+msgid "select a person"
+msgstr "selecionar um aluno"
+
+#: treasury/templates/treasury/treasury_home.html:16
+msgid "Actions"
+msgstr "Ações"
 
 #: treasury/views/bankflag.py:33
 msgid "The BankFlag has been created!"
@@ -1982,6 +2059,11 @@ msgstr "O BankFlag foi inativado!"
 #: treasury/views/bankflag.py:81
 msgid "The BankFlag has been deleted!"
 msgstr "O BankFlag foi apagado!"
+
+#: treasury/views/form_of_payment.py:21
+#| msgid "Forms of Payments"
+msgid "Forms of Payables"
+msgstr "Formas de Pagamentos"
 
 #: treasury/views/form_of_payment.py:33
 msgid "The Form of Payment has been created!"
@@ -2074,14 +2156,6 @@ msgstr "O Tipo de Pagamento foi apagado!"
 #: treasury/views/reports.py:44
 msgid "treasury"
 msgstr "tesouraria"
-
-#: treasury/views/reports.py:77
-msgid "Cash Balance"
-msgstr "Balanço de Caixa"
-
-#: treasury/views/reports.py:151
-msgid "Payment by person"
-msgstr "Pagamento por pessoa"
 
 #: user/admin.py:152
 #, python-format
