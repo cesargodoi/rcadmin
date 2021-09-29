@@ -1,5 +1,7 @@
 {% load base_extras %}
-<h4>{% if table_title %}{{ table_title }}{% else %}Seekers{% endif %}</h4>
+{% load i18n %}
+
+<h4>{% if table_title %}{{ table_title }}{% else %}{% trans 'Seekers' %}{% endif %}</h4>
 
 {% if object_list %}
 
@@ -30,7 +32,7 @@
       <small><em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em></small>
       {% if not obj.is_active and obj.status != 'ITD' %}
         &nbsp;&nbsp;
-        <small class="badge-pill badge-danger">inactive</small>
+        <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
       {% endif %}
     </div>
 
@@ -51,7 +53,7 @@
         {{ obj.center }}
         {% if obj.center != request.user.person.center %}
           &nbsp;&nbsp;
-          <span class="badge badge-pill badge-warning">only view</span>
+          <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
         {% endif %}
       {% endif %}
     </div>
@@ -105,9 +107,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      choose your search terms
+      {% trans 'choose your search terms' %}
       {% else %}
-      seekers not found
+      {% trans 'seekers not found' %}
       {% endif %}
     </h4> 
   </div>  

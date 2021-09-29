@@ -1,4 +1,6 @@
-<h4>Groups</h4>
+{% load i18n %}
+
+<h4>{% trans 'Groups' %}</h4>
 
 {% if object_list %}
 
@@ -24,14 +26,14 @@
       {% if obj.center != request.user.person.center %}
         &nbsp;&nbsp;
         <span class="badge badge-pill badge-{% if not obj.is_active %}danger{% else %}warning{% endif %}">
-          only view
+          {% trans 'only view' %}
         </span>
       {% endif %}
     </div>
 
     <div class="col-sm-1 align-middle">
       {% if not obj.is_active %}
-        <small class="badge-pill badge-danger">inactive</small>
+        <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
       {% endif %}
     </div>
 
@@ -61,9 +63,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      choose your search terms
+      {% trans 'choose your search terms' %}
       {% else %}
-      groups not found
+      {% trans 'groups not found' %}
       {% endif %}
     </h4> 
   </div>  

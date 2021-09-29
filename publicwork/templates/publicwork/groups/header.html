@@ -1,4 +1,6 @@
 {% load base_extras %}
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="article-metadata">
@@ -7,12 +9,12 @@
           {{ object.center }}
           {% if object.center != request.user.person.center %}
           &nbsp;&nbsp;&nbsp;
-          <span class="badge badge-pill badge-danger">another center - only view</span>
+          <span class="badge badge-pill badge-danger">{% trans 'another center - only view' %}</span>
           {% endif %}
         </div>
         <div class="col-2 text-right">
           {% if not object.is_active %}
-          <span class="badge badge-pill badge-danger">inactive</span>
+          <span class="badge badge-pill badge-danger">{% trans 'inactive' %}</span>
           {% endif %}
         </div>
       </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 20:34-0300\n"
+"POT-Creation-Date: 2021-09-29 11:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,8 @@ msgstr ""
 #: base/templates/base/import_persons.html:49
 #: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:23
+#: publicwork/templates/publicwork/groups/confirm_remove_member.html:23
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
 #: publicwork/templates/publicwork/reports/navbar.html:33
 msgid "Go back"
@@ -93,6 +95,8 @@ msgstr ""
 #: person/templates/person/elements/confirm_to_import.html:22
 #: person/templates/person/elements/confirm_to_insert.html:19
 #: person/templates/person/elements/confirm_to_reinsert_person.html:18
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:19
+#: publicwork/templates/publicwork/groups/confirm_remove_member.html:19
 #: publicwork/templates/publicwork/listener/confirm.html:30
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:18
 msgid "Confirm"
@@ -113,6 +117,8 @@ msgstr ""
 #: person/templates/person/frequency_insert.html:11
 #: person/templates/person/membership_ps_insert.html:12
 #: person/templates/person/navbar.html:142
+#: publicwork/templates/publicwork/groups/actions.html:23
+#: publicwork/templates/publicwork/groups/navbar.html:97
 #: publicwork/templates/publicwork/lecture/navbar.html:47
 #: publicwork/templates/publicwork/listener/add.html:12
 #: publicwork/templates/publicwork/listener/confirm.html:34
@@ -393,6 +399,8 @@ msgstr ""
 #: event/templates/event/elements/events.html:74
 #: person/templates/person/membership.html:48
 #: person/templates/person/persons.html:83
+#: publicwork/templates/publicwork/groups/groups.html:66
+#: publicwork/templates/publicwork/groups/seekers.html:110
 #: publicwork/templates/publicwork/lecture/lectures.html:86
 #: publicwork/templates/publicwork/seeker/seekers.html:97
 msgid "choose your search terms"
@@ -448,6 +456,10 @@ msgid "conference center"
 msgstr ""
 
 #: center/templates/center/header.html:28 event/templates/event/header.html:19
+#: publicwork/templates/publicwork/groups/frequencies.html:21
+#: publicwork/templates/publicwork/groups/groups.html:36
+#: publicwork/templates/publicwork/groups/header.html:17
+#: publicwork/templates/publicwork/groups/seekers.html:35
 #: publicwork/templates/publicwork/lecture/header.html:16
 #: publicwork/templates/publicwork/lecture/lectures.html:40
 #: publicwork/templates/publicwork/listener/listeners.html:49
@@ -505,6 +517,7 @@ msgstr ""
 #: center/templates/center/navbar.html:32
 #: center/templates/center/navbar.html:42 event/templates/event/navbar.html:39
 #: person/templates/person/navbar.html:78
+#: publicwork/templates/publicwork/groups/navbar.html:60
 #: publicwork/templates/publicwork/lecture/navbar.html:29
 #: publicwork/templates/publicwork/seeker/navbar.html:51
 #: user/templates/user/profile/navbar.html:42
@@ -520,6 +533,7 @@ msgstr ""
 
 #: center/templates/center/navbar.html:58
 #: person/templates/person/navbar.html:94
+#: publicwork/templates/publicwork/groups/navbar.html:76
 #: publicwork/templates/publicwork/seeker/navbar.html:68
 msgid "Reinsert"
 msgstr ""
@@ -579,6 +593,9 @@ msgstr ""
 #: event/templates/event/elements/frequencies.html:3
 #: event/templates/event/navbar.html:32 person/templates/person/detail.html:20
 #: person/templates/person/navbar.html:46
+#: publicwork/templates/publicwork/groups/detail.html:21
+#: publicwork/templates/publicwork/groups/navbar.html:21
+#: publicwork/templates/publicwork/groups/navbar.html:88
 #: publicwork/templates/publicwork/seeker/detail.html:18
 #: publicwork/templates/publicwork/seeker/navbar.html:21
 #: user/templates/user/profile/navbar.html:16
@@ -612,6 +629,7 @@ msgid "events not found"
 msgstr ""
 
 #: event/templates/event/elements/frequencies.html:53
+#: publicwork/templates/publicwork/groups/frequencies.html:53
 #: publicwork/templates/publicwork/seeker/frequencies.html:47
 msgid "no frequencies found"
 msgstr ""
@@ -758,6 +776,8 @@ msgstr ""
 #: person/templates/person/elements/confirm_to_import.html:8
 #: person/templates/person/elements/confirm_to_insert.html:8
 #: person/templates/person/elements/confirm_to_reinsert_person.html:8
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:8
+#: publicwork/templates/publicwork/groups/confirm_remove_member.html:8
 #: publicwork/templates/publicwork/listener/confirm.html:8
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:8
 msgid "Atention"
@@ -781,6 +801,7 @@ msgid "Pupil"
 msgstr ""
 
 #: person/templates/person/elements/confirm_to_insert.html:9
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:9
 #: publicwork/templates/publicwork/listener/confirm.html:9
 msgid "Are you shure you want to insert"
 msgstr ""
@@ -799,6 +820,9 @@ msgid "Insert Frequency"
 msgstr ""
 
 #: person/templates/person/header.html:15
+#: publicwork/templates/publicwork/groups/frequencies.html:15
+#: publicwork/templates/publicwork/groups/groups.html:29
+#: publicwork/templates/publicwork/groups/seekers.html:56
 #: publicwork/templates/publicwork/lecture/header.html:13
 #: publicwork/templates/publicwork/lecture/lectures.html:33
 #: publicwork/templates/publicwork/seeker/seekers.html:45
@@ -953,21 +977,87 @@ msgstr ""
 msgid "confirm to import"
 msgstr ""
 
+#: publicwork/templates/publicwork/groups/actions.html:11
+#: publicwork/templates/publicwork/insert_yourself/form.html:69
+msgid "Register"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/add_member.html:3
+msgid "Add Member"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/add_mentor.html:3
+msgid "Add Mentor"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
+msgid "in"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/confirm_remove_member.html:9
+msgid "Are you shure you want to remove:"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/frequencies.html:31
+#: publicwork/templates/publicwork/seeker/info.html:21
+msgid "since"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/groups.html:3
+#: publicwork/templates/publicwork/home.html:42
+#: publicwork/templates/publicwork/navbar.html:29
+msgid "Groups"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/groups.html:68
+msgid "groups not found"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/header.html:12
+#: publicwork/templates/publicwork/seeker/header.html:11
+msgid "another center - only view"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/navbar.html:7
+#: publicwork/templates/publicwork/navbar.html:68
+msgid "Group"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/navbar.html:15
+msgid "Members"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/navbar.html:35
+#: publicwork/templates/publicwork/navbar.html:48
+#: publicwork/templates/publicwork/seeker/navbar.html:7
+#: publicwork/templates/publicwork/seeker/navbar.html:41
+msgid "Seeker"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/navbar.html:68
+msgid "Del"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/seekers.html:4
 #: publicwork/templates/publicwork/home.html:19
 #: publicwork/templates/publicwork/navbar.html:16
 #: publicwork/templates/publicwork/seeker/seekers.html:4
 msgid "Seekers"
 msgstr ""
 
+#: publicwork/templates/publicwork/groups/seekers.html:112
+#: publicwork/templates/publicwork/seeker/seekers.html:99
+msgid "seekers not found"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/who_participated.html:16
+msgid "Who participated?"
+msgstr ""
+
 #: publicwork/templates/publicwork/home.html:30
 #: publicwork/templates/publicwork/lecture/lectures.html:3
 #: publicwork/templates/publicwork/navbar.html:22
 msgid "Lectures"
-msgstr ""
-
-#: publicwork/templates/publicwork/home.html:42
-#: publicwork/templates/publicwork/navbar.html:29
-msgid "Groups"
 msgstr ""
 
 #: publicwork/templates/publicwork/home.html:50
@@ -980,10 +1070,12 @@ msgid "Congratulations!"
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/congratulations.html:5
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:5
 msgid "Your registration was successful!"
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/congratulations.html:6
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:6
 msgid ""
 "You will be included in a “Welcome” group and in the next few days, one of "
 "the students responsible for this group should contact you (by message, call "
@@ -991,17 +1083,50 @@ msgid ""
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/congratulations.html:7
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:7
 msgid "If this does not occur within 7 days, please contact us via email: "
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/congratulations.html:10
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:14
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:10
 #: publicwork/templates/publicwork/insert_yourself/expired_token.html:11
 msgid "Best regards"
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/congratulations.html:11
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:15
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:11
 #: publicwork/templates/publicwork/insert_yourself/expired_token.html:12
 msgid "team rc@dmin"
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:4
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:4
+msgid "Congratulations"
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:6
+msgid ""
+"You are receiving this email because you have signed up to join the Golden "
+"Rosicrucian Spiritual School \"Welcome\" group."
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:8
+msgid "Please click on the link below to confirm your registration."
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:10
+msgid "confirmation link"
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:12
+msgid "If you have not made this request, please disregard this email."
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:20
+msgid ""
+"if you can not click on the link, copy a url below and paste in your browser:"
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/expired_token.html:4
@@ -1079,10 +1204,6 @@ msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:60
 msgid "of Golden Rosicrucian."
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/form.html:69
-msgid "Register"
 msgstr ""
 
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:9
@@ -1192,16 +1313,6 @@ msgstr ""
 msgid "Update frequency"
 msgstr ""
 
-#: publicwork/templates/publicwork/navbar.html:48
-#: publicwork/templates/publicwork/seeker/navbar.html:7
-#: publicwork/templates/publicwork/seeker/navbar.html:41
-msgid "Seeker"
-msgstr ""
-
-#: publicwork/templates/publicwork/navbar.html:68
-msgid "Group"
-msgstr ""
-
 #: publicwork/templates/publicwork/reports/navbar.html:5
 msgid "Report"
 msgstr ""
@@ -1218,24 +1329,12 @@ msgstr ""
 msgid "define the reporting terms"
 msgstr ""
 
-#: publicwork/templates/publicwork/seeker/header.html:11
-msgid "another center - only view"
-msgstr ""
-
 #: publicwork/templates/publicwork/seeker/historic.html:41
 msgid "no historics found"
 msgstr ""
 
-#: publicwork/templates/publicwork/seeker/info.html:21
-msgid "since"
-msgstr ""
-
 #: publicwork/templates/publicwork/seeker/info.html:47
 msgid "group"
-msgstr ""
-
-#: publicwork/templates/publicwork/seeker/seekers.html:99
-msgid "seekers not found"
 msgstr ""
 
 #: publicwork/views/group.py:65
