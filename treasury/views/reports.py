@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.translation import gettext as _
+
 from person.models import Person
 from rcadmin.common import paginator
 
@@ -39,7 +41,7 @@ def treasury_home(request):
         "last_payments_total": last_payments_total,
         "self_payed": len(self_payed),
         "self_payed_total": self_payed_total,
-        "title": "treasury",
+        "title": _("treasury"),
         "nav": "home",
     }
     return render(request, "treasury/treasury_home.html", context)
@@ -72,7 +74,7 @@ def cash_balance(request):
             dt1.strftime("%d/%m/%y"), dt2.strftime("%d/%m/%y")
         ),
         "object_list": object_list.all_payforms,
-        "title": "Cash Balance",
+        "title": _("Cash Balance"),
     }
     return render(request, "treasury/reports/cash_balance.html", context)
 
@@ -104,7 +106,7 @@ def period_payments(request):
             dt1.strftime("%d/%m/%y"), dt2.strftime("%d/%m/%y")
         ),
         "object_list": object_list.all_payments,
-        "title": "Period payments",
+        "title": _("Period payments"),
     }
     return render(request, "treasury/reports/period_payments.html", context)
 
@@ -146,7 +148,7 @@ def payments_by_person(request):
         object_list = paginator(payments, page=request.GET.get("page"))
 
     context = {
-        "title": "Payment by person",
+        "title": _("Payment by person"),
         "object": person,
         "object_list": object_list,
         "nav": "reports",

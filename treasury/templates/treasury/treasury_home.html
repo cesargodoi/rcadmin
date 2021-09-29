@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load static %}
 
 {% block content %}
@@ -11,44 +13,44 @@
   </div>
   <div class="col-lg-4 mb-4">
     <div class="card-treasury-new bg-light mb-3">
-      <div class="card-header-treasury-new">Actions</div>
+      <div class="card-header-treasury-new">{% trans 'Actions' %}</div>
       <ul class="list-group list-group-flush">
         <a type="button" 
           class="list-group-item-treasury-new list-group-item-action text-info" 
           href="{% url 'orders' %}?init=on">
           <i class="fas fa-shopping-bag"></i> 
-          Orders
+          {% trans 'Orders' %}
         </a>
         <a type="button" 
           class="list-group-item-treasury-new list-group-item-action text-primary" 
           href="{% url 'order_create' %}">
           <i class="fas fa-plus"></i> 
-          New order
+          {% trans 'New order' %}
         </a>
       </ul>
     </div>
   </div>
   <div class="col-lg-4 mb-4">
     <div class="card-treasury-new bg-light mb-3">
-      <div class="card-header-treasury-new">Reports</div>
+      <div class="card-header-treasury-new">{% trans 'Reports' %}</div>
       <ul class="list-group list-group-flush">
         <a type="button" 
           class="list-group-item-treasury-new list-group-item-action text-info" 
           href="{% url 'cash_balance' %}">
           <i class="fas fa-eye"></i> 
-          Cash balance
+          {% trans 'Cash balance' %}
         </a>
         <a type="button" 
           class="list-group-item-treasury-new list-group-item-action text-info" 
           href="{% url 'period_payments' %}">
           <i class="fas fa-eye"></i> 
-          Period payments
+          {% trans 'Period payments' %}
         </a>
         <a type="button" 
           class="list-group-item-treasury-new list-group-item-action text-info" 
           href="{% url 'payments_by_person' %}">
           <i class="fas fa-eye"></i> 
-          Payments by person
+          {% trans 'Payments by person' %}
         </a>
       </ul>
     </div>

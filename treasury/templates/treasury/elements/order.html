@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article 
   class="media content-section mb-1" 
   onclick="location.href='{% url 'order_detail' object.id %}';">
@@ -12,7 +14,7 @@
           {{ object.payments.count }} payment{{ object.payments.count|pluralize }} &nbsp;&nbsp;
           {% if object.self_payed %}
           <span class="badge badge-pill badge-secondary">
-            made by the pupil
+            {% trans 'made by the pupil' %}
           </span>
           {% endif %}
         </small>

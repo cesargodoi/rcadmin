@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section">
   <img class="rounded article-img" src="{{ object.user.profile.image.url }}">
   <div class="media-body">
@@ -5,7 +7,7 @@
       {{ object.center }}
       &nbsp;&nbsp;
       <em>
-        {{ object.get_aspect_display }} <strong>in</strong>
+        {{ object.get_aspect_display }} <strong>{% trans 'in' %}</strong>
         {{ object.aspect_date|date:"d/m/Y" }}
       </em>
       &nbsp;&nbsp;&nbsp;

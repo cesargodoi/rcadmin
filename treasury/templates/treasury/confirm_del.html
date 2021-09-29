@@ -1,19 +1,21 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="alert alert-secondary" role="alert">
-  <h4 class="alert-heading">Atention!</h4>
-  <p>Are you sure you want to delete?</p>
+  <h4 class="alert-heading">{% trans 'Atention' %}!</h4>
+  <p>{% trans 'Are you sure you want to delete' %}?</p>
   <hr>
   <form method="POST">
     {% csrf_token %}
     <div class="form-group">
-      <button class="btn btn-outline-danger" type="submit">Confirm</button>
+      <button class="btn btn-outline-danger" type="submit">{% trans 'Confirm' %}</button>
       <a 
         class="btn btn-outline-info" 
         href="javascript:history.back()">
-        Go back
+        {% trans 'Go back' %}
       </a>
     </div>
   </form>

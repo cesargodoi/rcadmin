@@ -1,9 +1,10 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>Forms of Payables</h2>
+    <h2>{% trans 'Forms of Payments' %}</h2>
   </div>
 </article>
 
@@ -13,13 +14,13 @@
       class="btn btn-light text-primary" 
       href="{% url 'form_of_payment_create' %}">
       <i class="fas fa-plus"></i> 
-      Add
+      {% trans 'Add' %}
     </a>
     <a type="button" 
       class="btn btn-light text-info" 
       href="{% url 'home' %}">
       <i class="fas fa-chevron-left "></i> 
-      Go back
+      {% trans 'Go back' %}
     </a>
   </div>
 </div>
@@ -31,12 +32,12 @@
 <table class="table table-hover table-sm">
   <thead>
     <tr>
-      <th>payment type</th>
-      <th class="text-right">bank or flag</th>
-      <th class="text-right">ctrl</th>
-      <th class="text-right">complement</th>
-      <th class="text-right">value $</th>
-      <th class="text-right">order</th>
+      <th>{% trans 'payment type' %}</th>
+      <th class="text-right">{% trans 'bank or flag' %}</th>
+      <th class="text-right">{% trans 'ctrl' %}</th>
+      <th class="text-right">{% trans 'complement' %}</th>
+      <th class="text-right">{% trans 'value' %} $</th>
+      <th class="text-right">{% trans 'order' %}</th>
       <th class="text-right"></th>
     </tr>
   </thead>

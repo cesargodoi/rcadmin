@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-29 11:35-0300\n"
+"POT-Creation-Date: 2021-09-29 16:53-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,6 +74,17 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:23
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
 #: publicwork/templates/publicwork/reports/navbar.html:33
+#: treasury/templates/treasury/bankflags.html:22
+#: treasury/templates/treasury/confirm_del.html:18
+#: treasury/templates/treasury/confirm_delete.html:31
+#: treasury/templates/treasury/confirm_register.html:20
+#: treasury/templates/treasury/forms_of_payments.html:23
+#: treasury/templates/treasury/order_add_payform.html:18
+#: treasury/templates/treasury/order_add_payment.html:19
+#: treasury/templates/treasury/order_create.html:23
+#: treasury/templates/treasury/order_detail.html:25
+#: treasury/templates/treasury/payments.html:23
+#: treasury/templates/treasury/paytypes.html:23
 msgid "Go back"
 msgstr ""
 
@@ -84,6 +95,7 @@ msgid "Atention!"
 msgstr ""
 
 #: base/templates/base/confirm_delete.html:9
+#: treasury/templates/treasury/confirm_del.html:9
 msgid "Are you sure you want to delete"
 msgstr ""
 
@@ -99,6 +111,9 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:19
 #: publicwork/templates/publicwork/listener/confirm.html:30
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:18
+#: treasury/templates/treasury/confirm_del.html:14
+#: treasury/templates/treasury/confirm_delete.html:26
+#: treasury/templates/treasury/confirm_register.html:15
 msgid "Confirm"
 msgstr ""
 
@@ -182,6 +197,9 @@ msgid "Activities"
 msgstr ""
 
 #: base/templates/base/elements/menu_admin.html:8
+#: treasury/templates/treasury/order_create.html:60
+#: treasury/templates/treasury/order_detail.html:70
+#: treasury/templates/treasury/payments.html:7 treasury/views/payments.py:21
 #: user/templates/user/profile/navbar.html:28
 msgid "Payments"
 msgstr ""
@@ -220,6 +238,7 @@ msgstr ""
 #: base/templates/base/form.html:23
 #: person/templates/person/forms/historic.html:24
 #: person/templates/person/forms/membership.html:23
+#: treasury/templates/treasury/order_create.html:29
 msgid "Create"
 msgstr ""
 
@@ -229,6 +248,7 @@ msgstr ""
 #: publicwork/templates/publicwork/listener/update.html:12
 #: publicwork/templates/publicwork/seeker/add_or_change.html:11
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
+#: treasury/templates/treasury/order_create.html:29
 msgid "Update"
 msgstr ""
 
@@ -324,6 +344,7 @@ msgstr ""
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:40
 #: person/templates/person/info.html:44
+#: treasury/templates/treasury/paytypes.html:38
 #: user/templates/user/profile/info.html:53
 msgid "type"
 msgstr ""
@@ -344,6 +365,7 @@ msgstr ""
 #: base/templates/base/searchs/seeker.html:54
 #: base/templates/base/searchs/seeker.html:59
 #: publicwork/templates/publicwork/seeker/info.html:18
+#: treasury/templates/treasury/order_detail.html:56
 msgid "status"
 msgstr ""
 
@@ -403,6 +425,7 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/seekers.html:110
 #: publicwork/templates/publicwork/lecture/lectures.html:86
 #: publicwork/templates/publicwork/seeker/seekers.html:97
+#: treasury/templates/treasury/orders.html:36
 msgid "choose your search terms"
 msgstr ""
 
@@ -443,6 +466,7 @@ msgstr ""
 #: center/templates/center/info.html:29
 #: person/templates/person/forms/person.html:47
 #: person/templates/person/info.html:28
+#: treasury/templates/treasury/order_create.html:144
 #: user/templates/user/profile/info.html:30
 msgid "Others"
 msgstr ""
@@ -520,6 +544,7 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/navbar.html:60
 #: publicwork/templates/publicwork/lecture/navbar.html:29
 #: publicwork/templates/publicwork/seeker/navbar.html:51
+#: treasury/templates/treasury/order_detail.html:13
 #: user/templates/user/profile/navbar.html:42
 msgid "Edit"
 msgstr ""
@@ -528,6 +553,7 @@ msgstr ""
 #: person/templates/person/navbar.html:86
 #: publicwork/templates/publicwork/lecture/navbar.html:37
 #: publicwork/templates/publicwork/seeker/navbar.html:60
+#: treasury/templates/treasury/order_detail.html:19
 msgid "Delete"
 msgstr ""
 
@@ -560,7 +586,9 @@ msgstr ""
 #: person/views/person.py:211 publicwork/views/group.py:175
 #: publicwork/views/historic.py:95 publicwork/views/lecture.py:136
 #: publicwork/views/listener.py:111 publicwork/views/listener.py:211
-#: publicwork/views/seeker.py:142
+#: publicwork/views/seeker.py:142 treasury/views/bankflag.py:87
+#: treasury/views/form_of_payment.py:83 treasury/views/order.py:430
+#: treasury/views/payments.py:83 treasury/views/paytypes.py:84
 msgid "confirm to delete"
 msgstr ""
 
@@ -586,6 +614,12 @@ msgstr[1] ""
 #: event/templates/event/activity_home.html:16
 #: publicwork/templates/publicwork/seeker/add_or_change.html:11
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
+#: treasury/templates/treasury/bankflags.html:17
+#: treasury/templates/treasury/forms_of_payments.html:17
+#: treasury/templates/treasury/order_create.html:67
+#: treasury/templates/treasury/order_create.html:105
+#: treasury/templates/treasury/payments.html:17
+#: treasury/templates/treasury/paytypes.html:17
 msgid "Add"
 msgstr ""
 
@@ -611,7 +645,8 @@ msgid "Scan this QR-Code to sign-in Event"
 msgstr ""
 
 #: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:45
-#: user/models.py:62
+#: treasury/templates/treasury/bankflags.html:35
+#: treasury/templates/treasury/paytypes.html:39 user/models.py:62
 msgid "active"
 msgstr ""
 
@@ -780,6 +815,9 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:8
 #: publicwork/templates/publicwork/listener/confirm.html:8
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:8
+#: treasury/templates/treasury/confirm_del.html:8
+#: treasury/templates/treasury/confirm_delete.html:8
+#: treasury/templates/treasury/confirm_register.html:8
 msgid "Atention"
 msgstr ""
 
@@ -899,6 +937,7 @@ msgid "Insert Membership"
 msgstr ""
 
 #: person/templates/person/navbar.html:7 person/templates/person/navbar.html:67
+#: treasury/templates/treasury/order_create.html:37
 msgid "Person"
 msgstr ""
 
@@ -1062,6 +1101,7 @@ msgstr ""
 
 #: publicwork/templates/publicwork/home.html:50
 #: publicwork/templates/publicwork/reports/menu.html:5
+#: treasury/templates/treasury/treasury_home.html:35
 msgid "Reports"
 msgstr ""
 
@@ -1711,6 +1751,295 @@ msgid ""
 "15 digits allowed."
 msgstr ""
 
+#: treasury/templates/treasury/bankflags.html:7 treasury/views/bankflag.py:21
+msgid "BankFlags"
+msgstr ""
+
+#: treasury/templates/treasury/bankflags.html:34
+#: treasury/templates/treasury/paytypes.html:37
+msgid "name"
+msgstr ""
+
+#: treasury/templates/treasury/confirm_delete.html:10
+msgid "You want to delete"
+msgstr ""
+
+#: treasury/templates/treasury/confirm_delete.html:12
+msgid "But this is part of a payment order"
+msgstr ""
+
+#: treasury/templates/treasury/confirm_delete.html:14
+msgid "You can only delete it using the payment order"
+msgstr ""
+
+#: treasury/templates/treasury/confirm_delete.html:17
+msgid "Are you shure you want to delete"
+msgstr ""
+
+#: treasury/templates/treasury/confirm_register.html:9
+msgid "Do you confirm the registration procedure?"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:7
+msgid "Forms of Payments"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:35
+msgid "payment type"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:36
+msgid "bank or flag"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:37
+msgid "ctrl"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:38
+msgid "complement"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:39
+msgid "value"
+msgstr ""
+
+#: treasury/templates/treasury/forms_of_payments.html:40
+msgid "order"
+msgstr ""
+
+#: treasury/templates/treasury/order_add_payform.html:12
+#: treasury/templates/treasury/order_add_payform.html:24
+msgid "Add form of payment"
+msgstr ""
+
+#: treasury/templates/treasury/order_add_payment.html:13
+#: treasury/templates/treasury/order_add_payment.html:25
+msgid "Add payment"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:15
+msgid "Pay now"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:29
+msgid "Order"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:80
+#: treasury/templates/treasury/order_create.html:118
+#: treasury/templates/treasury/order_detail.html:79
+#: treasury/templates/treasury/order_detail.html:97
+msgid "TOTAL"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:98
+#: treasury/templates/treasury/order_detail.html:89
+msgid "Forms of Payment"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:126
+msgid "missing"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:150
+msgid "Description"
+msgstr ""
+
+#: treasury/templates/treasury/order_create.html:160
+msgid "Status"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:32
+msgid "Order Detail"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:34
+msgid "made by the pupil"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:45
+msgid "person"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:51
+msgid "date"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:114
+msgid "Update status"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:124
+msgid "description"
+msgstr ""
+
+#: treasury/templates/treasury/order_detail.html:133
+msgid "Voucher"
+msgstr ""
+
+#: treasury/templates/treasury/orders.html:38
+msgid "orders not found"
+msgstr ""
+
+#: treasury/templates/treasury/payments.html:98
+msgid "Payments not found"
+msgstr ""
+
+#: treasury/templates/treasury/paytypes.html:7
+msgid "PayTypes"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:16
+msgid "Actions"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:22 treasury/views/order.py:41
+msgid "Orders"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:28
+#: user/templates/user/profile/navbar.html:69
+msgid "New order"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:41
+msgid "Cash balance"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:47
+#: treasury/views/reports.py:109
+msgid "Period payments"
+msgstr ""
+
+#: treasury/templates/treasury/treasury_home.html:53
+msgid "Payments by person"
+msgstr ""
+
+#: treasury/views/bankflag.py:33
+msgid "The BankFlag has been created!"
+msgstr ""
+
+#: treasury/views/bankflag.py:43
+msgid "Create BankFlag"
+msgstr ""
+
+#: treasury/views/bankflag.py:56
+msgid "The BankFlag has been updated!"
+msgstr ""
+
+#: treasury/views/bankflag.py:65
+msgid "Update BankFlag"
+msgstr ""
+
+#: treasury/views/bankflag.py:78
+msgid "The BankFlag has been inactivated!"
+msgstr ""
+
+#: treasury/views/bankflag.py:81
+msgid "The BankFlag has been deleted!"
+msgstr ""
+
+#: treasury/views/form_of_payment.py:33
+msgid "The Form of Payment has been created!"
+msgstr ""
+
+#: treasury/views/form_of_payment.py:43
+msgid "Create Form of Payment"
+msgstr ""
+
+#: treasury/views/form_of_payment.py:56
+msgid "The Form of Payment has been updated!"
+msgstr ""
+
+#: treasury/views/form_of_payment.py:65
+msgid "Update Form of Payment"
+msgstr ""
+
+#: treasury/views/form_of_payment.py:77
+msgid "The Form of Payment has been deleted!"
+msgstr ""
+
+#: treasury/views/order.py:73 treasury/views/order.py:160
+msgid "Create Order"
+msgstr ""
+
+#: treasury/views/order.py:178 treasury/views/order.py:249 user/views.py:269
+msgid "confirm delete"
+msgstr ""
+
+#: treasury/views/order.py:231
+msgid "Add Form of Payment"
+msgstr ""
+
+#: treasury/views/order.py:309
+msgid "confirm register"
+msgstr ""
+
+#: treasury/views/order.py:389
+msgid "View Order"
+msgstr ""
+
+#: treasury/views/order.py:402
+msgid "Edit Order"
+msgstr ""
+
+#: treasury/views/payments.py:33
+msgid "The Payment has been created!"
+msgstr ""
+
+#: treasury/views/payments.py:43
+msgid "Create Payment"
+msgstr ""
+
+#: treasury/views/payments.py:56
+msgid "The Payment has been updated!"
+msgstr ""
+
+#: treasury/views/payments.py:65
+msgid "Update Payment"
+msgstr ""
+
+#: treasury/views/payments.py:77
+msgid "The Payment has been deleted!"
+msgstr ""
+
+#: treasury/views/paytypes.py:30
+msgid "The PayType has been created!"
+msgstr ""
+
+#: treasury/views/paytypes.py:40
+msgid "Create PayType"
+msgstr ""
+
+#: treasury/views/paytypes.py:53
+msgid "The PayType has been updated!"
+msgstr ""
+
+#: treasury/views/paytypes.py:62
+msgid "Update PayType"
+msgstr ""
+
+#: treasury/views/paytypes.py:75
+msgid "The PayType has been inactivated!"
+msgstr ""
+
+#: treasury/views/paytypes.py:78
+msgid "The PayType has been deleted!"
+msgstr ""
+
+#: treasury/views/reports.py:44
+msgid "treasury"
+msgstr ""
+
+#: treasury/views/reports.py:77
+msgid "Cash Balance"
+msgstr ""
+
+#: treasury/views/reports.py:151
+msgid "Payment by person"
+msgstr ""
+
 #: user/admin.py:152
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
@@ -1908,10 +2237,6 @@ msgstr ""
 msgid "Scan QR-CODE"
 msgstr ""
 
-#: user/templates/user/profile/navbar.html:69
-msgid "New order"
-msgstr ""
-
 #: user/views.py:40
 msgid "My Profile has been updated!"
 msgstr ""
@@ -1931,8 +2256,4 @@ msgstr ""
 
 #: user/views.py:247
 msgid "Create my order - add payment"
-msgstr ""
-
-#: user/views.py:269
-msgid "confirm delete"
 msgstr ""

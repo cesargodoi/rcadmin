@@ -1,9 +1,10 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>BankFlags</h2>
+    <h2>{% trans 'BankFlags' %}</h2>
   </div>
 </article>
 
@@ -13,12 +14,12 @@
       class="btn btn-light text-primary" 
       href="{% url 'bankflag_create' %}">
       <i class="fas fa-plus"></i> 
-      Add
+      {% trans 'Add' %}
     </a>
     <a type="button" 
       class="btn btn-light text-info" 
       href="{% url 'home' %}">
-      <i class="fas fa-chevron-left "></i> Go back
+      <i class="fas fa-chevron-left "></i> {% trans 'Go back' %}
     </a>
   </div>
 </div>
@@ -30,8 +31,8 @@
 <table class="table table-hover table-sm">
   <thead>
     <tr>
-      <th>name</th>
-      <th>active</th>
+      <th>{% trans 'name' %}</th>
+      <th>{% trans 'active' %}</th>
       <th class="text-right"></th>
     </tr>
   </thead>

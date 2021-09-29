@@ -1,18 +1,20 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="alert alert-secondary" role="alert">
-  <h4 class="alert-heading">Atention!</h4>
+  <h4 class="alert-heading">{% trans 'Atention' %}!</h4>
   {% if object.order_set.all %}
-  <p>You want to delete: <br>
+  <p>{% trans 'You want to delete' %}: <br>
     <strong>{{ object }}?</strong> <br>
-    But this is part of a payment order: <br>
+    {% trans 'But this is part of a payment order' %}: <br>
     <strong>{{ object.order_set.all.0 }}</strong> <br>
-    You can only delete it using the payment order. <br>
+    {% trans 'You can only delete it using the payment order' %}. <br>
   </p>
   {% else %}
-  <p>Are you shure you want to delete: <br>
+  <p>{% trans 'Are you shure you want to delete' %}: <br>
     <strong>{{ object }}?</strong>
   </p>
   {% endif %}
@@ -21,12 +23,12 @@
     {% csrf_token %}
     <div class="form-group">
       {% if not object.order_set.all %}
-      <button class="btn btn-outline-danger" type="submit">Confirm</button>
+      <button class="btn btn-outline-danger" type="submit">{% trans 'Confirm' %}</button>
       {% endif %}
       <a 
         class="btn btn-outline-info" 
         href="javascript:history.back()">
-        Go back
+        {% trans 'Go back' %}
       </a>
     </div>
   </form>

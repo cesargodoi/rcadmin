@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <h5>{{ object.type.1|upper }}</h5>
@@ -7,14 +9,14 @@
     <table class="table table-sm">
       {% if object.pending %}
       <tr class="text-secondary">
-        <th class="text-right">partial:</th>
+        <th class="text-right">{% trans 'partial' %}:</th>
         <th class="text-right" id="totPayForm" width="80px">
           {{ object.total|floatformat:2 }}
         </th>
       </tr>
       <tr class="text-info">
         <th class="text-right">
-          pending:
+          {% trans 'pending' %}:
         </th>
         <th class="text-right" width="80px">
           - {{ object.pending|floatformat:2 }}
@@ -22,7 +24,7 @@
       </tr>
       {% endif %}
       <tr>
-        <th class="text-right">TOTAL:</th>
+        <th class="text-right">{% trans 'TOTAL' %}:</th>
         <th class="text-right" id="totPayForm" width="80px">
           {{ object.concluded|floatformat:2 }}
         </th>

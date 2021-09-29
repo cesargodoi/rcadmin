@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator
 
 from ..forms import PayTypeForm
@@ -25,7 +27,7 @@ def paytype_create(request):
         form = PayTypeForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The PayType has been created!"
+            message = _("The PayType has been created!")
             messages.success(request, message)
             return redirect("paytypes")
 
@@ -35,7 +37,7 @@ def paytype_create(request):
         "form_path": "treasury/forms/paytype.html",
         "goback": reverse("payments"),
         "to_create": True,
-        "title": "Create PayType",
+        "title": _("Create PayType"),
     }
     return render(request, "base/form.html", context)
 
@@ -48,7 +50,7 @@ def paytype_update(request, pk):
         form = PayTypeForm(request.POST, instance=pay_types)
         if form.is_valid():
             form.save()
-            message = "The PayType has been updated!"
+            message = _("The PayType has been updated!")
             messages.success(request, message)
             return redirect("paytypes")
 
@@ -57,7 +59,7 @@ def paytype_update(request, pk):
         "form_name": "Paytype",
         "form_path": "treasury/forms/paytype.html",
         "goback": reverse("payments"),
-        "title": "Update PayType",
+        "title": _("Update PayType"),
     }
     return render(request, "base/form.html", context)
 
@@ -70,12 +72,15 @@ def paytype_delete(request, pk):
         if pay_types.payment_set.all():
             pay_types.is_active = False
             pay_types.save()
-            message = "The PayType has been inactivated!"
+            message = _("The PayType has been inactivated!")
         else:
             pay_types.delete()
-            message = "The PayType has been deleted!"
+            message = _("The PayType has been deleted!")
         messages.success(request, message)
         return redirect("paytypes")
 
-    context = {"object": pay_types, "title": "confirm to delete"}
+    context = {
+        "object": pay_types,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)

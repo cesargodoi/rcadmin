@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -8,7 +9,7 @@
   <div class="media-body">
     <div class="row">
       <div class="col-sm-8">
-        <h2>Payments by person</h2>
+        <h2>{% trans 'Payments by person' %}</h2>
       </div>
       <div class="floating-right">
         <form class="form-control-sm" method="GET" onsubmit="return isFormOk()">
@@ -28,7 +29,7 @@
   <div class="col-md-6">
     <div class="card mb-3">
       <div class="card-header">
-        <h5>Payments</h5>
+        <h5>{% trans 'Payments' %}</h5>
       </div>
       {% if object_list.has_other_pages %}
       {% include "base/paginator.html" %}
@@ -42,7 +43,7 @@
 </div>
 {% else %}
 <div class="alert alert-secondary" role="alert">
-  <h4 class="alert-heading">select a person</h4>
+  <h4 class="alert-heading">{% trans 'select a person' %}</h4>
 </div>
 {% endif %}
 

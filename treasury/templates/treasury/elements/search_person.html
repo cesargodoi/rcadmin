@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="input-group">
   <input class="form-control" 
     id="person" 
@@ -7,6 +9,6 @@
     class="btn btn-outline-success ml-2" 
     type="submit" onclick="checkForm()">
     <i class="fas fa-check"></i>
-    Use
+    {% trans 'Use' %}
   </button>
 </div>

@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator
 
 from ..forms import PaymentForm
@@ -14,7 +16,10 @@ def payments(request):
     queryset = Payment.objects.all()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
-    context = {"object_list": object_list, "title": "Payments"}
+    context = {
+        "object_list": object_list,
+        "title": _("Payments"),
+    }
     return render(request, "treasury/payments.html", context)
 
 
@@ -25,7 +30,7 @@ def payment_create(request):
         form = PaymentForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The Payment has been created!"
+            message = _("The Payment has been created!")
             messages.success(request, message)
             return redirect("payments")
 
@@ -35,7 +40,7 @@ def payment_create(request):
         "form_path": "treasury/forms/payment.html",
         "goback": reverse("payments"),
         "to_create": True,
-        "title": "Create Payment",
+        "title": _("Create Payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -48,7 +53,7 @@ def payment_update(request, pk):
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
             form.save()
-            message = "The Payment has been updated!"
+            message = _("The Payment has been updated!")
             messages.success(request, message)
             return redirect("payments")
 
@@ -57,7 +62,7 @@ def payment_update(request, pk):
         "form_name": "Payment",
         "form_path": "treasury/forms/payment.html",
         "goback": reverse("payments"),
-        "title": "Update Payment",
+        "title": _("Update Payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -69,9 +74,12 @@ def payment_delete(request, pk):
     if request.method == "POST":
         if not payment.order_set.all():
             payment.delete()
-            message = "The Payment has been deleted!"
+            message = _("The Payment has been deleted!")
             messages.success(request, message)
         return redirect("payments")
 
-    context = {"object": payment, "title": "confirm to delete"}
+    context = {
+        "object": payment,
+        "title": _("confirm to delete"),
+    }
     return render(request, "treasury/confirm_delete.html", context)

@@ -1,7 +1,10 @@
-{% extends "base/base.html" %} {% block content %}
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>Payments</h2>
+    <h2>{% trans 'Payments' %}</h2>
   </div>
 </article>
 
@@ -11,13 +14,13 @@
       class="btn btn-light text-primary" 
       href="{% url 'payment_create' %}">
       <i class="fas fa-plus"></i> 
-      Add
+      {% trans 'Add' %}
     </a>
     <a type="button" 
       class="btn btn-light text-info" 
       href="{% url 'home' %}">
       <i class="fas fa-chevron-left"></i> 
-      Go back
+      {% trans 'Go back' %}
     </a>
   </div>
 </div>
@@ -92,7 +95,7 @@
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="alert alert-secondary" role="alert">
-      <h4 class="alert-heading">Payments not found</h4>
+      <h4 class="alert-heading">{% trans 'Payments not found' %}</h4>
     </div>
   </div>
 </article>
