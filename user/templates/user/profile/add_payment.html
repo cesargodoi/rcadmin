@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,20 +9,20 @@
   <button class="btn btn-primary" 
     onclick="checkForm()">
     <i class="fas fa-check"></i> 
-    Add payment
+    {% trans 'Add payment' %}
   </button>
   <a type="button" 
     class="btn btn-light text-info mr-3" 
     href="{% url 'user_new_order' %}">
     <i class="fas fa-chevron-left "></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
 
 <article class="media content-section">
   <div class="media-body">
-    <h4>Add payment</h4>
+    <h4>{% trans 'Add payment' %}</h4>
 
     <form method="POST" enctype="multipart/form-data" id="form">
       {% csrf_token %}

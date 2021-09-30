@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from person.models import Person
 from rcadmin.common import ASPECTS, STATUS, paginator, clear_session
@@ -23,14 +24,14 @@ def membership_insert(request, workgroup_id):
         if request.method == "POST":
             workgroup.members.add(person)
             messages.success(
-                request, "The person has been inserted on workgroup!"
+                request, _("The person has been inserted on workgroup!")
             )
             return redirect("workgroup_detail", pk=workgroup_id)
 
         context = {
             "person": person,
             "insert_to": f"{workgroup.name} {workgroup.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request,
@@ -56,7 +57,7 @@ def membership_insert(request, workgroup_id):
         "aspect_list": ASPECTS,
         "status_list": STATUS,
         "form": MembershipForm(initial={"workgroup": workgroup}),
-        "title": "create membership",
+        "title": _("create membership"),
         "object": workgroup,
         "flag": "membership",
     }
@@ -72,13 +73,13 @@ def membership_update(request, workgroup_id, pk):
         form = MembershipForm(request.POST, instance=membership)
         if form.is_valid():
             form.save()
-            messages.success(request, "The Membership has been updated!")
+            messages.success(request, _("The Membership has been updated!"))
 
         return redirect("workgroup_detail", pk=workgroup_id)
 
     context = {
         "form": MembershipForm(instance=membership),
-        "title": "update membership",
+        "title": _("update membership"),
         "object": membership.workgroup,
     }
     return render(request, "workgroup/membership_update.html", context)
@@ -92,5 +93,8 @@ def membership_delete(request, workgroup_id, pk):
         membership.delete()
         return redirect("workgroup_detail", pk=workgroup_id)
 
-    context = {"object": membership, "title": "confirm to delete"}
+    context = {
+        "object": membership,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)

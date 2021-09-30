@@ -1,5 +1,6 @@
+{% load i18n %}
 
-<h4>Latest payments</h4>
+<h4>{% trans 'Latest payments' %}</h4>
 
 {% if payments %}
 
@@ -11,8 +12,8 @@
     <div class="alert alert-secondary mt-4">
       <small>
         <p>
-          Here showing your last <strong>{{ payments|length }}</strong> payments. &nbsp;
-          To find out more, contact the <strong>{{ object.person.center.name }}</strong> secretariat.
+          {% trans 'Here showing your last' %} <strong>{{ payments|length }}</strong> {% trans 'payments' %}. &nbsp;
+          {% trans 'To find out more, contact the' %} <strong>{{ object.person.center.name }}</strong> {% trans 'secretariat' %}.
         </p>
       </small>
     </div>
@@ -21,7 +22,7 @@
 {% else %}
 
   <div class="alert alert-secondary" role="alert">
-    <h4 class="alert-heading">payments not found</h4>
+    <h4 class="alert-heading">{% trans 'payments not found' %}</h4>
   </div>
 
 {% endif %}

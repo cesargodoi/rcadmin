@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -10,13 +11,13 @@
   <div class="media-body">
 
     {% if tab == "info" %}
-      <h4>Info</h4>
+      <h4>{% trans 'Info' %}</h4>
       {% include "workgroup/member/info.html" %}
     {% elif tab == "frequencies" %}
-      <h4>Frequencies</h4>
+      <h4>{% trans 'Frequencies' %}</h4>
       {% include "workgroup/member/frequencies.html" %}
     {% elif tab == "historic" %}
-      <h4>Historic</h4>
+      <h4>{% trans 'Historic' %}</h4>
       {% include "workgroup/member/historic.html" %}
     {% endif %}
     

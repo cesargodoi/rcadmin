@@ -1,4 +1,6 @@
-<h4>Members</h4>
+{% load i18n %}
+
+<h4>{% trans 'Members' %}</h4>
 
 {% if object_list %}
 
@@ -24,7 +26,7 @@
     <div class="col-sm-3 align-middle">
       {{ obj.person.get_aspect_display }}
       &nbsp;&nbsp;
-      <small>since: <strong>{{ obj.person.aspect_date|date:"d/m/y" }}</strong></small>
+      <small>{% trans 'since' %}: <strong>{{ obj.person.aspect_date|date:"d/m/y" }}</strong></small>
     </div>
 
     <div class="col-sm-2 align-middle">
@@ -53,9 +55,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      choose your search terms
+      {% trans 'choose your search terms' %}
       {% else %}
-      members not found
+      {% trans 'members not found' %}
       {% endif %}
     </h4> 
   </div> 

@@ -83,9 +83,9 @@ def user_historic(request):
 @login_required
 def scan_qrcode_event(request):
     if request.method == "POST":
-        event = get_object_or_404(Event, id=request.POST.get("id"))
+        event = get_object_or_404(Event, id=request.POST.get("qrcode"))
         event.frequencies.add(request.user.person)
-        message = _(f"You are registered for the event: {event}")
+        message = _("You are registered for the event: %s") % (event)
         messages.success(request, message)
         return redirect(reverse("user_frequencies"))
 

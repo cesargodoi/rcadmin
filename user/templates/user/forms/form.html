@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -8,13 +10,13 @@
     class="btn btn-warning" 
     onclick="checkForm();">
     <i class="fas fa-check"></i> 
-    Save
+    {% trans 'Save' %}
   </button>
   <a type="button" 
     class="btn btn-light text-info mr-3" 
     href="{% url 'profile_detail' %}">
     <i class="fas fa-chevron-left"></i> 
-    Go back
+    {% trans 'Go back' %}
   </a>
 </div>
 
@@ -24,7 +26,7 @@
       {% csrf_token %}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">
-          {% if to_create %} Create {% else %} Update {% endif %} Profile
+          {% if to_create %} {% trans 'Create' %} {% else %} {% trans 'Update' %} {% endif %} {% trans 'Profile' %}
         </legend>
         <ul class="nav nav-pills" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
@@ -35,7 +37,7 @@
               role="tab" 
               aria-controls="basic"
               aria-selected="true">
-              Basic
+              {% trans 'Basic' %}
             </a>
           </li>
           <li class="nav-item" role="presentation">
@@ -46,7 +48,7 @@
               role="tab" 
               aria-controls="address"
               aria-selected="false">
-              Address
+              {% trans 'Address' %}
             </a>
           </li>
           <li class="nav-item" role="presentation">
@@ -57,7 +59,7 @@
               role="tab" 
               aria-controls="other"
               aria-selected="false">
-              Others
+              {% trans 'Others' %}
             </a>
           </li>
         </ul>

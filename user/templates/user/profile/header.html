@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <article class="media content-section mb-1">
   <div class="media-body">
     <div class="article-metadata">
@@ -7,13 +9,13 @@
           {% if object.person.aspect != "--" %}
             &nbsp;&nbsp;&nbsp;&nbsp;
             <em>
-              {{ object.person.get_aspect_display }} <strong>in</strong>
+              {{ object.person.get_aspect_display }} <strong>{% trans 'in' %}</strong>
               {{ object.person.aspect_date|date:"d/m/Y" }}
             </em>
           {% endif %}
           {% if object.person.center != request.user.person.center %}
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="badge badge-pill badge-danger">another center - only view</span>
+            <span class="badge badge-pill badge-danger">{% trans 'another center - only view' %}</span>
           {% endif %}
         </div>
         <div class="col text-right">

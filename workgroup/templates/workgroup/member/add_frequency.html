@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,13 +9,13 @@
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'mentoring_member_frequencies' group_pk object.pk %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h4>Insert Frequency</h4>
+    <h4>{% trans 'Insert Frequency' %}</h4>
     <form class="form-control-sm border-top" method="GET">
       {% csrf_token %}
       {% include "base/searchs/event.html" %}

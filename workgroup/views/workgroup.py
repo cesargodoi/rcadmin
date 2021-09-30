@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import WORKGROUP_TYPES, paginator, clear_session
 from base.searchs import search_workgroup
 
@@ -26,7 +28,7 @@ def workgroup_home(request):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("workgroup_home"),
-        "title": "workgroups",
+        "title": _("workgroups"),
         "workgroup_types": WORKGROUP_TYPES,
         "nav": "home",
     }
@@ -49,7 +51,7 @@ def workgroup_detail(request, pk):
     context = {
         "object": obj,
         "object_list": object_list,
-        "title": "workgroup detail",
+        "title": _("workgroup detail"),
         "nav": "detail",
     }
     return render(request, "workgroup/detail.html", context)
@@ -62,7 +64,7 @@ def workgroup_create(request):
         form = WorkgroupForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "The Workgroup has been created!")
+            messages.success(request, _("The Workgroup has been created!"))
         return redirect(reverse("workgroup_home") + "?init=on")
 
     context = {
@@ -70,7 +72,7 @@ def workgroup_create(request):
         "form_name": "Workgroup",
         "form_path": "workgroup/forms/workgroup.html",
         "goback": reverse("workgroup_home"),
-        "title": "create workgroup",
+        "title": _("create workgroup"),
         "to_create": True,
     }
     return render(request, "base/form.html", context)
@@ -84,7 +86,7 @@ def workgroup_update(request, pk):
         form = WorkgroupForm(request.POST, instance=workgroup)
         if form.is_valid():
             form.save()
-            messages.success(request, "The Workgroup has been updated!")
+            messages.success(request, _("The Workgroup has been updated!"))
 
         return redirect("workgroup_detail", pk=pk)
 
@@ -95,7 +97,7 @@ def workgroup_update(request, pk):
         "form_name": "Workgroup",
         "form_path": "workgroup/forms/workgroup.html",
         "goback": reverse("workgroup_detail", args=[pk]),
-        "title": "update workgroup",
+        "title": _("update workgroup"),
         "pk": pk,
     }
     return render(request, "base/form.html", context)
@@ -117,7 +119,7 @@ def workgroup_delete(request, pk):
             m
             for m in workgroup.membership_set.all().order_by("-role_type")[:4]
         ],
-        "title": "confirm to delete",
+        "title": _("confirm to delete"),
     }
     return render(
         request, "workgroup/elements/confirm_to_delete_workgroup.html", context
