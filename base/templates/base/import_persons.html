@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+
 {% load i18n %}
 
 {% load static %}
@@ -53,69 +54,26 @@
 
   {% if report_data %}
 
-  <article class="content-section mb-1">
-    <h4>{% trans 'Summary' %}</h4>
-    <table class="table table-sm table-striped">
-      <tr>
-        <th>{% trans 'center to insert' %}</th>
-        <td>{{ report_data.center }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'file name' %}</th>
-        <td>{{ report_data.file }} &nbsp;&nbsp;
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'importeds' %}</th>
-        <td>{{ report_data.importeds|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'without email' %}</th>
-        <td>{{ report_data.no_email|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'already in db' %}</th>
-        <td>{{ report_data.used_email|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'total' %}</th>
-        <td>{{ report_data.total }} {% trans 'objects' %}</td>
-      </tr>
-    </table>
-
-    <h4>{% trans 'Detail' %}</h4>
-    <table class="table table-sm">
-      <tr>
-        <th>{% trans 'importeds' %}</th>
-        <td>
-          {% for obj in report_data.importeds %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'without email' %}</th>
-        <td>
-          {% for obj in report_data.no_email %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'already in db' %}</th>
-        <td>
-          {% for obj in report_data.used_email %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
-    </table>
+  <article class="content-section p-4">
+    {% for line in report_data %}
+      {% if "*" in line %}
+        <p class="text-monospace"><strong>{{ line }}</strong></p>
+      {% else %}
+      <p class="text-monospace">&nbsp;&nbsp;{{ line }}</p>
+      {% endif %}
+    {% endfor %}
   </article>
 
   {% else %}
 
   <div class="alert alert-info" role="alert">
-    <h4 class="alert-heading">{% trans 'select file (.csv) to import' %}</h4>
+    <h4 class="alert-heading">
+      {% if error %}
+        {{ error }}
+      {% else %}
+        {% trans 'select file (.csv) to import' %}
+      {% endif %}
+    </h4>
   </div>
 
   {% endif %}
@@ -127,10 +85,14 @@
 <script>
   $(document).ready(function(){
     var reportData = '{{ report_data }}';
-    if (!reportData) {
+    var error = '{{ error }}'
+    if (!reportData && !error) {
       $('#modal').modal('show');
     }
   });
 </script>
 
 {% endblock %}
+
+
+
