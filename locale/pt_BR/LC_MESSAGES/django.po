@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 10:58-0300\n"
-"PO-Revision-Date: 2021-10-05 10:58-0306\n"
+"POT-Creation-Date: 2021-10-05 10:59-0300\n"
+"PO-Revision-Date: 2021-10-05 10:59-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -250,7 +250,6 @@ msgid "Banks or Flags"
 msgstr "Bancos e Cartões"
 
 #: base/templates/base/elements/menu_admin.html:13
-#| msgid "Import persons"
 msgid "Import persons from (.csv)"
 msgstr "Importar pessoas de"
 
@@ -1156,6 +1155,11 @@ msgstr "Buscadores"
 #: publicwork/templates/publicwork/seeker/seekers.html:99
 msgid "seekers not found"
 msgstr "buscadores não encontrados"
+
+#: publicwork/templates/publicwork/groups/select_lecture.html:3
+#| msgid "Select an event"
+msgid "Select a lecture"
+msgstr "selecionar um evento"
 
 #: publicwork/templates/publicwork/groups/who_participated.html:3
 #: publicwork/templates/publicwork/lecture/navbar.html:7

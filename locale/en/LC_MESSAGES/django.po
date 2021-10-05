@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 10:58-0300\n"
+"POT-Creation-Date: 2021-10-05 10:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1144,6 +1144,10 @@ msgstr ""
 #: publicwork/templates/publicwork/groups/seekers.html:112
 #: publicwork/templates/publicwork/seeker/seekers.html:99
 msgid "seekers not found"
+msgstr ""
+
+#: publicwork/templates/publicwork/groups/select_lecture.html:3
+msgid "Select a lecture"
 msgstr ""
 
 #: publicwork/templates/publicwork/groups/who_participated.html:3
