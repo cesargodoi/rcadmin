@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 15:55-0300\n"
-"PO-Revision-Date: 2021-09-30 15:53-0306\n"
+"POT-Creation-Date: 2021-10-05 10:55-0300\n"
+"PO-Revision-Date: 2021-10-05 10:44-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1108,7 +1108,7 @@ msgstr "confirme para importar"
 #: publicwork/templates/publicwork/groups/actions.html:11
 #: publicwork/templates/publicwork/insert_yourself/form.html:69
 msgid "Register"
-msgstr "Registro"
+msgstr "Registrar"
 
 #: publicwork/templates/publicwork/groups/add_member.html:3
 msgid "Add Member"
@@ -1191,6 +1191,12 @@ msgstr "Buscadores"
 #: publicwork/templates/publicwork/seeker/seekers.html:99
 msgid "seekers not found"
 msgstr "buscadores não encontrados"
+
+#: publicwork/templates/publicwork/groups/who_participated.html:3
+#: publicwork/templates/publicwork/lecture/navbar.html:7
+#: publicwork/templates/publicwork/navbar.html:58
+msgid "Lecture"
+msgstr "Palestra"
 
 #: publicwork/templates/publicwork/groups/who_participated.html:16
 #: workgroup/templates/workgroup/mentoring/who_participated.html:16
@@ -1458,11 +1464,6 @@ msgstr "Eu concordo"
 #: publicwork/templates/publicwork/lecture/lectures.html:88
 msgid "lectures not found"
 msgstr "palestras não encontradas"
-
-#: publicwork/templates/publicwork/lecture/navbar.html:7
-#: publicwork/templates/publicwork/navbar.html:58
-msgid "Lecture"
-msgstr "Palestra"
 
 #: publicwork/templates/publicwork/lecture/navbar.html:20
 #: publicwork/templates/publicwork/listener/listeners.html:3

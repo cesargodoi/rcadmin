@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 15:55-0300\n"
+"POT-Creation-Date: 2021-10-05 10:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1187,6 +1187,12 @@ msgstr ""
 msgid "seekers not found"
 msgstr ""
 
+#: publicwork/templates/publicwork/groups/who_participated.html:3
+#: publicwork/templates/publicwork/lecture/navbar.html:7
+#: publicwork/templates/publicwork/navbar.html:58
+msgid "Lecture"
+msgstr ""
+
 #: publicwork/templates/publicwork/groups/who_participated.html:16
 #: workgroup/templates/workgroup/mentoring/who_participated.html:16
 msgid "Who participated?"
@@ -1424,11 +1430,6 @@ msgstr ""
 
 #: publicwork/templates/publicwork/lecture/lectures.html:88
 msgid "lectures not found"
-msgstr ""
-
-#: publicwork/templates/publicwork/lecture/navbar.html:7
-#: publicwork/templates/publicwork/navbar.html:58
-msgid "Lecture"
 msgstr ""
 
 #: publicwork/templates/publicwork/lecture/navbar.html:20
