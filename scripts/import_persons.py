@@ -1,9 +1,12 @@
 import csv
+import os
 
-from django.utils import timezone
+from datetime import datetime
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import Group
+from django.conf import settings
 
 from center.models import Center
 from user.models import User
@@ -22,20 +25,24 @@ def run(*args):
     # get args
     center_name, file_name = args[0], args[1]
     # get center and file path
-    start = timezone.now()
+    start = datetime.now()
     center = Center.objects.filter(name__icontains=center_name).first()
-    file_path = f"../imports/{file_name}.csv"
-    report_path = f"../imports/{file_name}_report.txt"
+    imports_dir = f"{os.path.dirname(settings.BASE_DIR)}/imports"
+    file_path = f"{imports_dir}/{file_name}"
+    report_path = f"{imports_dir}/{file_name.split('.')[0]}__report.txt"
     user = center.made_by
     user_group = Group.objects.get(name="user")
+
     # lists to report
-    importeds, not_email, used_email = [], [], []
+    total, importeds, not_email, used_email = 0, [], [], []
+
     # read file as a dict
     with open(file_path, newline="") as csvfile:
         _dict = csv.DictReader(csvfile)
         for person in _dict:
+            total += 1
             if not person.get("email"):
-                not_email.append(f"{person['name']}")
+                not_email.append(f"{short_name(person['name'])}")
             else:
                 password = BaseUserManager().make_random_password()
 
@@ -48,7 +55,10 @@ def run(*args):
                     )
                     _user = User.objects.create(**new_user)
                 except Exception:
-                    used_email.append(f"{person['name']} ({person['email']})")
+                    used_email.append(
+                        f"{short_name(person['name'])} ({person['email']})"
+                    )
+
                 if _user:
                     user_group.user_set.add(_user)
 
@@ -131,7 +141,7 @@ def run(*args):
                                 "person": _person,
                                 "occurrence": aspect["aspect"],
                                 "date": aspect["date"],
-                                "description": f"on import: {timezone.now()}",
+                                "description": f"on import: {datetime.now()}",
                                 "made_by": user,
                             }
                             Historic.objects.create(**new_aspect)
@@ -148,7 +158,7 @@ def run(*args):
                             "person": _person,
                             "occurrence": person["restriction"],
                             "date": person["restriction_date"],
-                            "description": f"on import in: {timezone.now()}",
+                            "description": f"on import in: {datetime.now()}",
                             "made_by": user,
                         }
                         Historic.objects.create(**new_status)
@@ -160,26 +170,31 @@ def run(*args):
 
     # make report
     with open(report_path, "w") as report:
-        report.write("#######  IMPORT PERSONS  #######")
-        report.write(f"\n\ncenter:     {center}")
-        report.write(f"\nfile:       {file_name}.csv")
-        report.write(f"\ncreated_by: {user}")
-        report.write(f"\nstart:      {start}")
-        report.write(f"\nend:        {timezone.now()}")
-        report.write("\n\n#######  SUMMARY  #######")
-        report.write(f"\n\nIMPORTEDS:  {len(importeds)}")
-        report.write(f"\nNOT EMAIL:  {len(not_email)}")
-        report.write(f"\nUSED EMAIL: {len(used_email)}")
-        report.write("\n\n#######  DETAIL  #######")
+        report.write("  IMPORT PERSONS  ".center(80, "*"))
+        report.write(f"\n\ncenter:      {center}")
+        report.write(f"\nfile:        {file_name}")
+        report.write(f"\nimported_by: {user}")
+        report.write(
+            f"\nimported_on: {start.strftime('%Y-%m-%d %H:%M:%S.%f')}"
+        )
+        report.write(f"\ntime:        {datetime.now() - start}")
+        report.write("\n\n")
+        report.write("  SUMMARY  ".center(80, "*"))
+        report.write(f"\n\n- ENTRIES:     {total}")
+        report.write(f"\n- IMPORTEDS:   {len(importeds)}")
+        report.write(f"\n- NOT_EMAIL:   {len(not_email)}")
+        report.write(f"\n- USED_EMAIL:  {len(used_email)}")
+        report.write("\n\n")
+        report.write("  DETAIL  ".center(80, "*"))
         if importeds:
             report.write("\n\nIMPORTEDS:")
             for n, item in enumerate(importeds):
                 report.write(f"\n  {n + 1} - {item}")
         if not_email:
-            report.write("\n\nNOT EMAIL:")
+            report.write("\n\nNOT_EMAIL:")
             for n, item in enumerate(not_email):
                 report.write(f"\n  {n + 1} - {item}")
         if used_email:
-            report.write("\n\nUSED EMAIL:")
+            report.write("\n\nUSED_EMAIL:")
             for n, item in enumerate(used_email):
                 report.write(f"\n  {n + 1} - {item}")

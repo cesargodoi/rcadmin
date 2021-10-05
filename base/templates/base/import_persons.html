@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+
 {% load i18n %}
 
 {% load static %}
@@ -36,13 +37,6 @@
         {% trans 'New import' %}
       </a>
       <a type="button" 
-        class="btn btn-light text-warning controls-report" 
-        href="#"
-        onclick="window.print()">
-        <i class="fas fa-print"></i> 
-        {% trans 'To print' %}
-      </a>
-      <a type="button" 
         class="btn btn-light text-info controls-report" 
         href="{% url 'home' %}">
         <i class="fas fa-chevron-left "></i> 
@@ -51,74 +45,113 @@
     </div>
   </div>
 
-  {% if report_data %}
+  {% if entries %}
 
-  <article class="content-section mb-1">
-    <h4>{% trans 'Summary' %}</h4>
-    <table class="table table-sm table-striped">
-      <tr>
-        <th>{% trans 'center to insert' %}</th>
-        <td>{{ report_data.center }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'file name' %}</th>
-        <td>{{ report_data.file }} &nbsp;&nbsp;
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'importeds' %}</th>
-        <td>{{ report_data.importeds|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'without email' %}</th>
-        <td>{{ report_data.no_email|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'already in db' %}</th>
-        <td>{{ report_data.used_email|length }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'total' %}</th>
-        <td>{{ report_data.total }} {% trans 'objects' %}</td>
-      </tr>
-    </table>
-
-    <h4>{% trans 'Detail' %}</h4>
-    <table class="table table-sm">
-      <tr>
-        <th>{% trans 'importeds' %}</th>
-        <td>
-          {% for obj in report_data.importeds %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'without email' %}</th>
-        <td>
-          {% for obj in report_data.no_email %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'already in db' %}</th>
-        <td>
-          {% for obj in report_data.used_email %}
-          {{ obj }} &nbsp;&nbsp;
-          {% endfor %}
-        </td>
-      </tr>
+  <article class="content-section p-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Center</th>
+          <th scope="col" colspan="2">File</th>
+          <th scope="col">Imported by</th>
+          <th scope="col">Imported on</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in entries %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ entry.center }}</td>
+          <td colspan="2">
+            {{ entry.file }} 
+            &nbsp;&nbsp;<span class="badge badge-pill badge-secondary">{{ entry.entries }} entries</span>
+          </td>
+          <td>{{ entry.imported_by }}</td>
+          <td>{{ entry.imported_on }}</td>
+        </tr>
+        <tr class="bg-light">
+          <th scope="row"></th>
+          <td colspan="4">
+            <div class="row">
+              <div class="col"><strong>Importeds:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.importeds }}</span></div>
+              <div class="col"><strong>Not email:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.not_email }}</span></div>
+              <div class="col"><strong>Used email:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.used_email }}</span></div>
+            </div>
+          </td>
+          <td class="text-right">
+            <a type="button" href="{% url 'import_persons' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
+              <i class="fas fa-eye"></i> 
+              Details
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
   </article>
 
   {% else %}
 
   <div class="alert alert-info" role="alert">
-    <h4 class="alert-heading">{% trans 'select file (.csv) to import' %}</h4>
+    <h4 class="alert-heading">
+      {% trans 'select file (.csv) to import' %}
+    </h4>
   </div>
 
   {% endif %}
+
+  <!-- show report_data -->
+  <div class="modal fade" id="modalReport" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" onblur="clearUrl()">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-secondary" id="modalLabel">Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearUrl()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height: 70vh; overflow: auto;">
+          {% for line in report_data %}
+            {% if "*" in line %}
+              <p class="text-monospace"><strong>{{ line }}</strong></p>
+            {% else %}
+              <p class="text-monospace">&nbsp;&nbsp;{{ line }}</p>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearUrl()">
+            <i class="fas fa-times"></i>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- show error -->
+  <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" onblur="clearUrl()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-secondary" id="modalLabel">Error</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearUrl()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-justify text-monospace">
+          {{ error }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearUrl()">
+            <i class="fas fa-times"></i>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 
@@ -126,11 +159,27 @@
 
 <script>
   $(document).ready(function(){
-    var reportData = '{{ report_data }}';
-    if (!reportData) {
+    var showReport = '{{ show_report }}';
+    var error = '{{ error }}';
+    var entries = '{{ entries }}'
+    if (showReport) {
+      $('#modalReport').modal('show');
+    }
+    if (error) {
+      $('#modalError').modal('show');
+    }
+    if (!entries) {
       $('#modal').modal('show');
     }
   });
+
+  function clearUrl() {
+    let url = window.location.href 
+    window.location.href = url.split("?")[0]
+  }
 </script>
 
 {% endblock %}
+
+
+
