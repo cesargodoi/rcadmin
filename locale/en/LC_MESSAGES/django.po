@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 10:55-0300\n"
+"POT-Creation-Date: 2021-10-05 10:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgid "Action not allowed!"
 msgstr ""
 
 #: base/templates/base/action_not_allowed.html:11
-#: base/templates/base/import_persons.html:49
+#: base/templates/base/import_persons.html:43
 #: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:23
@@ -245,6 +245,10 @@ msgstr ""
 msgid "Banks or Flags"
 msgstr ""
 
+#: base/templates/base/elements/menu_admin.html:13
+msgid "Import persons from (.csv)"
+msgstr ""
+
 #: base/templates/base/elements/navbar.html:31
 #: user/templates/user/forms/form.html:29
 #: user/templates/user/profile/detail.html:13
@@ -292,56 +296,11 @@ msgstr ""
 msgid "Welcome to"
 msgstr ""
 
-#: base/templates/base/import_persons.html:36
+#: base/templates/base/import_persons.html:37
 msgid "New import"
 msgstr ""
 
-#: base/templates/base/import_persons.html:43
-#: publicwork/templates/publicwork/reports/navbar.html:25
-msgid "To print"
-msgstr ""
-
-#: base/templates/base/import_persons.html:57
-#: treasury/templates/treasury/elements/payments_summary.html:4
-msgid "Summary"
-msgstr ""
-
-#: base/templates/base/import_persons.html:60
-msgid "center to insert"
-msgstr ""
-
-#: base/templates/base/import_persons.html:64
-msgid "file name"
-msgstr ""
-
-#: base/templates/base/import_persons.html:69
-#: base/templates/base/import_persons.html:89
-msgid "importeds"
-msgstr ""
-
-#: base/templates/base/import_persons.html:73
-#: base/templates/base/import_persons.html:97
-msgid "without email"
-msgstr ""
-
-#: base/templates/base/import_persons.html:77
-#: base/templates/base/import_persons.html:105
-msgid "already in db"
-msgstr ""
-
-#: base/templates/base/import_persons.html:81
-msgid "total"
-msgstr ""
-
-#: base/templates/base/import_persons.html:82
-msgid "objects"
-msgstr ""
-
-#: base/templates/base/import_persons.html:86
-msgid "Detail"
-msgstr ""
-
-#: base/templates/base/import_persons.html:118
+#: base/templates/base/import_persons.html:98
 msgid "select file (.csv) to import"
 msgstr ""
 
@@ -454,7 +413,7 @@ msgstr ""
 msgid "aspect"
 msgstr ""
 
-#: base/views/tools.py:169 base/views/tools.py:177
+#: base/views/tools.py:23
 msgid "import persons"
 msgstr ""
 
@@ -1463,6 +1422,10 @@ msgstr ""
 msgid "New search"
 msgstr ""
 
+#: publicwork/templates/publicwork/reports/navbar.html:25
+msgid "To print"
+msgstr ""
+
 #: publicwork/templates/publicwork/reports/navbar.html:29
 msgid "Get file"
 msgstr ""
@@ -1916,6 +1879,10 @@ msgstr ""
 #: treasury/templates/treasury/order_detail.html:97
 #: user/templates/user/profile/new_order.html:50
 msgid "TOTAL"
+msgstr ""
+
+#: treasury/templates/treasury/elements/payments_summary.html:4
+msgid "Summary"
 msgstr ""
 
 #: treasury/templates/treasury/elements/payments_summary.html:7
