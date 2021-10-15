@@ -28,7 +28,7 @@ class Person(models.Model):
     name = models.CharField(max_length=80)
     name_sa = models.CharField(max_length=80, editable=False)
     short_name = models.CharField(max_length=40, null=True, blank=True)
-    id_card = models.CharField("id card", max_length=20, blank=True)
+    id_card = models.CharField("id card", max_length=30, blank=True)
     birth = models.DateField(null=True, blank=True)
     person_type = models.CharField(
         "type", max_length=3, choices=PERSON_TYPES, default="PUP"

@@ -17,6 +17,7 @@ jupyter/
 *.sqlite3
 .env
 *.ipynb
+.DS_Store
 
 geckodriver.log
 

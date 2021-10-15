@@ -9,5 +9,6 @@ urlpatterns = [
         name="change_color_scheme",
     ),
     path("import-persons/", tools.import_persons, name="import_persons"),
+    path("download-csv/<str:file>", tools.download_csv, name="download_csv"),
     path("clear-session/", base.clear_session, name="clear_session"),
 ]

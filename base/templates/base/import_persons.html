@@ -48,47 +48,54 @@
   {% if entries %}
 
   <article class="content-section p-4">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Center</th>
-          <th scope="col" colspan="2">File</th>
-          <th scope="col">Imported by</th>
-          <th scope="col">Imported on</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for entry in entries %}
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>{{ entry.center }}</td>
-          <td colspan="2">
-            {{ entry.file }} 
-            &nbsp;&nbsp;<span class="badge badge-pill badge-secondary">{{ entry.entries }} entries</span>
-          </td>
-          <td>{{ entry.imported_by }}</td>
-          <td>{{ entry.imported_on }}</td>
-        </tr>
-        <tr class="bg-light">
-          <th scope="row"></th>
-          <td colspan="4">
-            <div class="row">
-              <div class="col"><strong>Importeds:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.importeds }}</span></div>
-              <div class="col"><strong>Not email:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.not_email }}</span></div>
-              <div class="col"><strong>Used email:</strong> &nbsp;&nbsp;<span class="h4">{{ entry.used_email }}</span></div>
-            </div>
-          </td>
-          <td class="text-right">
-            <a type="button" href="{% url 'import_persons' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
-              <i class="fas fa-eye"></i> 
-              Details
+    <div class="row mb-2">
+      <div class="col-1 font-weight-bold">#</div>
+      <div class="col-2 font-weight-bold">Center</div>
+      <div class="col-3 font-weight-bold">File</div>
+      <div class="col-1 text-right font-weight-bold">Entries</div>
+      <div class="col-3 text-right font-weight-bold">Imported by</div>
+      <div class="col-2 text-right font-weight-bold">Imported on</div>
+    </div>
+
+    {% for entry in entries %}
+      <div class="row border-top pt-2">
+        <div class="col-1 h4">{{ forloop.counter }}</div>
+        <div class="col-2">{{ entry.center }}</div>
+        <div class="col-3">{{ entry.file }}</div>
+        <div class="col-1 text-right font-weight-bold">{{ entry.entries }}</div>
+        <div class="col-3 text-right">{{ entry.imported_by }}</div>
+        <div class="col-2 text-right">{{ entry.imported_on|date:"d/m/y H:i:s" }}</div>
+      </div>
+      <div class="row mb-4 text-right text-secondary">
+        <div class="col-2 font-weight-bold">Importeds:</div>
+        <div class="col-1 bg-light font-weight-bold">{{ entry.importeds }}</div>
+        <div class="col-2 font-weight-bold">Without email:</div>
+        <div class="col-1 bg-light font-weight-bold">
+          {{ entry.without_email }}
+          {% if entry.without_email %}
+            <a href="{% url 'download_csv' entry.file %}?type=we">
+              <i class="fas fa-file-download"></i> 
             </a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+          {% endif %}
+        </div>
+        <div class="col-2 font-weight-bold">Used email:</div>
+        <div class="col-1 bg-light font-weight-bold">
+          {{ entry.used_email }}
+          {% if entry.used_email %}
+            <a href="{% url 'download_csv' entry.file %}?type=ue">
+              <i class="fas fa-file-download"></i> 
+            </a>
+          {% endif %}
+        </div>
+        <div class="col-3">
+          <a type="button" href="{% url 'import_persons' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
+            <i class="fas fa-eye"></i> 
+            Details
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+
   </article>
 
   {% else %}
@@ -111,7 +118,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" style="height: 70vh; overflow: auto;">
+        <div class="modal-body text-secondary" style="height: 70vh; overflow: auto;">
           {% for line in report_data %}
             {% if "*" in line %}
               <p class="text-monospace"><strong>{{ line }}</strong></p>

@@ -164,6 +164,49 @@ def short_name(name):
     return " ".join(to_join)
 
 
+def cpf_validation(num):
+    cpf = "".join(re.findall(r"\d", num))
+
+    if len(cpf) != 11:
+        return False
+    if cpf in (
+        "00000000000",
+        "11111111111",
+        "22222222222",
+        "33333333333",
+        "44444444444",
+        "55555555555",
+        "66666666666",
+        "77777777777",
+        "88888888888",
+        "99999999999",
+    ):
+        return False
+
+    weight1 = [10, 9, 8, 7, 6, 5, 4, 3, 2]
+    digit1 = 11 - (
+        sum([int(d) * weight1[n] for n, d in enumerate(cpf[:9])]) % 11
+    )
+    if digit1 > 9:
+        digit1 = 0
+
+    if cpf[9:10] != f"{digit1}":
+        return False
+
+    weight2 = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
+    digit2 = 11 - (
+        sum([int(d) * weight2[n] for n, d in enumerate(cpf[:9] + str(digit1))])
+        % 11
+    )
+    if digit2 > 9:
+        digit2 = 0
+
+    if cpf[9:] != f"{digit1}{digit2}":
+        return False
+
+    return True
+
+
 def cpf_format(num):
     cpf = "".join(re.findall(r"\d", num))
     return f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"

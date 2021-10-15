@@ -986,7 +986,7 @@ msgstr "anos"
 
 #: person/templates/person/info.html:79
 msgid "id card"
-msgstr "RG."
+msgstr "documento"
 
 #: person/templates/person/info.html:89
 #: publicwork/templates/publicwork/seeker/info.html:34
