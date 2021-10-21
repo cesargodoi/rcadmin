@@ -15,7 +15,19 @@
         </div>
         <div class="modal-body">
           {{ form|crispy }}
-          <input type="file" name="import_file" id="import_file" />
+          <div class="form-group">
+            <label for="fields">Colunas</label>
+            <input type="text" class="form-control" name="columns" id="columns" aria-describedby="textHelp">
+            <small id="textHelp" class="form-text text-muted">Exemplo: <em>email, birth, A1</em> ...</small>
+          </div>
+          <div class="form-group">
+            <label for="fields">Colunas de Datas</label>
+            <input type="text" class="form-control" name="dates" id="dates" aria-describedby="textHelp">
+            <small id="textHelp" class="form-text text-muted">exemplo: <em>birth, A1</em> ...</small>
+          </div>
+          <div class="form-group">
+            <input type="file" name="import_file" id="import_file" />
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>

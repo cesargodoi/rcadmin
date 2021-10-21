@@ -10,5 +10,10 @@ urlpatterns = [
     ),
     path("import-persons/", tools.import_persons, name="import_persons"),
     path("download-csv/<str:file>", tools.download_csv, name="download_csv"),
+    path(
+        "import-fields-to-persons/",
+        tools.import_fields_to_persons,
+        name="import_fields_to_persons",
+    ),
     path("clear-session/", base.clear_session, name="clear_session"),
 ]

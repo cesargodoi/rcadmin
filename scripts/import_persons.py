@@ -86,10 +86,10 @@ def run(*args):
                 # updating the user.person
                 _person = _user.person
                 _person.center = center
-                _person.reg = person["reg"] or ""
+                _person.reg = person["reg"] if person["reg"] != "0" else ""
                 _person.name = person["name"]
                 _person.short_name = short_name(person["name"])
-                _person.birth = person["birthday"]
+                _person.birth = person["birth"]
                 _person.observations = f"{person['ps']}" or ""
                 _person.made_by = user
 
