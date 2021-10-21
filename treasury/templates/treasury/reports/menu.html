@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-    aria-haspopup="true" aria-expanded="false">Reports</a>
+    aria-haspopup="true" aria-expanded="false">{% trans 'Reports' %}</a>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="{% url 'cash_balance' %}">Cash balance</a>
-    <a class="dropdown-item" href="{% url 'period_payments' %}">Period payments</a>
-    <a class="dropdown-item" href="{% url 'payments_by_person' %}">Payment by person</a>
+    <a class="dropdown-item" href="{% url 'cash_balance' %}">{% trans 'Cash balance' %}</a>
+    <a class="dropdown-item" href="{% url 'period_payments' %}">{% trans 'Period payments' %}</a>
+    <a class="dropdown-item" href="{% url 'payments_by_person' %}">{% trans 'Payment by person' %}</a>
   </div>
 </li>

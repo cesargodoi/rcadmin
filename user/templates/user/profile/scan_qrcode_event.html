@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -6,7 +7,7 @@
   <a class="btn btn-light text-info mr-3" 
     href="{% url 'user_frequencies' %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
@@ -17,12 +18,12 @@
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Scan the Event QR-CODE</legend>
+            <legend class="border-bottom mb-4">{% trans 'Scan the Event QR-CODE' %}</legend>
             <div class="input-group">
               <input class="form-control" type="text" name="qrcode" id="qrcode" required>
               <span class="input-group-append">
                 <button class="btn btn btn-outline-success" type="submit">
-                  <i class="fas fa-signature"></i> Sign in</button>
+                  <i class="fas fa-signature"></i> {% trans 'Sign in' %}</button>
               </span>
             </div>
           </fieldset>

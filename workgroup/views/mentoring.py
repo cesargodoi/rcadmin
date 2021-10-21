@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import ACTIVITY_TYPES, paginator, clear_session
 from base.searchs import search_event
 
@@ -35,7 +37,7 @@ def mentoring_home(request):
 
     context = {
         "object_list": object_list,
-        "title": "mentoring",
+        "title": _("mentoring"),
         "nav": "home",
     }
     return render(request, "workgroup/mentoring/home.html", context)
@@ -66,7 +68,7 @@ def mentoring_group_detail(request, pk):
         "object": workgroup,
         "object_list": object_list,
         "mentors": mentors,
-        "title": "workgroup detail",
+        "title": _("workgroup detail"),
         "nav": "detail",
         "tab": "members",
         "goback": reverse("mentoring_home"),
@@ -103,7 +105,7 @@ def mentoring_group_frequencies(request, pk):
         "object": workgroup,
         "object_list": sorted(object_list, key=lambda x: x.rank, reverse=True),
         "mentors": mentors,
-        "title": "workgroup detail",
+        "title": _("workgroup detail"),
         "nav": "detail",
         "tab": "frequencies",
         "goback": reverse("mentoring_home"),
@@ -118,7 +120,7 @@ def mentoring_member_detail(request, group_pk, person_pk):
     age = (date.today() - obj.birth).days // 365
     context = {
         "object": obj,
-        "title": "member detail",
+        "title": _("member detail"),
         "nav": "detail",
         "tab": "info",
         "age": age,
@@ -137,7 +139,7 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
     ranking = sum([f.ranking for f in object_list])
     context = {
         "object": obj,
-        "title": "member detail | frequencies",
+        "title": _("member detail | frequencies"),
         "object_list": paginator(object_list, page=page),
         "nav": "detail",
         "tab": "frequencies",
@@ -156,7 +158,7 @@ def mentoring_member_historic(request, group_pk, person_pk):
     object_list = obj.historic_set.all().order_by("-date")
     context = {
         "object": obj,
-        "title": "member detail | historic",
+        "title": _("member detail | historic"),
         "object_list": paginator(object_list, page=page),
         "nav": "detail",
         "tab": "historic",
@@ -183,7 +185,7 @@ def membership_add_frequency(request, group_pk, person_pk):
                 ranking=request.POST.get("ranking"),
                 observations=request.POST.get("observations"),
             )
-            messages.success(request, "The frequency has been inserted!")
+            messages.success(request, _("The frequency has been inserted!"))
             return redirect(
                 "mentoring_member_frequencies",
                 group_pk=group_pk,
@@ -194,7 +196,7 @@ def membership_add_frequency(request, group_pk, person_pk):
             "object": person,
             "form": MentoringFrequencyForm,
             "insert_to": f"{event.activity.name} {event.center}",
-            "title": "confirm to insert",
+            "title": _("confirm to insert"),
         }
         return render(
             request, "workgroup/elements/confirm_add_frequency.html", context
@@ -215,7 +217,7 @@ def membership_add_frequency(request, group_pk, person_pk):
         "object": person,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "title": "insert frequencies",
+        "title": _("insert frequencies"),
         "type_list": ACTIVITY_TYPES,
         "pre_freqs": [obj.event.pk for obj in person.frequency_set.all()],
         "group_pk": group_pk,
@@ -235,7 +237,7 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
         )
         frequency.observations = request.POST["observations"]
         frequency.save()
-        messages.success(request, "The frequency has been updated!")
+        messages.success(request, _("The frequency has been updated!"))
         return redirect(
             "mentoring_member_frequencies",
             group_pk=group_pk,
@@ -246,7 +248,7 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
         "object": person,
         "event": frequency.event,
         "form": MentoringFrequencyForm(instance=frequency),
-        "title": "update frequency | person side",
+        "title": _("update frequency | person side"),
         "goback": reverse(
             "mentoring_member_frequencies", args=[group_pk, person_pk]
         ),
@@ -261,14 +263,17 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 
     if request.method == "POST":
         frequency.delete()
-        messages.success(request, "The frequency has been removed!")
+        messages.success(request, _("The frequency has been removed!"))
         return redirect(
             "mentoring_member_frequencies",
             group_pk=group_pk,
             person_pk=person_pk,
         )
 
-    context = {"object": frequency, "title": "confirm to delete"}
+    context = {
+        "object": frequency,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)
 
 
@@ -327,7 +332,7 @@ def mentoring_add_frequencies(request, group_pk):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_detail", args=[group_pk]),
-        "title": "workgroup add members",
+        "title": _("workgroup add members"),
         "nav": "detail",
         "tab": "add_frequencies",
         "goback": reverse("mentoring_group_detail", args=[group_pk]),

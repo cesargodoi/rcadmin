@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator
 
 from ..forms import FormOfPaymentForm
@@ -14,7 +16,10 @@ def forms_of_payments(request):
     queryset = FormOfPayment.objects.all()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
-    context = {"object_list": object_list, "title": "Forms of Payables"}
+    context = {
+        "object_list": object_list,
+        "title": _("Forms of Payables"),
+    }
     return render(request, "treasury/forms_of_payments.html", context)
 
 
@@ -25,7 +30,7 @@ def form_of_payment_create(request):
         form = FormOfPaymentForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The Form of Payment has been created!"
+            message = _("The Form of Payment has been created!")
             messages.success(request, message)
             return redirect("forms_of_payments")
 
@@ -35,7 +40,7 @@ def form_of_payment_create(request):
         "form_path": "treasury/forms/form_of_payment.html",
         "goback": reverse("forms_of_payments"),
         "to_create": True,
-        "title": "Create Form of Payment",
+        "title": _("Create Form of Payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -48,7 +53,7 @@ def form_of_payment_update(request, pk):
         form = FormOfPaymentForm(request.POST, instance=form_of_payment)
         if form.is_valid():
             form.save()
-            message = "The Form of Payment has been updated!"
+            message = _("The Form of Payment has been updated!")
             messages.success(request, message)
             return redirect("forms_of_payments")
 
@@ -57,7 +62,7 @@ def form_of_payment_update(request, pk):
         "form_name": "Paytype",
         "form_path": "treasury/forms/form_of_payment.html",
         "goback": reverse("forms_of_payments"),
-        "title": "Update Form of Payment",
+        "title": _("Update Form of Payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -69,9 +74,12 @@ def form_of_payment_delete(request, pk):
     if request.method == "POST":
         if not form_of_payment.order_set.all():
             form_of_payment.delete()
-            message = "The Form of Payment has been deleted!"
+            message = _("The Form of Payment has been deleted!")
             messages.success(request, message)
         return redirect("forms_of_payments")
 
-    context = {"object": form_of_payment, "title": "confirm to delete"}
+    context = {
+        "object": form_of_payment,
+        "title": _("confirm to delete"),
+    }
     return render(request, "treasury/confirm_delete.html", context)

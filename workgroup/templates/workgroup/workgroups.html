@@ -1,4 +1,6 @@
-<h4>Workgroups</h4>
+{% load i18n %}
+
+<h4>{% trans 'Workgroups' %}</h4>
 
 {% if object_list %}
 
@@ -61,9 +63,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      choose your search terms
+      {% trans 'choose your search terms' %}
       {% else %}
-      groups not found
+      {% trans 'groups not found' %}
       {% endif %}
     </h4> 
   </div> 

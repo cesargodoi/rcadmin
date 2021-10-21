@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -8,28 +10,28 @@
   <a class="btn btn-light" 
     href="{% url 'order_update' request.session.order.id %}">
     <i class="fas fa-edit"></i> 
-    Edit
+    {% trans 'Edit' %}
   </a>
   {% endif %}
   <a class="btn btn-light" 
     href="{% url 'order_delete' request.session.order.id %}">
     <i class="fas fa-trash-alt"></i> 
-    Delete
+    {% trans 'Delete' %}
   </a>
   <a type="button" 
     class="btn btn-light mr-3" 
     href="{% url 'orders' %}?d30=on">
     <i class="fas fa-chevron-left "></i> 
-    Go back
+    {% trans 'Go back' %}
   </a>
 </div>
 
 <article class="media content-section mb-1">
   <div class="media-body">
     <h2>
-      Order Detail &nbsp;
+      {% trans 'Order Detail' %} &nbsp;
       {% if request.session.order.self_payed %}
-      <small class="text-muted"><em>made by the pupil</em></small>
+      <small class="text-muted"><em>{% trans 'made by the pupil' %}</em></small>
       {% endif %}
     </h2>
   </div>
@@ -40,18 +42,18 @@
     <div class="row border-bottom mb-4">
       <div class="col-sm-6">
         <h5>
-          <small><em>person:</em></small>
+          <small><em>{% trans 'person' %}:</em></small>
           {{ request.session.order.person.name }}
         </h5>
       </div>
       <div class="col-sm-3">
         <h5>
-          <small><em>date:</em></small>
+          <small><em>{% trans 'date' %}:</em></small>
           {{ request.session.order.created_on }}
         </h5>
       </div>
       <div class="col-sm-3 text-right">
-        <h5><small><em>status:</em></small>
+        <h5><small><em>{% trans 'status' %}:</em></small>
           <span class="badge badge-pill badge-{% if request.session.order.status.cod == 'PND' %}warning
                         {% elif request.session.order.status.cod == 'CCL' %}danger
                         {% else %}success{% endif %}">
@@ -65,7 +67,7 @@
       <div class="col-sm-6">
         <div class="card text-white bg-steel mb-4">
           <div class="card-header">
-            <h5 class="text-white">Payments</h5>
+            <h5 class="text-white">{% trans 'Payments' %}</h5>
           </div>
           <div class="card-body">
             {% for object in request.session.order.payments %}
@@ -74,7 +76,7 @@
             <table class="table table-sm mt-2">
               <tr>
                 <th></th>
-                <th class="text-right">TOTAL:</th>
+                <th class="text-right">{% trans 'TOTAL' %}:</th>
                 <th class="text-right" id="totPayment" width="60px">
                   {{ request.session.order.total_payments|floatformat:2 }}
                 </th>
@@ -84,7 +86,7 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <h5>Forms of Payment</h5>
+        <h5>{% trans 'Forms of Payment' %}</h5>
 
         {% for object in request.session.order.payforms %}
         {% include "treasury/elements/payform.html" %}
@@ -92,7 +94,7 @@
 
         <table class="table table-hover table-sm mt-2">
           <tr>
-            <th class="text-right">TOTAL:</th>
+            <th class="text-right">{% trans 'TOTAL' %}:</th>
             <th class="text-right" id="totPayForm" width="60px">
               {{ request.session.order.total_payforms|floatformat:2 }}
             </th>
@@ -109,7 +111,7 @@
             <button 
               class="btn btn-warning ml-1 mr-1" 
               type="submit">
-              Update status
+              {% trans 'Update status' %}
             </button>
           </form>
         </div>
@@ -119,7 +121,7 @@
     </div>
 
     {% if request.session.order.description %}
-    <em>description: </em> {{ request.session.order.description }}
+    <em>{% trans 'description' %}: </em> {{ request.session.order.description }}
     {% endif %}
   </div>
 </article>
@@ -128,7 +130,7 @@
   {% if object.voucher_img %}
   <article class="media content-section">
     <div class="media-body">
-      <h5>Voucher</h5>
+      <h5>{% trans 'Voucher' %}</h5>
       <div class="p-2 text-center"><img src="{{ object.voucher_img }}"></div>
       
     </div>

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="media border-top {% if item.status == 'PND' %}text-info{% endif %}">
   <div class="media-body" v-on:click="getOrder('{{ item.order_id }}')">
     <div class="row mt-1 mb-0">
@@ -16,7 +18,7 @@
           <em>{{ item.complement }}</em> &nbsp;&nbsp;&nbsp;
           {% endif %}
           {% if item.status == 'PND' %}
-          <strong> pending</strong>
+          <strong> {% trans 'pending' %}</strong>
           {% endif %}
         </small>
       </div>

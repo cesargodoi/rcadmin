@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -32,9 +33,9 @@
 <div class="alert alert-secondary">
   <h4 class="alert-heading">
     {% if init %}
-    choose your search terms
+    {% trans 'choose your search terms' %}
     {% else %}
-    orders not found
+    {% trans 'orders not found' %}
     {% endif %}
   </h4> 
 </div>

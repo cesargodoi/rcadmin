@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+
 from rcadmin.common import paginator
 
 from ..forms import BankFlagForm
@@ -14,7 +16,10 @@ def bankflags(request):
     queryset = BankFlags.objects.all()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
-    context = {"object_list": object_list, "title": "BankFlags"}
+    context = {
+        "object_list": object_list,
+        "title": _("BankFlags"),
+    }
     return render(request, "treasury/bankflags.html", context)
 
 
@@ -25,7 +30,7 @@ def bankflag_create(request):
         form = BankFlagForm(request.POST)
         if form.is_valid():
             form.save()
-            message = "The BankFlag has been created!"
+            message = _("The BankFlag has been created!")
             messages.success(request, message)
             return redirect("bankflags")
 
@@ -35,7 +40,7 @@ def bankflag_create(request):
         "form_path": "treasury/forms/bankflag.html",
         "goback": reverse("bankflags"),
         "to_create": True,
-        "title": "Create BankFlag",
+        "title": _("Create BankFlag"),
     }
     return render(request, "base/form.html", context)
 
@@ -48,7 +53,7 @@ def bankflag_update(request, pk):
         form = BankFlagForm(request.POST, instance=bank_flag)
         if form.is_valid():
             form.save()
-            message = "The BankFlag has been updated!"
+            message = _("The BankFlag has been updated!")
             messages.success(request, message)
             return redirect("bankflags")
 
@@ -57,7 +62,7 @@ def bankflag_update(request, pk):
         "form_name": "Bankflag",
         "form_path": "treasury/forms/bankflag.html",
         "goback": reverse("bankflags"),
-        "title": "Update BankFlag",
+        "title": _("Update BankFlag"),
     }
     return render(request, "base/form.html", context)
 
@@ -70,12 +75,15 @@ def bankflag_delete(request, pk):
         if bank_flag.formofpayment_set.all():
             bank_flag.is_active = False
             bank_flag.save()
-            message = "The BankFlag has been inactivated!"
+            message = _("The BankFlag has been inactivated!")
         else:
             bank_flag.delete()
-            message = "The BankFlag has been deleted!"
+            message = _("The BankFlag has been deleted!")
         messages.success(request, message)
         return redirect("bankflags")
 
-    context = {"object": bank_flag, "title": "confirm to delete"}
+    context = {
+        "object": bank_flag,
+        "title": _("confirm to delete"),
+    }
     return render(request, "base/confirm_delete.html", context)

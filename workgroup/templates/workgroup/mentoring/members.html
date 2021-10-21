@@ -1,4 +1,6 @@
-<h4>Members</h4>
+{% load i18n %}
+
+<h4>{% trans 'Members' %}</h4>
 
 {% if object_list %}
 
@@ -46,7 +48,7 @@
 
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
-      members not found
+      {% trans 'members not found' %}
     </h4> 
   </div> 
 

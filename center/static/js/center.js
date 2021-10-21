@@ -1,9 +1,20 @@
 //fields
 const nameCenter = document.getElementById("id_name");
-const confCenter = document.getElementById("id_conf_center");
 const phoneCenter = document.getElementById("id_phone_1");
 const emailCenter = document.getElementById("id_email");
 const secretaryCenter = document.getElementById("id_secretary");
+
+function alertField(input, message) {
+  const invalidField = document.getElementById(input);
+
+  var invalidValueField = document.createElement("p");
+  invalidValueField.classList.add("invalid-feedback");
+  var invalidText = document.createTextNode(message);
+  invalidValueField.appendChild(invalidText);
+  invalidField.parentElement.appendChild(invalidValueField);
+  invalidField.classList.add("is-invalid");
+  invalidField.focus();
+}
 
 //label with orientation for email field
 const labelEmail = document.createElement("small");
@@ -16,10 +27,6 @@ function checkForm() {
   let message = "Don't forget this field.";
   if (nameCenter.value == "" || nameCenter.value === null) {
     alertField("id_name", message);
-    return false;
-  }
-  if (confCenter.item(0).selected) {
-    alertField("id_conf_center", message);
     return false;
   }
   if (
@@ -49,45 +56,79 @@ function checkForm() {
   document.getElementById("form").submit();
 }
 
-function alertField(input, message) {
-  const invalidField = document.getElementById(input);
-
-  var invalidValueField = document.createElement("p");
-  invalidValueField.classList.add("invalid-feedback");
-  var invalidText = document.createTextNode(message);
-  invalidValueField.appendChild(invalidText);
-  invalidField.parentElement.appendChild(invalidValueField);
-  invalidField.classList.add("is-invalid");
-  invalidField.focus();
-}
+// ***************************************
 
 //Address filled by ZIP Code
-// aplicating function in tag
-let inputCep = document.querySelector("input[id=id_zip_code]");
-inputCep.addEventListener("change", searchZIPCode);
 
-// handlers functions
-function fillField(json) {
-  document.querySelector("input[id=id_address]").value = json.logradouro;
-  document.querySelector("input[id=id_district]").value = json.bairro;
-  document.querySelector("input[id=id_complement]").value = json.complemento;
-  document.querySelector("input[id=id_city]").value = json.localidade;
-  document.querySelector("input[id=id_state]").value = json.uf;
+const inputCep = document.getElementById("id_zip_code");
+inputCep.addEventListener("focusout", () => {
+  pesquisacep(inputCep.value);
+});
+
+function limpa_formulário_cep() {
+  //Limpa valores do formulário de cep.
+  document.getElementById("id_address").value = "";
+  document.getElementById("id_district").value = "";
+  document.getElementById("id_city").value = "";
+  document.getElementById("id_state").value = "";
 }
 
-// main function for ZIP code
-function searchZIPCode() {
-  let inputCep = document.querySelector("input[id=id_zip_code]");
-  let cep = inputCep.value.replace("-", "");
+function meu_callback(conteudo) {
+  if (!("erro" in conteudo)) {
+    //Atualiza os campos com os valores.
+    document.getElementById("id_address").value = conteudo.logradouro;
+    document.getElementById("id_district").value = conteudo.bairro;
+    document.getElementById("id_city").value = conteudo.localidade;
+    document.getElementById("id_state").value = conteudo.uf;
+  } //end if.
+  else {
+    //CEP não Encontrado.
+    limpa_formulário_cep();
+    // alert("CEP não encontrado.");
+    let message = "CEP não encontrado.";
+    alertField("id_zip_code", message);
+  }
+}
 
-  let url = "http://viacep.com.br/ws/" + cep + "/json";
+function pesquisacep(valor) {
+  //Nova variável "cep" somente com dígitos.
+  var cep = valor.replace(/\D/g, "");
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      if (xhr.status == 200) fillField(JSON.parse(xhr.responseText));
+  //Verifica se campo cep possui valor informado.
+  if (cep != "") {
+    //Expressão regular para validar o CEP.
+    var validacep = /^[0-9]{8}$/;
+
+    //Valida o formato do CEP.
+    if (validacep.test(cep)) {
+      //Preenche os campos com "..." enquanto consulta webservice.
+      document.getElementById("id_address").value = "...";
+      document.getElementById("id_district").value = "...";
+      document.getElementById("id_city").value = "...";
+      document.getElementById("id_state").value = "...";
+
+      //Cria um elemento javascript.
+      var script = document.createElement("script");
+
+      //Sincroniza com o callback.
+      script.src =
+        "https://viacep.com.br/ws/" + cep + "/json/?callback=meu_callback";
+
+      //Insere script no documento e carrega o conteúdo.
+      document.body.appendChild(script);
+    } //end if.
+    else {
+      //cep é inválido.
+      limpa_formulário_cep();
+      // alert("Formato de CEP inválido.");
+      let message = "Formato de CEP inválido.";
+      alertField("id_zip_code", message);
     }
-  };
-  xhr.send();
+  } //end if.
+  else {
+    //cep sem valor, limpa formulário.
+    limpa_formulário_cep();
+  }
 }
+
+// ***************************************

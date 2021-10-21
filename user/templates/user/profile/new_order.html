@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% extends "base/base.html" %}
 {% load crispy_forms_tags %}
 
@@ -9,14 +11,14 @@
     class="btn btn-primary" 
     onclick="checkFormOfPayment()" id="pay-now">
     <i class="fas fa-money-bill-wave-alt"></i> 
-    Pay now
+    {% trans 'Pay now' %}
   </button>
   {% endif %}
   <a type="button" 
     class="btn btn-light text-info mr-3"
     href="{% url 'user_payments' %}">
     <i class="fas fa-chevron-left "></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
@@ -25,14 +27,14 @@
   <div class="media-body">
     <div class="row  mt-2 mb-2">
       <div class="col-sm-6">
-        <h5>Payments</h5>
+        <h5>{% trans 'Payments' %}</h5>
       </div>
       <div class="col-sm-6">
         <a type="button" 
           class="btn btn-light btn-sm text-primary float-right" 
           href="{% url 'user_add_payment' %}">
           <i class="fas fa-plus "></i> 
-          Payment
+          {% trans 'Payment' %}
         </a>
       </div>
     </div>
@@ -45,7 +47,7 @@
 
       <table class="table table-hover table-sm mt-2">
         <tr>
-          <th class="text-right">TOTAL:</th>
+          <th class="text-right">{% trans 'TOTAL' %}:</th>
           <th class="text-right" id="totPayment" width="10%">
             {{ request.session.my_order.total_payments|floatformat:2 }}
           </th>
@@ -63,7 +65,7 @@
   <article class="media content-section">
     <div class="media-body">
       <div class="alert alert-secondary mt-2">
-        <h4 class="profile-payments-title">Para fazer suas contribuições e pagamentos siga as instruções:</h4>
+        <h4 class="profile-payments-title">{% trans 'To make your contributions and payments follow the instructions' %}:</h4>
         <div class="row">
           <div class="col-sm-4" id="payform_type">
             <img 
@@ -71,17 +73,17 @@
               class="img-fluid">
           </div>
           <div class="col-sm-8">
-            <p><strong>Chave-pix: </strong></p>
+            <p><strong>{% trans 'pix-key' %}: </strong></p>
             {{ object.person.center.pix_key }}
 
             <hr>
             <ul>
-              <li>Realize a transferência, depósito ou PIX em seu banco.</li>
-              <li>Use o campo de "Descrição" no aplicativo de seu banco para identificar sua contribuição via PIX.</li>
-              <li>Pegue o comprovante digital em .pdf ou .jpg fornecido por seu banco</li>
-              <li>Neste programa você conseguirá fazer os pagamentos e contribuições apenas em seu nome.</li>
-              <li>Para pagamentos e contribuições coletivas (duas ou mais pessoas) procure a tesouraria de seu núcleo.</li>
-              <li>Para iniciar, clique em <strong class="text-primary">+ Add payment</strong> </li>
+              <li>{% trans 'Transfer, deposit or PIX at your bank.' %}</li>
+              <li>{% trans 'Use the "Description" field in your bank app to identify your contribution via PIX.' %}</li>
+              <li>{% trans 'Take the .pdf or .jpg digital voucher provided by your bank' %}</li>
+              <li>{% trans 'In this program you will be able to make payments and contributions in your name only.' %}</li>
+              <li>{% trans 'For collective payments and contributions (two or more people) contact your core treasury.' %}</li>
+              <li>{% trans 'To start, click on' %} <strong class="text-primary">{% trans '+ Add payment' %}</strong> </li>
             </ul>
           </div>
         </div>
@@ -95,7 +97,7 @@
   <div class="media-body">
     <div class="row">
       <div class="col-lg-6">
-        <h5>Form of Payment</h5>
+        <h5>{% trans 'Form of Payment' %}</h5>
         <form id="form" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="row">
@@ -120,7 +122,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
+            <label for="description">{% trans 'Description' %}</label>
             <input type="text" 
               class="form-control" 
               id="description" 
@@ -134,15 +136,15 @@
         <div class="alert alert-secondary">
           <div class="row">
             <div class="col-sm-12">
-              <p>Para concluir sua contribuição tenha o comprovante de depósito, transferência ou PIX digitalizado (.pdf ou .jpg)</p>
-              <p><strong>Voucher img: </strong>Carregue o arquivo para o sistema</p>
+              <p>{% trans 'In order to complete your contribution, have your deposit, transfer or PIX receipt scanned (.pdf or .jpg)' %}</p>
+              <p><strong>{% trans 'Voucher img' %}: </strong>{% trans 'Upload the file to the system' %}</p>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-12">
-              <p> <strong>Bank-flag: </strong>escolha a opção que corresponda ao seu banco.</p>
-              <p> <strong>Ctrl number: </strong>Número de identificação do depósito, transferência ou PIX.</p>
+              <p> <strong>{% trans 'Bank-flag' %}: </strong>{% trans 'choose the option that matches your bank.' %}</p>
+              <p> <strong>{% trans 'Ctrl number' %}: </strong>{% trans 'Deposit, transfer or PIX identification number.' %}</p>
             </div>
           </div>
           <hr>
@@ -153,11 +155,11 @@
                 class="img-fluid">
             </div>
             <div class="col-sm-6">
-              <p>Pagamentos com PIX: use a chave-pix ou o QR-Code</p>
-              <p><strong>Chave-pix: </strong></p>
+              <p>{% trans 'Payments with PIX: use pix-key or QR-Code' %}</p>
+              <p><strong>{% trans 'pix-key' %}:</strong></p>
               {{ object.person.center.pix_key }}
               <hr>
-              <p>Use o campo de "Descrição" no aplicativo de seu banco para identificar sua contribuição via PIX.</p>
+              <p>{% trans 'Use the "Description" field in your banks application to identify your contribution via PIX.' %}</p>
             </div>
           </div>
         </div>

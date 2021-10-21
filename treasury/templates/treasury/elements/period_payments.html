@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div 
   class="media border-top {% if item.status == 'PND' %}text-info{% endif %}">
   <div class="media-body">
@@ -18,7 +20,7 @@
           <em>{{ item.event }}</em> &nbsp;&nbsp;&nbsp;
           {% endif %}
           {% if item.status == 'PND' %}
-          <strong> pending</strong>
+          <strong> {% trans 'pending' %}</strong>
           {% endif %}
         </small>
       </div>

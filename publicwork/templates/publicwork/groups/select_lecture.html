@@ -1,4 +1,6 @@
-<h4>Select a lecture</h4>
+{% load i18n %}
+
+<h4>{% trans 'Select a lecture' %}</h4>
 <form class="form-control-sm border-top" method="GET">
   {% csrf_token %}
   {% include "base/searchs/lecture.html" %}

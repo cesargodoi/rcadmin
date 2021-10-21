@@ -1,4 +1,6 @@
 {% extends "base/base.html" %}
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -10,7 +12,7 @@
       class="btn btn-primary" 
       onclick="document.getElementById('form').submit();">
       <i class="fas fa-money-bill-wave-alt"></i> 
-      Pay now
+      {% trans 'Pay now' %}
     </button>
     {% endif %}
   {% endif %}
@@ -18,13 +20,13 @@
     class="btn btn-light mr-3"
     href="{% if to_create %}{% url 'treasury_home' %}{% else %}{% url 'order_detail' request.session.order.id %}{% endif %}">
     <i class="fas fa-chevron-left "></i> 
-    Go back
+    {% trans 'Go back' %}
   </a>
 </div>
 
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>{% if to_create %}Create{% else %}Update{% endif %} Order</h2>
+    <h2>{% if to_create %}{% trans 'Create' %}{% else %}{% trans 'Update' %}{% endif %} {% trans 'Order' %}</h2>
   </div>
 </article>
 
@@ -32,7 +34,7 @@
   <div class="media-body">
     <div class="row">
       <div class="col-sm-2">
-        <h5>Person</h5>
+        <h5>{% trans 'Person' %}</h5>
       </div>
       <div class="col-sm-6">
         {% if request.session.order.person %}
@@ -55,14 +57,14 @@
   <div class="media-body">
     <div class="media">
       <div class="media-body">
-        <h5>Payments</h5>
+        <h5>{% trans 'Payments' %}</h5>
       </div>
       <div class="text-right">
         <a type="button" 
           class="btn btn-light btn-sm text-info" 
           href="{% url 'order_add_payment' %}">
           <i class="fas fa-plus "></i> 
-          Add
+          {% trans 'Add' %}
         </a>
       </div>
     </div>
@@ -75,7 +77,7 @@
 
     <table class="table table-hover table-sm mt-2">
       <tr>
-        <th class="text-right">TOTAL:</th>
+        <th class="text-right">{% trans 'TOTAL' %}:</th>
         <th class="text-right" id="totPayment" width="10%">
           {{ request.session.order.total_payments|floatformat:2 }}
         </th>
@@ -93,14 +95,14 @@
   <div class="media-body">
     <div class="media">
       <div class="media-body">
-        <h5>Forms of Payment</h5>
+        <h5>{% trans 'Forms of Payment' %}</h5>
       </div>
       <div class="text-right">
         <a type="button" 
           class="btn btn-light btn-sm text-info" 
           href="{% url 'order_add_payform' %}">
           <i class="fas fa-plus "></i> 
-          Add
+          {% trans 'Add' %}
         </a>
       </div>
     </div>
@@ -113,7 +115,7 @@
 
     <table class="table table-hover table-sm mt-2">
       <tr>
-        <th class="text-right">TOTAL:</th>
+        <th class="text-right">{% trans 'TOTAL' %}:</th>
         <th class="text-right" id="totPayForm" width="10%">
           {{ request.session.order.total_payforms|floatformat:2 }}
         </th>
@@ -121,7 +123,7 @@
       </tr>
       {% if request.session.order.missing != 0 %}
       <tr class="text-danger">
-        <td class="text-right"><em>missing:</em></td>
+        <td class="text-right"><em>{% trans 'missing' %}:</em></td>
         <td class="text-right" id="diference" width="10%">
           <em>{{ request.session.order.missing|floatformat:2 }}</em>
         </td>
@@ -139,13 +141,13 @@
 {% if request.session.order.payforms %}
 <article class="media content-section">
   <div class="media-body">
-    <h5>Others</h5>
+    <h5>{% trans 'Others' %}</h5>
     <form id="form" action="{% url 'order_register' %}" method="GET">
       {% csrf_token %}
       <div class="row">
         <div class="col-8">
           <div class="form-group">
-            <label for="description">Description</label>
+            <label for="description">{% trans 'Description' %}</label>
             <input type="text" 
               class="form-control" 
               id="description" 
@@ -155,7 +157,7 @@
         </div>
         <div class="col-4">
           <label for="status" class=" requiredField">
-            Status
+            {% trans 'Status' %}
           </label>
           <div class="">
             <select name="status" 

@@ -1,6 +1,8 @@
+{% load i18n %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-transp mb-1">
   <a class="navbar-brand" href="{% url 'treasury_home' %}">
-    Treasury
+    {% trans 'Treasury' %}
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarProfile"
     aria-controls="navbarProfile" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +15,7 @@
       <li class="nav-item">
         <a class="nav-link {% if nav == 'order' %}active{% endif %}" 
           href="{% url 'orders' %}?init=on">
-          Orders
+          {% trans 'Orders' %}
         </a>
       </li>
       {% include 'treasury/reports/menu.html' %} 
@@ -25,7 +27,7 @@
       <a class="btn btn-light btn-sm" 
         href="{% url 'order_create' %}">
         <i class="fas fa-plus"></i> 
-        New order
+        {% trans 'New order' %}
       </a>
       {% endif %}
 
@@ -34,7 +36,7 @@
         <a class="btn btn-light btn-sm" 
           href="{% url 'order_create' %}">
           <i class="fas fa-plus"></i> 
-          New order
+          {% trans 'New order' %}
         </a>
         {% endif %}
       {% endif %}
@@ -48,7 +50,7 @@
           {% endif %}
           ">
         <i class="fas fa-chevron-left"></i> 
-        Go back
+        {% trans 'Go back' %}
       </a>
 
     </div>

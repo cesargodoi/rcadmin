@@ -1,4 +1,6 @@
-<h4>Historic</h4>
+{% load i18n %}
+
+<h4>{% trans 'Historic' %}</h4>
 
 {% if historic %}
 
@@ -17,8 +19,8 @@
     <div class="alert alert-secondary mt-4">
       <small>
         <p>
-          Here showing your last <strong>{{ historic|length }}</strong> occurrences. &nbsp;
-          To find out more, contact the <strong>{{ object.person.center.name }}</strong> secretariat.
+          {% trans 'Here showing your last' %} <strong>{{ historic|length }}</strong> {% trans 'occurrences' %}. &nbsp;
+          {% trans 'To find out more, contact the' %} <strong>{{ object.person.center.name }}</strong> {% trans 'secretariat' %}.
         </p>
       </small>
     </div>
@@ -27,7 +29,7 @@
 {% else %}
 
   <div class="alert alert-secondary" role="alert">
-    <h4 class="alert-heading">no historic found</h4>
+    <h4 class="alert-heading">{% trans 'no historic found' %}</h4>
   </div>
   
 {% endif %}

@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -6,7 +7,7 @@
 
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>Period payments</h2>
+    <h2>{% trans 'Period payments' %}</h2>
     <form class="form-control-sm border-top" method="GET">
       {% csrf_token %}
       {% include "treasury/elements/search_dates.html" %}
@@ -20,7 +21,7 @@
   </div>
   <div class="col-lg-8 mb-4">
     <div class="card bg-light mb-3">
-      <div class="card-header">Details</div>
+      <div class="card-header">{% trans 'Details' %}</div>
       {% for object in object_list %}
       {% include "treasury/elements/payment_by_paytype.html" %}
       {% endfor %}

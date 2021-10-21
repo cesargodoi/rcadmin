@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext as _
+
 from event.models import Event
 from person.models import Person
 from rcadmin.common import (
@@ -36,7 +38,7 @@ def orders(request):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "status_list": ORDER_STATUS,
-        "title": "Orders",
+        "title": _("Orders"),
         "nav": "order",
     }
     return render(request, "treasury/orders.html", context)
@@ -68,7 +70,7 @@ def order_create(request):
 
     context = {
         "to_create": True,
-        "title": "Create Order",
+        "title": _("Create Order"),
         "status": ORDER_STATUS,
     }
     return render(request, "treasury/order_create.html", context)
@@ -155,7 +157,7 @@ def order_add_payment(request):
         "form": PaymentForm(
             initial={"person": person[0], "ref_month": timezone.now().date()}
         ),
-        "title": "Create Order",
+        "title": _("Create Order"),
     }
     return render(request, "treasury/order_add_payment.html", context)
 
@@ -173,7 +175,7 @@ def order_del_payment(request, pay_id):
         request.session.modified = True
         return redirect("order_create")
 
-    context = {"title": "confirm delete"}
+    context = {"title": _("confirm delete")}
     return render(request, "treasury/confirm_del.html", context)
 
 
@@ -226,7 +228,7 @@ def order_add_payform(request):
         "form": FormOfPaymentForm(
             initial={"value": request.session["order"]["missing"]}
         ),
-        "title": "Add Form of Payment",
+        "title": _("Add Form of Payment"),
     }
     return render(request, "treasury/order_add_payform.html", context)
 
@@ -244,7 +246,7 @@ def order_del_payform(request, pay_id):
         request.session.modified = True
         return redirect("order_create")
 
-    context = {"title": "confirm delete"}
+    context = {"title": _("confirm delete")}
     return render(request, "treasury/confirm_del.html", context)
 
 
@@ -304,7 +306,7 @@ def order_register(request):
     request.session["order"]["status"] = request.GET.get("status")
     request.session.modified = True
 
-    context = {"title": "confirm register"}
+    context = {"title": _("confirm register")}
     return render(request, "treasury/confirm_register.html", context)
 
 
@@ -384,7 +386,7 @@ def order_detail(request, id):
         request.session["order"]["total_payforms"] += float(pf.value)
 
     context = {
-        "title": "View Order",
+        "title": _("View Order"),
         "detail": True,
         "form_update_status": FormUpdateStatus(
             initial={"status": _status[0][0]}
@@ -397,7 +399,7 @@ def order_detail(request, id):
 @permission_required("treasury.change_order")
 def order_update(request, id):
     context = {
-        "title": "Edit Order",
+        "title": _("Edit Order"),
         "status": ORDER_STATUS,
     }
     return render(request, "treasury/order_create.html", context)
@@ -423,5 +425,8 @@ def order_delete(request, id):
         order.delete()
         return redirect("orders")
 
-    context = {"object": order, "title": "confirm to delete"}
+    context = {
+        "object": order,
+        "title": _("confirm to delete"),
+    }
     return render(request, "treasury/confirm_delete.html", context)

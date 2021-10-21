@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -8,13 +9,13 @@
         href="#" 
         onclick="document.getElementById('form').submit();">
       <i class="fas fa-check"></i> 
-      Add
+      {% trans 'Add' %}
     </a>
   {% endif %}
   <a class="btn btn-light mt-2 mr-3 text-info"
       href="{% url 'mentoring_group_frequencies' object.id %}">
     <i class="fas fa-chevron-left"></i> 
-    Back
+    {% trans 'Back' %}
   </a>
 </div>
 
