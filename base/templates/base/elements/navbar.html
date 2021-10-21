@@ -28,10 +28,16 @@
                 <i class="fas fa-user"></i>
               </a>
               <div class="dropdown-menu" aria-labelledby="profile">
-                <a class="dropdown-item" href="{% url 'profile_detail' %}">{% trans 'Profile' %}</a>
-                <a class="dropdown-item" href="{% url 'logout' %}">{% trans 'Logout' %}</a>
+                <a class="dropdown-item" href="{% url 'profile_detail' %}">
+                  <i class="fas fa-id-card"></i>
+                  {% trans 'Profile' %}
+                </a>
+                <a class="dropdown-item" href="{% url 'logout' %}">
+                  <i class="fas fa-sign-out-alt"></i>
+                  {% trans 'Logout' %}
+                </a>
                 <button type="button" 
-                    class="btn btn-sm m-2" 
+                    class="btn_color" 
                     onclick="changeColor()"
                     data-toggle="tooltip" 
                     data-placement="right" 
@@ -56,3 +62,26 @@
     </div>
   </nav>
 </header>
+
+<style>
+  /* Classes for the button to look like links, in Navbar Right Side. */
+
+.btn_color:focus, .btn_color:hover {
+    text-decoration: none;
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+button:focus {
+    outline: none;
+    outline: none;
+}
+
+.btn_color {
+    width: 100%;
+    text-align: left;
+    border: 1px solid transparent;
+    padding: .25rem 1.5rem;
+    background-color: transparent;
+}
+</style>
