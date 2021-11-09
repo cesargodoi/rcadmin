@@ -25,9 +25,9 @@ class Person(models.Model):
         blank=True,
     )
     reg = models.CharField(max_length=10, null=True, blank=True)
-    name = models.CharField(max_length=80)
-    name_sa = models.CharField(max_length=80, editable=False)
-    short_name = models.CharField(max_length=40, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    name_sa = models.CharField(max_length=100, editable=False)
+    short_name = models.CharField(max_length=80, null=True, blank=True)
     id_card = models.CharField("id card", max_length=30, blank=True)
     birth = models.DateField(null=True, blank=True)
     person_type = models.CharField(
@@ -56,9 +56,7 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.name:
-            self.name = (
-                f"<<{self.user.email.split('@')[0]}>> REQUIRES ADJUSTMENTS"
-            )
+            self.name = f"<<{self.user.email.split('@')[0]}>>"
         self.name_sa = us_inter_char(self.name)
         self.short_name = short_name(self.name)
         super(Person, self).save(*args, **kwargs)
