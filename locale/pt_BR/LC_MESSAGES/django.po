@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 10:59-0300\n"
-"PO-Revision-Date: 2021-10-05 10:59-0306\n"
+"POT-Creation-Date: 2021-11-16 09:12-0300\n"
+"PO-Revision-Date: 2021-11-16 09:14-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -68,6 +68,7 @@ msgid "Action not allowed!"
 msgstr "Ação não permitida!"
 
 #: base/templates/base/action_not_allowed.html:11
+#: base/templates/base/import_fields_to_persons.html:43
 #: base/templates/base/import_persons.html:43
 #: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
@@ -250,10 +251,16 @@ msgid "Banks or Flags"
 msgstr "Bancos e Cartões"
 
 #: base/templates/base/elements/menu_admin.html:13
-msgid "Import persons from (.csv)"
-msgstr "Importar pessoas de"
+msgid "Import persons"
+msgstr "Importar pessoas"
 
-#: base/templates/base/elements/navbar.html:31
+#: base/templates/base/elements/menu_admin.html:14
+#, fuzzy
+#| msgid "Import persons"
+msgid "Import fields to persons"
+msgstr "Importar pessoas"
+
+#: base/templates/base/elements/navbar.html:33
 #: user/templates/user/forms/form.html:29
 #: user/templates/user/profile/detail.html:13
 #: user/templates/user/profile/navbar-ant.html:4
@@ -261,11 +268,11 @@ msgstr "Importar pessoas de"
 msgid "Profile"
 msgstr "Perfil"
 
-#: base/templates/base/elements/navbar.html:32
+#: base/templates/base/elements/navbar.html:37
 msgid "Logout"
 msgstr "Sair"
 
-#: base/templates/base/elements/navbar.html:50
+#: base/templates/base/elements/navbar.html:56
 msgid "Login"
 msgstr "Entrar"
 
@@ -300,12 +307,15 @@ msgstr "Atualizar"
 msgid "Welcome to"
 msgstr "Bem-vindo"
 
+#: base/templates/base/import_fields_to_persons.html:37
 #: base/templates/base/import_persons.html:37
 msgid "New import"
 msgstr "Nova importação"
 
-#: base/templates/base/import_persons.html:98
-msgid "select file (.csv) to import"
+#: base/templates/base/import_fields_to_persons.html:85
+#: base/templates/base/import_persons.html:105
+#| msgid "select file (.csv) to import"
+msgid "Select a .csv file to import."
 msgstr "selecionar arquivo (.csv) para importar"
 
 #: base/templates/base/searchs/center.html:24
@@ -372,6 +382,7 @@ msgid "status"
 msgstr "status"
 
 #: base/templates/base/searchs/modal_frequencies.html:65
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:33
 #: base/templates/base/searchs/modal_import_persons.html:21
 #: base/templates/base/searchs/modal_lectures.html:65
 #: base/templates/base/searchs/modal_status.html:35
@@ -387,10 +398,13 @@ msgstr "Fechar"
 msgid "Generate"
 msgstr "Gerar"
 
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:11
 #: base/templates/base/searchs/modal_import_persons.html:11
-msgid "Import persons"
-msgstr "Importar pessoas"
+#| msgid "select file (.csv) to import"
+msgid "Select a .csv file to import"
+msgstr "selecionar arquivo (.csv) para importar"
 
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:34
 #: base/templates/base/searchs/modal_import_persons.html:22
 msgid "Import"
 msgstr "Importar"
@@ -412,13 +426,19 @@ msgid "all status"
 msgstr "todos status"
 
 #: base/templates/base/searchs/person.html:25
-#: person/templates/person/info.html:48 rcadmin/common.py:72
+#: person/templates/person/info.html:48 rcadmin/common.py:75
 #: workgroup/templates/workgroup/member/info.html:18
 msgid "aspect"
 msgstr "discipulado"
 
-#: base/views/tools.py:23
+#: base/views/tools.py:26
 msgid "import persons"
+msgstr "importar pessoas"
+
+#: base/views/tools.py:97
+#, fuzzy
+#| msgid "import persons"
+msgid "import fields to persons"
 msgstr "importar pessoas"
 
 #: center/templates/center/centers.html:70
@@ -483,7 +503,7 @@ msgstr "Outros"
 msgid "pupils"
 msgstr "alunos"
 
-#: center/templates/center/header.html:22 rcadmin/common.py:30
+#: center/templates/center/header.html:22 rcadmin/common.py:33
 msgid "conference center"
 msgstr "centro de conferência"
 
@@ -600,7 +620,7 @@ msgstr "atualizar núcleo"
 #: publicwork/views/historic.py:95 publicwork/views/lecture.py:136
 #: publicwork/views/listener.py:111 publicwork/views/listener.py:211
 #: publicwork/views/seeker.py:142 treasury/views/bankflag.py:87
-#: treasury/views/form_of_payment.py:83 treasury/views/order.py:430
+#: treasury/views/form_of_payment.py:83 treasury/views/order.py:440
 #: treasury/views/payments.py:83 treasury/views/paytypes.py:84
 #: workgroup/views/membership.py:98 workgroup/views/mentoring.py:275
 #: workgroup/views/workgroup.py:122
@@ -667,7 +687,7 @@ msgstr "QR - Code"
 msgid "Scan this QR-Code to sign-in Event"
 msgstr "Leia este QR - Code para fazer login no evento"
 
-#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:45
+#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:48
 #: treasury/templates/treasury/bankflags.html:35
 #: treasury/templates/treasury/paytypes.html:39 user/models.py:62
 msgid "active"
@@ -916,11 +936,11 @@ msgstr "apenas ver"
 msgid "historic not found"
 msgstr "histórico não encontrado"
 
-#: person/templates/person/import_from_seekers.html:11
+#: person/templates/person/import_from_seekers.html:12
 msgid "Seekers who will become pupils"
 msgstr "Buscadores que se tornarão alunos"
 
-#: person/templates/person/import_from_seekers.html:58
+#: person/templates/person/import_from_seekers.html:59
 msgid "no seekers found"
 msgstr "nenhum buscador encontrado"
 
@@ -1157,7 +1177,6 @@ msgid "seekers not found"
 msgstr "buscadores não encontrados"
 
 #: publicwork/templates/publicwork/groups/select_lecture.html:3
-#| msgid "Select an event"
 msgid "Select a lecture"
 msgstr "selecionar um evento"
 
@@ -1446,7 +1465,7 @@ msgid "Add listener"
 msgstr "Adicionar ouvinte"
 
 #: publicwork/templates/publicwork/listener/listeners.html:47
-#: rcadmin/common.py:122
+#: rcadmin/common.py:125
 msgid "installed"
 msgstr "instalado"
 
@@ -1632,151 +1651,151 @@ msgstr "detalhes do buscador | frequências"
 msgid "seeker detail | historic"
 msgstr "detalhes do buscador | histórico"
 
-#: rcadmin/common.py:21
+#: rcadmin/common.py:24
 msgid "Golden Rosycross"
 msgstr "Rosacruz Áurea"
 
-#: rcadmin/common.py:25
+#: rcadmin/common.py:28
 msgid "male"
 msgstr "masculino"
 
-#: rcadmin/common.py:26
+#: rcadmin/common.py:29
 msgid "female"
 msgstr "femenino"
 
-#: rcadmin/common.py:29
+#: rcadmin/common.py:32
 msgid "center"
 msgstr "núcleo"
 
-#: rcadmin/common.py:31
+#: rcadmin/common.py:34
 msgid "contact room"
 msgstr "sala de contato"
 
-#: rcadmin/common.py:35
+#: rcadmin/common.py:38
 msgid "1st. Aspect"
 msgstr "1o Aspecto"
 
-#: rcadmin/common.py:36
+#: rcadmin/common.py:39
 msgid "2nd. Aspect"
 msgstr "2o Aspecto"
 
-#: rcadmin/common.py:37
+#: rcadmin/common.py:40
 msgid "3rd. Aspect"
 msgstr "3o Aspecto"
 
-#: rcadmin/common.py:38
+#: rcadmin/common.py:41
 msgid "4th. Aspect"
 msgstr "4o Aspecto"
 
-#: rcadmin/common.py:39
+#: rcadmin/common.py:42
 msgid "Grail"
 msgstr "Graal"
 
-#: rcadmin/common.py:40
+#: rcadmin/common.py:43
 msgid "5th. Aspect"
 msgstr "5o Aspecto"
 
-#: rcadmin/common.py:41
+#: rcadmin/common.py:44
 msgid "6th. Aspect"
 msgstr "6o Aspecto"
 
-#: rcadmin/common.py:46
+#: rcadmin/common.py:49
 msgid "licensed"
 msgstr "licenciado"
 
-#: rcadmin/common.py:47
+#: rcadmin/common.py:50
 msgid "dead"
 msgstr "morto"
 
-#: rcadmin/common.py:48
+#: rcadmin/common.py:51
 msgid "disconnected"
 msgstr "desconectado"
 
-#: rcadmin/common.py:49
+#: rcadmin/common.py:52
 msgid "removed"
 msgstr "removido"
 
-#: rcadmin/common.py:52
+#: rcadmin/common.py:55
 msgid "transfered"
 msgstr "transferido"
 
-#: rcadmin/common.py:53
+#: rcadmin/common.py:56
 msgid "regressed"
 msgstr "retrogradado"
 
-#: rcadmin/common.py:54 rcadmin/common.py:84
+#: rcadmin/common.py:57 rcadmin/common.py:87
 msgid "other"
 msgstr "outro"
 
-#: rcadmin/common.py:55
+#: rcadmin/common.py:58
 msgid "preparatório"
 msgstr "preparatório"
 
-#: rcadmin/common.py:56
+#: rcadmin/common.py:59
 msgid "probatório"
 msgstr "probatório"
 
-#: rcadmin/common.py:57
+#: rcadmin/common.py:60
 msgid "professo"
 msgstr "professo"
 
-#: rcadmin/common.py:62
+#: rcadmin/common.py:65
 msgid "pupil"
 msgstr "aluno"
 
-#: rcadmin/common.py:63
+#: rcadmin/common.py:66
 msgid "web pupil"
 msgstr "aluno web"
 
-#: rcadmin/common.py:64
+#: rcadmin/common.py:67
 msgid "gest"
 msgstr "convidado"
 
-#: rcadmin/common.py:67
+#: rcadmin/common.py:70
 msgid "mentor"
 msgstr "mentor"
 
-#: rcadmin/common.py:68 rcadmin/common.py:114
+#: rcadmin/common.py:71 rcadmin/common.py:117
 msgid "contact"
 msgstr "contato"
 
-#: rcadmin/common.py:69 rcadmin/common.py:120
+#: rcadmin/common.py:72 rcadmin/common.py:123
 msgid "member"
 msgstr "membro"
 
-#: rcadmin/common.py:73
+#: rcadmin/common.py:76
 msgid "maintenance"
 msgstr "manutenção"
 
-#: rcadmin/common.py:74
+#: rcadmin/common.py:77
 msgid "admin"
 msgstr "admin"
 
-#: rcadmin/common.py:77
+#: rcadmin/common.py:80
 msgid "open"
 msgstr "aberto"
 
-#: rcadmin/common.py:78
+#: rcadmin/common.py:81
 msgid "close"
 msgstr "fechar"
 
-#: rcadmin/common.py:81
+#: rcadmin/common.py:84
 msgid "service"
 msgstr "serviço"
 
-#: rcadmin/common.py:82
+#: rcadmin/common.py:85
 msgid "conference"
 msgstr "conferência"
 
-#: rcadmin/common.py:83 rcadmin/common.py:115
+#: rcadmin/common.py:86 rcadmin/common.py:118
 msgid "meeting"
 msgstr "reunião"
 
-#: rcadmin/common.py:87
+#: rcadmin/common.py:90
 msgid "canceled"
 msgstr "cancelado"
 
-#: rcadmin/common.py:88
+#: rcadmin/common.py:91
 #: treasury/templates/treasury/elements/cash_balance.html:21
 #: treasury/templates/treasury/elements/payform_by_type.html:19
 #: treasury/templates/treasury/elements/payment_by_paytype.html:19
@@ -1784,83 +1803,83 @@ msgstr "cancelado"
 msgid "pending"
 msgstr "pendente"
 
-#: rcadmin/common.py:89
+#: rcadmin/common.py:92
 msgid "concluded"
 msgstr "concluído"
 
-#: rcadmin/common.py:92
+#: rcadmin/common.py:95
 msgid "monthly"
 msgstr "mensal"
 
-#: rcadmin/common.py:93
+#: rcadmin/common.py:96
 msgid "by event"
 msgstr "por evento"
 
-#: rcadmin/common.py:94
+#: rcadmin/common.py:97
 msgid "campaign"
 msgstr "campanha"
 
-#: rcadmin/common.py:97 rcadmin/common.py:108
+#: rcadmin/common.py:100 rcadmin/common.py:111
 msgid "pix"
 msgstr "pix"
 
-#: rcadmin/common.py:98
+#: rcadmin/common.py:101
 msgid "cash"
 msgstr "dinheiro"
 
-#: rcadmin/common.py:99
+#: rcadmin/common.py:102
 msgid "check"
 msgstr "cheque"
 
-#: rcadmin/common.py:100
+#: rcadmin/common.py:103
 msgid "pre check"
 msgstr "cheque-pré"
 
-#: rcadmin/common.py:101
+#: rcadmin/common.py:104
 msgid "debit"
 msgstr "débito"
 
-#: rcadmin/common.py:102
+#: rcadmin/common.py:105
 msgid "credit"
 msgstr "crédito"
 
-#: rcadmin/common.py:103 rcadmin/common.py:109
+#: rcadmin/common.py:106 rcadmin/common.py:112
 msgid "deposit"
 msgstr "depósito"
 
-#: rcadmin/common.py:104 rcadmin/common.py:110
+#: rcadmin/common.py:107 rcadmin/common.py:113
 msgid "transfer"
 msgstr "transferência"
 
-#: rcadmin/common.py:105
+#: rcadmin/common.py:108
 msgid "bank slip"
 msgstr "boleto bancário"
 
-#: rcadmin/common.py:112
+#: rcadmin/common.py:115
 msgid "Brazil"
 msgstr "Brasil"
 
-#: rcadmin/common.py:118
+#: rcadmin/common.py:121
 msgid "observation"
 msgstr "observação"
 
-#: rcadmin/common.py:119
+#: rcadmin/common.py:122
 msgid "new"
 msgstr "novo"
 
-#: rcadmin/common.py:121
+#: rcadmin/common.py:124
 msgid "installing"
 msgstr "instalando"
 
-#: rcadmin/common.py:123
+#: rcadmin/common.py:126
 msgid "stand by"
 msgstr "em espera"
 
-#: rcadmin/common.py:124
+#: rcadmin/common.py:127
 msgid "restriction"
 msgstr "restrição"
 
-#: rcadmin/common.py:175
+#: rcadmin/common.py:221
 msgid ""
 "Phone number must be entered in the format: '+1234567890'.             Up to"
 " 15 digits allowed."
@@ -1944,6 +1963,10 @@ msgstr "pagamento"
 #: treasury/templates/treasury/elements/payments_summary.html:31
 msgid "Payment made by pupil"
 msgstr "Pagamento feito pelo aluno"
+
+#: treasury/templates/treasury/elements/search_person.html:7
+msgid "Type pupil name"
+msgstr "Digite o nome do aluno"
 
 #: treasury/templates/treasury/elements/search_person.html:12
 msgid "Use"
@@ -2085,7 +2108,7 @@ msgstr "Balaço de caixa"
 #: treasury/templates/treasury/treasury_home.html:47
 #: treasury/views/reports.py:109
 msgid "Period payments"
-msgstr "Período do pagamentos"
+msgstr "Pagamentos por período"
 
 #: treasury/templates/treasury/reports/menu.html:9
 #: treasury/views/reports.py:151
@@ -2153,27 +2176,27 @@ msgstr "Atualizar forma de pagamento"
 msgid "The Form of Payment has been deleted!"
 msgstr "A forma de pagamento foi excluída!"
 
-#: treasury/views/order.py:73 treasury/views/order.py:160
+#: treasury/views/order.py:73 treasury/views/order.py:170
 msgid "Create Order"
 msgstr "Criar Pedido"
 
-#: treasury/views/order.py:178 treasury/views/order.py:249 user/views.py:269
+#: treasury/views/order.py:188 treasury/views/order.py:259 user/views.py:269
 msgid "confirm delete"
 msgstr "confirmar exclusão"
 
-#: treasury/views/order.py:231
+#: treasury/views/order.py:241
 msgid "Add Form of Payment"
 msgstr "Adicionar Forma de Pagamento"
 
-#: treasury/views/order.py:309
+#: treasury/views/order.py:319
 msgid "confirm register"
 msgstr "confirmar registro"
 
-#: treasury/views/order.py:389
+#: treasury/views/order.py:399
 msgid "View Order"
 msgstr "Ver Pedido"
 
-#: treasury/views/order.py:402
+#: treasury/views/order.py:412
 msgid "Edit Order"
 msgstr "Editar Pedido"
 
@@ -2717,6 +2740,9 @@ msgstr "O Grupo de trabalho foi atualizado!"
 #: workgroup/views/workgroup.py:100
 msgid "update workgroup"
 msgstr "atualizar grupo de trabalho"
+
+#~ msgid "Import persons from (.csv)"
+#~ msgstr "Importar pessoas de"
 
 #~ msgid "center to insert"
 #~ msgstr "núcleo para inserir"

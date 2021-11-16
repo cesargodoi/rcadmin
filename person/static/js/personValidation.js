@@ -52,11 +52,7 @@ function checkForm() {
     alertField("id_email", message);
     return false;
   }
-  if (
-    phoneOnePerson.value.length < 10 ||
-    phoneOnePerson.value == "" ||
-    phoneOnePerson.value === null
-  ) {
+  if (phoneOnePerson.value.length > 0 && phoneOnePerson.value.length < 10) {
     let message = "enter with a valid phone number: xx-98765.4321";
     alertField("id_phone_1", message);
     return false;
