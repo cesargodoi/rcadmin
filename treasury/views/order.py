@@ -143,19 +143,29 @@ def order_add_payment(request):
         request.session.modified = True
         return redirect("order_create")
 
+    # change queryset for person field and set current person as initial
     persons = Person.objects.filter(center=request.user.person.center)
-    person = [
-        p
-        for p in persons
-        if p.name == request.session["order"]["person"]["name"]
-    ]
+    current_person = [
+        person
+        for person in persons
+        if person.name == request.session["order"]["person"]["name"]
+    ][0]
     PaymentForm.base_fields["person"] = forms.ModelChoiceField(
         queryset=persons
     )
 
+    # change queryset for event field (only type CNF and status OPN)
+    events = Event.objects.filter(
+        activity__activity_type="CNF", status="OPN"
+    ).order_by("-date")
+    PaymentForm.base_fields["event"] = forms.ModelChoiceField(queryset=events)
+
     context = {
         "form": PaymentForm(
-            initial={"person": person[0], "ref_month": timezone.now().date()}
+            initial={
+                "person": current_person,
+                "ref_month": timezone.now().date(),
+            }
         ),
         "title": _("Create Order"),
     }
