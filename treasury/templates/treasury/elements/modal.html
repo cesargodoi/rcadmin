@@ -1,13 +1,12 @@
 {% load i18n %}
 
 <div class="modal" 
-  aria-hidden="true" 
-  id="toShow" 
-  v-if="showModal">
+  aria-hidden="false" 
+  id="toShow">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">[[ titulo ]]</h5>
+        <h5 class="modal-title" id="modalTitle">[[ titulo ]]</h5>
         <button 
           type="button" 
           class="close" 
@@ -17,6 +16,7 @@
         </button>
       </div>
       <div class="modal-body">
+        <h1>[[ titulo ]]</h1>
         <p>{% trans 'Modal body text goes here' %}.</p>
       </div>
       <div class="modal-footer">

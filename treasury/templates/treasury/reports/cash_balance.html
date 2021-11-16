@@ -34,24 +34,55 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="http://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
-<script>
+
+
+<!-- <script src="http://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script> -->
+<!-- <script>
   var order = new Vue({
     el: "#order",
     delimiters: ["[[", "]]"],
     data: {
-      titulo: "aqui vão as orders",
+      titulo: "ORDERS",
       showModal: false,
     },
     methods: {
       getOrder(order_id) {
-        alert(order_id)
         var url = `/treasury/vue/get_order?order_id=${order_id}`
         this.$http.get(url).then(function (response) {
-          console.log(response)
+          let info = JSON.parse(response.bodyText);
+          console.log(info);
+          this.showModal = true;
+          console.log(this.showModal);
         })
       }
     }
   })
+</script> -->
+
+<script>
+  function getOrder(order_id) {
+    var url = 
+    $.ajax({
+        type: 'GET',
+        url: `/treasury/vue/get_order?order_id=${order_id}`,
+        success: function (response) {
+          toModal(response);
+          
+          $('#toShow').modal('show');
+        },
+        error: function (response) {
+          console.log(response)
+        }
+      })
+    }
+    
+  function toModal(info) {
+    const title = document.getElementById('modalTitle')
+    title.innerHTML = info.center;
+    console.log(info.person);
+
+
+  }
 </script>
+
 {% endblock %}

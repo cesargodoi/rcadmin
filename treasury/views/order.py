@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
@@ -395,12 +396,17 @@ def order_detail(request, id):
         request.session["order"]["payforms"].append(payform)
         request.session["order"]["total_payforms"] += float(pf.value)
 
+    goback = (
+        f"{request.GET['goback']}" if request.GET.get("goback") else "orders"
+    )
+
     context = {
         "title": _("View Order"),
         "detail": True,
         "form_update_status": FormUpdateStatus(
             initial={"status": _status[0][0]}
         ),
+        "goback": reverse(goback),
     }
     return render(request, "treasury/order_detail.html", context)
 
