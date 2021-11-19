@@ -16,15 +16,12 @@ from ..models import Person
 def frequency_ps_list(request, person_id):
     person = Person.objects.get(id=person_id)
     queryset = person.frequency_set.all().order_by("-event__date")
-    # import ipdb
-
-    # ipdb.set_trace()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
     context = {
         "object_list": object_list,
         "title": _("frequencies list"),
-        "person": person,  # to header element,
+        "object": person,  # to header element,
         "nav": "detail",
         "tab": "frequencies",
     }
@@ -71,11 +68,11 @@ def frequency_ps_insert(request, person_id):
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("insert frequencies"),
-        "person": person,  # to header element
         "type_list": ACTIVITY_TYPES,
         "pre_freqs": [
             person.event.pk for person in person.frequency_set.all()
         ],
+        "person_id": person_id,  # to goback
     }
     return render(request, "person/frequency_insert.html", context)
 

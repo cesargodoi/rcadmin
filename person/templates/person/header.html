@@ -5,19 +5,19 @@
     <div class="article-metadata">
       <div class="row">
         <div class="col-9">
-          {{ person.center }}
-          {% if person.aspect != "--" %}
+          {{ object.center }}
+          {% if object.aspect != "--" %}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <em>{{ person.get_aspect_display }}</em>
+          <em>{{ object.get_aspect_display }}</em>
           {% endif %}
-          {% if person.center != request.user.person.center %}
+          {% if object.center != request.user.person.center %}
           &nbsp;&nbsp;&nbsp;
           <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
           {% endif %}
         </div>
         <div class="col text-right">
-          {% if person.reg %}
-          <strong>{{ person.reg }}</strong>
+          {% if object.reg %}
+          <strong>{{ object.reg }}</strong>
           {% endif %}
         </div>
       </div>
@@ -25,22 +25,22 @@
     <div class="row">
       <div class="col-9">
         <h3>
-          {{ person.name }} &nbsp;&nbsp;
-          <small class="text-muted"><em>{{ person.user.profile.social_name }}</em></small>
+          {{ object.name }} &nbsp;&nbsp;
+          <small class="text-muted"><em>{{ object.user.profile.social_name }}</em></small>
         </h3>
       </div>
       <div class="col text-right">
-        {% if person.status not in "ACT,---" %}
-        <strong class="{% if person.status == 'LIC' %}
+        {% if object.status not in "ACT,---,OTH" %}
+        <strong class="{% if object.status == 'LIC' %}
                        text-success
-                     {% elif person.status == 'DIS' %}
+                     {% elif object.status == 'DIS' %}
                        text-warning
-                     {% elif person.status == 'REM' %}
+                     {% elif object.status == 'REM' %}
                        text-danger
-                     {% elif person.status == 'DEA' %}
+                     {% elif object.status == 'DEA' %}
                        text-secondary
                      {% endif %}">
-          {{ person.get_status_display }}
+          {{ object.get_status_display }}
         </strong>
         {% endif %}
       </div>

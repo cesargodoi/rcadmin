@@ -26,7 +26,7 @@ def membership_ps_list(request, person_id):
     context = {
         "object_list": object_list,
         "title": _("membership list"),
-        "person": person,  # to header element
+        "object": person,  # to header element
         "nav": "detail",
         "tab": "membership",
     }
@@ -69,11 +69,11 @@ def membership_ps_create(request, person_id):
         "title": _("insert membership"),
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("membership_ps_create", args=[person_id]),
-        "person": person,  # to header element
         "workgroup_types": WORKGROUP_TYPES,
         "pre_groups": [
             person.workgroup.pk for person in person.membership_set.all()
         ],
+        "person_id": person_id,  # to goback
     }
     return render(request, "person/membership_ps_insert.html", context)
 

@@ -129,26 +129,9 @@
               <tr>
                 <th width="120px">{% trans 'address' %}</th>
                 <td>
-                  <address>
-                    {{ person.user.profile.address }}, {{ person.user.profile.number }}
-                    {% if person.user.profile.complement %}
-                    &nbsp;&nbsp;
-                    <small class="text-muted">
-                      <em>{{ person.user.profile.complement }}</em>
-                    </small>
-                    {% endif %}
-                    <br>
-                    {{ person.user.profile.district }} -
-                    {{ person.user.profile.city }} -
-                    {{ person.user.profile.state }}
-                    <br>
-                    {{ person.user.profile.country }} -
-                    {{ person.user.profile.zip_code }}
-                  </address>
+                  {% include "person/elements/address.html" %}                  
                 </td>
-  
               </tr>
-  
             </table>
           </div>
         </div>

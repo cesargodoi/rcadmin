@@ -50,7 +50,7 @@ class Person(models.Model):
 
     def clean(self, *args, **kwargs):
         self.is_active = (
-            False if self.status not in ("ACT", "LIC", "---") else True
+            False if self.status not in ("ACT", "LIC", "---", "OTH") else True
         )
         super(Person, self).clean(*args, **kwargs)
 

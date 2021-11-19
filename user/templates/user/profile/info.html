@@ -109,25 +109,37 @@
             <th>{% trans 'address' %}</th>
             <td>
               <address>
-                {{ object.profile.address }}, {{ object.profile.number }}
+                {% if object.profile.address %}
+                  {{ object.profile.address }}
+                {% endif %}
+                {% if object.profile.number %}
+                  , {{ object.profile.number }}
+                {% endif %}
                 {% if object.profile.complement %}
-                &nbsp;&nbsp;
-                <small class="text-muted">
-                  <em>{{ object.profile.complement }}</em>
-                </small>
+                  &nbsp;&nbsp;<small><em>{{ object.profile.complement }}</em></small>
                 {% endif %}
                 <br>
-                {{ object.profile.district }} -
-                {{ object.profile.city }} -
-                {{ object.profile.state }} <br>
-                {{ object.profile.country }} -
-                {{ object.profile.zip_code }}
+                {% if object.profile.district %}
+                  {{ object.profile.district }} 
+                {% endif %}
+                {% if object.profile.city %}
+                  - {{ object.profile.city }} 
+                {% endif %}
+                {% if object.profile.state %}
+                  - {{ object.profile.state }} 
+                {% endif %}
+                <br>
+                {% if object.profile.country %}
+                  {{ object.profile.get_country_display }} 
+                {% endif %}
+                {% if object.profile.zip_code %}
+                  - {{ object.profile.zip_code }}
+                {% endif %}
               </address>
             </td>
           </tr>
         </table>
       </div>
     </div>
-  
   </div>
 </div>

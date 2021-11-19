@@ -48,32 +48,7 @@
         {% endif %}
       </div>
       <div class="col text-right">
-        <address>
-          {{ object.user.profile.address }}, {{ object.user.profile.number }}
-          {% if object.user.profile.complement %}
-          &nbsp;&nbsp;
-          <small class="text-muted">
-            <em>{{ object.user.profile.complement }}</em>
-          </small>
-          {% endif %}
-          <br>
-          {% if object.user.profile.district %}
-          {{ object.user.profile.district }} 
-          {% endif %}
-          {% if object.user.profile.city %}
-          - {{ object.user.profile.city }} 
-          {% endif %}
-          {% if object.user.profile.state %}
-          - {{ object.user.profile.state }} 
-          {% endif %}
-          <br>
-          {% if object.user.profile.country %}
-          {{ object.user.profile.country }} 
-          {% endif %}
-          {% if object.user.profile.zip_code %}
-          - {{ object.user.profile.zip_code }}
-          {% endif %}
-        </address>
+        {% include "person/elements/address.html" %}
       </div>
     </div>
   </div>

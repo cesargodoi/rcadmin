@@ -8,7 +8,7 @@
 
   {% for wg_obj in object_list %}
     <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'membership_ps_update' person.id wg_obj.pk %}';"
+        onclick="location.href='{% url 'membership_ps_update' object.id wg_obj.pk %}';"
         style="cursor: pointer;">
 
       <div class="col-sm-4">
@@ -28,7 +28,7 @@
       <div class="col-sm text-right">
         <a type="button" 
           class="btn btn-light text-danger btn-sm"
-          href="{% url 'membership_ps_delete' person.id wg_obj.pk %}">
+          href="{% url 'membership_ps_delete' object.id wg_obj.pk %}">
           <i class="fas fa-trash-alt"></i>
         </a>
       </div>

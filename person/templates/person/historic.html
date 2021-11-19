@@ -8,7 +8,7 @@
 
   {% for obj in object_list %}
     <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'historic_update' person.id obj.pk %}';"
+        onclick="location.href='{% url 'historic_update' object.id obj.pk %}';"
         style="cursor: pointer;">
 
       <div class="col-sm-2">
@@ -26,7 +26,7 @@
       <div class="col-sm text-right">
         <a type="button" 
           class="btn btn-light text-danger btn-sm"
-          href="{% url 'historic_delete' person.id obj.pk %}">
+          href="{% url 'historic_delete' object.id obj.pk %}">
           <i class="fas fa-trash-alt"></i>
         </a>
       </div>

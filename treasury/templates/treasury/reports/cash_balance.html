@@ -15,19 +15,16 @@
   </div>
 </article>
 
-<div class="row row-col-2">
-  <div class="col-lg-4 mb-4">
+<div class="row mt-2">
+  <div class="col-lg-4">
     {% include "treasury/elements/payments_summary.html" %}
   </div>
-  <div class="col-lg-8 mb-4">
-    <div class="card bg-light mb-3" id="order">
-      <div class="card-header">{% trans 'Details' %}</div>
-      {% for object in object_list %}
-      {% include "treasury/elements/payform_by_type.html" %}
-      {% endfor %}
+  <div class="col-lg-8">
+    {% for object in object_list %}
+    {% include "treasury/elements/payform_by_type.html" %}
+    {% endfor %}
 
-      {% include "treasury/elements/modal.html" %}
-    </div>
+    {% include "treasury/elements/modal.html" %}
   </div>
 </div>
 
