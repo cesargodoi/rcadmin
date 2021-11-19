@@ -12,7 +12,7 @@ from rcadmin.common import paginator
 from .useful import OrderByPeriod, OrderToJson
 
 
-def vue_get_order(request):
+def ajax_get_order(request):
     if request.is_ajax and request.method == "GET":
         order = OrderToJson(request.GET.get("order_id"))
         return JsonResponse(order.json, safe=False)

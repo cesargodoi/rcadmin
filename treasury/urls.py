@@ -142,7 +142,7 @@ urlpatterns += [
 ## reports
 urlpatterns += [
     path("", reports.treasury_home, name="treasury_home"),
-    path("vue/get_order", reports.vue_get_order, name="vue_get_order"),
+    path("ajax/get_order", reports.ajax_get_order, name="ajax_get_order"),
     path("reports/cash_balance", reports.cash_balance, name="cash_balance"),
     path(
         "reports/period_payments",

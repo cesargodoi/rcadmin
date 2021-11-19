@@ -94,7 +94,7 @@
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: `/treasury/vue/get_order?order_id=${order_id}`,
+        url: `/treasury/ajax/get_order?order_id=${order_id}`,
         success: function (response) {
           toModal(response);
           $('#toShow').modal('show');
