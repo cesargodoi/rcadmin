@@ -1,4 +1,3 @@
-from treasury.views.reports import cash_balance
 from django.urls import path
 from .views import (
     paytypes,
@@ -9,7 +8,7 @@ from .views import (
     reports,
 )
 
-## paytypes
+# paytypes
 urlpatterns = [
     path("paytypes/", paytypes.paytypes, name="paytypes"),
     path("paytypes/create/", paytypes.paytype_create, name="paytype_create"),
@@ -25,7 +24,7 @@ urlpatterns = [
     ),
 ]
 
-## payments
+# payments
 urlpatterns += [
     path("payments/", payments.payments, name="payments"),
     path("payment/create/", payments.payment_create, name="payment_create"),
@@ -41,7 +40,7 @@ urlpatterns += [
     ),
 ]
 
-## bankflags
+# bankflags
 urlpatterns += [
     path("bankflags/", bankflag.bankflags, name="bankflags"),
     path(
@@ -59,7 +58,7 @@ urlpatterns += [
     ),
 ]
 
-## form_of_payment
+# form_of_payment
 urlpatterns += [
     path(
         "forms_of_payments/",
@@ -83,7 +82,7 @@ urlpatterns += [
     ),
 ]
 
-## orders
+# orders
 urlpatterns += [
     path("orders/", order.orders, name="orders"),
     path("order/create", order.order_create, name="order_create"),
@@ -139,10 +138,10 @@ urlpatterns += [
     ),
 ]
 
-## reports
+# reports
 urlpatterns += [
     path("", reports.treasury_home, name="treasury_home"),
-    path("ajax/get_order", reports.ajax_get_order, name="ajax_get_order"),
+    path("hx/get_order", reports.hx_get_order, name="hx_get_order"),
     path("reports/cash_balance", reports.cash_balance, name="cash_balance"),
     path(
         "reports/period_payments",

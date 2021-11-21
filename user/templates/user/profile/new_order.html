@@ -1,6 +1,5 @@
-{% load i18n %}
-
 {% extends "base/base.html" %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -70,20 +69,20 @@
           <div class="col-sm-4" id="payform_type">
             <img 
               src="{{ object.person.center.pix_image.url }}" 
-              class="img-fluid">
+              class="img-fluid mb-4">
           </div>
           <div class="col-sm-8">
             <p><strong>{% trans 'pix-key' %}: </strong></p>
-            {{ object.person.center.pix_key }}
+            <p class="h2">{{ object.person.center.pix_key }}</p>
 
             <hr>
             <ul>
               <li>{% trans 'Transfer, deposit or PIX at your bank.' %}</li>
               <li>{% trans 'Use the "Description" field in your bank app to identify your contribution via PIX.' %}</li>
-              <li>{% trans 'Take the .pdf or .jpg digital voucher provided by your bank' %}</li>
+              <li>{% trans 'Take the digital voucher provided by your bank (.jpg file format only)' %}</li>
               <li>{% trans 'In this program you will be able to make payments and contributions in your name only.' %}</li>
               <li>{% trans 'For collective payments and contributions (two or more people) contact your core treasury.' %}</li>
-              <li>{% trans 'To start, click on' %} <strong class="text-primary">{% trans '+ Add payment' %}</strong> </li>
+              <li>{% trans 'To start, click on' %} <strong class="text-primary">+ {% trans 'Payment' %}</strong> </li>
             </ul>
           </div>
         </div>
@@ -136,7 +135,7 @@
         <div class="alert alert-secondary">
           <div class="row">
             <div class="col-sm-12">
-              <p>{% trans 'In order to complete your contribution, have your deposit, transfer or PIX receipt scanned (.pdf or .jpg)' %}</p>
+              <p>{% trans 'In order to complete your contribution, have your deposit, transfer or PIX receipt scanned in .jpg file format' %}</p>
               <p><strong>{% trans 'Voucher img' %}: </strong>{% trans 'Upload the file to the system' %}</p>
             </div>
           </div>
@@ -182,6 +181,8 @@
   const voucherImg = document.getElementById("id_voucher_img")
   const bancFlagField = document.getElementById("id_bank_flag")
   const ctrlNumberField = document.getElementById("id_ctrl_number")
+  // mostrar o evento quando seleciona conferência
+  const eventField = document.getElementById("div_id_event")
 
   
   //verifica se todos os campos estão válidos no formulário antes de salvar

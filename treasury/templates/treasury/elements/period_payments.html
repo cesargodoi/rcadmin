@@ -1,7 +1,12 @@
 {% load i18n %}
 
 <div class="media border-top {% if item.status == 'PND' %}text-info{% endif %}">
-  <div class="media-body" onClick="getOrder('{{ item.order_id }}')" style="cursor: pointer;">
+  <div class="media-body" 
+       hx-get="{% url 'hx_get_order' %}?order_id={{ item.order_id }}" 
+       hx-target="#showModal"
+       hx-trigger="click"
+       _="on htmx:afterOnLoad wait 10ms then add .show to #modal then add .show to #modal-backdro"
+       style="cursor: pointer;">
     <div class="row mt-1 mb-0">
       <div class="col-md-2">
         {{ item.date }}

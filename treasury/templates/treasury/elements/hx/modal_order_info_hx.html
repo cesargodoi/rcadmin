@@ -1,0 +1,112 @@
+{% load i18n %}
+
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content text-secondary">
+      <div class="modal-header">
+        <h4 class="modal-title text-secondary">
+          Order detail 
+          {% if order_info.self_payed %}
+          &nbsp;&nbsp;<small class="text-muted">self payed</small>
+          {% endif %}
+        </h4>
+        <button type="button" class="close" onclick="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-secondary">
+        <div class="row">
+          <div class="col-6 font-weight-bold">{{ order_info.person }}</div>
+          <div class="col-4">{{ order_info.created_on }}</div>
+          <div class="col-2 text-right">{{ order_info.status }}</div>
+        </div>
+        {% if order_info.description %}
+          <span class="text-muted font-italic"><small>{{ order_info.description }}</small></span>
+        {% endif %}
+        <!-- payments -->
+        <h5 class="mt-4 text-secondary">payments</h5>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>type</th>
+              <th>description</th>
+              <th class="text-right">value $</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payment in order_info.payments %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ payment.paytype }}</td>
+              {% if payment.event %}
+                <td>{{ payment.event }}</td>
+              {% else %}
+                <td>{{ payment.ref_month }}</td>
+              {% endif %}
+              <td class="text-right">{{ payment.value|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="table table-sm">
+          <tr>
+            <th width="80%" class="text-right">TOTAL:</th>
+            <th class="text-right" id="ptTotal">{{ order_info.amount|floatformat:2 }}</th>
+          </tr>
+        </table>
+        <!-- payforms -->
+        <h5 class="text-secondary">payment forms</h5>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>type</th>
+              <th>bank/flag</th>
+              <th>description</th>
+              <th class="text-right">value $</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payform in order_info.payforms %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ payform.payform_type }}</td>
+              <td>{{ payform.bank_flag }}</td>
+              <td>
+                {% if payform.ctrl_number %}{{ payform.ctrl_number }}{% endif %}
+                {% if payform.ctrl_number and payform.complement %} - {% endif %}
+                {% if payform.complement %}{{ payform.complement }}{% endif %}
+              </td>
+              <td class="text-right">{{ payform.value|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="table table-sm">
+          <tr>
+            <th width="80%" class="text-right">TOTAL:</th>
+            <th class="text-right" id="pfTotal">{{ order_info.amount|floatformat:2 }}</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function closeModal() {
+	var container = document.getElementById("showModal")
+	var backdrop = document.getElementById("modal-backdrop")
+	var modal = document.getElementById("modal")
+
+	modal.classList.remove("show")
+	backdrop.classList.remove("show")
+
+	setTimeout(function() {
+		container.removeChild(backdrop)
+		container.removeChild(modal)
+	}, 200)
+}
+</script>
