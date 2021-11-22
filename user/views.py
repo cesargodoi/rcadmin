@@ -237,9 +237,7 @@ def add_payment(request):
     context = {
         "form": MyPaymentForm(
             initial={
-                "paytype": PayTypes.objects.first()
-                if len(PayTypes.objects.all()) > 0
-                else None,
+                "paytype": None,
                 "person": request.user.person,
                 "ref_month": timezone.now().date(),
             }

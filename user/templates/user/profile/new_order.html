@@ -8,7 +8,7 @@
   {% if request.session.my_order.total_payments != 0.0 %}
   <button 
     class="btn btn-primary" 
-    onclick="checkFormOfPayment()" id="pay-now">
+    onclick="checkForm()" id="pay-now">
     <i class="fas fa-money-bill-wave-alt"></i> 
     {% trans 'Pay now' %}
   </button>
@@ -173,66 +173,7 @@
 
 {% block scripts %}
 
-<script>
-  //faz campo de valor não ser editável no profile>payments
-  const paymentValue = document.getElementById("id_value")
-  paymentValue.setAttribute('readonly', 'readonly')
-
-  const voucherImg = document.getElementById("id_voucher_img")
-  const bancFlagField = document.getElementById("id_bank_flag")
-  const ctrlNumberField = document.getElementById("id_ctrl_number")
-  // mostrar o evento quando seleciona conferência
-  const eventField = document.getElementById("div_id_event")
-
-  
-  //verifica se todos os campos estão válidos no formulário antes de salvar
-  function checkFormOfPayment(){
-    
-    if(bancFlagField.value == ''){
-      alertPaymentIdentification("id_bank_flag");
-      return false;
-    }
-    if(ctrlNumberField.value == ''){
-      alertPaymentIdentification("id_ctrl_number");
-      return false;
-    }
-    if(voucherImg.value == ''){
-          alertVoucherImg();
-          return false;
-    }
-    document.getElementById('form').submit()
-
-  }
-
-  function alertVoucherImg(){
-    var voucherImg = document.getElementById("id_voucher_img")
-    var divVoucherImg = document.getElementById("div_id_voucher_img")
-    
-    var invalideValue = document.createElement("p");
-    invalideValue.classList.add("invalid-feedback");
-    invalideValue.style.display = 'block'
-    var invalidText = document.createTextNode(
-      "Please send a voucher for your pay."
-    );
-    invalideValue.appendChild(invalidText);
-    divVoucherImg.appendChild(invalideValue)
-    divVoucherImg.classList.add("is-invalid")
-    voucherImg.focus();
-  }
-
-  function alertPaymentIdentification(id){
-    var identificationField = document.getElementById(id)
-
-    var invalidValueField = document.createElement("p");
-    invalidValueField.classList.add("invalid-feedback");
-    var invalidText = document.createTextNode(
-      "Don't forget this field."
-    );
-    invalidValueField.appendChild(invalidText);
-    identificationField.parentElement.appendChild(invalidValueField);
-    identificationField.classList.add("is-invalid");
-    identificationField.focus();
-  }
-</script>
+{% load static %}
+<script type="text/javascript" src="{% static 'js/profile_add_paymentform.js' %}"></script>
 
 {% endblock %}
