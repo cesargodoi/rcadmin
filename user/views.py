@@ -1,12 +1,12 @@
 import datetime
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.utils.translation import get_language, activate
 from event.models import Event
 from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
@@ -233,6 +233,14 @@ def add_payment(request):
         request.session["my_order"]["payments"].append(new)
         request.session.modified = True
         return redirect("user_new_order")
+
+    # change queryset for event field (only type CNF and status OPN)
+    events = Event.objects.filter(
+        activity__activity_type="CNF", status="OPN"
+    ).order_by("-date")
+    MyPaymentForm.base_fields["event"] = forms.ModelChoiceField(
+        queryset=events
+    )
 
     context = {
         "form": MyPaymentForm(
