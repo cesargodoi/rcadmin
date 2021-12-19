@@ -22,25 +22,22 @@
 </article>
 
 {% if object %}
-<div class="row row-col-2">
-  <div class="col-md-6">
-    {% include "treasury/elements/person_card.html" %}
-  </div>
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <div class="card-header">
-        <h5>{% trans 'Payments' %}</h5>
-      </div>
-      {% if object_list.has_other_pages %}
-      {% include "base/paginator.html" %}
-      {% endif %}
 
-      {% for pay in object_list %}
-      {% include "user/elements/payment.html" %}
-      {% endfor %}
-    </div>
+{% include "treasury/elements/person_card.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h5>{% trans 'Payments' %}</h5>
+    {% if object_list.has_other_pages %}
+    {% include "base/paginator.html" %}
+    {% endif %}
+
+    {% for pay in object_list %}
+    {% include "user/profile/payment.html" %}
+    {% endfor %}
   </div>
-</div>
+</article>
+
 {% else %}
 <div class="alert alert-secondary" role="alert">
   <h4 class="alert-heading">{% trans 'select a person' %}</h4>

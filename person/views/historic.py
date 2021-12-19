@@ -24,7 +24,7 @@ def person_historic(request, person_id):
     context = {
         "object_list": object_list,
         "title": _("historic list"),
-        "person": person,  # to header element
+        "object": person,  # to header element
         "nav": "detail",
         "tab": "historic",
     }
@@ -55,7 +55,7 @@ def historic_create(request, person_id):
         ),
         "title": _("create historic"),
         "to_create": True,
-        "person": person,  # to header element
+        "person_id": person_id,  # to header element
     }
     return render(request, "person/forms/historic.html", context)
 
@@ -79,7 +79,7 @@ def historic_update(request, person_id, pk):
     context = {
         "form": HistoricForm(instance=historic),
         "title": _("update historic"),
-        "person": historic.person,  # to header element
+        "person_id": person_id,  # to header element
     }
     return render(request, "person/forms/historic.html", context)
 

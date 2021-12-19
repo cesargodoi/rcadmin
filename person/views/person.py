@@ -71,7 +71,6 @@ def person_detail(request, id):
     context = {
         "object": person,
         "title": _("person detail"),
-        "person": person,  # to header element
         "age": age,
         "nav": "detail",
         "tab": "info",

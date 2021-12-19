@@ -53,7 +53,7 @@ function displayEventChoices() {
   const paytypeChoices = document.getElementById("id_paytype");
   const divEventChoices = document.getElementById("div_id_event");
 
-  if (paytypeChoices.value == "3") {
+  if (paytypeChoices.value == "1") {
     divEventChoices.style.display = "block";
   } else {
     divEventChoices.style.display = "none";

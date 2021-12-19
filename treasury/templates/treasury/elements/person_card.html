@@ -10,17 +10,9 @@
         {{ object.get_aspect_display }} <strong>{% trans 'in' %}</strong>
         {{ object.aspect_date|date:"d/m/Y" }}
       </em>
-      &nbsp;&nbsp;&nbsp;
-      <p class="badge badge-pill badge-secondary float-right">{{ object.reg }}</p>
-    </div>
-    <h5>
-      {{ object.name }} &nbsp;&nbsp;
-      <small class="text-muted ">
-        <em>{{ object.user.profile.social_name }}</em>
-      </small>
-    </h5>
-    {% if object.status not in "ACT,---" %}
-    <span class="badge badge-pill 
+      <div class="float-right">
+        {% if object.status not in "ACT,---" %}
+          <span class="badge badge-pill 
             {% if object.status == 'LIC' %}
             badge-success
             {% elif object.status == 'DIS' %}
@@ -30,34 +22,34 @@
             {% elif object.status == 'DEA' %}
             badge-dark
             {% endif %}">
-      {{ object.get_status_display }}
-    </span>
-    {% endif %}
-    {% if object.user.profile.phone_1 %}
-    <i class="fas fa-phone"></i> {{ object.user.profile.phone_1 }} &nbsp;&nbsp;
-    {% endif %}
-    {% if object.user.profile.phone_2 %}
-    <i class="fas fa-phone"></i> {{ object.user.profile.phone_2 }} <br>
-    {% endif %}
-    {% if object.user.email %}
-    <i class="fas fa-envelope"></i> {{ object.user.email }}
-    {% endif %}
-    <hr>
-    <address>
-      {{ object.user.profile.address }}, {{ object.user.profile.number }}
-      {% if object.user.profile.complement %}
-        &nbsp;&nbsp;
-        <small class="text-muted">
-          <em>{{ object.user.profile.complement }}</em>
-        </small>
-      {% endif %}
-      <br>
-      {{ object.user.profile.district }} -
-      {{ object.user.profile.city }} -
-      {{ object.user.profile.state }}
-      <br>
-      {{ object.user.profile.country }} -
-      {{ object.user.profile.zip_code }}
-    </address>
+            {{ object.get_status_display }}
+          </span>
+          &nbsp;&nbsp;
+        {% endif %}
+        <p class="badge badge-pill badge-secondary">{{ object.reg }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h5>
+          {{ object.name }} &nbsp;&nbsp;
+          <small class="text-muted font-italic">
+            {{ object.user.profile.social_name }}
+          </small>
+        </h5>
+        {% if object.user.profile.phone_1 %}
+        <i class="fas fa-phone"></i> {{ object.user.profile.phone_1 }} &nbsp;&nbsp;
+        {% endif %}
+        {% if object.user.profile.phone_2 %}
+        <i class="fas fa-phone"></i> {{ object.user.profile.phone_2 }} <br>
+        {% endif %}
+        {% if object.user.email %}
+        <i class="fas fa-envelope"></i> {{ object.user.email }}
+        {% endif %}
+      </div>
+      <div class="col text-right">
+        {% include "person/elements/address.html" %}
+      </div>
+    </div>
   </div>
 </article>

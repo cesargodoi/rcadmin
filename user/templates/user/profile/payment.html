@@ -1,11 +1,11 @@
-<div class="row border-top border-secondary pt-2">
-  <div class="col-sm-2">
+<div class="row border-top border-secondary pt-2 pb-2">
+  <div class="col-md-2">
     {{ pay.created_on|date:"d/m/y" }}
   </div>
-  <div class="col-sm-4">
+  <div class="col-md-4">
     {{ pay.paytype }}
   </div>
-  <div class="col-sm-3">
+  <div class="col-md-3">
     {% if pay.ref_month %}
       {{ pay.ref_month|date:"M/y" }}
     {% endif %}
@@ -14,7 +14,7 @@
       {{ pay.event.center }}
     {% endif %}
   </div>
-  <div class="col-sm-2 text-right {% if pay.order_set.all.0.status == 'PND' %}
+  <div class="col-md-2 text-right {% if pay.order_set.all.0.status == 'PND' %}
                                     text-info
                                   {% elif pay.order_set.all.0.status == 'CCL' %}
                                     text-danger
@@ -23,7 +23,7 @@
                                   {% endif %}">
     <strong>{{ pay.order_set.all.0.get_status_display }}</strong>
   </div>
-  <div class="col-sm-1 text-right {% if pay.order_set.all.0.status == 'PND' %}
+  <div class="col-md-1 text-right {% if pay.order_set.all.0.status == 'PND' %}
                                     text-info
                                   {% elif pay.order_set.all.0.status == 'CCL' %}
                                     text-danger
@@ -32,5 +32,4 @@
                                   {% endif %}">
     <strong>{{ pay.value }}</strong>
   </div>
-
 </div>

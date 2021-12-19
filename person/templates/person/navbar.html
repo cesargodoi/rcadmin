@@ -30,25 +30,25 @@
       {% if nav == 'detail' %}
         <li class="nav-item">
           <a class="nav-link {% if tab == 'info' %}active{% endif %}" 
-             href="{% url 'person_detail' person.id %}">
+             href="{% url 'person_detail' object.id %}">
              {% trans 'Info' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'historic' %}active{% endif %}" 
-             href="{% url 'person_historic' person.id %}">
+             href="{% url 'person_historic' object.id %}">
              {% trans 'Historic' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'frequencies' %}active{% endif %}" 
-             href="{% url 'frequency_ps_list' person.id %}">
+             href="{% url 'frequency_ps_list' object.id %}">
              {% trans 'Frequencies' %}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if tab == 'membership' %}active{% endif %}" 
-             href="{% url 'membership_ps_list' person.id %}">
+             href="{% url 'membership_ps_list' object.id %}">
              {% trans 'Membership' %}
           </a>
         </li>
@@ -97,11 +97,11 @@
         {% endif %}
       {% endif %}
 
-      {% if person.is_active %}
+      {% if object.is_active %}
         {% if tab == "historic" %}
           <li class="nav-item">
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-               href="{% url 'historic_create' person.id %}">
+               href="{% url 'historic_create' object.id %}">
               <i class="fas fa-plus"></i> 
               {% trans 'Historic' %}
             </a>
@@ -111,7 +111,7 @@
         {% if tab == "frequencies" %}
           <li class="nav-item">
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-               href="{% url 'frequency_ps_insert' person.id %}">
+               href="{% url 'frequency_ps_insert' object.id %}">
               <i class="fas fa-plus"></i> 
               {% trans 'Frequency' %}
             </a>
@@ -121,7 +121,7 @@
         {% if tab == "membership" %}
           <li class="nav-item">
             <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-               href="{% url 'membership_ps_create' person.id %}">
+               href="{% url 'membership_ps_create' object.id %}">
               <i class="fas fa-plus"></i> 
               {% trans 'Membership' %}
             </a>

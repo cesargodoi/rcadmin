@@ -39,12 +39,7 @@ class MyPaymentForm(forms.ModelForm):
 
 
 class MyFormOfPaymentForm(forms.ModelForm):
-    type = forms.ChoiceField(
-        choices=PROFILE_PAYFORM_TYPES,
-        widget=forms.Select(
-            attrs={"v-model": "selected", "v-on:change": "viewPix()"}
-        ),
-    )
+    type = forms.ChoiceField(choices=PROFILE_PAYFORM_TYPES)
 
     class Meta:
         model = FormOfPayment

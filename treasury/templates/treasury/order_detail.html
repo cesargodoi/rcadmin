@@ -1,6 +1,5 @@
 {% extends "base/base.html" %}
 {% load i18n %}
-
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -20,7 +19,7 @@
   </a>
   <a type="button" 
     class="btn btn-light mr-3" 
-    href="{% url 'orders' %}?d30=on">
+    href="{{ goback }}">
     <i class="fas fa-chevron-left "></i> 
     {% trans 'Go back' %}
   </a>
@@ -65,9 +64,9 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <div class="card text-white bg-steel mb-4">
+        <div class="card bg-steel mb-4">
           <div class="card-header">
-            <h5 class="text-white">{% trans 'Payments' %}</h5>
+            <h5>{% trans 'Payments' %}</h5>
           </div>
           <div class="card-body">
             {% for object in request.session.order.payments %}

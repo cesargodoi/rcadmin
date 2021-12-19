@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 10:59-0300\n"
-"PO-Revision-Date: 2021-10-05 10:59-0306\n"
+"POT-Creation-Date: 2021-11-21 09:25-0300\n"
+"PO-Revision-Date: 2021-11-18 10:35-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -68,6 +68,7 @@ msgid "Action not allowed!"
 msgstr "Ação não permitida!"
 
 #: base/templates/base/action_not_allowed.html:11
+#: base/templates/base/import_fields_to_persons.html:43
 #: base/templates/base/import_persons.html:43
 #: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
@@ -76,19 +77,19 @@ msgstr "Ação não permitida!"
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
 #: publicwork/templates/publicwork/reports/navbar.html:33
 #: treasury/templates/treasury/bankflags.html:22
-#: treasury/templates/treasury/confirm_del.html:18
-#: treasury/templates/treasury/confirm_delete.html:31
-#: treasury/templates/treasury/confirm_register.html:20
+#: treasury/templates/treasury/confirm_del.html:17
+#: treasury/templates/treasury/confirm_delete.html:30
+#: treasury/templates/treasury/confirm_register.html:19
 #: treasury/templates/treasury/elements/treasury_navbar.html:53
 #: treasury/templates/treasury/forms_of_payments.html:23
-#: treasury/templates/treasury/order_add_payform.html:18
-#: treasury/templates/treasury/order_add_payment.html:19
-#: treasury/templates/treasury/order_create.html:23
-#: treasury/templates/treasury/order_detail.html:25
+#: treasury/templates/treasury/order_add_payform.html:17
+#: treasury/templates/treasury/order_add_payment.html:18
+#: treasury/templates/treasury/order_create.html:22
+#: treasury/templates/treasury/order_detail.html:24
 #: treasury/templates/treasury/payments.html:23
 #: treasury/templates/treasury/paytypes.html:23
 #: user/templates/user/auth/password_change_done.html:13
-#: user/templates/user/forms/form.html:19
+#: user/templates/user/forms/form.html:18
 #: user/templates/user/profile/confirm_del.html:20
 msgid "Go back"
 msgstr "Voltar"
@@ -100,7 +101,7 @@ msgid "Atention!"
 msgstr "Atenção!"
 
 #: base/templates/base/confirm_delete.html:9
-#: treasury/templates/treasury/confirm_del.html:9
+#: treasury/templates/treasury/confirm_del.html:8
 msgid "Are you sure you want to delete"
 msgstr "Tem certeza que deseja apagar"
 
@@ -116,9 +117,9 @@ msgstr "Tem certeza que deseja apagar"
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:19
 #: publicwork/templates/publicwork/listener/confirm.html:30
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:18
-#: treasury/templates/treasury/confirm_del.html:14
-#: treasury/templates/treasury/confirm_delete.html:26
-#: treasury/templates/treasury/confirm_register.html:15
+#: treasury/templates/treasury/confirm_del.html:13
+#: treasury/templates/treasury/confirm_delete.html:25
+#: treasury/templates/treasury/confirm_register.html:14
 #: user/templates/user/profile/confirm_del.html:16
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:29
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:32
@@ -153,7 +154,7 @@ msgstr "Confirmar"
 #: publicwork/templates/publicwork/seeker/navbar.html:103
 #: user/templates/user/auth/password_change_form.html:18
 #: user/templates/user/profile/add_payment.html:18
-#: user/templates/user/profile/new_order.html:21
+#: user/templates/user/profile/new_order.html:20
 #: user/templates/user/profile/scan_qrcode_event.html:10
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:33
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:36
@@ -178,14 +179,12 @@ msgid "all"
 msgstr "todos"
 
 #: base/templates/base/elements/menu.html:6 base/templates/base/home.html:44
-#: center/templates/center/centers.html:4
-#: center/templates/center/navbar.html:6
+#: center/templates/center/centers.html:4 center/templates/center/navbar.html:6
 msgid "Centers"
 msgstr "Núcleos"
 
 #: base/templates/base/elements/menu.html:11 base/templates/base/home.html:54
-#: person/templates/person/navbar.html:7
-#: person/templates/person/persons.html:3
+#: person/templates/person/navbar.html:7 person/templates/person/persons.html:3
 msgid "Persons"
 msgstr "Alunos"
 
@@ -226,14 +225,13 @@ msgid "Activities"
 msgstr "Atividades"
 
 #: base/templates/base/elements/menu_admin.html:8
-#: treasury/templates/treasury/order_create.html:60
-#: treasury/templates/treasury/order_detail.html:70
+#: treasury/templates/treasury/order_create.html:59
+#: treasury/templates/treasury/order_detail.html:69
 #: treasury/templates/treasury/payments.html:7
-#: treasury/templates/treasury/reports/payments_by_person.html:32
-#: treasury/views/payments.py:21
-#: user/templates/user/profile/navbar-ant.html:22
+#: treasury/templates/treasury/reports/payments_by_person.html:30
+#: treasury/views/payments.py:21 user/templates/user/profile/navbar-ant.html:22
 #: user/templates/user/profile/navbar.html:28
-#: user/templates/user/profile/new_order.html:30
+#: user/templates/user/profile/new_order.html:29
 msgid "Payments"
 msgstr "Pagamentos"
 
@@ -250,28 +248,34 @@ msgid "Banks or Flags"
 msgstr "Bancos e Cartões"
 
 #: base/templates/base/elements/menu_admin.html:13
-msgid "Import persons from (.csv)"
-msgstr "Importar pessoas de"
+msgid "Import persons"
+msgstr "Importar pessoas"
 
-#: base/templates/base/elements/navbar.html:31
-#: user/templates/user/forms/form.html:29
+#: base/templates/base/elements/menu_admin.html:14
+#, fuzzy
+#| msgid "Import persons"
+msgid "Import fields to persons"
+msgstr "Importar pessoas"
+
+#: base/templates/base/elements/navbar.html:33
+#: user/templates/user/forms/form.html:28
 #: user/templates/user/profile/detail.html:13
 #: user/templates/user/profile/navbar-ant.html:4
 #: user/templates/user/profile/navbar.html:7
 msgid "Profile"
 msgstr "Perfil"
 
-#: base/templates/base/elements/navbar.html:32
+#: base/templates/base/elements/navbar.html:37
 msgid "Logout"
 msgstr "Sair"
 
-#: base/templates/base/elements/navbar.html:50
+#: base/templates/base/elements/navbar.html:56
 msgid "Login"
 msgstr "Entrar"
 
 #: base/templates/base/form.html:12
 #: person/templates/person/forms/historic.html:12
-#: user/templates/user/forms/form.html:13
+#: user/templates/user/forms/form.html:12
 #: workgroup/templates/workgroup/member/update_frequency.html:13
 msgid "Save"
 msgstr "Salvar"
@@ -279,8 +283,8 @@ msgstr "Salvar"
 #: base/templates/base/form.html:23
 #: person/templates/person/forms/historic.html:24
 #: person/templates/person/forms/membership.html:23
-#: treasury/templates/treasury/order_create.html:29
-#: user/templates/user/forms/form.html:29
+#: treasury/templates/treasury/order_create.html:28
+#: user/templates/user/forms/form.html:28
 msgid "Create"
 msgstr "Criar"
 
@@ -290,8 +294,8 @@ msgstr "Criar"
 #: publicwork/templates/publicwork/listener/update.html:12
 #: publicwork/templates/publicwork/seeker/add_or_change.html:11
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
-#: treasury/templates/treasury/order_create.html:29
-#: user/templates/user/forms/form.html:29
+#: treasury/templates/treasury/order_create.html:28
+#: user/templates/user/forms/form.html:28
 #: workgroup/templates/workgroup/membership_update.html:13
 msgid "Update"
 msgstr "Atualizar"
@@ -300,12 +304,14 @@ msgstr "Atualizar"
 msgid "Welcome to"
 msgstr "Bem-vindo"
 
+#: base/templates/base/import_fields_to_persons.html:37
 #: base/templates/base/import_persons.html:37
 msgid "New import"
 msgstr "Nova importação"
 
-#: base/templates/base/import_persons.html:98
-msgid "select file (.csv) to import"
+#: base/templates/base/import_fields_to_persons.html:85
+#: base/templates/base/import_persons.html:105
+msgid "Select a .csv file to import."
 msgstr "selecionar arquivo (.csv) para importar"
 
 #: base/templates/base/searchs/center.html:24
@@ -336,7 +342,7 @@ msgstr "de"
 #: event/templates/event/header.html:11
 #: treasury/templates/treasury/elements/search_dates.html:19
 msgid "to"
-msgstr "para"
+msgstr "à"
 
 #: base/templates/base/searchs/event.html:32
 #: base/templates/base/searchs/workgroup.html:24
@@ -367,17 +373,17 @@ msgstr "Frequências por período"
 #: base/templates/base/searchs/seeker.html:54
 #: base/templates/base/searchs/seeker.html:59
 #: publicwork/templates/publicwork/seeker/info.html:18
-#: treasury/templates/treasury/order_detail.html:56
+#: treasury/templates/treasury/order_detail.html:55
 msgid "status"
 msgstr "status"
 
 #: base/templates/base/searchs/modal_frequencies.html:65
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:33
 #: base/templates/base/searchs/modal_import_persons.html:21
 #: base/templates/base/searchs/modal_lectures.html:65
 #: base/templates/base/searchs/modal_status.html:35
 #: center/templates/center/info.html:148
 #: publicwork/templates/publicwork/insert_yourself/modal_data_policy.html:29
-#: treasury/templates/treasury/elements/modal.html:26
 msgid "Close"
 msgstr "Fechar"
 
@@ -387,10 +393,12 @@ msgstr "Fechar"
 msgid "Generate"
 msgstr "Gerar"
 
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:11
 #: base/templates/base/searchs/modal_import_persons.html:11
-msgid "Import persons"
-msgstr "Importar pessoas"
+msgid "Select a .csv file to import"
+msgstr "selecionar arquivo (.csv) para importar"
 
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:34
 #: base/templates/base/searchs/modal_import_persons.html:22
 msgid "Import"
 msgstr "Importar"
@@ -412,13 +420,19 @@ msgid "all status"
 msgstr "todos status"
 
 #: base/templates/base/searchs/person.html:25
-#: person/templates/person/info.html:48 rcadmin/common.py:72
+#: person/templates/person/info.html:48 rcadmin/common.py:75
 #: workgroup/templates/workgroup/member/info.html:18
 msgid "aspect"
 msgstr "discipulado"
 
-#: base/views/tools.py:23
+#: base/views/tools.py:26
 msgid "import persons"
+msgstr "importar pessoas"
+
+#: base/views/tools.py:97
+#, fuzzy
+#| msgid "import persons"
+msgid "import fields to persons"
 msgstr "importar pessoas"
 
 #: center/templates/center/centers.html:70
@@ -450,7 +464,7 @@ msgstr "Tem certeza que deseja reinserir o Núcleo"
 
 #: center/templates/center/forms/center.html:14
 #: person/templates/person/forms/person.html:14
-#: person/templates/person/info.html:22 user/templates/user/forms/form.html:40
+#: person/templates/person/info.html:22 user/templates/user/forms/form.html:39
 #: user/templates/user/profile/info.html:19
 msgid "Basic"
 msgstr "Básico"
@@ -464,7 +478,7 @@ msgstr "Contatos"
 #: center/templates/center/forms/center.html:32
 #: center/templates/center/info.html:20
 #: person/templates/person/forms/person.html:36
-#: person/templates/person/info.html:34 user/templates/user/forms/form.html:51
+#: person/templates/person/info.html:34 user/templates/user/forms/form.html:50
 #: user/templates/user/profile/info.html:41
 msgid "Address"
 msgstr "Endereço"
@@ -473,8 +487,8 @@ msgstr "Endereço"
 #: center/templates/center/info.html:29
 #: person/templates/person/forms/person.html:47
 #: person/templates/person/info.html:28
-#: treasury/templates/treasury/order_create.html:144
-#: user/templates/user/forms/form.html:62
+#: treasury/templates/treasury/order_create.html:143
+#: user/templates/user/forms/form.html:61
 #: user/templates/user/profile/info.html:30
 msgid "Others"
 msgstr "Outros"
@@ -483,7 +497,7 @@ msgstr "Outros"
 msgid "pupils"
 msgstr "alunos"
 
-#: center/templates/center/header.html:22 rcadmin/common.py:30
+#: center/templates/center/header.html:22 rcadmin/common.py:33
 msgid "conference center"
 msgstr "centro de conferência"
 
@@ -545,8 +559,7 @@ msgstr "observações"
 msgid "Center PIX"
 msgstr "Núcleo PIX"
 
-#: center/templates/center/navbar.html:6
-#: center/templates/center/navbar.html:21
+#: center/templates/center/navbar.html:6 center/templates/center/navbar.html:21
 msgid "Center"
 msgstr "Núcleo"
 
@@ -556,7 +569,7 @@ msgstr "Núcleo"
 #: publicwork/templates/publicwork/groups/navbar.html:60
 #: publicwork/templates/publicwork/lecture/navbar.html:29
 #: publicwork/templates/publicwork/seeker/navbar.html:51
-#: treasury/templates/treasury/order_detail.html:13
+#: treasury/templates/treasury/order_detail.html:12
 #: user/templates/user/profile/navbar.html:42
 #: workgroup/templates/workgroup/navbar.html:39
 msgid "Edit"
@@ -566,7 +579,7 @@ msgstr "Editar"
 #: person/templates/person/navbar.html:86
 #: publicwork/templates/publicwork/lecture/navbar.html:37
 #: publicwork/templates/publicwork/seeker/navbar.html:60
-#: treasury/templates/treasury/order_detail.html:19
+#: treasury/templates/treasury/order_detail.html:18
 msgid "Delete"
 msgstr "Apagar"
 
@@ -594,21 +607,21 @@ msgid "update center"
 msgstr "atualizar núcleo"
 
 #: center/views.py:131 event/views/activity.py:83 event/views/event.py:123
-#: event/views/frequencies.py:26 person/views/frequency_ps.py:96
+#: event/views/frequencies.py:26 person/views/frequency_ps.py:93
 #: person/views/historic.py:98 person/views/membership_ps.py:112
-#: person/views/person.py:211 publicwork/views/group.py:175
+#: person/views/person.py:210 publicwork/views/group.py:175
 #: publicwork/views/historic.py:95 publicwork/views/lecture.py:136
 #: publicwork/views/listener.py:111 publicwork/views/listener.py:211
 #: publicwork/views/seeker.py:142 treasury/views/bankflag.py:87
-#: treasury/views/form_of_payment.py:83 treasury/views/order.py:430
+#: treasury/views/form_of_payment.py:83 treasury/views/order.py:442
 #: treasury/views/payments.py:83 treasury/views/paytypes.py:84
 #: workgroup/views/membership.py:98 workgroup/views/mentoring.py:275
 #: workgroup/views/workgroup.py:122
 msgid "confirm to delete"
 msgstr "confirme para deletar"
 
-#: center/views.py:147 person/views/person.py:231
-#: publicwork/views/group.py:191 publicwork/views/seeker.py:156
+#: center/views.py:147 person/views/person.py:230 publicwork/views/group.py:191
+#: publicwork/views/seeker.py:156
 msgid "confirm to reinsert"
 msgstr "confirme para reinserir"
 
@@ -631,8 +644,8 @@ msgstr[1] "%d eventos foram marcados com sucesso como 'ativos'."
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
 #: treasury/templates/treasury/bankflags.html:17
 #: treasury/templates/treasury/forms_of_payments.html:17
-#: treasury/templates/treasury/order_create.html:67
-#: treasury/templates/treasury/order_create.html:105
+#: treasury/templates/treasury/order_create.html:66
+#: treasury/templates/treasury/order_create.html:104
 #: treasury/templates/treasury/payments.html:17
 #: treasury/templates/treasury/paytypes.html:17
 #: workgroup/templates/workgroup/mentoring/add_frequencies.html:12
@@ -667,7 +680,7 @@ msgstr "QR - Code"
 msgid "Scan this QR-Code to sign-in Event"
 msgstr "Leia este QR - Code para fazer login no evento"
 
-#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:45
+#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:48
 #: treasury/templates/treasury/bankflags.html:35
 #: treasury/templates/treasury/paytypes.html:39 user/models.py:62
 msgid "active"
@@ -792,7 +805,7 @@ msgstr "O evento foi apagado!"
 msgid "The Frequency has been deleted!"
 msgstr "A frequência foi excluída!"
 
-#: event/views/frequencies.py:67 person/views/frequency_ps.py:73
+#: event/views/frequencies.py:67 person/views/frequency_ps.py:70
 #: workgroup/views/mentoring.py:220
 msgid "insert frequencies"
 msgstr "inserir frequências"
@@ -853,9 +866,9 @@ msgstr "Membros"
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:8
 #: publicwork/templates/publicwork/listener/confirm.html:8
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:8
-#: treasury/templates/treasury/confirm_del.html:8
-#: treasury/templates/treasury/confirm_delete.html:8
-#: treasury/templates/treasury/confirm_register.html:8
+#: treasury/templates/treasury/confirm_del.html:7
+#: treasury/templates/treasury/confirm_delete.html:7
+#: treasury/templates/treasury/confirm_register.html:7
 #: user/templates/user/profile/confirm_del.html:8
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:8
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:8
@@ -916,11 +929,11 @@ msgstr "apenas ver"
 msgid "historic not found"
 msgstr "histórico não encontrado"
 
-#: person/templates/person/import_from_seekers.html:11
+#: person/templates/person/import_from_seekers.html:12
 msgid "Seekers who will become pupils"
 msgstr "Buscadores que se tornarão alunos"
 
-#: person/templates/person/import_from_seekers.html:58
+#: person/templates/person/import_from_seekers.html:59
 msgid "no seekers found"
 msgstr "nenhum buscador encontrado"
 
@@ -986,9 +999,8 @@ msgstr "membro não encontrado"
 msgid "Insert Membership"
 msgstr "Inserir Membro"
 
-#: person/templates/person/navbar.html:7
-#: person/templates/person/navbar.html:67
-#: treasury/templates/treasury/order_create.html:37
+#: person/templates/person/navbar.html:7 person/templates/person/navbar.html:67
+#: treasury/templates/treasury/order_create.html:36
 msgid "Person"
 msgstr "Aluno"
 
@@ -1010,11 +1022,11 @@ msgstr "Frequência"
 msgid "persons not found in the search"
 msgstr "pessoas não encontradas na pesquisa"
 
-#: person/views/frequency_ps.py:26
+#: person/views/frequency_ps.py:23
 msgid "frequencies list"
 msgstr "lista de frequências"
 
-#: person/views/frequency_ps.py:55 person/views/membership_ps.py:54
+#: person/views/frequency_ps.py:52 person/views/membership_ps.py:54
 #: publicwork/views/group.py:333 publicwork/views/group.py:406
 #: publicwork/views/listener.py:47 publicwork/views/listener.py:143
 #: workgroup/views/membership.py:34 workgroup/views/mentoring.py:199
@@ -1053,11 +1065,11 @@ msgstr "aluno"
 msgid "person detail"
 msgstr "detalhes do aluno"
 
-#: person/views/person.py:133
+#: person/views/person.py:132
 msgid "create person"
 msgstr "criar aluno"
 
-#: person/views/person.py:187
+#: person/views/person.py:186
 msgid "update person"
 msgstr "atualizar aluno"
 
@@ -1157,7 +1169,6 @@ msgid "seekers not found"
 msgstr "buscadores não encontrados"
 
 #: publicwork/templates/publicwork/groups/select_lecture.html:3
-#| msgid "Select an event"
 msgid "Select a lecture"
 msgstr "selecionar um evento"
 
@@ -1181,7 +1192,7 @@ msgstr "Palestras"
 #: publicwork/templates/publicwork/home.html:50
 #: publicwork/templates/publicwork/reports/menu.html:5
 #: treasury/templates/treasury/reports/menu.html:5
-#: treasury/templates/treasury/treasury_home.html:35
+#: treasury/templates/treasury/treasury_home.html:34
 msgid "Reports"
 msgstr "Relatórios"
 
@@ -1198,8 +1209,8 @@ msgstr "Seu cadastro foi realizado com sucesso!"
 #: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:6
 msgid ""
 "You will be included in a “Welcome” group and in the next few days, one of "
-"the students responsible for this group should contact you (by message, call"
-" or email), to give you directions and upcoming activities."
+"the students responsible for this group should contact you (by message, call "
+"or email), to give you directions and upcoming activities."
 msgstr ""
 "Você será incluído em um grupo de “Boas-vindas” e nos próximos dias, um dos "
 "alunos responsáveis por este grupo deve entrar em contato com você (por "
@@ -1250,13 +1261,11 @@ msgstr "link de confirmação"
 
 #: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:12
 msgid "If you have not made this request, please disregard this email."
-msgstr ""
-"Se você não fez essa solicitação, por favor, desconsidere este e-mail."
+msgstr "Se você não fez essa solicitação, por favor, desconsidere este e-mail."
 
 #: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:20
 msgid ""
-"if you can not click on the link, copy a url below and paste in your "
-"browser:"
+"if you can not click on the link, copy a url below and paste in your browser:"
 msgstr ""
 "caso não seja possível clicar no link, copie a url abaixo e cole no seu "
 "navegador:"
@@ -1301,8 +1310,8 @@ msgid ""
 "first moment, through a “Welcome” group, in which you are our guest."
 msgstr ""
 "Como você está chegando agora, alguns de nossos alunos vão acompanhar você "
-"neste primeiro momento, através de um grupo de “Boas-vindas”, no qual você é"
-" nosso convidado."
+"neste primeiro momento, através de um grupo de “Boas-vindas”, no qual você é "
+"nosso convidado."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:24
 msgid ""
@@ -1311,16 +1320,16 @@ msgid ""
 "very clear understanding of what it is to be a Golden Rosicrucian student."
 msgstr ""
 "Neste grupo, você vai conhecer e participar das principais atividades de "
-"nossos alunos (Serviços Templários, Conferências e reuniões), com o objetivo"
-" de ter uma compreensão muito clara do que é ser aluno da Rosacruz Áurea."
+"nossos alunos (Serviços Templários, Conferências e reuniões), com o objetivo "
+"de ter uma compreensão muito clara do que é ser aluno da Rosacruz Áurea."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:25
 msgid ""
 "Participating in this group does not represent any commitment to the School "
 "and you can leave it whenever you want."
 msgstr ""
-"A participação neste grupo não representa nenhum vínculo com a Escola e você"
-" pode sair dele quando quiser."
+"A participação neste grupo não representa nenhum vínculo com a Escola e você "
+"pode sair dele quando quiser."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:26
 msgid ""
@@ -1446,7 +1455,7 @@ msgid "Add listener"
 msgstr "Adicionar ouvinte"
 
 #: publicwork/templates/publicwork/listener/listeners.html:47
-#: rcadmin/common.py:122
+#: rcadmin/common.py:125
 msgid "installed"
 msgstr "instalado"
 
@@ -1632,238 +1641,238 @@ msgstr "detalhes do buscador | frequências"
 msgid "seeker detail | historic"
 msgstr "detalhes do buscador | histórico"
 
-#: rcadmin/common.py:21
+#: rcadmin/common.py:24
 msgid "Golden Rosycross"
 msgstr "Rosacruz Áurea"
 
-#: rcadmin/common.py:25
+#: rcadmin/common.py:28
 msgid "male"
 msgstr "masculino"
 
-#: rcadmin/common.py:26
+#: rcadmin/common.py:29
 msgid "female"
 msgstr "femenino"
 
-#: rcadmin/common.py:29
+#: rcadmin/common.py:32
 msgid "center"
 msgstr "núcleo"
 
-#: rcadmin/common.py:31
+#: rcadmin/common.py:34
 msgid "contact room"
 msgstr "sala de contato"
 
-#: rcadmin/common.py:35
+#: rcadmin/common.py:38
 msgid "1st. Aspect"
 msgstr "1o Aspecto"
 
-#: rcadmin/common.py:36
+#: rcadmin/common.py:39
 msgid "2nd. Aspect"
 msgstr "2o Aspecto"
 
-#: rcadmin/common.py:37
+#: rcadmin/common.py:40
 msgid "3rd. Aspect"
 msgstr "3o Aspecto"
 
-#: rcadmin/common.py:38
+#: rcadmin/common.py:41
 msgid "4th. Aspect"
 msgstr "4o Aspecto"
 
-#: rcadmin/common.py:39
+#: rcadmin/common.py:42
 msgid "Grail"
 msgstr "Graal"
 
-#: rcadmin/common.py:40
+#: rcadmin/common.py:43
 msgid "5th. Aspect"
 msgstr "5o Aspecto"
 
-#: rcadmin/common.py:41
+#: rcadmin/common.py:44
 msgid "6th. Aspect"
 msgstr "6o Aspecto"
 
-#: rcadmin/common.py:46
+#: rcadmin/common.py:49
 msgid "licensed"
 msgstr "licenciado"
 
-#: rcadmin/common.py:47
+#: rcadmin/common.py:50
 msgid "dead"
 msgstr "morto"
 
-#: rcadmin/common.py:48
+#: rcadmin/common.py:51
 msgid "disconnected"
 msgstr "desconectado"
 
-#: rcadmin/common.py:49
+#: rcadmin/common.py:52
 msgid "removed"
 msgstr "removido"
 
-#: rcadmin/common.py:52
+#: rcadmin/common.py:55
 msgid "transfered"
 msgstr "transferido"
 
-#: rcadmin/common.py:53
+#: rcadmin/common.py:56
 msgid "regressed"
 msgstr "retrogradado"
 
-#: rcadmin/common.py:54 rcadmin/common.py:84
+#: rcadmin/common.py:57 rcadmin/common.py:87
 msgid "other"
 msgstr "outro"
 
-#: rcadmin/common.py:55
+#: rcadmin/common.py:58
 msgid "preparatório"
 msgstr "preparatório"
 
-#: rcadmin/common.py:56
+#: rcadmin/common.py:59
 msgid "probatório"
 msgstr "probatório"
 
-#: rcadmin/common.py:57
+#: rcadmin/common.py:60
 msgid "professo"
 msgstr "professo"
 
-#: rcadmin/common.py:62
+#: rcadmin/common.py:65
 msgid "pupil"
 msgstr "aluno"
 
-#: rcadmin/common.py:63
+#: rcadmin/common.py:66
 msgid "web pupil"
 msgstr "aluno web"
 
-#: rcadmin/common.py:64
+#: rcadmin/common.py:67
 msgid "gest"
 msgstr "convidado"
 
-#: rcadmin/common.py:67
+#: rcadmin/common.py:70
 msgid "mentor"
 msgstr "mentor"
 
-#: rcadmin/common.py:68 rcadmin/common.py:114
+#: rcadmin/common.py:71 rcadmin/common.py:117
 msgid "contact"
 msgstr "contato"
 
-#: rcadmin/common.py:69 rcadmin/common.py:120
+#: rcadmin/common.py:72 rcadmin/common.py:123
 msgid "member"
 msgstr "membro"
 
-#: rcadmin/common.py:73
+#: rcadmin/common.py:76
 msgid "maintenance"
 msgstr "manutenção"
 
-#: rcadmin/common.py:74
+#: rcadmin/common.py:77
 msgid "admin"
 msgstr "admin"
 
-#: rcadmin/common.py:77
+#: rcadmin/common.py:80
 msgid "open"
 msgstr "aberto"
 
-#: rcadmin/common.py:78
+#: rcadmin/common.py:81
 msgid "close"
 msgstr "fechar"
 
-#: rcadmin/common.py:81
+#: rcadmin/common.py:84
 msgid "service"
 msgstr "serviço"
 
-#: rcadmin/common.py:82
+#: rcadmin/common.py:85
 msgid "conference"
 msgstr "conferência"
 
-#: rcadmin/common.py:83 rcadmin/common.py:115
+#: rcadmin/common.py:86 rcadmin/common.py:118
 msgid "meeting"
 msgstr "reunião"
 
-#: rcadmin/common.py:87
+#: rcadmin/common.py:90
 msgid "canceled"
 msgstr "cancelado"
 
-#: rcadmin/common.py:88
-#: treasury/templates/treasury/elements/cash_balance.html:21
+#: rcadmin/common.py:91
+#: treasury/templates/treasury/elements/cash_balance.html:26
 #: treasury/templates/treasury/elements/payform_by_type.html:19
 #: treasury/templates/treasury/elements/payment_by_paytype.html:19
-#: treasury/templates/treasury/elements/period_payments.html:23
+#: treasury/templates/treasury/elements/period_payments.html:26
 msgid "pending"
 msgstr "pendente"
 
-#: rcadmin/common.py:89
+#: rcadmin/common.py:92
 msgid "concluded"
 msgstr "concluído"
 
-#: rcadmin/common.py:92
+#: rcadmin/common.py:95
 msgid "monthly"
 msgstr "mensal"
 
-#: rcadmin/common.py:93
+#: rcadmin/common.py:96
 msgid "by event"
 msgstr "por evento"
 
-#: rcadmin/common.py:94
+#: rcadmin/common.py:97
 msgid "campaign"
 msgstr "campanha"
 
-#: rcadmin/common.py:97 rcadmin/common.py:108
+#: rcadmin/common.py:100 rcadmin/common.py:111
 msgid "pix"
 msgstr "pix"
 
-#: rcadmin/common.py:98
+#: rcadmin/common.py:101
 msgid "cash"
 msgstr "dinheiro"
 
-#: rcadmin/common.py:99
+#: rcadmin/common.py:102
 msgid "check"
 msgstr "cheque"
 
-#: rcadmin/common.py:100
+#: rcadmin/common.py:103
 msgid "pre check"
 msgstr "cheque-pré"
 
-#: rcadmin/common.py:101
+#: rcadmin/common.py:104
 msgid "debit"
 msgstr "débito"
 
-#: rcadmin/common.py:102
+#: rcadmin/common.py:105
 msgid "credit"
 msgstr "crédito"
 
-#: rcadmin/common.py:103 rcadmin/common.py:109
+#: rcadmin/common.py:106 rcadmin/common.py:112
 msgid "deposit"
 msgstr "depósito"
 
-#: rcadmin/common.py:104 rcadmin/common.py:110
+#: rcadmin/common.py:107 rcadmin/common.py:113
 msgid "transfer"
 msgstr "transferência"
 
-#: rcadmin/common.py:105
+#: rcadmin/common.py:108
 msgid "bank slip"
 msgstr "boleto bancário"
 
-#: rcadmin/common.py:112
+#: rcadmin/common.py:115
 msgid "Brazil"
 msgstr "Brasil"
 
-#: rcadmin/common.py:118
+#: rcadmin/common.py:121
 msgid "observation"
 msgstr "observação"
 
-#: rcadmin/common.py:119
+#: rcadmin/common.py:122
 msgid "new"
 msgstr "novo"
 
-#: rcadmin/common.py:121
+#: rcadmin/common.py:124
 msgid "installing"
 msgstr "instalando"
 
-#: rcadmin/common.py:123
+#: rcadmin/common.py:126
 msgid "stand by"
 msgstr "em espera"
 
-#: rcadmin/common.py:124
+#: rcadmin/common.py:127
 msgid "restriction"
 msgstr "restrição"
 
-#: rcadmin/common.py:175
+#: rcadmin/common.py:221
 msgid ""
-"Phone number must be entered in the format: '+1234567890'.             Up to"
-" 15 digits allowed."
+"Phone number must be entered in the format: '+1234567890'.             Up to "
+"15 digits allowed."
 msgstr ""
 "O número de telefone deve ser inserido no formato: '+1234567890'. São "
 "permitidos até 15 dígitos."
@@ -1877,37 +1886,29 @@ msgstr "BankFlags"
 msgid "name"
 msgstr "nome"
 
-#: treasury/templates/treasury/confirm_delete.html:10
+#: treasury/templates/treasury/confirm_delete.html:9
 msgid "You want to delete"
 msgstr "Você deseja apagar"
 
-#: treasury/templates/treasury/confirm_delete.html:12
+#: treasury/templates/treasury/confirm_delete.html:11
 msgid "But this is part of a payment order"
 msgstr "Mas isso faz parte de um pedido de pagamento"
 
-#: treasury/templates/treasury/confirm_delete.html:14
+#: treasury/templates/treasury/confirm_delete.html:13
 msgid "You can only delete it using the payment order"
 msgstr "Você só pode excluí-lo usando o pedido de pagamento"
 
-#: treasury/templates/treasury/confirm_delete.html:17
+#: treasury/templates/treasury/confirm_delete.html:16
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:9
 msgid "Are you shure you want to delete"
 msgstr "Tem certeza que deseja apagar"
 
-#: treasury/templates/treasury/confirm_register.html:9
+#: treasury/templates/treasury/confirm_register.html:8
 msgid "Do you confirm the registration procedure?"
 msgstr "Você confirma o procedimento de registro?"
 
-#: treasury/templates/treasury/elements/modal.html:20
-msgid "Modal body text goes here"
-msgstr "Texto do corpo modal vai aqui"
-
-#: treasury/templates/treasury/elements/modal.html:30
-msgid "Save changes"
-msgstr "Salvar alterações"
-
 #: treasury/templates/treasury/elements/order.html:17
-#: treasury/templates/treasury/order_detail.html:34
+#: treasury/templates/treasury/order_detail.html:33
 msgid "made by the pupil"
 msgstr "feito pelo aluno"
 
@@ -1920,11 +1921,11 @@ msgstr "parcial"
 #: treasury/templates/treasury/elements/payment_by_paytype.html:27
 #: treasury/templates/treasury/elements/payments_summary.html:25
 #: treasury/templates/treasury/elements/payments_summary.html:36
-#: treasury/templates/treasury/order_create.html:80
-#: treasury/templates/treasury/order_create.html:118
-#: treasury/templates/treasury/order_detail.html:79
-#: treasury/templates/treasury/order_detail.html:97
-#: user/templates/user/profile/new_order.html:50
+#: treasury/templates/treasury/order_create.html:79
+#: treasury/templates/treasury/order_create.html:117
+#: treasury/templates/treasury/order_detail.html:78
+#: treasury/templates/treasury/order_detail.html:96
+#: user/templates/user/profile/new_order.html:49
 msgid "TOTAL"
 msgstr "TOTAL"
 
@@ -1945,19 +1946,22 @@ msgstr "pagamento"
 msgid "Payment made by pupil"
 msgstr "Pagamento feito pelo aluno"
 
+#: treasury/templates/treasury/elements/search_person.html:7
+msgid "Type pupil name"
+msgstr "Digite o nome do aluno"
+
 #: treasury/templates/treasury/elements/search_person.html:12
 msgid "Use"
 msgstr "Usar"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:18
-#: treasury/templates/treasury/treasury_home.html:22
-#: treasury/views/order.py:41
+#: treasury/templates/treasury/treasury_home.html:21 treasury/views/order.py:42
 msgid "Orders"
 msgstr "Pedidos"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:30
 #: treasury/templates/treasury/elements/treasury_navbar.html:39
-#: treasury/templates/treasury/treasury_home.html:28
+#: treasury/templates/treasury/treasury_home.html:27
 #: user/templates/user/profile/navbar.html:69
 msgid "New order"
 msgstr "Novo pedido"
@@ -1990,66 +1994,66 @@ msgstr "valor"
 msgid "order"
 msgstr "pedido"
 
-#: treasury/templates/treasury/order_add_payform.html:12
-#: treasury/templates/treasury/order_add_payform.html:24
+#: treasury/templates/treasury/order_add_payform.html:11
+#: treasury/templates/treasury/order_add_payform.html:23
 msgid "Add form of payment"
 msgstr "Adicionar forma de pagamento"
 
-#: treasury/templates/treasury/order_add_payment.html:13
-#: treasury/templates/treasury/order_add_payment.html:25
+#: treasury/templates/treasury/order_add_payment.html:12
+#: treasury/templates/treasury/order_add_payment.html:24
 #: user/templates/user/profile/add_payment.html:12
 #: user/templates/user/profile/add_payment.html:25
 msgid "Add payment"
 msgstr "Adicionar pagamento"
 
-#: treasury/templates/treasury/order_create.html:15
-#: user/templates/user/profile/new_order.html:14
+#: treasury/templates/treasury/order_create.html:14
+#: user/templates/user/profile/new_order.html:13
 msgid "Pay now"
 msgstr "Pagar"
 
-#: treasury/templates/treasury/order_create.html:29
+#: treasury/templates/treasury/order_create.html:28
 msgid "Order"
 msgstr "Pedido"
 
-#: treasury/templates/treasury/order_create.html:98
-#: treasury/templates/treasury/order_detail.html:89
+#: treasury/templates/treasury/order_create.html:97
+#: treasury/templates/treasury/order_detail.html:88
 msgid "Forms of Payment"
 msgstr "Formas de Pagamento"
 
-#: treasury/templates/treasury/order_create.html:126
+#: treasury/templates/treasury/order_create.html:125
 msgid "missing"
 msgstr "ausente"
 
-#: treasury/templates/treasury/order_create.html:150
-#: user/templates/user/profile/new_order.html:125
+#: treasury/templates/treasury/order_create.html:149
+#: user/templates/user/profile/new_order.html:124
 msgid "Description"
 msgstr "Descrição"
 
-#: treasury/templates/treasury/order_create.html:160
+#: treasury/templates/treasury/order_create.html:159
 msgid "Status"
 msgstr "Status"
 
-#: treasury/templates/treasury/order_detail.html:32
+#: treasury/templates/treasury/order_detail.html:31
 msgid "Order Detail"
 msgstr "Detalhe do pedido"
 
-#: treasury/templates/treasury/order_detail.html:45
+#: treasury/templates/treasury/order_detail.html:44
 msgid "person"
 msgstr "aluno"
 
-#: treasury/templates/treasury/order_detail.html:51
+#: treasury/templates/treasury/order_detail.html:50
 msgid "date"
 msgstr "data"
 
-#: treasury/templates/treasury/order_detail.html:114
+#: treasury/templates/treasury/order_detail.html:113
 msgid "Update status"
 msgstr "Atualizar status"
 
-#: treasury/templates/treasury/order_detail.html:124
+#: treasury/templates/treasury/order_detail.html:123
 msgid "description"
 msgstr "descrição"
 
-#: treasury/templates/treasury/order_detail.html:133
+#: treasury/templates/treasury/order_detail.html:132
 msgid "Voucher"
 msgstr "Comprovante"
 
@@ -2066,42 +2070,37 @@ msgid "PayTypes"
 msgstr "Tipos de Pagamentos"
 
 #: treasury/templates/treasury/reports/cash_balance.html:10
-#: treasury/views/reports.py:77
+#: treasury/views/reports.py:79
 msgid "Cash Balance"
 msgstr "Balanço de Caixa"
 
-#: treasury/templates/treasury/reports/cash_balance.html:24
-#: treasury/templates/treasury/reports/period_payments.html:24
-msgid "Details"
-msgstr "Detalhes"
-
 #: treasury/templates/treasury/reports/menu.html:7
-#: treasury/templates/treasury/treasury_home.html:41
+#: treasury/templates/treasury/treasury_home.html:40
 msgid "Cash balance"
 msgstr "Balaço de caixa"
 
 #: treasury/templates/treasury/reports/menu.html:8
 #: treasury/templates/treasury/reports/period_payments.html:10
-#: treasury/templates/treasury/treasury_home.html:47
-#: treasury/views/reports.py:109
+#: treasury/templates/treasury/treasury_home.html:46
+#: treasury/views/reports.py:112
 msgid "Period payments"
-msgstr "Período do pagamentos"
+msgstr "Pagamentos por período"
 
 #: treasury/templates/treasury/reports/menu.html:9
-#: treasury/views/reports.py:151
+#: treasury/views/reports.py:155
 msgid "Payment by person"
 msgstr "Pagamento por pessoa"
 
 #: treasury/templates/treasury/reports/payments_by_person.html:12
-#: treasury/templates/treasury/treasury_home.html:53
+#: treasury/templates/treasury/treasury_home.html:52
 msgid "Payments by person"
 msgstr "Pagamentos por pessoa"
 
-#: treasury/templates/treasury/reports/payments_by_person.html:46
+#: treasury/templates/treasury/reports/payments_by_person.html:43
 msgid "select a person"
 msgstr "selecionar um aluno"
 
-#: treasury/templates/treasury/treasury_home.html:16
+#: treasury/templates/treasury/treasury_home.html:15
 msgid "Actions"
 msgstr "Ações"
 
@@ -2153,27 +2152,27 @@ msgstr "Atualizar forma de pagamento"
 msgid "The Form of Payment has been deleted!"
 msgstr "A forma de pagamento foi excluída!"
 
-#: treasury/views/order.py:73 treasury/views/order.py:160
+#: treasury/views/order.py:74 treasury/views/order.py:171
 msgid "Create Order"
 msgstr "Criar Pedido"
 
-#: treasury/views/order.py:178 treasury/views/order.py:249 user/views.py:269
+#: treasury/views/order.py:189 treasury/views/order.py:260 user/views.py:269
 msgid "confirm delete"
 msgstr "confirmar exclusão"
 
-#: treasury/views/order.py:231
+#: treasury/views/order.py:242
 msgid "Add Form of Payment"
 msgstr "Adicionar Forma de Pagamento"
 
-#: treasury/views/order.py:309
+#: treasury/views/order.py:320
 msgid "confirm register"
 msgstr "confirmar registro"
 
-#: treasury/views/order.py:389
+#: treasury/views/order.py:400
 msgid "View Order"
 msgstr "Ver Pedido"
 
-#: treasury/views/order.py:402
+#: treasury/views/order.py:414
 msgid "Edit Order"
 msgstr "Editar Pedido"
 
@@ -2221,7 +2220,7 @@ msgstr "O Tipo de Pagamento foi inativado!"
 msgid "The PayType has been deleted!"
 msgstr "O Tipo de Pagamento foi apagado!"
 
-#: treasury/views/reports.py:44
+#: treasury/views/reports.py:45
 msgid "treasury"
 msgstr "tesouraria"
 
@@ -2257,11 +2256,11 @@ msgstr "Designa se o usuário pode fazer login neste site de administração."
 
 #: user/models.py:65
 msgid ""
-"Designates whether this user should be treated as active."
-"                     Unselect this instead of deleting accounts."
+"Designates whether this user should be treated as "
+"active.                     Unselect this instead of deleting accounts."
 msgstr ""
-"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de"
-" deletar contas."
+"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de "
+"deletar contas."
 
 #: user/models.py:69
 msgid "date joined"
@@ -2289,8 +2288,8 @@ msgstr "Seu e-mail e/ou senha não conferem. Por favor, tente novamente."
 
 #: user/templates/user/auth/login.html:16
 msgid ""
-"Your account doesn't have access to this page. To proceed, please login with"
-" an account that has access."
+"Your account doesn't have access to this page. To proceed, please login with "
+"an account that has access."
 msgstr ""
 "Sua conta não tem acesso a esta página. Para continuar, faça login com uma "
 "conta que tenha acesso."
@@ -2352,8 +2351,8 @@ msgstr "Por favor corrija os erros abaixo."
 
 #: user/templates/user/auth/password_change_form.html:38
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new"
-" password twice so we can verify you typed it in correctly."
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
 msgstr ""
 "Por favor, digite sua senha antiga, por questões de segurança, e depois "
 "digite sua novasenha duas vezes para que possamos verificar se você digitou "
@@ -2391,10 +2390,12 @@ msgstr "Enviamos por e-mail instruções para definir sua senha."
 #, python-format
 msgid ""
 "\n"
-"You're receiving this email because you requested a password reset for your user account at %(site_name)s.\n"
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s.\n"
 msgstr ""
 "\n"
-"Você está recebendo este e-mail porque solicitou uma redefinição de senha para a suaconta de usuário no site %(site_name)s. \n"
+"Você está recebendo este e-mail porque solicitou uma redefinição de senha "
+"para a suaconta de usuário no site %(site_name)s. \n"
 
 #: user/templates/user/auth/password_reset_email.html:8
 msgid "Please go to the following page and choose a new password:"
@@ -2467,44 +2468,46 @@ msgstr "Alterar"
 msgid "Scan QR-CODE"
 msgstr "Ler QR-CODE"
 
-#: user/templates/user/profile/new_order.html:37
+#: user/templates/user/profile/new_order.html:36
+#: user/templates/user/profile/new_order.html:85
 msgid "Payment"
 msgstr "Pagamento"
 
-#: user/templates/user/profile/new_order.html:68
+#: user/templates/user/profile/new_order.html:67
 msgid "To make your contributions and payments follow the instructions"
 msgstr "Para fazer suas contribuições e pagamentos, siga as instruções"
 
-#: user/templates/user/profile/new_order.html:76
-#: user/templates/user/profile/new_order.html:159
+#: user/templates/user/profile/new_order.html:75
+#: user/templates/user/profile/new_order.html:158
 msgid "pix-key"
 msgstr "chave-PIX"
 
-#: user/templates/user/profile/new_order.html:81
+#: user/templates/user/profile/new_order.html:80
 msgid "Transfer, deposit or PIX at your bank."
 msgstr "Realize a transferência, depósito ou PIX em seu banco."
 
-#: user/templates/user/profile/new_order.html:82
+#: user/templates/user/profile/new_order.html:81
 msgid ""
-"Use the \"Description\" field in your bank app to identify your contribution"
-" via PIX."
+"Use the \"Description\" field in your bank app to identify your contribution "
+"via PIX."
 msgstr ""
 "Use o campo de Descrição no aplicativo de seu banco para identificar sua "
 "contribuição via PIX."
 
-#: user/templates/user/profile/new_order.html:83
-msgid "Take the .pdf or .jpg digital voucher provided by your bank"
-msgstr "Pegue o comprovante digital em .pdf ou .jpg fornecido por seu banco"
+#: user/templates/user/profile/new_order.html:82
+#| msgid "Take the .pdf or .jpg digital voucher provided by your bank"
+msgid "Take the digital voucher provided by your bank (.jpg file format only)"
+msgstr "Pegue o comprovante digital fornecido por seu banco (somente formato de arquivo .jpg)"
 
-#: user/templates/user/profile/new_order.html:84
+#: user/templates/user/profile/new_order.html:83
 msgid ""
 "In this program you will be able to make payments and contributions in your "
 "name only."
 msgstr ""
-"Neste programa você conseguirá fazer os pagamentos e contribuições apenas em"
-" seu nome."
+"Neste programa você conseguirá fazer os pagamentos e contribuições apenas em "
+"seu nome."
 
-#: user/templates/user/profile/new_order.html:85
+#: user/templates/user/profile/new_order.html:84
 msgid ""
 "For collective payments and contributions (two or more people) contact your "
 "core treasury."
@@ -2512,55 +2515,54 @@ msgstr ""
 "Para pagamentos e contribuições coletivas (duas ou mais pessoas) procure a "
 "tesouraria de seu núcleo."
 
-#: user/templates/user/profile/new_order.html:86
+#: user/templates/user/profile/new_order.html:85
 msgid "To start, click on"
 msgstr "Para iniciar, clique em"
 
-#: user/templates/user/profile/new_order.html:86
-msgid "+ Add payment"
-msgstr "+ Adicionar pagamento"
-
-#: user/templates/user/profile/new_order.html:100
+#: user/templates/user/profile/new_order.html:99
 msgid "Form of Payment"
 msgstr "Forma de Pagamento"
 
-#: user/templates/user/profile/new_order.html:139
+#: user/templates/user/profile/new_order.html:138
+#| msgid ""
+#| "In order to complete your contribution, have your deposit, transfer or "
+#| "PIX receipt scanned (.pdf or .jpg)"
 msgid ""
 "In order to complete your contribution, have your deposit, transfer or PIX "
-"receipt scanned (.pdf or .jpg)"
+"receipt scanned in .jpg file format"
 msgstr ""
 "Para concluir sua contribuição tenha o comprovante de depósito, "
-"transferência ou PIX digitalizado (.pdf ou .jpg)"
+"transferência ou PIX digitalizado no formato de arquivo .jpg"
 
-#: user/templates/user/profile/new_order.html:140
+#: user/templates/user/profile/new_order.html:139
 msgid "Voucher img"
 msgstr "Comprovante"
 
-#: user/templates/user/profile/new_order.html:140
+#: user/templates/user/profile/new_order.html:139
 msgid "Upload the file to the system"
 msgstr "Faça upload do arquivo para o sistema"
 
-#: user/templates/user/profile/new_order.html:146
+#: user/templates/user/profile/new_order.html:145
 msgid "Bank-flag"
 msgstr "Bank-flag"
 
-#: user/templates/user/profile/new_order.html:146
+#: user/templates/user/profile/new_order.html:145
 msgid "choose the option that matches your bank."
 msgstr "escolha a opção que corresponda ao seu banco."
 
-#: user/templates/user/profile/new_order.html:147
+#: user/templates/user/profile/new_order.html:146
 msgid "Ctrl number"
 msgstr "número de Controle"
 
-#: user/templates/user/profile/new_order.html:147
+#: user/templates/user/profile/new_order.html:146
 msgid "Deposit, transfer or PIX identification number."
 msgstr "Número de identificação do depósito, transferência ou PIX."
 
-#: user/templates/user/profile/new_order.html:158
+#: user/templates/user/profile/new_order.html:157
 msgid "Payments with PIX: use pix-key or QR-Code"
 msgstr "Pagamentos com PIX: use a chave-pix ou o QR-Code"
 
-#: user/templates/user/profile/new_order.html:162
+#: user/templates/user/profile/new_order.html:161
 msgid ""
 "Use the \"Description\" field in your banks application to identify your "
 "contribution via PIX."
@@ -2718,11 +2720,33 @@ msgstr "O Grupo de trabalho foi atualizado!"
 msgid "update workgroup"
 msgstr "atualizar grupo de trabalho"
 
+#, fuzzy
+#~| msgid "file name"
+#~ msgid "file format"
+#~ msgstr "nome do arquivo"
+
+#, fuzzy
+#~| msgid "Payment"
+#~ msgid "+ Payment"
+#~ msgstr "Pagamento"
+
+#~ msgid "Modal body text goes here"
+#~ msgstr "Texto do corpo modal vai aqui"
+
+#~ msgid "Save changes"
+#~ msgstr "Salvar alterações"
+
+#~ msgid "Details"
+#~ msgstr "Detalhes"
+
+#~ msgid "+ Add payment"
+#~ msgstr "+ Adicionar pagamento"
+
+#~ msgid "Import persons from (.csv)"
+#~ msgstr "Importar pessoas de"
+
 #~ msgid "center to insert"
 #~ msgstr "núcleo para inserir"
-
-#~ msgid "file name"
-#~ msgstr "nome do arquivo"
 
 #~ msgid "importeds"
 #~ msgstr "importados"

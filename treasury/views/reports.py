@@ -12,15 +12,16 @@ from rcadmin.common import paginator
 from .useful import OrderByPeriod, OrderToJson
 
 
-def vue_get_order(request):
-    if request.is_ajax and request.method == "GET":
-        order = OrderToJson(request.GET.get("order_id"))
-        return JsonResponse(order.json, safe=False)
+def hx_get_order(request):
+    template_name = "treasury/elements/hx/modal_order_info_hx.html"
+    context = {"order_info": OrderToJson(request.GET.get("order_id"))}
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("treasury.view_order")
 def treasury_home(request):
+    template_name = "treasury/treasury_home.html"
     # clear session
     if request.session.get("order"):
         del request.session["order"]
@@ -44,12 +45,13 @@ def treasury_home(request):
         "title": _("treasury"),
         "nav": "home",
     }
-    return render(request, "treasury/treasury_home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("treasury.view_order")
 def cash_balance(request):
+    template_name = "treasury/reports/cash_balance.html"
     search = search_dates(request)
     dt1 = (
         datetime.strptime(request.GET["dt1"], "%Y-%m-%d")
@@ -76,12 +78,13 @@ def cash_balance(request):
         "object_list": object_list.all_payforms,
         "title": _("Cash Balance"),
     }
-    return render(request, "treasury/reports/cash_balance.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("treasury.view_order")
 def period_payments(request):
+    template_name = "treasury/reports/period_payments.html"
     search = search_dates(request)
     dt1 = (
         datetime.strptime(request.GET["dt1"], "%Y-%m-%d")
@@ -108,12 +111,13 @@ def period_payments(request):
         "object_list": object_list.all_payments,
         "title": _("Period payments"),
     }
-    return render(request, "treasury/reports/period_payments.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("treasury.view_order")
 def payments_by_person(request):
+    template_name = "treasury/reports/payments_by_person.html"
     if not request.session.get("order"):
         request.session["order"] = {
             "person": {},
@@ -153,12 +157,13 @@ def payments_by_person(request):
         "object_list": object_list,
         "nav": "reports",
     }
-    return render(request, "treasury/reports/payments_by_person.html", context)
+    return render(request, template_name, context)
 
 
 # helpers
 # get person by jQuery
 def reports_search_person(request):
+    template_name = "treasury/reports/payment_by_person.html"
     if request.is_ajax():
         term = request.GET.get("term")
         persons = Person.objects.filter(
@@ -167,7 +172,7 @@ def reports_search_person(request):
         results = [person.name for person in persons]
         return JsonResponse(results, safe=False)
 
-    return render(request, "treasury/reports/payment_by_person.html")
+    return render(request, template_name)
 
 
 # search dates

@@ -63,7 +63,7 @@ paytypeCreateOrder.addEventListener("blur", (evento) => {
 function displayEventChoices() {
   const divEventChoices = document.getElementById("div_id_event");
 
-  if (paytypeCreateOrder.value == "3") {
+  if (paytypeCreateOrder.value == "1") {
     divEventChoices.style.display = "block";
   } else {
     divEventChoices.style.display = "none";
