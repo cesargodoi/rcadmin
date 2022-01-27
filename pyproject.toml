@@ -6,10 +6,10 @@ authors = ["Cesar Godoi <cesar.godoi@gmail.com>", "Jady Godoi <jady.s.m@gmail.co
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "=3.2.11"
+Django = "3.2.*"
 dynaconf = "^3.1.7"
 django-crispy-forms = "^1.14.0"
-Pillow = "^8.4.0"
+Pillow = "^9.0.0"
 qrcode = "^7.3.1"
 psycopg2-binary = "^2.9.3"
 gunicorn = "^20.1.0"
