@@ -5,6 +5,7 @@ from faker import Faker
 from django.utils import timezone
 from user.models import User, Profile
 from center.models import Center
+from event.models import Activity
 from publicwork.models import TempRegOfSeeker, Seeker
 
 fake = Faker("pt_BR")
@@ -46,7 +47,7 @@ class CenterFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Center
 
-    name = f"Center {fake.pyint(min_value=1, max_value=9)}"
+    name = f"Center {fake.pyint(min_value=1, max_value=100)}"
     short_name = f"C-{name.split()[1]}"
     city = fake.city()
     state = fake.estado_sigla()
@@ -54,6 +55,17 @@ class CenterFactory(factory.django.DjangoModelFactory):
     phone_1 = fake.phone_number()
     email = fake.email()
     center_type = "CNT"
+    made_by = factory.SubFactory(UserFactory)
+
+
+#  Activity
+class ActivityFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Activity
+
+    name = f"Activity {fake.pyint(min_value=1, max_value=9)}"
+    activity_type = "SRV"
+    multi_date = False
 
 
 #  TempRegOfSeeker

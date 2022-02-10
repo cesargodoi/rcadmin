@@ -1,20 +1,25 @@
 import random
 import pytest
 
+from django.utils import timezone
 from pytest_factoryboy import register
 from django.contrib.auth.models import Group, Permission
 from factories import (
     fake,
     UserFactory,
     CenterFactory,
+    ActivityFactory,
     TempRegOfSeeker,
     SeekerFactory,
 )
 from person.models import Person, Historic
+from event.models import Event, Frequency
+
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
 register(UserFactory)
 register(CenterFactory)
+register(ActivityFactory)
 register(TempRegOfSeeker)
 register(SeekerFactory)
 
@@ -79,6 +84,49 @@ def create_historic(db):
         return historic
 
     return make_historic
+
+
+@pytest.fixture
+def create_event(db, activity_factory, center_factory, create_user):
+    def make_event(center=None, activity=None):
+        _center = center if center else center_factory()
+        _activity = activity if activity else activity_factory()
+        _event = dict(
+            center=_center,
+            activity=_activity,
+            date=timezone.now(),
+            status="OPN",
+            made_by=create_user(),
+        )
+        event = Event(**_event)
+        event.save()
+        return event
+
+    return make_event
+
+
+@pytest.fixture
+def create_frequency(
+    db, create_event, create_person, activity_factory, center_factory
+):
+    def make_frequency(center=None, activity=None, event=None, person=None):
+        _center = center if center else center_factory()
+        _activity = activity if activity else activity_factory()
+        _event = (
+            event
+            if event
+            else create_event(center=_center, activity=_activity)
+        )
+        _person = person if person else create_person(center=_center)
+        frequency = Frequency(event_id=_event.id, person_id=_person.id).save()
+        return frequency
+
+    return make_frequency
+
+    # event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    # person = models.ForeignKey(Person, on_delete=models.PROTECT)
+    # aspect = models.CharField(max_length=2, choices=ASPECTS, default="--")
+    # ranking = models.IntegerField(default=0)
 
 
 #  Groups and Permissions
