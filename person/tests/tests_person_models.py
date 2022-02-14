@@ -4,10 +4,12 @@ from person.models import Historic, Person
 
 @pytest.mark.django_db
 def test_list_persons(center_factory, create_person):
+    """The center_factory will make an user (consequently a person).
+    Add +1 on your count."""
     center = center_factory()
     for _ in range(5):
         create_person(center=center)
-    assert Person.objects.count() == 5
+    assert Person.objects.count() == 6
 
 
 @pytest.mark.django_db
@@ -18,8 +20,9 @@ def test_search_person(create_person):
 
 @pytest.mark.django_db
 def test_create_person(create_person):
+    """The create_person uses center_factory. Add +1 on your count."""
     create_person()
-    assert Person.objects.count() == 1
+    assert Person.objects.count() == 2
 
 
 @pytest.mark.django_db
@@ -42,11 +45,12 @@ def test_update_person_name(create_person):
 
 @pytest.mark.django_db
 def test_delete_person(center_factory, create_person):
+    """The create_person uses center_factory. Add +1 on your count."""
     center = center_factory()
     for _ in range(5):
         create_person(center=center)
     Person.objects.last().delete()
-    assert Person.objects.count() == 4
+    assert Person.objects.count() == 5
 
 
 @pytest.mark.django_db

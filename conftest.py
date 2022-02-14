@@ -55,8 +55,8 @@ def auto_login_user(db, client, create_user, get_password, get_group):
 
 @pytest.fixture
 def create_person(db, create_user, center_factory):
-    def make_person(center=None, name=None):
-        user = create_user()
+    def make_person(center=None, name=None, email=None):
+        user = create_user(email=email)
         person = Person.objects.get(user=user)
         person.name = name if name else fake.name()
         person.center = center if center else center_factory.create()
@@ -112,21 +112,22 @@ def create_frequency(
     def make_frequency(center=None, activity=None, event=None, person=None):
         _center = center if center else center_factory()
         _activity = activity if activity else activity_factory()
-        _event = (
-            event
-            if event
-            else create_event(center=_center, activity=_activity)
-        )
+        if Event.objects.filter(center=_center, activity=_activity):
+            _event = Event.objects.filter(
+                center=_center, activity=_activity
+            ).first()
+        else:
+            _event = (
+                event
+                if event
+                else create_event(center=_center, activity=_activity)
+            )
         _person = person if person else create_person(center=_center)
-        frequency = Frequency(event_id=_event.id, person_id=_person.id).save()
+
+        frequency = _event.frequency_set.create(person=_person)
         return frequency
 
     return make_frequency
-
-    # event = models.ForeignKey(Event, on_delete=models.PROTECT)
-    # person = models.ForeignKey(Person, on_delete=models.PROTECT)
-    # aspect = models.CharField(max_length=2, choices=ASPECTS, default="--")
-    # ranking = models.IntegerField(default=0)
 
 
 #  Groups and Permissions
