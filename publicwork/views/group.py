@@ -263,9 +263,12 @@ def group_add_frequencies(request, pk):
                 "lecture": {},
                 "listeners": [],
             }
-            preparing_the_session(
-                request, pw_group.members.exclude(status="ITD"), lecture
-            )
+            active_members = [
+                m
+                for m in pw_group.members.all()
+                if m.status not in ("ITD", "STD")
+            ]
+            preparing_the_session(request, active_members, lecture)
 
     if request.method == "POST":
         listeners = get_listeners_dict(request)
