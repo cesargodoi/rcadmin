@@ -13,7 +13,7 @@ from factories import (
     SeekerFactory,
 )
 from person.models import Person, Historic
-from event.models import Event, Frequency
+from event.models import Event
 
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
@@ -146,6 +146,7 @@ def get_group(db, get_perms):
 @pytest.fixture
 def get_perms(db):
     perms = {
+        "admin": [perm for perm in Permission.objects.all()],
         "user": [
             # user and profile
             Permission.objects.get(codename="view_user"),
@@ -203,6 +204,52 @@ def get_perms(db):
             # order
             Permission.objects.get(codename="add_order"),
             Permission.objects.get(codename="view_order"),
+        ],
+        "publicwork": [
+            # seeker
+            Permission.objects.get(codename="add_seeker"),
+            Permission.objects.get(codename="change_seeker"),
+            Permission.objects.get(codename="delete_seeker"),
+            Permission.objects.get(codename="view_seeker"),
+            # publicwork_group
+            Permission.objects.get(codename="add_publicworkgroup"),
+            Permission.objects.get(codename="change_publicworkgroup"),
+            Permission.objects.get(codename="delete_publicworkgroup"),
+            Permission.objects.get(codename="view_publicworkgroup"),
+            # historic
+            Permission.objects.get(codename="add_historicofseeker"),
+            Permission.objects.get(codename="change_historicofseeker"),
+            Permission.objects.get(codename="delete_historicofseeker"),
+            Permission.objects.get(codename="view_historicofseeker"),
+            # lecture
+            Permission.objects.get(codename="add_lecture"),
+            Permission.objects.get(codename="change_lecture"),
+            Permission.objects.get(codename="delete_lecture"),
+            Permission.objects.get(codename="view_lecture"),
+            # listener
+            Permission.objects.get(codename="add_listener"),
+            Permission.objects.get(codename="change_listener"),
+            Permission.objects.get(codename="delete_listener"),
+            Permission.objects.get(codename="view_listener"),
+        ],
+        "publicwork_jr": [
+            # seeker
+            Permission.objects.get(codename="change_seeker"),
+            Permission.objects.get(codename="view_seeker"),
+            # publicwork_group
+            Permission.objects.get(codename="view_publicworkgroup"),
+            # historic
+            Permission.objects.get(codename="add_historicofseeker"),
+            Permission.objects.get(codename="change_historicofseeker"),
+            Permission.objects.get(codename="delete_historicofseeker"),
+            Permission.objects.get(codename="view_historicofseeker"),
+            # lecture
+            Permission.objects.get(codename="view_lecture"),
+            # listener
+            Permission.objects.get(codename="add_listener"),
+            Permission.objects.get(codename="change_listener"),
+            Permission.objects.get(codename="delete_listener"),
+            Permission.objects.get(codename="view_listener"),
         ],
     }
     return perms
