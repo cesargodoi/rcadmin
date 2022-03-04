@@ -42,7 +42,7 @@ def orders(request):
         "title": _("Orders"),
         "nav": "order",
     }
-    return render(request, "treasury/orders.html", context)
+    return render(request, "treasury/order/orders.html", context)
 
 
 @login_required
@@ -74,7 +74,7 @@ def order_create(request):
         "title": _("Create Order"),
         "status": ORDER_STATUS,
     }
-    return render(request, "treasury/order_create.html", context)
+    return render(request, "treasury/order/create.html", context)
 
 
 def order_search_person(request):
@@ -86,7 +86,7 @@ def order_search_person(request):
         results = [person.name for person in persons]
         return JsonResponse(results, safe=False)
 
-    return render(request, "treasury/order_create.html")
+    return render(request, "treasury/order/create.html")
 
 
 def order_add_payment(request):
@@ -170,7 +170,7 @@ def order_add_payment(request):
         ),
         "title": _("Create Order"),
     }
-    return render(request, "treasury/order_add_payment.html", context)
+    return render(request, "treasury/order/add_payment.html", context)
 
 
 def order_del_payment(request, pay_id):
@@ -187,7 +187,7 @@ def order_del_payment(request, pay_id):
         return redirect("order_create")
 
     context = {"title": _("confirm delete")}
-    return render(request, "treasury/confirm_del.html", context)
+    return render(request, "treasury/order/confirm_del.html", context)
 
 
 def order_add_payform(request):
@@ -241,7 +241,7 @@ def order_add_payform(request):
         ),
         "title": _("Add Form of Payment"),
     }
-    return render(request, "treasury/order_add_payform.html", context)
+    return render(request, "treasury/order/add_payform.html", context)
 
 
 def order_del_payform(request, pay_id):
@@ -258,7 +258,7 @@ def order_del_payform(request, pay_id):
         return redirect("order_create")
 
     context = {"title": _("confirm delete")}
-    return render(request, "treasury/confirm_del.html", context)
+    return render(request, "treasury/order/confirm_del.html", context)
 
 
 def order_register(request):
@@ -318,7 +318,7 @@ def order_register(request):
     request.session.modified = True
 
     context = {"title": _("confirm register")}
-    return render(request, "treasury/confirm_register.html", context)
+    return render(request, "treasury/order/confirm_register.html", context)
 
 
 @login_required
@@ -404,7 +404,7 @@ def order_detail(request, id):
         ),
         "goback": reverse("orders"),
     }
-    return render(request, "treasury/order_detail.html", context)
+    return render(request, "treasury/order/detail.html", context)
 
 
 @login_required
@@ -414,7 +414,7 @@ def order_update(request, id):
         "title": _("Edit Order"),
         "status": ORDER_STATUS,
     }
-    return render(request, "treasury/order_create.html", context)
+    return render(request, "treasury/order/create.html", context)
 
 
 @login_required
@@ -441,4 +441,4 @@ def order_delete(request, id):
         "object": order,
         "title": _("confirm to delete"),
     }
-    return render(request, "treasury/confirm_delete.html", context)
+    return render(request, "treasury/order/confirm_delete.html", context)

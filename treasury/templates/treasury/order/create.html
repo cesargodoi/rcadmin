@@ -16,10 +16,10 @@
     {% endif %}
   {% endif %}
   <a type="button" 
-    class="btn btn-light mr-3"
+    class="nav-link px-1 mx-1 py-3 my-n2 text-info"
     href="{% if to_create %}{% url 'treasury_home' %}{% else %}{% url 'order_detail' request.session.order.id %}{% endif %}">
     <i class="fas fa-chevron-left "></i> 
-    {% trans 'Go back' %}
+    {% trans 'Back' %}
   </a>
 </div>
 

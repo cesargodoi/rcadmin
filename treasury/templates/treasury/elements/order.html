@@ -2,7 +2,7 @@
 
 <article 
   class="media content-section mb-1" 
-  onclick="location.href='{% url 'order_detail' object.id %}';">
+  onclick="location.href='{% url 'order_detail' object.id %}';" style="cursor: pointer;">
   <div class="media-body">
     <div class="row mt-1 mb-0">
       <div class="col-md-2">
@@ -34,7 +34,6 @@
           {{ object.amount }}
         </span>
       </div>
-      </row>
 
     </div>
 </article>
