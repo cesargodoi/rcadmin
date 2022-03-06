@@ -441,4 +441,4 @@ def order_delete(request, id):
         "object": order,
         "title": _("confirm to delete"),
     }
-    return render(request, "treasury/order/confirm_delete.html", context)
+    return render(request, "treasury/elements/confirm_delete.html", context)

@@ -1,0 +1,61 @@
+{% load base_extras %}
+{% load i18n %}
+
+<h4>{% trans 'Banks or Flags' %}</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2">
+
+    <div class="col-sm-6">
+      <strong>{{ obj.name | upper }}</strong>
+    </div>
+
+    <div class="col-sm-4">
+      {% if obj.is_active %}
+        <i class="fas fa-check-square text-success"></i>
+      {% else %}
+        <i class="fas fa-square text-secondary"></i>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 text-right">
+      <div class="btn-group btn-group-sm">
+        <a type="button" 
+          href="{% url 'bankflag_update' obj.pk %}" 
+          class="btn btn-light btn-sm">
+          <i class="fas fa-edit text-warning"></i>
+        </a>
+        <a type="button" 
+          href="{% url 'bankflag_delete' obj.pk %}" 
+          class="btn btn-light btn-sm">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </a>
+      </div>
+    </div>
+    
+  </div>
+{% endfor %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+        {% trans 'choose your search terms' %}
+      {% else %}
+        {% trans 'forms of payments not found' %}
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

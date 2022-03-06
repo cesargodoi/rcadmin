@@ -20,7 +20,7 @@ def forms_of_payments(request):
         "object_list": object_list,
         "title": _("Forms of Payables"),
     }
-    return render(request, "treasury/forms_of_payments.html", context)
+    return render(request, "treasury/form_of_payment/home.html", context)
 
 
 @login_required
@@ -36,8 +36,8 @@ def form_of_payment_create(request):
 
     context = {
         "form": FormOfPaymentForm(),
-        "form_name": "Paytype",
-        "form_path": "treasury/forms/form_of_payment.html",
+        "form_name": "Form of Payment",
+        "form_path": "treasury/elements/generic_form.html",
         "goback": reverse("forms_of_payments"),
         "to_create": True,
         "title": _("Create Form of Payment"),
@@ -59,8 +59,8 @@ def form_of_payment_update(request, pk):
 
     context = {
         "form": FormOfPaymentForm(instance=form_of_payment),
-        "form_name": "Paytype",
-        "form_path": "treasury/forms/form_of_payment.html",
+        "form_name": "Form of Payment",
+        "form_path": "treasury/elements/generic_form.html",
         "goback": reverse("forms_of_payments"),
         "title": _("Update Form of Payment"),
     }
@@ -82,4 +82,4 @@ def form_of_payment_delete(request, pk):
         "object": form_of_payment,
         "title": _("confirm to delete"),
     }
-    return render(request, "treasury/confirm_delete.html", context)
+    return render(request, "treasury/elements/confirm_delete.html", context)
