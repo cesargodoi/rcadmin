@@ -176,21 +176,29 @@ class OrderByPeriod:
 class OrderToJson:
     def __init__(self, order_id):
         order = Order.objects.get(id=order_id)
+        self.center = str(order.center)
+        self.person = str(order.person.short_name)
+        self.amount = float(order.amount)
         self.payforms = self.get_payforms(order.form_of_payments.all())
         self.payments = self.get_payments(order.payments.all())
+        self.status = [
+            stts[1] for stts in ORDER_STATUS if stts[0] == order.status
+        ][0]
+        self.description = order.description
+        self.self_payed = order.self_payed
+        self.created_on = order.created_on.strftime("%d/%m/%y")
+
         self.json = dict(
             id=order_id,
-            center=str(order.center),
-            person=str(order.person.short_name),
+            center=self.center,
+            person=self.person,
             payments=self.payments,
             payforms=self.payforms,
-            amount=float(order.amount),
-            status=[
-                stts[1] for stts in ORDER_STATUS if stts[0] == order.status
-            ][0],
-            description=order.description,
-            self_payed=order.self_payed,
-            created_on=order.created_on.strftime("%d/%m/%y"),
+            amount=self.amount,
+            status=self.status,
+            description=self.description,
+            self_payed=self.self_payed,
+            created_on=self.created_on,
         )
 
     def get_payforms(self, payforms):

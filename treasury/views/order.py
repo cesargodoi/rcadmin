@@ -42,7 +42,7 @@ def orders(request):
         "title": _("Orders"),
         "nav": "order",
     }
-    return render(request, "treasury/order/orders.html", context)
+    return render(request, "treasury/order/home.html", context)
 
 
 @login_required

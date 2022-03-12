@@ -1,7 +1,7 @@
 {% load base_extras %}
 {% load i18n %}
 
-<h4>{% trans 'Orders' %}</h4>
+<h4>{% trans 'Activities' %}</h4>
 
 {% if object_list %}
 
@@ -9,8 +9,8 @@
     {% include "base/elements/paginator.html" %}
   {% endif %}
 
-  {% for object in object_list %}
-    {% include "treasury/elements/order.html" %}
+  {% for obj in object_list %}
+    {% include "event/activity/activity.html" %}
   {% endfor %}
 
   {% if object_list.has_other_pages %}
@@ -24,7 +24,7 @@
       {% if init %}
         {% trans 'choose your search terms' %}
       {% else %}
-        {% trans 'forms of payments not found' %}
+        {% trans 'activities not found' %}
       {% endif %}
     </h4> 
   </div> 
