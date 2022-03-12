@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-21 09:25-0300\n"
-"PO-Revision-Date: 2021-11-18 10:35-0306\n"
+"PO-Revision-Date: 2022-02-21 16:35-0306\n"
 "Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -179,12 +179,14 @@ msgid "all"
 msgstr "todos"
 
 #: base/templates/base/elements/menu.html:6 base/templates/base/home.html:44
-#: center/templates/center/centers.html:4 center/templates/center/navbar.html:6
+#: center/templates/center/centers.html:4
+#: center/templates/center/navbar.html:6
 msgid "Centers"
 msgstr "Núcleos"
 
 #: base/templates/base/elements/menu.html:11 base/templates/base/home.html:54
-#: person/templates/person/navbar.html:7 person/templates/person/persons.html:3
+#: person/templates/person/navbar.html:7
+#: person/templates/person/persons.html:3
 msgid "Persons"
 msgstr "Alunos"
 
@@ -229,11 +231,12 @@ msgstr "Atividades"
 #: treasury/templates/treasury/order_detail.html:69
 #: treasury/templates/treasury/payments.html:7
 #: treasury/templates/treasury/reports/payments_by_person.html:30
-#: treasury/views/payments.py:21 user/templates/user/profile/navbar-ant.html:22
+#: treasury/views/payments.py:21
+#: user/templates/user/profile/navbar-ant.html:22
 #: user/templates/user/profile/navbar.html:28
 #: user/templates/user/profile/new_order.html:29
 msgid "Payments"
-msgstr "Pagamentos"
+msgstr "Contribuições"
 
 #: base/templates/base/elements/menu_admin.html:9
 msgid "Forms of payments"
@@ -559,7 +562,8 @@ msgstr "observações"
 msgid "Center PIX"
 msgstr "Núcleo PIX"
 
-#: center/templates/center/navbar.html:6 center/templates/center/navbar.html:21
+#: center/templates/center/navbar.html:6
+#: center/templates/center/navbar.html:21
 msgid "Center"
 msgstr "Núcleo"
 
@@ -620,8 +624,8 @@ msgstr "atualizar núcleo"
 msgid "confirm to delete"
 msgstr "confirme para deletar"
 
-#: center/views.py:147 person/views/person.py:230 publicwork/views/group.py:191
-#: publicwork/views/seeker.py:156
+#: center/views.py:147 person/views/person.py:230
+#: publicwork/views/group.py:191 publicwork/views/seeker.py:156
 msgid "confirm to reinsert"
 msgstr "confirme para reinserir"
 
@@ -855,7 +859,7 @@ msgstr "Histórico"
 #: person/templates/person/navbar.html:52
 #: person/templates/person/navbar.html:126
 msgid "Membership"
-msgstr "Membros"
+msgstr "Grupos"
 
 #: person/templates/person/elements/confirm_to_delete_freq.html:8
 #: person/templates/person/elements/confirm_to_delete_member.html:8
@@ -999,7 +1003,8 @@ msgstr "membro não encontrado"
 msgid "Insert Membership"
 msgstr "Inserir Membro"
 
-#: person/templates/person/navbar.html:7 person/templates/person/navbar.html:67
+#: person/templates/person/navbar.html:7
+#: person/templates/person/navbar.html:67
 #: treasury/templates/treasury/order_create.html:36
 msgid "Person"
 msgstr "Aluno"
@@ -1209,8 +1214,8 @@ msgstr "Seu cadastro foi realizado com sucesso!"
 #: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:6
 msgid ""
 "You will be included in a “Welcome” group and in the next few days, one of "
-"the students responsible for this group should contact you (by message, call "
-"or email), to give you directions and upcoming activities."
+"the students responsible for this group should contact you (by message, call"
+" or email), to give you directions and upcoming activities."
 msgstr ""
 "Você será incluído em um grupo de “Boas-vindas” e nos próximos dias, um dos "
 "alunos responsáveis por este grupo deve entrar em contato com você (por "
@@ -1261,11 +1266,13 @@ msgstr "link de confirmação"
 
 #: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:12
 msgid "If you have not made this request, please disregard this email."
-msgstr "Se você não fez essa solicitação, por favor, desconsidere este e-mail."
+msgstr ""
+"Se você não fez essa solicitação, por favor, desconsidere este e-mail."
 
 #: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:20
 msgid ""
-"if you can not click on the link, copy a url below and paste in your browser:"
+"if you can not click on the link, copy a url below and paste in your "
+"browser:"
 msgstr ""
 "caso não seja possível clicar no link, copie a url abaixo e cole no seu "
 "navegador:"
@@ -1310,8 +1317,8 @@ msgid ""
 "first moment, through a “Welcome” group, in which you are our guest."
 msgstr ""
 "Como você está chegando agora, alguns de nossos alunos vão acompanhar você "
-"neste primeiro momento, através de um grupo de “Boas-vindas”, no qual você é "
-"nosso convidado."
+"neste primeiro momento, através de um grupo de “Boas-vindas”, no qual você é"
+" nosso convidado."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:24
 msgid ""
@@ -1320,16 +1327,16 @@ msgid ""
 "very clear understanding of what it is to be a Golden Rosicrucian student."
 msgstr ""
 "Neste grupo, você vai conhecer e participar das principais atividades de "
-"nossos alunos (Serviços Templários, Conferências e reuniões), com o objetivo "
-"de ter uma compreensão muito clara do que é ser aluno da Rosacruz Áurea."
+"nossos alunos (Serviços Templários, Conferências e reuniões), com o objetivo"
+" de ter uma compreensão muito clara do que é ser aluno da Rosacruz Áurea."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:25
 msgid ""
 "Participating in this group does not represent any commitment to the School "
 "and you can leave it whenever you want."
 msgstr ""
-"A participação neste grupo não representa nenhum vínculo com a Escola e você "
-"pode sair dele quando quiser."
+"A participação neste grupo não representa nenhum vínculo com a Escola e você"
+" pode sair dele quando quiser."
 
 #: publicwork/templates/publicwork/insert_yourself/form.html:26
 msgid ""
@@ -1871,8 +1878,8 @@ msgstr "restrição"
 
 #: rcadmin/common.py:221
 msgid ""
-"Phone number must be entered in the format: '+1234567890'.             Up to "
-"15 digits allowed."
+"Phone number must be entered in the format: '+1234567890'.             Up to"
+" 15 digits allowed."
 msgstr ""
 "O número de telefone deve ser inserido no formato: '+1234567890'. São "
 "permitidos até 15 dígitos."
@@ -1944,7 +1951,7 @@ msgstr "pagamento"
 
 #: treasury/templates/treasury/elements/payments_summary.html:31
 msgid "Payment made by pupil"
-msgstr "Pagamento feito pelo aluno"
+msgstr "Contribuição registrada pelo aluno"
 
 #: treasury/templates/treasury/elements/search_person.html:7
 msgid "Type pupil name"
@@ -1955,16 +1962,17 @@ msgid "Use"
 msgstr "Usar"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:18
-#: treasury/templates/treasury/treasury_home.html:21 treasury/views/order.py:42
+#: treasury/templates/treasury/treasury_home.html:21
+#: treasury/views/order.py:42
 msgid "Orders"
-msgstr "Pedidos"
+msgstr "Contribuições"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:30
 #: treasury/templates/treasury/elements/treasury_navbar.html:39
 #: treasury/templates/treasury/treasury_home.html:27
 #: user/templates/user/profile/navbar.html:69
 msgid "New order"
-msgstr "Novo pedido"
+msgstr "Nova contribuição"
 
 #: treasury/templates/treasury/forms_of_payments.html:7
 msgid "Forms of Payments"
@@ -2004,7 +2012,7 @@ msgstr "Adicionar forma de pagamento"
 #: user/templates/user/profile/add_payment.html:12
 #: user/templates/user/profile/add_payment.html:25
 msgid "Add payment"
-msgstr "Adicionar pagamento"
+msgstr "Adicionar contribuição"
 
 #: treasury/templates/treasury/order_create.html:14
 #: user/templates/user/profile/new_order.html:13
@@ -2084,17 +2092,17 @@ msgstr "Balaço de caixa"
 #: treasury/templates/treasury/treasury_home.html:46
 #: treasury/views/reports.py:112
 msgid "Period payments"
-msgstr "Pagamentos por período"
+msgstr "Contribuições por período"
 
 #: treasury/templates/treasury/reports/menu.html:9
 #: treasury/views/reports.py:155
 msgid "Payment by person"
-msgstr "Pagamento por pessoa"
+msgstr "Contribuição por pessoa"
 
 #: treasury/templates/treasury/reports/payments_by_person.html:12
 #: treasury/templates/treasury/treasury_home.html:52
 msgid "Payments by person"
-msgstr "Pagamentos por pessoa"
+msgstr "Contribuições por pessoa"
 
 #: treasury/templates/treasury/reports/payments_by_person.html:43
 msgid "select a person"
@@ -2256,11 +2264,11 @@ msgstr "Designa se o usuário pode fazer login neste site de administração."
 
 #: user/models.py:65
 msgid ""
-"Designates whether this user should be treated as "
-"active.                     Unselect this instead of deleting accounts."
+"Designates whether this user should be treated as active."
+"                     Unselect this instead of deleting accounts."
 msgstr ""
-"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de "
-"deletar contas."
+"Designa se este usuário deve ser tratado como ativo.Desmarque isto em vez de"
+" deletar contas."
 
 #: user/models.py:69
 msgid "date joined"
@@ -2288,8 +2296,8 @@ msgstr "Seu e-mail e/ou senha não conferem. Por favor, tente novamente."
 
 #: user/templates/user/auth/login.html:16
 msgid ""
-"Your account doesn't have access to this page. To proceed, please login with "
-"an account that has access."
+"Your account doesn't have access to this page. To proceed, please login with"
+" an account that has access."
 msgstr ""
 "Sua conta não tem acesso a esta página. Para continuar, faça login com uma "
 "conta que tenha acesso."
@@ -2351,8 +2359,8 @@ msgstr "Por favor corrija os erros abaixo."
 
 #: user/templates/user/auth/password_change_form.html:38
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+"Please enter your old password, for security’s sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
 msgstr ""
 "Por favor, digite sua senha antiga, por questões de segurança, e depois "
 "digite sua novasenha duas vezes para que possamos verificar se você digitou "
@@ -2390,12 +2398,10 @@ msgstr "Enviamos por e-mail instruções para definir sua senha."
 #, python-format
 msgid ""
 "\n"
-"You're receiving this email because you requested a password reset for your "
-"user account at %(site_name)s.\n"
+"You're receiving this email because you requested a password reset for your user account at %(site_name)s.\n"
 msgstr ""
 "\n"
-"Você está recebendo este e-mail porque solicitou uma redefinição de senha "
-"para a suaconta de usuário no site %(site_name)s. \n"
+"Você está recebendo este e-mail porque solicitou uma redefinição de senha para a suaconta de usuário no site %(site_name)s. \n"
 
 #: user/templates/user/auth/password_reset_email.html:8
 msgid "Please go to the following page and choose a new password:"
@@ -2488,8 +2494,8 @@ msgstr "Realize a transferência, depósito ou PIX em seu banco."
 
 #: user/templates/user/profile/new_order.html:81
 msgid ""
-"Use the \"Description\" field in your bank app to identify your contribution "
-"via PIX."
+"Use the \"Description\" field in your bank app to identify your contribution"
+" via PIX."
 msgstr ""
 "Use o campo de Descrição no aplicativo de seu banco para identificar sua "
 "contribuição via PIX."
@@ -2497,15 +2503,17 @@ msgstr ""
 #: user/templates/user/profile/new_order.html:82
 #| msgid "Take the .pdf or .jpg digital voucher provided by your bank"
 msgid "Take the digital voucher provided by your bank (.jpg file format only)"
-msgstr "Pegue o comprovante digital fornecido por seu banco (somente formato de arquivo .jpg)"
+msgstr ""
+"Pegue o comprovante digital fornecido por seu banco (somente formato de "
+"arquivo .jpg)"
 
 #: user/templates/user/profile/new_order.html:83
 msgid ""
 "In this program you will be able to make payments and contributions in your "
 "name only."
 msgstr ""
-"Neste programa você conseguirá fazer os pagamentos e contribuições apenas em "
-"seu nome."
+"Neste programa você conseguirá fazer os pagamentos e contribuições apenas em"
+" seu nome."
 
 #: user/templates/user/profile/new_order.html:84
 msgid ""
@@ -2525,8 +2533,8 @@ msgstr "Forma de Pagamento"
 
 #: user/templates/user/profile/new_order.html:138
 #| msgid ""
-#| "In order to complete your contribution, have your deposit, transfer or "
-#| "PIX receipt scanned (.pdf or .jpg)"
+#| "In order to complete your contribution, have your deposit, transfer or PIX "
+#| "receipt scanned (.pdf or .jpg)"
 msgid ""
 "In order to complete your contribution, have your deposit, transfer or PIX "
 "receipt scanned in .jpg file format"
@@ -2572,15 +2580,15 @@ msgstr ""
 
 #: user/templates/user/profile/payments.html:3
 msgid "Latest payments"
-msgstr "Últimos pagamentos"
+msgstr "Últimas contribuições"
 
 #: user/templates/user/profile/payments.html:15
 msgid "payments"
-msgstr "pagamentos"
+msgstr "contribuições"
 
 #: user/templates/user/profile/payments.html:25
 msgid "payments not found"
-msgstr "Pagamentos não encontrados"
+msgstr "Contribuições não encontradas"
 
 #: user/templates/user/profile/scan_qrcode_event.html:21
 msgid "Scan the Event QR-CODE"
@@ -2721,12 +2729,10 @@ msgid "update workgroup"
 msgstr "atualizar grupo de trabalho"
 
 #, fuzzy
-#~| msgid "file name"
 #~ msgid "file format"
 #~ msgstr "nome do arquivo"
 
 #, fuzzy
-#~| msgid "Payment"
 #~ msgid "+ Payment"
 #~ msgstr "Pagamento"
 

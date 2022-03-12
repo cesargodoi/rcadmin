@@ -21,7 +21,7 @@ def hx_get_order(request):
 @login_required
 @permission_required("treasury.view_order")
 def treasury_home(request):
-    template_name = "treasury/treasury_home.html"
+    template_name = "treasury/home.html"
     # clear session
     if request.session.get("order"):
         del request.session["order"]

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import Group
 
 from person.models import Person
 from rcadmin.common import ASPECTS, STATUS, paginator, clear_session
@@ -73,6 +74,8 @@ def membership_update(request, workgroup_id, pk):
         form = MembershipForm(request.POST, instance=membership)
         if form.is_valid():
             form.save()
+            ensure_mentoring_permission(form.cleaned_data["person"])
+
             messages.success(request, _("The Membership has been updated!"))
 
         return redirect("workgroup_detail", pk=workgroup_id)
@@ -98,3 +101,13 @@ def membership_delete(request, workgroup_id, pk):
         "title": _("confirm to delete"),
     }
     return render(request, "base/confirm_delete.html", context)
+
+
+#  handlers
+def ensure_mentoring_permission(person):
+    mentor = [g for g in person.membership_set.all() if g.role_type == "MTR"]
+    mentoring = Group.objects.get(name="mentoring")
+    if mentor:
+        person.user.groups.add(mentoring)
+    else:
+        person.user.groups.remove(mentoring)

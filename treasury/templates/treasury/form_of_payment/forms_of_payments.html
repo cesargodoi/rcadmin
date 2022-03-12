@@ -1,0 +1,72 @@
+{% load base_extras %}
+{% load i18n %}
+
+<h4>{% trans 'Forms of Payments' %}</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+  <div class="row border-top border-secondary pb-2 pt-2">
+
+    <div class="col-sm-2">
+      <strong>{{ obj.get_payform_type_display | upper }}</strong>
+    </div>
+
+    <div class="col-sm-6 text-secondary">
+      {% if obj.bank_flag %}
+        {{ obj.bank_flag }} &nbsp;&nbsp;
+      {% endif %}
+      {% if obj.bank_flag and obj.ctrl_number %} | &nbsp;&nbsp; {% endif %}
+      {% if obj.ctrl_number %}
+        {{ obj.ctrl_number }} &nbsp;&nbsp;
+      {% endif %}
+      {% if obj.ctrl_number and obj.complement %} | &nbsp;&nbsp; {% endif %}
+      {% if obj.complement %}
+        {{ obj.complement }} &nbsp;&nbsp;
+      {% endif %}
+    </div>
+
+    <div class="col-sm-2 text-right">
+      <strong>{{ obj.value }}</strong>
+      
+    </div>
+
+    <div class="col-sm-2 text-right">
+      <div class="btn-group btn-group-sm">
+        <a type="button" 
+          href="{% url 'form_of_payment_update' pk=obj.pk %}" 
+          class="btn btn-light btn-sm">
+          <i class="fas fa-edit text-warning"></i>
+        </a>
+        <a type="button" 
+          href="{% url 'form_of_payment_delete' pk=obj.pk %}" 
+          class="btn btn-light btn-sm">
+          <i class="fas fa-trash-alt text-danger"></i>
+        </a>
+      </div>
+    </div>
+    
+  </div>
+{% endfor %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+        {% trans 'choose your search terms' %}
+      {% else %}
+        {% trans 'forms of payments not found' %}
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

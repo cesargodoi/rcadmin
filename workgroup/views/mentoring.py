@@ -55,7 +55,7 @@ def mentoring_group_detail(request, pk):
     mentors = [
         mtr.person.short_name for mtr in _members if mtr.role_type == "MTR"
     ]
-    members = [mbr for mbr in _members if mbr.role_type == "MBR"]
+    members = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")]
 
     object_list = paginator(members, 25, request.GET.get("page"))
     # add action links
@@ -88,7 +88,7 @@ def mentoring_group_frequencies(request, pk):
     mentors = [
         mtr.person.short_name for mtr in _members if mtr.role_type == "MTR"
     ]
-    members = [mbr for mbr in _members if mbr.role_type == "MBR"]
+    members = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")]
 
     object_list = paginator(members, 25, request.GET.get("page"))
 

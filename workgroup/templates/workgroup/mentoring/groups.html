@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load base_extras %}
 
 <h4>{% trans 'Groups' %}</h4>
 
@@ -7,12 +8,11 @@
   {% for obj in object_list %}
   <div class="row border-top border-secondary pb-2 pt-2"
     {% if obj.click_link %}
-      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser or request.user|has_group:'mentoring' %}
         onclick="location.href='{{ obj.click_link }}';"
         style="cursor: pointer;"
       {% endif %}
     {% endif %}>
-
     <div class="col-sm-3">
       <strong>{{ obj.workgroup.name }}</strong>
     </div>

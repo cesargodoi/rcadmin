@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% include "treasury/bankflag/navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'treasury/bankflag/bankflags.html' %}
+  </div>
+</article>
+
+{% endblock content %}

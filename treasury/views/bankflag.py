@@ -18,9 +18,9 @@ def bankflags(request):
 
     context = {
         "object_list": object_list,
-        "title": _("BankFlags"),
+        "title": _("Banks or Flags"),
     }
-    return render(request, "treasury/bankflags.html", context)
+    return render(request, "treasury/bankflag/home.html", context)
 
 
 @login_required
@@ -30,17 +30,17 @@ def bankflag_create(request):
         form = BankFlagForm(request.POST)
         if form.is_valid():
             form.save()
-            message = _("The BankFlag has been created!")
+            message = _("The Bank or Flag has been created!")
             messages.success(request, message)
             return redirect("bankflags")
 
     context = {
         "form": BankFlagForm(),
-        "form_name": "Bankflag",
-        "form_path": "treasury/forms/bankflag.html",
+        "form_name": "Bank or Flag",
+        "form_path": "treasury/elements/generic_form.html",
         "goback": reverse("bankflags"),
         "to_create": True,
-        "title": _("Create BankFlag"),
+        "title": _("Create Bank or flag"),
     }
     return render(request, "base/form.html", context)
 
@@ -53,16 +53,16 @@ def bankflag_update(request, pk):
         form = BankFlagForm(request.POST, instance=bank_flag)
         if form.is_valid():
             form.save()
-            message = _("The BankFlag has been updated!")
+            message = _("The Bank or Flag has been updated!")
             messages.success(request, message)
             return redirect("bankflags")
 
     context = {
         "form": BankFlagForm(instance=bank_flag),
-        "form_name": "Bankflag",
-        "form_path": "treasury/forms/bankflag.html",
+        "form_name": "Bank or flag",
+        "form_path": "treasury/elements/generic_form.html",
         "goback": reverse("bankflags"),
-        "title": _("Update BankFlag"),
+        "title": _("Update Bank or Flag"),
     }
     return render(request, "base/form.html", context)
 
@@ -75,10 +75,10 @@ def bankflag_delete(request, pk):
         if bank_flag.formofpayment_set.all():
             bank_flag.is_active = False
             bank_flag.save()
-            message = _("The BankFlag has been inactivated!")
+            message = _("The Bank or Flag has been inactivated!")
         else:
             bank_flag.delete()
-            message = _("The BankFlag has been deleted!")
+            message = _("The Bank or Flag has been deleted!")
         messages.success(request, message)
         return redirect("bankflags")
 

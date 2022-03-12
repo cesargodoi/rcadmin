@@ -6,22 +6,22 @@
 
 <div class="text-right mb-2 mt-4">
   {% if not request.session.order.self_payed %}
-  <a class="btn btn-light" 
+  <a class="btn btn-light text-warning mt-2" 
     href="{% url 'order_update' request.session.order.id %}">
     <i class="fas fa-edit"></i> 
     {% trans 'Edit' %}
   </a>
   {% endif %}
-  <a class="btn btn-light" 
+  <a class="btn btn-light text-danger mt-2" 
     href="{% url 'order_delete' request.session.order.id %}">
     <i class="fas fa-trash-alt"></i> 
     {% trans 'Delete' %}
   </a>
   <a type="button" 
-    class="btn btn-light mr-3" 
+    class="btn btn-light text-info mt-2" 
     href="{{ goback }}">
     <i class="fas fa-chevron-left "></i> 
-    {% trans 'Go back' %}
+    {% trans 'Back' %}
   </a>
 </div>
 

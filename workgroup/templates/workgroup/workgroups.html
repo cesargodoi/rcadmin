@@ -30,7 +30,9 @@
     </div>
 
     <div class="col-sm text-right">
+      {% if obj.aspect != '--' %}
       <strong>{{ obj.get_aspect_display }}</strong>
+      {% endif %}
       {% if not nav == "home" %}
         &nbsp;&nbsp;&nbsp;&nbsp;
         {% if obj.pk in pre_groups %}

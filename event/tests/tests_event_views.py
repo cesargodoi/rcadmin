@@ -1,344 +1,255 @@
-from person.models import Person
-from event.models import Activity, Event
-from event.tests.dummy import EventDummy
-from django.contrib import auth
-from django.shortcuts import get_object_or_404
+import pytest
+from django.urls import reverse
 
 
+#  Activity  ##################################################################
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "_type",
+    [("home"), ("create"), ("update"), ("delete")],
+)
+def test_unlogged_person_cannot_view_activity_page(
+    activity_factory, client, _type
+):
+    """unlogged person can't access any page of activity app"""
+    activity = activity_factory()
+    page = f"activity_{_type}"
+    if _type in ("update", "delete"):
+        url = reverse(page, args=[str(activity.pk)])
+    else:
+        url = reverse(page)
+    response = client.get(url)
+    assert "login" in response.url
 
-class ActivityViewTests(EventDummy):
-    # only superuser can access activity pages(CRUD)
-    def test_office_logged_in_can_not_access_activity_list(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/")
 
-    def test_office_logged_in_can_not_access_activity_create(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/create")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/create")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 302),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__activity_home__by_user_type(
+    auto_login_user, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access activity_home"""
+    client, user = auto_login_user(group=user_type)
+    url = reverse("activity_home")
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_office_logged_in_can_not_access_activity_update(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/update")
 
-    def test_office_logged_in_can_not_access_activity_delete(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/delete")
-    ####
-    def test_treasury_logged_in_can_not_access_activity_list(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 302),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__activity_create__by_user_type(
+    auto_login_user, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access activity_create"""
+    client, user = auto_login_user(group=user_type)
+    url = reverse("activity_create")
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_treasury_logged_in_can_not_access_activity_create(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/create")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/create")
 
-    def test_treasury_logged_in_can_not_access_activity_update(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/update")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 302),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__activity_update__by_user_type(
+    center_factory,
+    activity_factory,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'admin' and 'superuser' can access person_update"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    activity = activity_factory()
+    url = reverse("activity_update", args=[activity.pk])
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_treasury_logged_in_can_not_access_activity_delete(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/delete")
 
-    #####
-    def test_treasuryjr_logged_in_can_not_access_activity_list(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 302),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__activity_delete__by_user_type(
+    center_factory,
+    activity_factory,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'admin' and 'superuser' can access person_update"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    activity = activity_factory()
+    url = reverse("activity_delete", args=[activity.pk])
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_treasuryjr_logged_in_can_not_access_activity_create(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/create")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/create")
 
-    def test_treasuryjr_logged_in_can_not_access_activity_update(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/update")
+#  Event  ##################################################################
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__event_home__by_user_type(
+    auto_login_user, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access event_home"""
+    client, user = auto_login_user(group=user_type)
+    url = reverse("event_home")
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_treasuryjr_logged_in_can_not_access_activity_delete(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/delete")
 
-    #####
-    def test_user_logged_in_can_not_access_activity_list(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__event_detail__by_user_type(
+    auto_login_user, create_event, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access event_detail"""
+    client, user = auto_login_user(group=user_type)
+    event = create_event()
+    url = reverse("event_detail", args=[event.pk])
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_user_logged_in_can_not_access_activity_create(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/create")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/create")
 
-    def test_user_logged_in_can_not_access_activity_update(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/update")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__event_create__by_user_type(
+    auto_login_user, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access event_create"""
+    client, user = auto_login_user(group=user_type)
+    url = reverse("event_create")
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_user_logged_in_can_not_access_activity_delete(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/activity/1/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/activity/1/delete")
 
-class EventViewTests(EventDummy):
-    # only office and superuser can access event.
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__event_update__by_user_type(
+    auto_login_user, create_event, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access event_update"""
+    client, user = auto_login_user(group=user_type)
+    event = create_event()
+    url = reverse("event_update", args=[event.pk])
+    response = client.get(url)
+    assert response.status_code == status_code
 
-    def test_office_logged_in_can_access_event_list(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "event/event_home.html")
 
-    def test_office_logged_in_can_access_event_detail(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/detail")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "event/event_detail.html")
-
-    def test_office_logged_in_can_access_event_insert_frequencies(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/frequencies_add")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "event/frequencies_add.html")
-
-    def test_office_logged_in_can_access_event_delete_frequencies(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        freq = get_object_or_404(Person, name__icontains="Office One")  ######
-        response = self.client.get(f"/event/{event.id}/frequency/{freq.id}/delete")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "base/confirm_delete.html")
-    
-    def test_office_logged_in_can_access_event_create(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/create/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "event/event_form.html")
-
-    def test_office_logged_in_can_access_event_update(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/update")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "event/event_form.html")
-
-    def test_office_logged_in_can_access_event_delete(self):
-        self.client.login(
-            email="office1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/delete")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "base/confirm_delete.html")
-
-    ######
-    def test_treasury_logged_in_can_not_access_event_list(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/")
-
-    def test_treasury_logged_in_can_not_access_event_create(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/create/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/create/")
-
-    def test_treasury_logged_in_can_not_access_event_update(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/update")
-
-    def test_treasury_logged_in_can_not_access_event_delete(self):
-        self.client.login(
-            email="treasury1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/delete")
-
-    ######
-    def test_treasuryjr_logged_in_can_not_access_event_list(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/")
-
-    def test_treasuryjr_logged_in_can_not_access_event_create(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/create/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/create/")
-
-    def test_treasuryjr_logged_in_can_not_access_event_update(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/update")
-
-    def test_treasuryjr_logged_in_can_not_access_event_delete(self):
-        self.client.login(
-            email="treasuryjr1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/delete")
-
-    ######
-    def test_user_logged_in_can_not_access_event_list(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/")
-
-    def test_user_logged_in_can_not_access_event_create(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        response = self.client.get("/event/create/")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/user/login/?next=/event/create/")
-
-    def test_user_logged_in_can_not_access_event_update(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/update")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/update")
-
-    def test_user_logged_in_can_not_access_event_delete(self):
-        self.client.login(
-            email="user1@rcad.min",
-            password="asdf1234",
-        )
-        event = Event.objects.get(id=1)
-        response = self.client.get(f"/event/{event.id}/delete")
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"/user/login/?next=/event/{event.id}/delete")
+@pytest.mark.events
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+    ],
+)
+def test_access__event_delete__by_user_type(
+    auto_login_user, create_event, user_type, status_code
+):
+    """only 'admin' or 'superuser' can access event_delete"""
+    client, user = auto_login_user(group=user_type)
+    event = create_event()
+    url = reverse("event_delete", args=[event.pk])
+    response = client.get(url)
+    assert response.status_code == status_code

@@ -1,0 +1,87 @@
+{% load base_extras %}
+{% load i18n %}
+
+<h4>{% trans 'Payments' %}</h4>
+
+{% if object_list %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+  {% for obj in object_list %}
+    <div class="row border-top border-secondary pb-2 pt-2">
+
+      <div class="col-sm-1">
+        {{ obj.created_on | date:"d/m/y" }}
+      </div>
+
+      <div class="col-sm-2">
+        <strong>{{ obj.paytype }}</strong>
+      </div>
+
+      <div class="col-sm-4 text-secondary">
+        {% if obj.ref_month %}
+        {{ obj.ref_month|date:"M/y" }} &nbsp;&nbsp;
+        {% endif %}
+        {% if obj.ref_month and obj.person %} | &nbsp;&nbsp; {% endif %}
+        {% if obj.person %}
+        {{ obj.person.short_name }} &nbsp;&nbsp;
+        {% endif %}
+        {% if obj.person and obj.event %} | &nbsp;&nbsp; {% endif %}
+        {% if obj.event %}
+        {{ obj.event.center }} &nbsp;&nbsp;
+        {% endif %}
+      </div>
+
+      <div class="col-sm-3 text-right">
+        <small class="text-{% if obj.order_set.all.0.status == 'PND' %}warning
+                      {% elif obj.order_set.all.0.status == 'CCL' %}danger
+                      {% else %}success{% endif %}">
+          {{ obj.order_set.all.0.get_status_display }}
+        </small>
+        &nbsp;&nbsp;
+        <strong>
+          <span class="text-{% if obj.order_set.all.0.status == 'PND' %}warning
+                        {% elif obj.order_set.all.0.status == 'CCL' %}danger
+                        {% else %}success{% endif %}">
+            {{ obj.value }}
+          </span>
+        </strong>
+      </div>
+
+      <div class="col-sm-2 text-right">
+        <div class="btn-group btn-group-sm">
+          <a type="button" 
+            href="{% url 'payment_update' pk=obj.pk %}" 
+            class="btn btn-light btn-sm">
+            <i class="fas fa-edit text-warning"></i>
+          </a>
+          <a type="button" 
+            href="{% url 'payment_delete' pk=obj.pk %}" 
+            class="btn btn-light btn-sm">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </a>
+        </div>
+      </div>
+      
+    </div>
+  {% endfor %}
+
+  {% if object_list.has_other_pages %}
+    {% include "base/elements/paginator.html" %}
+  {% endif %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+        {% trans 'choose your search terms' %}
+      {% else %}
+        {% trans 'payments not found' %}
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

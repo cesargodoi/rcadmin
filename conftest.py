@@ -1,20 +1,25 @@
 import random
 import pytest
 
+from django.utils import timezone
 from pytest_factoryboy import register
 from django.contrib.auth.models import Group, Permission
 from factories import (
     fake,
     UserFactory,
     CenterFactory,
+    ActivityFactory,
     TempRegOfSeeker,
     SeekerFactory,
 )
 from person.models import Person, Historic
+from event.models import Event
+
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
 register(UserFactory)
 register(CenterFactory)
+register(ActivityFactory)
 register(TempRegOfSeeker)
 register(SeekerFactory)
 
@@ -50,8 +55,8 @@ def auto_login_user(db, client, create_user, get_password, get_group):
 
 @pytest.fixture
 def create_person(db, create_user, center_factory):
-    def make_person(center=None, name=None):
-        user = create_user()
+    def make_person(center=None, name=None, email=None):
+        user = create_user(email=email)
         person = Person.objects.get(user=user)
         person.name = name if name else fake.name()
         person.center = center if center else center_factory.create()
@@ -81,6 +86,50 @@ def create_historic(db):
     return make_historic
 
 
+@pytest.fixture
+def create_event(db, activity_factory, center_factory, create_user):
+    def make_event(center=None, activity=None):
+        _center = center if center else center_factory()
+        _activity = activity if activity else activity_factory()
+        _event = dict(
+            center=_center,
+            activity=_activity,
+            date=timezone.now(),
+            status="OPN",
+            made_by=create_user(),
+        )
+        event = Event(**_event)
+        event.save()
+        return event
+
+    return make_event
+
+
+@pytest.fixture
+def create_frequency(
+    db, create_event, create_person, activity_factory, center_factory
+):
+    def make_frequency(center=None, activity=None, event=None, person=None):
+        _center = center if center else center_factory()
+        _activity = activity if activity else activity_factory()
+        if Event.objects.filter(center=_center, activity=_activity):
+            _event = Event.objects.filter(
+                center=_center, activity=_activity
+            ).first()
+        else:
+            _event = (
+                event
+                if event
+                else create_event(center=_center, activity=_activity)
+            )
+        _person = person if person else create_person(center=_center)
+
+        frequency = _event.frequency_set.create(person=_person)
+        return frequency
+
+    return make_frequency
+
+
 #  Groups and Permissions
 @pytest.fixture
 def get_group(db, get_perms):
@@ -97,6 +146,7 @@ def get_group(db, get_perms):
 @pytest.fixture
 def get_perms(db):
     perms = {
+        "admin": [perm for perm in Permission.objects.all()],
         "user": [
             # user and profile
             Permission.objects.get(codename="view_user"),
@@ -154,6 +204,52 @@ def get_perms(db):
             # order
             Permission.objects.get(codename="add_order"),
             Permission.objects.get(codename="view_order"),
+        ],
+        "publicwork": [
+            # seeker
+            Permission.objects.get(codename="add_seeker"),
+            Permission.objects.get(codename="change_seeker"),
+            Permission.objects.get(codename="delete_seeker"),
+            Permission.objects.get(codename="view_seeker"),
+            # publicwork_group
+            Permission.objects.get(codename="add_publicworkgroup"),
+            Permission.objects.get(codename="change_publicworkgroup"),
+            Permission.objects.get(codename="delete_publicworkgroup"),
+            Permission.objects.get(codename="view_publicworkgroup"),
+            # historic
+            Permission.objects.get(codename="add_historicofseeker"),
+            Permission.objects.get(codename="change_historicofseeker"),
+            Permission.objects.get(codename="delete_historicofseeker"),
+            Permission.objects.get(codename="view_historicofseeker"),
+            # lecture
+            Permission.objects.get(codename="add_lecture"),
+            Permission.objects.get(codename="change_lecture"),
+            Permission.objects.get(codename="delete_lecture"),
+            Permission.objects.get(codename="view_lecture"),
+            # listener
+            Permission.objects.get(codename="add_listener"),
+            Permission.objects.get(codename="change_listener"),
+            Permission.objects.get(codename="delete_listener"),
+            Permission.objects.get(codename="view_listener"),
+        ],
+        "publicwork_jr": [
+            # seeker
+            Permission.objects.get(codename="change_seeker"),
+            Permission.objects.get(codename="view_seeker"),
+            # publicwork_group
+            Permission.objects.get(codename="view_publicworkgroup"),
+            # historic
+            Permission.objects.get(codename="add_historicofseeker"),
+            Permission.objects.get(codename="change_historicofseeker"),
+            Permission.objects.get(codename="delete_historicofseeker"),
+            Permission.objects.get(codename="view_historicofseeker"),
+            # lecture
+            Permission.objects.get(codename="view_lecture"),
+            # listener
+            Permission.objects.get(codename="add_listener"),
+            Permission.objects.get(codename="change_listener"),
+            Permission.objects.get(codename="delete_listener"),
+            Permission.objects.get(codename="view_listener"),
         ],
     }
     return perms

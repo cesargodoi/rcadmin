@@ -17,7 +17,7 @@ def activity_home(request):
         "object_list": activities,
         "title": _("Activities"),
     }
-    return render(request, "event/activity_home.html", context)
+    return render(request, "event/activity/home.html", context)
 
 
 @login_required

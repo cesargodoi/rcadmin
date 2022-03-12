@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% include "treasury/form_of_payment/navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    {% include 'treasury/form_of_payment/forms_of_payments.html' %}
+  </div>
+</article>
+
+{% endblock content %}

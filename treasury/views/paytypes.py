@@ -16,8 +16,11 @@ def paytypes(request):
     queryset = PayTypes.objects.all()
     object_list = paginator(queryset, page=request.GET.get("page"))
 
-    context = {"object_list": object_list, "title": "PayTypes"}
-    return render(request, "treasury/paytypes.html", context)
+    context = {
+        "object_list": object_list,
+        "title": "Types of payment",
+    }
+    return render(request, "treasury/paytype/home.html", context)
 
 
 @login_required
@@ -33,11 +36,11 @@ def paytype_create(request):
 
     context = {
         "form": PayTypeForm(),
-        "form_name": "Paytype",
-        "form_path": "treasury/forms/paytype.html",
-        "goback": reverse("payments"),
+        "form_name": "Type of payment",
+        "form_path": "treasury/elements/generic_form.html",
+        "goback": reverse("paytypes"),
         "to_create": True,
-        "title": _("Create PayType"),
+        "title": _("Create type of payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -50,16 +53,16 @@ def paytype_update(request, pk):
         form = PayTypeForm(request.POST, instance=pay_types)
         if form.is_valid():
             form.save()
-            message = _("The PayType has been updated!")
+            message = _("The types of payment has been updated!")
             messages.success(request, message)
             return redirect("paytypes")
 
     context = {
         "form": PayTypeForm(instance=pay_types),
-        "form_name": "Paytype",
-        "form_path": "treasury/forms/paytype.html",
-        "goback": reverse("payments"),
-        "title": _("Update PayType"),
+        "form_name": "Type of payment",
+        "form_path": "treasury/elements/generic_form.html",
+        "goback": reverse("paytypes"),
+        "title": _("Update type of payment"),
     }
     return render(request, "base/form.html", context)
 
@@ -72,10 +75,10 @@ def paytype_delete(request, pk):
         if pay_types.payment_set.all():
             pay_types.is_active = False
             pay_types.save()
-            message = _("The PayType has been inactivated!")
+            message = _("The types of payment has been inactivated!")
         else:
             pay_types.delete()
-            message = _("The PayType has been deleted!")
+            message = _("The types of payment has been deleted!")
         messages.success(request, message)
         return redirect("paytypes")
 

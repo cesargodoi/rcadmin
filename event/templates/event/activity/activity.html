@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<div class="row row border-top border-secondary pb-2 pt-2">
+  <div class="col-sm-4">{{ obj.name }}</div>
+
+  <div class="col-sm-4">
+    <span class="text-secondary">
+      <em>{{ obj.get_activity_type_display }}</em>
+    </span>
+  </div>
+
+  <div class="col-sm-1">
+    {% if obj.is_active %}
+      <i class="fas fa-check-square text-success"></i>
+    {% else %}
+      <i class="fas fa-square text-secondary"></i>
+    {% endif %}
+  </div>
+
+  <div class="col-sm-2">
+    {% if obj.multi_date %}
+    <span class="badge badge-pill badge-secondary">{% trans 'is multi date' %}</span>
+    {% endif %}
+  </div>
+
+  <div class="col-sm-1 text-right">
+    <div class="btn-group btn-group-sm">
+      <a type="button" 
+            href="{% url 'activity_update' obj.pk %}" 
+            class="btn btn-light btn-sm">
+            <i class="fas fa-edit text-warning"></i>
+          </a>
+      <a type="button" 
+        href="{% url 'activity_delete' obj.pk %}" 
+        class="btn btn-light btn-sm">
+        <i class="fas fa-trash-alt text-danger"></i>
+      </a>
+    </div>
+  </div>
+</div>
