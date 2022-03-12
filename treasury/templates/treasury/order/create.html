@@ -7,16 +7,14 @@
 <div class="text-right mb-2 mt-4">
   {% if request.session.order.total_payments != 0.0 %}
     {% if request.session.order.total_payments == request.session.order.total_payforms %}
-    <button 
-      class="btn btn-primary" 
+    <button class="btn btn-primary mt-2" 
       onclick="document.getElementById('form').submit();">
       <i class="fas fa-money-bill-wave-alt"></i> 
       {% trans 'Pay now' %}
     </button>
     {% endif %}
   {% endif %}
-  <a type="button" 
-    class="nav-link px-1 mx-1 py-3 my-n2 text-info"
+  <a class="btn btn-light text-info mt-2 mr-3"
     href="{% if to_create %}{% url 'treasury_home' %}{% else %}{% url 'order_detail' request.session.order.id %}{% endif %}">
     <i class="fas fa-chevron-left "></i> 
     {% trans 'Back' %}
