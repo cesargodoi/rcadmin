@@ -8,6 +8,7 @@ from rcadmin.common import (
     phone_format,
     CENTER_TYPES,
     COUNTRIES,
+    RESPOSABILITIES,
 )
 
 
@@ -59,6 +60,9 @@ class Center(models.Model):
     conf_center = models.ForeignKey(
         "self", on_delete=models.PROTECT, null=True, blank=True
     )
+    responsible_for = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through="Responsible", blank=True
+    )
     observations = models.CharField(max_length=200, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -94,3 +98,23 @@ class Center(models.Model):
         verbose_name = "center"
         verbose_name_plural = "centers"
         ordering = ["name"]
+
+
+#  Responsible
+class Responsible(models.Model):
+    center = models.ForeignKey(Center, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT
+    )
+    rule = models.CharField(
+        max_length=3, choices=RESPOSABILITIES, default="BDG"
+    )
+
+    def __str__(self):
+        return "center: {} user: {} rule: {}".format(
+            self.center, self.user, self.rule
+        )
+
+    class Meta:
+        verbose_name = "responsible"
+        verbose_name_plural = "responsibles"

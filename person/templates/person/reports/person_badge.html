@@ -1,0 +1,104 @@
+{% extends 'person/reports/base_report.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="al-justify pt9">
+    Esta é sua Carteirinha de Aluno do Lectorium Rosicrucianum para o ano de {% now "Y" %}.<br>
+    Você deve imprimí-la em sua impressora ou numa empresa copiadora (xerox)
+    como preferir. Após impressão:<br>
+    - Dobre a folha usando a marca de dobra 1, de modo que a parte escrita fique pra fora;<br>
+    - Corte com um estilete ou tesoura na linha pontilhada 2;<br>
+    - Corte com um estilete ou tesoura nas linhas pontilhadas 3 e 4;<br>
+    - Se preferir mande plastificar.<br>
+    Guarde sua carteirinha sempre junto ao seu documento de identificação.<br>
+    <br>
+    Feliz {% now "Y" %}!!!<br>
+  </div>
+
+  <div style="position:relative; width:680px; float:left;">
+    <img src="{% static 'images/badge-top.png' %}" style="margin-left: 15px;">
+    <div class="back">
+      <div class="pt8 al-center top10">
+        <strong>
+          EM CASO DE ACIDENTE, MORTE <br>
+          OU ENFERMIDADE SÚBITA E GRAVE
+        </strong>
+      </div>
+      <div class="al-justify">
+        <span class="txt-bordered">
+          Peço o favor de comunicar imediatamente meu familiar:
+        </span>
+        <br>
+        <div>
+          <strong>
+            {{ person.user.profile.sos_contact }}
+            <span class="float-right">{{ person.user.profile.sos_phone }}</span>
+          </strong>
+        </div>
+        <br>
+        <span class="txt-bordered">
+          Peço também o favor de comunicar a direção do Lectorium Rosicrucianum através de:
+        </span><br>
+
+        {% for r in responsibles %}
+          <div>
+            <strong>
+              {{ r.user.person.short_name }}
+              <span class="float-right">{{ r.user.profile.phone_1 }}</span>
+            </strong>
+          </div>
+        {% endfor %}
+
+      </div>
+      <br>
+      <div class="al-center">
+        <strong>{{ person.center.name }} - {{ person.center.city }} - {{ person.center.country }}</strong><br>
+        <div class="pt7 obliq top-3">{{ person.center.phone_1 }} - {{ person.center.email }}</div>
+      </div>
+
+    </div>
+
+    <div class="front">
+
+      <div class="pt8 w90 al-center" style="margin-top: 15px; margin-bottom: 15px; margin-left: 10px;">
+        <img width=60 src="{% static 'images/rca.png' %}">
+      </div>
+
+      <div class="w210 al-right top20">
+        <div class="pt10"><strong>LECTORIUM ROSICRUCIANUM</strong></div>
+        <div class="pt8 top-3">Escola Espiritual da Rosacruz Áurea</div>
+        <div class="pt6 top-3">DEPARTAMENTO BRASILEIRO</div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="user-info">
+        <div class="user-labels al-right">
+          nome<br>
+          matricula<br>
+          identidade<br>
+          ano
+        </div>
+
+        <div class="user-data al-left">
+          <strong>{{ person.short_name }}</strong><br>
+          {{ person.reg }}<br>
+          {{ person.id_card }}<br>
+          <div class="pt14 top-3">{% now "Y" %}</div>
+        </div>
+
+        <div class="user-photo">
+          {% if person.user.profile.image.url %}
+            <img class="photo" 
+                 src="{{ person.user.profile.image.url }}">
+          {% endif %}
+        </div>
+
+      </div>
+
+    </div>
+
+    <img src="{% static 'images/badge-bot.png' %}" style="margin-left: 15px;">
+  </div>
+  {% endblock %}

@@ -1,0 +1,277 @@
+body {
+  width: 900px;
+  margin: 0 auto;
+  font-size: 8pt;
+  font-family: arial, helvetica;
+}
+em {
+  font-size: 7pt;
+  font-weight: bold;
+  font-style: oblique;
+}
+.box-clear {
+  clear: both;
+}
+.h215 {
+  height: 215px;
+}
+.w50 {
+  position: relative;
+  width: 50px;
+  float: left;
+}
+.w80 {
+  position: relative;
+  width: 80px;
+  float: left;
+}
+.w90 {
+  position: relative;
+  width: 90px;
+  float: left;
+}
+.w100 {
+  position: relative;
+  width: 100px;
+  float: left;
+}
+.w150 {
+  position: relative;
+  width: 150px;
+  float: left;
+}
+.w250 {
+  position: relative;
+  width: 250px;
+  float: left;
+}
+.w200 {
+  position: relative;
+  width: 200px;
+  float: left;
+}
+.w210 {
+  position: relative;
+  width: 210px;
+  float: left;
+}
+.w220 {
+  position: relative;
+  width: 220px;
+  float: left;
+}
+.w300 {
+  position: relative;
+  width: 300px;
+}
+/** align **/
+.al-left {
+  text-align: left;
+}
+.al-center {
+  text-align: center;
+}
+.al-right {
+  text-align: right;
+}
+.al-justify {
+  text-align: justify;
+  padding: 10px;
+  /* background-color: rgb(45, 55, 185); */
+}
+/** font size **/
+.pt6 {
+  font-size: 6pt;
+}
+.pt7 {
+  font-size: 7pt;
+}
+.pt8 {
+  font-size: 8pt;
+}
+.pt9 {
+  font-size: 9pt;
+}
+.pt10 {
+  font-size: 10pt;
+}
+.pt12 {
+  font-size: 12pt;
+}
+.pt14 {
+  font-size: 14pt;
+}
+.bgDDD {
+  background-color: #ddd;
+}
+/** padding **/
+.pad5 {
+  padding: 5px;
+}
+.pad10 {
+  padding: 10px;
+}
+.pad15 {
+  padding: 15px;
+}
+.pad20 {
+  padding: 20px;
+}
+/** spaces **/
+.lef5 {
+  margin-left: 5px;
+}
+.lef10 {
+  margin-left: 10px;
+}
+.lef15 {
+  margin-left: 15px;
+}
+.lef20 {
+  margin-left: 20px;
+}
+.rgt5 {
+  margin-right: 5px;
+}
+.rgt10 {
+  margin-right: 10px;
+}
+.rgt15 {
+  margin-right: 15px;
+}
+.rgt20 {
+  margin-right: 20px;
+}
+.top5 {
+  margin-top: 5px;
+}
+.top10 {
+  margin-top: 10px;
+}
+.top15 {
+  margin-top: 15px;
+}
+.top20 {
+  margin-top: 20px;
+}
+.top25 {
+  margin-top: 25px;
+}
+.top30 {
+  margin-top: 30px;
+}
+.top35 {
+  margin-top: 35px;
+}
+.top40 {
+  margin-top: 40px;
+}
+.bot5 {
+  margin-bottom: 5px;
+}
+.bot10 {
+  margin-bottom: 10px;
+}
+.bot15 {
+  margin-bottom: 15px;
+}
+.bot20 {
+  margin-bottom: 20px;
+}
+/** borders **/
+.bord-top {
+  border-top: 1px solid #666;
+}
+.bord-bot {
+  border-bottom: 1px solid #666;
+}
+
+/** outros **/
+.txt-bordered {
+  position: relative;
+  width: 300px;
+  float: left;
+  font-size: 7pt;
+  border-bottom: 1px solid #666;
+  padding: 0, 10px, 0, 10px;
+}
+.top-3 {
+  margin-top: -3px;
+}
+.top-4 {
+  margin-top: -4px;
+}
+.top-5 {
+  margin-top: -5px;
+}
+.obliq {
+  font-style: oblique;
+}
+.back {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  float: left;
+  margin-left: 23px;
+  border-left: 1px dashed #666;
+}
+.front {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  float: left;
+  border-right: 1px dashed #666;
+}
+.user-info {
+  position: relative;
+  width: 300px;
+  height: 112px;
+  float: left;
+  margin-left: 10px;
+  border-top: 1px solid #666;
+}
+.user-labels {
+  position: relative;
+  width: 60px;
+  height: 72px;
+  float: left;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-right: 1px solid #666;
+  padding-right: 5px;
+}
+.user-data {
+  position: relative;
+  width: 160px;
+  height: 72px;
+  float: left;
+  margin-top: 25px;
+  /* margin-right: 10px; */
+  margin-bottom: 25px;
+  padding-left: 10px;
+}
+.user-photo {
+  position: relative;
+  float: right;
+  margin-top: 25px;
+}
+.photo {
+  max-width: 100%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.rca-symbol {
+  position: relative;
+  width: 90px;
+  height: 80px;
+  float: left;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.float-right {
+  position: relative;
+  float: right;
+}

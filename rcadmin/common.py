@@ -126,6 +126,7 @@ SEEKER_STATUS = (
     ("STD", _("stand by")),
     ("RST", _("restriction")),
 )
+RESPOSABILITIES = (("BDG", _("Badge")),)
 BR_REGIONS = {
     "SP": ["SP"],
     "RJ": ["RJ", "ES"],
