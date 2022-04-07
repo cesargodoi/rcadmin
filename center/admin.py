@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Center
+from .models import Center, Responsible
+
+
+admin.site.register(Responsible)
 
 
 @admin.register(Center)

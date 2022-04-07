@@ -52,6 +52,7 @@
              {% trans 'Membership' %}
           </a>
         </li>
+
       {% endif %}
 
     </ul>
@@ -71,6 +72,14 @@
 
     {% if nav == "detail" %}
       {% if tab == "info" %}
+        <li class="nav-item">
+          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
+            href="{% url 'person_badge' object.id %}"
+            target="blank">
+            <i class="fas fa-address-card"></i> 
+            {% trans 'Card' %}
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
              href="{% url 'person_update' object.id %}">
