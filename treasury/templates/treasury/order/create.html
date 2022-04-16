@@ -1,19 +1,12 @@
 {% extends "base/base.html" %}
 {% load i18n %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 
 <div class="text-right mb-2 mt-4">
-  {% if request.session.order.total_payments != 0.0 %}
-    {% if request.session.order.total_payments == request.session.order.total_payforms %}
-    <button class="btn btn-primary mt-2" 
-      onclick="document.getElementById('form').submit();">
-      <i class="fas fa-money-bill-wave-alt"></i> 
-      {% trans 'Pay now' %}
-    </button>
-    {% endif %}
-  {% endif %}
+
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{% if to_create %}{% url 'treasury_home' %}{% else %}{% url 'order_detail' request.session.order.id %}{% endif %}">
     <i class="fas fa-chevron-left "></i> 
@@ -23,181 +16,72 @@
 
 <article class="media content-section mb-1">
   <div class="media-body">
-    <h2>{% if to_create %}{% trans 'Create' %}{% else %}{% trans 'Update' %}{% endif %} {% trans 'Order' %}</h2>
-  </div>
-</article>
+    <h2 class="border-bottom pb-2 pl-4">
+      {% if to_create %}
+        {% trans 'Create' %}
+      {% else %}
+        {% trans 'Update' %}
+      {% endif %} 
+      {% trans 'Order' %}
+    </h2>
 
-<article class="media content-section">
-  <div class="media-body">
-    <div class="row">
-      <div class="col-sm-2">
-        <h5>{% trans 'Person' %}</h5>
-      </div>
-      <div class="col-sm-6">
-        {% if request.session.order.person %}
-        <h5>{{ request.session.order.person.name }}</h5>
-        {% endif %}
-      </div>
-      <div class="floating-right col-sm-4">
-        <form class="form-control-sm" method="GET" onsubmit="return isFormOk()">
-          {% csrf_token %}
-          {% include "treasury/elements/search_person.html" %}
-        </form>
-      </div>
-
-    </div>
-  </div>
-</article>
-
-{% if request.session.order.person %}
-<article class="media content-section">
-  <div class="media-body">
-    <div class="media">
-      <div class="media-body">
-        <h5>{% trans 'Payments' %}</h5>
-      </div>
-      <div class="text-right">
-        <a type="button" 
-          class="btn btn-light btn-sm text-info" 
-          href="{% url 'order_add_payment' %}">
-          <i class="fas fa-plus "></i> 
-          {% trans 'Add' %}
-        </a>
-      </div>
+    {% include "treasury/order/elements/person_div.html" %}
+    {% include "treasury/order/elements/payments_div.html" %}
+    {% include "treasury/order/elements/payforms_div.html" %}
+    {% include "treasury/order/elements/others_div.html" %}
+    
+    <div class="alert text-right d-none">
+      <a 
+        type="button" 
+        class="btn btn-secondary" 
+        href="{% if to_create %}{% url 'treasury_home' %}{% else %}{% url 'order_detail' request.session.order.id %}{% endif %}"
+      >
+        <i class="fa-solid fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </a>
+      <button 
+        class="btn btn-primary" 
+        id="payNow"
+        onclick="document.getElementById('registerForm').submit();"
+      >
+        <i class="fa-solid fa-coins"></i>
+        {% trans 'Pay now' %}
+      </button>
     </div>
 
-    {% if request.session.order.payments %}
-
-    {% for object in request.session.order.payments %}
-    {% include "treasury/elements/payment.html" %}
-    {% endfor %}
-
-    <table class="table table-hover table-sm mt-2">
-      <tr>
-        <th class="text-right">{% trans 'TOTAL' %}:</th>
-        <th class="text-right" id="totPayment" width="10%">
-          {{ request.session.order.total_payments|floatformat:2 }}
-        </th>
-        <th width="28px"></th>
-      </tr>
-    </table>
-
-    {% endif %}
   </div>
 </article>
-{% endif %}
 
-{% if request.session.order.payments or request.session.order.payforms %}
-<article class="media content-section">
-  <div class="media-body">
-    <div class="media">
-      <div class="media-body">
-        <h5>{% trans 'Forms of Payment' %}</h5>
-      </div>
-      <div class="text-right">
-        <a type="button" 
-          class="btn btn-light btn-sm text-info" 
-          href="{% url 'order_add_payform' %}">
-          <i class="fas fa-plus "></i> 
-          {% trans 'Add' %}
-        </a>
-      </div>
+<div id="orderModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div id="modalBody" class="modal-content">
+      <!-- modal content -->
     </div>
-
-    {% if request.session.order.payforms %}
-
-    {% for object in request.session.order.payforms %}
-    {% include "treasury/elements/payform.html" %}
-    {% endfor %}
-
-    <table class="table table-hover table-sm mt-2">
-      <tr>
-        <th class="text-right">{% trans 'TOTAL' %}:</th>
-        <th class="text-right" id="totPayForm" width="10%">
-          {{ request.session.order.total_payforms|floatformat:2 }}
-        </th>
-        <th width="28px"></th>
-      </tr>
-      {% if request.session.order.missing != 0 %}
-      <tr class="text-danger">
-        <td class="text-right"><em>{% trans 'missing' %}:</em></td>
-        <td class="text-right" id="diference" width="10%">
-          <em>{{ request.session.order.missing|floatformat:2 }}</em>
-        </td>
-        <td width="28px"></td>
-      </tr>
-      {% endif %}
-    </table>
-
-    {% endif %}
-
   </div>
-</article>
-{% endif %}
-
-{% if request.session.order.payforms %}
-<article class="media content-section">
-  <div class="media-body">
-    <h5>{% trans 'Others' %}</h5>
-    <form id="form" action="{% url 'order_register' %}" method="GET">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-8">
-          <div class="form-group">
-            <label for="description">{% trans 'Description' %}</label>
-            <input type="text" 
-              class="form-control" 
-              id="description" 
-              name="description"
-              value="{{ request.session.order.description }}">
-          </div>
-        </div>
-        <div class="col-4">
-          <label for="status" class=" requiredField">
-            {% trans 'Status' %}
-          </label>
-          <div class="">
-            <select name="status" 
-              id="status" 
-              class="select form-control">
-              {% for st in status %}
-              <option 
-                value="{{ st.0 }}" 
-                {% if request.session.order.status.cod == st.0 %}selected{% endif %}>
-                {{ st.1 }}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</article>
-{% endif %}
-{% endblock %}
-
-{% block jquery %}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-{% load static %}
-<script type="text/javascript" src="{% static 'js/order_create.js' %}"></script>
+</div>
 
 {% endblock %}
 
 {% block scripts %}
+
+<script type="text/javascript" src="{% static 'js/order_create.js' %}" defer></script>
+
 <script>
-  $(function () {
-    $("#person").autocomplete({
-      source: "{% url 'order_search_person' %}",
-      minLength: 3,
-    });
-  });
-  function isFormOk() {
-    var person = document.getElementById("person").value
-    return person.length < 8 ? false : true
-  }
+  // CSRF request in the headers
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+  })
+
+  // variables that will be used later
+  var modal = null;
+  var divIdEvent = null;
+  var idEvent = null;
+  var idPaytype = null;
+  var idPayformType = null;
+  var divIdBankFlag = null;
+  var divIdCtrlNumber = null;
+  var divIdComplement = null;
+  var divIdVoucherImg = null;
 </script>
+
 {% endblock %}

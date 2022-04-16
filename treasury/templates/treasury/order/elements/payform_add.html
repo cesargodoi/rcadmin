@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<form 
+  class="text-secondary"
+  hx-post="{{ hx_post }}" 
+  hx-target="{{ hx_target }}" 
+  hx-indicator=".htmx-indicator"
+  hx-swap="{{ hx_swap }}"
+>
+  <div class="modal-header">
+    <h5 class="modal-title text-secondary">{% trans 'Add payform' %}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{ form | crispy }}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      <i class="fas fa-times "></i>
+      Close
+    </button>
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-check"></i>
+      {% trans 'Add payform' %}
+    </button>
+  </div>
+</form>
+
+<script>
+  $('form').on('submit', function() {
+    $('#orderModal').modal('toggle')
+  });
+</script>
+
+<script src="{% static 'js/order_add_payform.js' %}" defer></script>

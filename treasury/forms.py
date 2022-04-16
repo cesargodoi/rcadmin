@@ -10,6 +10,15 @@ class PayTypeForm(forms.ModelForm):
         fields = "__all__"
 
 
+class PaymentOfEvent(forms.Select):
+    def create_option(self, name, value, *args, **kwargs):
+        option = super().create_option(name, value, *args, **kwargs)
+        if value:
+            icon = self.choices.queryset.get(pk=value)  # get icon instance
+            option["attrs"]["title"] = icon.title  # set option attribute
+        return option
+
+
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
@@ -18,7 +27,10 @@ class PaymentForm(forms.ModelForm):
             "ref_month": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
+            "value": forms.widgets.NumberInput(attrs={"placeholder": "0.00"}),
         }
+
+    field_order = ["paytype", "event", "person", "ref_month", "value", "obs"]
 
 
 class BankFlagForm(forms.ModelForm):
@@ -31,11 +43,6 @@ class FormOfPaymentForm(forms.ModelForm):
     class Meta:
         model = FormOfPayment
         fields = "__all__"
-        widgets = {
-            "payform_type": forms.Select(
-                attrs={"v-model": "selected", "v-on:change": "viewHide()"}
-            )
-        }
 
 
 class FormUpdateStatus(forms.Form):

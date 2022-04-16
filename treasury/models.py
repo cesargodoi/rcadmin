@@ -61,7 +61,7 @@ class Payment(models.Model):
         """this method is used on admin site."""
         try:
             return f"{self.ref_month.month}/{self.ref_month.year}"
-        except:
+        except Exception:
             return ""
 
     class Meta:

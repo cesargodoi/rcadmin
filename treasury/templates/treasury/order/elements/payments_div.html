@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<div class="alert d-none" id="paymentsDiv">
+  <div class="row mb-1">
+    <div class="col-md-8">
+      <h5>{% trans 'Payments' %}</h5>
+    </div>
+    <div class="col-md-4 text-right">
+      <a 
+        type="button" 
+        class="btn btn-light btn-sm text-info" 
+        data-toggle="modal" 
+        data-target="#orderModal"
+        hx-get="{% url 'order_add_payment' %}"
+        hx-target="#modalBody"
+      >
+        <i class="fas fa-plus "></i> 
+        {% trans 'Add' %}
+      </a>
+    </div>
+  </div>
+
+  {% include "treasury/order/elements/payments.html" %}
+
+  <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold" id="showTotalPayments">
+    <div class="col-sm-9 text-right">{% trans 'TOTAL' %}:</div>
+    <div class="col-sm-2 text-right" id="totalPayments">
+      {{ request.session.order.total_payments | floatformat:2 }}
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,15 @@
+<div class="input-group">
+  <input 
+    type="text"
+    class="form-control"
+    name="term"
+    placeholder="Search person..."
+    hx-get="{% url 'search_person_by_name' %}"
+    hx-target="#personNames"
+    hx-trigger="keyup changed delay:500ms"
+  />
+</div>
+
+<div class="float-right" style="position: absolute; z-index: 10; left: -1px;">
+  <div class="col-sm-12" id="personNames"></div>
+</div>
