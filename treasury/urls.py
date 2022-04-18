@@ -85,6 +85,7 @@ urlpatterns += [
 # orders
 urlpatterns += [
     path("orders/", order.orders, name="orders"),
+    path("orders/clear-session", order.to_clear_session, name="clear_session"),
     path("order/create", order.order_create, name="order_create"),
     path(
         "order/search-person-by-name/",

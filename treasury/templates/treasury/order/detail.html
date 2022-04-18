@@ -1,129 +1,142 @@
-{% extends "base/base.html" %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-
-<div class="text-right mb-2 mt-4">
-  {% if not request.session.order.self_payed %}
-  <a class="btn btn-light text-warning mt-2" 
-    href="{% url 'order_update' request.session.order.id %}">
-    <i class="fas fa-edit"></i> 
-    {% trans 'Edit' %}
-  </a>
-  {% endif %}
-  <a class="btn btn-light text-danger mt-2" 
-    href="{% url 'order_delete' request.session.order.id %}">
-    <i class="fas fa-trash-alt"></i> 
-    {% trans 'Delete' %}
-  </a>
-  <a type="button" 
-    class="btn btn-light text-info mt-2" 
-    href="{{ goback }}">
-    <i class="fas fa-chevron-left "></i> 
-    {% trans 'Back' %}
-  </a>
+<div class="modal-header">
+  <h5 class="modal-title">
+    {% trans 'Order Detail' %}
+    {% if request.session.order.self_payed %}
+      <small class="text-muted"><em>{% trans 'made by the pupil' %}</em></small>
+    {% endif %}
+  </h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <h2 class="border-bottom pb-2 pl-4">
-      {% trans 'Order Detail' %} &nbsp;
-      {% if request.session.order.self_payed %}
-      <small class="text-muted"><em>{% trans 'made by the pupil' %}</em></small>
-      {% endif %}
-    </h2>
-
-    <div class="alert row mb-4">
-      <div class="col-sm-6">
-        <h5>
-          <small><em>{% trans 'person' %}:</em></small>
-          {{ request.session.order.person.name }}
-        </h5>
+<div class="modal-body">
+  
+  <div class="ml-2 mr-2 mb-4">
+    <div class="row">
+      <div class="col-sm-7">
+        <small>{% trans 'person' %}</small><br>
+        <h5>{{ request.session.order.person.name }}</h5>
       </div>
-      <div class="col-sm-3">
-        <h5>
-          <small><em>{% trans 'date' %}:</em></small>
-          {{ request.session.order.created_on }}
-        </h5>
+      <div class="col-sm-2">
+        <small>{% trans 'date' %}</small><br>
+        <h5>{{ request.session.order.created_on }}</h5>
       </div>
       <div class="col-sm-3 text-right">
-        <h5><small><em>{% trans 'status' %}:</em></small>
-          <span class="badge badge-pill badge-{% if request.session.order.status.cod == 'PND' %}warning
-                        {% elif request.session.order.status.cod == 'CCL' %}danger
-                        {% else %}success{% endif %}">
-            {{ request.session.order.status.descr }}
-          </span>
-        </h5>
+        <small>{% trans 'status' %}</small><br>
+        <h5 class="badge badge-pill badge-{% if request.session.order.status.cod == 'PND' %}warning
+                      {% elif request.session.order.status.cod == 'CCL' %}danger
+                      {% else %}success{% endif %}">
+          {{ request.session.order.status.descr }}
+      </h5>
       </div>
     </div>
+  </div>
+  
+  <div class="ml-2 mr-2 mb-4">
+    <h5>{% trans 'Payments' %}</h5>
 
-    <div class="alert">
-      <h5>{% trans 'Payments' %}</h5>
+    {% for object in request.session.order.payments %}
+      {% include "treasury/order/elements/payment.html" %}
+    {% endfor %}
 
-      {% for object in request.session.order.payments %}
-        {% include "treasury/order/elements/payment.html" %}
-      {% endfor %}
+    <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold">
+      <div class="col-sm-10 text-right">{% trans 'TOTAL' %}:</div>
+      <div class="col-sm-2 text-right" id="totPayments">
+        {{ request.session.order.total_payments | floatformat:2 }}
+      </div>
+    </div>
+  </div>
+  
+  <div class="ml-2 mr-2 mb-4">
+    <h5>{% trans 'Forms of Payment' %}</h5>
 
-      <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold">
-        <div class="col-sm-10 text-right">{% trans 'TOTAL' %}:</div>
-        <div class="col-sm-2 text-right" id="totPayments">
-          {{ request.session.order.total_payments | floatformat:2 }}
+    {% for object in request.session.order.payforms %}
+    {% include "treasury/order/elements/payform.html" %}
+    {% endfor %}
+
+    <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold">
+      <div class="col-sm-10 text-right">{% trans 'TOTAL' %}:</div>
+      <div class="col-sm-2 text-right" id="totPayForm">
+        {{ request.session.order.total_payforms | floatformat:2 }}
+      </div>
+    </div>
+  </div>
+      
+  <div class="ml-2 mr-2 mb-4">
+    <small>{% trans 'description' %}</small><br>
+    {% if request.session.order.description %}
+    {{ request.session.order.description }} 
+    {% endif %}
+  </div>
+
+
+  {% for object in request.session.order.payforms %}
+    {% if object.voucher_img %}
+      <div class="ml-2 mr-2 mb-4">
+        <h5>{% trans 'Voucher' %}</h5>
+        <div class="p-2 text-center">
+          <img src="{{ object.voucher_img }}" class="voucher">
         </div>
       </div>
-    </div>
+    {% endif %}
+  {% endfor %}
 
-    <div class="alert">
-      <h5>{% trans 'Forms of Payment' %}</h5>
+</div>
 
-      {% for object in request.session.order.payforms %}
-      {% include "treasury/order/elements/payform.html" %}
-      {% endfor %}
+<div class="modal-footer">
 
-      <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold">
-        <div class="col-sm-10 text-right">{% trans 'TOTAL' %}:</div>
-        <div class="col-sm-2 text-right" id="totPayForm">
-          {{ request.session.order.total_payforms | floatformat:2 }}
-        </div>
-      </div>
-    </div>
-
-    <div class="alert">
-      {% if request.session.order.description %}
-      <em>{% trans 'description' %}: </em>{{ request.session.order.description }} 
-      {% endif %}
-    </div>
-
-    <div class="alert float-right">
-      <form 
-        class="form-inline"
-        action="{% url 'order_update_status' request.session.order.id %}" 
-        method="POST"
-      >
-        {% csrf_token %}
-        {{ form_update_status.status | as_crispy_field }}
+  <div class="text-right mb-2 mt-4">
+    <form 
+      class="form-inline"
+      action="{% url 'order_update_status' request.session.order.id %}" 
+      method="POST"
+    >
+      {% csrf_token %}
+      {{ form_update_status.status | as_crispy_field }}
+      <div>
         <button 
-          class="btn btn-info ml-1 mr-1" 
+          class="btn btn-info ml-1" 
           type="submit"
         >
-          <i class="fa-solid fa-circle-info"></i>
-          {% trans 'Update status' %}
+          <i class="fa-solid fa-check"></i>
+          {% trans 'Update' %}
         </button>
-      </form>
-    </div>
-
+        {% if not request.session.order.self_payed %}
+        <a class="btn btn-warning" 
+          href="{% url 'order_update' request.session.order.id %}">
+          <i class="fas fa-edit"></i> 
+          {% trans 'Edit' %}
+        </a>
+        {% endif %}
+        <a class="btn btn-danger" 
+          href="{% url 'order_delete' request.session.order.id %}">
+          <i class="fas fa-trash-alt"></i> 
+          {% trans 'Delete' %}
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fas fa-times "></i>
+          Close
+        </button>
+      </div>
+    </form>
   </div>
-</article>
 
-{% for object in request.session.order.payforms %}
-  {% if object.voucher_img %}
-  <article class="media content-section">
-    <div class="media-body">
-      <h5>{% trans 'Voucher' %}</h5>
-      <div class="p-2 text-center"><img src="{{ object.voucher_img }}"></div>
-    </div>
-  </article>
-  {% endif %}
-{% endfor %}
+</div>
 
-{% endblock %}
+<style type="text/css">
+  h5 {color: black;}
+
+  .voucher {
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+</style>

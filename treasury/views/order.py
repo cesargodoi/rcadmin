@@ -29,7 +29,8 @@ def orders(request):
     template_name = "treasury/order/home.html"
     object_list = None
     if request.session.get("order"):
-        del request.session["order"]
+        clear_session(request, ["order"])
+        # del request.session["order"]
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
@@ -44,6 +45,11 @@ def orders(request):
         "nav": "order",
     }
     return render(request, template_name, context)
+
+
+def to_clear_session(request):
+    clear_session(request, ["order"])
+    return HttpResponse("")
 
 
 @login_required

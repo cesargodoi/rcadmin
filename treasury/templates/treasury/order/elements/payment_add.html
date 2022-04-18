@@ -3,7 +3,6 @@
 {% load crispy_forms_tags %}
 
 <form 
-class="text-secondary"
   id="paymentForm"
   hx-post="{{ hx_post }}" 
   hx-target="{{ hx_target }}" 
@@ -21,13 +20,13 @@ class="text-secondary"
     {{ form | crispy }}
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-      <i class="fas fa-times "></i>
-      Close
-    </button>
     <button type="submit" class="btn btn-primary">
       <i class="fas fa-check"></i>
       {% trans 'Add' %}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      <i class="fas fa-times "></i>
+      Close
     </button>
   </div>
 </form>
