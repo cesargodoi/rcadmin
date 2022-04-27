@@ -3,6 +3,7 @@ import datetime
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -18,16 +19,18 @@ from .forms import MyFormOfPaymentForm, MyPaymentForm, ProfileForm, UserForm
 @login_required
 @permission_required("user.view_profile")
 def profile_detail(request):
+    template_name = "user/profile/detail.html"
     context = {
         "object": request.user,
         "tab": "detail",
     }
-    return render(request, "user/profile/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("user.change_profile")
 def profile_update(request):
+    template_name = "user/forms/form.html"
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         if user_form.is_valid():
@@ -49,12 +52,13 @@ def profile_update(request):
         "object": request.user,
     }
 
-    return render(request, "user/forms/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("user.view_profile")
 def user_frequencies(request):
+    template_name = "user/profile/detail.html"
     frequencies = request.user.person.event_set.all().order_by("-date")
     context = {
         "frequencies": frequencies[:20],
@@ -62,12 +66,13 @@ def user_frequencies(request):
         "object": request.user,
         "tab": "frequencies",
     }
-    return render(request, "user/profile/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("user.view_profile")
 def user_historic(request):
+    template_name = "user/profile/detail.html"
     historic = Historic.objects.filter(person=request.user.person).order_by(
         "-date"
     )
@@ -77,11 +82,12 @@ def user_historic(request):
         "object": request.user,
         "tab": "historic",
     }
-    return render(request, "user/profile/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 def scan_qrcode_event(request):
+    template_name = "user/profile/scan_qrcode_event.html"
     if request.method == "POST":
         event = get_object_or_404(Event, id=request.POST.get("qrcode"))
         event.frequencies.add(request.user.person)
@@ -92,11 +98,12 @@ def scan_qrcode_event(request):
     context = {
         "object": request.user,
     }
-    return render(request, "user/profile/scan_qrcode_event.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 def user_payments(request):
+    template_name = "user/profile/detail.html"
     if request.session.get("my_order"):
         del request.session["my_order"]
     payments = request.user.person.payment_set.all().order_by("-created_on")
@@ -107,11 +114,15 @@ def user_payments(request):
         "object": request.user,
         "tab": "payments",
     }
-    return render(request, "user/profile/detail.html", context)
+    # import ipdb
+
+    # ipdb.set_trace()
+    return render(request, template_name, context)
 
 
 @login_required
 def user_new_order(request):
+    template_name = "user/profile/new_order.html"
     if not request.session.get("my_order"):
         request.session["my_order"] = {
             "person": {
@@ -179,12 +190,21 @@ def user_new_order(request):
         ),
         "from_user": True,
     }
-    return render(request, "user/profile/new_order.html", context)
+    return render(request, template_name, context)
+
+
+def user_how_to_pay(request):
+    template_name = "user/profile/elements/how_to_pay.html"
+    return render(request, template_name)
 
 
 @login_required
-def add_payment(request):
+def user_add_payment(request):
+    template_name = "user/profile/elements/payment_add.html"
+
     if request.method == "POST":
+        template_name = "user/profile/elements/payment.html"
+
         _ids = (
             [int(i["id"]) for i in request.session["my_order"]["payments"]]
             if request.session["my_order"]["payments"]
@@ -232,7 +252,9 @@ def add_payment(request):
 
         request.session["my_order"]["payments"].append(new)
         request.session.modified = True
-        return redirect("user_new_order")
+
+        context = {"object": new}
+        return render(request, template_name, context)
 
     # change queryset for event field (only type CNF and status OPN)
     events = Event.objects.filter(
@@ -252,25 +274,25 @@ def add_payment(request):
         ),
         "title": _("Create my order - add payment"),
         "object": request.user,
+        "hx_post": reverse("user_add_payment"),
+        "hx_target": "#payments",
+        "hx_swap": "beforeend",
     }
-    return render(request, "user/profile/add_payment.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
-def del_payment(request, pay_id):
-    if request.method == "POST":
-        for payment in request.session["my_order"]["payments"]:
-            if payment["id"] == pay_id:
-                request.session["my_order"]["total_payments"] -= float(
-                    payment["value"]
-                )
-                request.session["my_order"]["missing"] -= float(
-                    payment["value"]
-                )
-                request.session["my_order"]["payments"].remove(payment)
-                break
-        request.session.modified = True
-        return redirect("user_new_order")
+@require_http_methods(["DELETE"])
+def user_del_payment(request, pay_id):
+    template_name = "user/profile/elements/payments.html"
+    for payment in request.session["my_order"]["payments"]:
+        if payment["id"] == pay_id:
+            request.session["my_order"]["total_payments"] -= float(
+                payment["value"]
+            )
+            request.session["my_order"]["missing"] -= float(payment["value"])
+            request.session["my_order"]["payments"].remove(payment)
+            break
+    request.session.modified = True
 
-    context = {"title": _("confirm delete")}
-    return render(request, "user/profile/confirm_del.html", context)
+    return render(request, template_name)

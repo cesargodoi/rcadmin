@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+<div class="alert" id="payformDiv">
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>{% trans 'Form of Payment' %}</h5>
+      <form id="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-lg-6" id="payform_type">
+            {{ form.type | as_crispy_field }}
+          </div>
+          <div class="col-lg-6">
+            {{ form.value | as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            {{ form.bank_flag | as_crispy_field }}
+          </div>
+          <div class="col-lg-6">
+            {{ form.ctrl_number | as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            {{ form.voucher_img | as_crispy_field }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">{% trans 'Description' %}</label>
+          <input type="text" 
+            class="form-control" 
+            id="description" 
+            name="description"
+            value="{{ request.session.my_order.description }}">
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-6">
+      <div class="alert alert-secondary">
+        {% include "user/profile/elements/other_instructions.html" %}
+      </div>
+    </div>
+  </div>
+</div>

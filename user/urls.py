@@ -85,18 +85,23 @@ urlpatterns += [
         name="user_payments",
     ),
     path(
-        "profile/new_order/",
+        "profile/new-order/",
         user_views.user_new_order,
         name="user_new_order",
     ),
     path(
-        "profile/add_payment/",
-        user_views.add_payment,
+        "profile/add-payment/",
+        user_views.user_add_payment,
         name="user_add_payment",
     ),
     path(
-        "profile/del_payment/<int:pay_id>/",
-        user_views.del_payment,
+        "profile/how-to-pay/",
+        user_views.user_how_to_pay,
+        name="user_how_to_pay",
+    ),
+    path(
+        "profile/del-payment/<int:pay_id>/",
+        user_views.user_del_payment,
         name="user_del_payment",
     ),
 ]

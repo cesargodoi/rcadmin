@@ -6,7 +6,6 @@
 {% block content %}
 
 <div class="text-right mb-2 mt-4">
-
   <a class="btn btn-light text-info mt-2 mr-3"
     href="{% url 'orders' %}">
     <i class="fas fa-chevron-left "></i> 
@@ -31,14 +30,6 @@
     {% include "treasury/order/elements/others_div.html" %}
     
     <div class="alert text-right d-none">
-      <a 
-        type="button" 
-        class="btn btn-secondary" 
-        href="{% url 'orders' %}"
-      >
-        <i class="fa-solid fa-xmark"></i>
-        {% trans 'Cancel' %}
-      </a>
       <button 
         class="btn btn-primary" 
         id="payNow"
@@ -47,6 +38,14 @@
         <i class="fa-solid fa-coins"></i>
         {% trans 'Pay now' %}
       </button>
+      <a 
+        type="button" 
+        class="btn btn-secondary" 
+        href="{% url 'orders' %}"
+      >
+        <i class="fa-solid fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </a>
     </div>
 
   </div>

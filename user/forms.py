@@ -1,4 +1,3 @@
-from rcadmin.common import PAYFORM_TYPES
 from django import forms
 from .models import User, Profile
 from treasury.models import Payment, FormOfPayment
@@ -32,7 +31,10 @@ class MyPaymentForm(forms.ModelForm):
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
             "value": forms.widgets.NumberInput(
-                attrs={"placeholder": "enter value"}
+                attrs={
+                    "placeholder": "0.00",
+                    "list": "suggestedValues",
+                }
             ),
             "person": forms.HiddenInput(),
         }

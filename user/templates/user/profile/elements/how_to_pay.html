@@ -1,0 +1,67 @@
+{% load i18n %}
+{% load static %}
+
+<div class="modal-header">
+  <h2 class="modal-title text-secondary">{% trans 'How to pay' %}</h2>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body text-center">
+  <!-- PIX image and key -->
+  <p><strong>{% trans 'pix-key' %}: </strong></p>
+  <p class="h5">{{ request.user.person.center.pix_key }}</p>
+  <img src="{{ request.user.person.center.pix_image.url }}" class="img-fluid mb-4">
+  <!-- step 1 -->
+  <div class="mb-2">
+    <span class="badge badge-pill badge-secondary">{% trans 'step' %} 1</span><br> 
+    {% trans 'Transfer, deposit or PIX at your bank.' %}<br>
+    <small>{% trans 'For PIX use image or pix-key above.' %} </small>
+  </div>
+  <!-- step 2 -->
+  <div class="mb-2">
+    <span class="badge badge-pill badge-secondary">{% trans 'step' %} 2</span><br> 
+    {% trans 'Enter payments by clicking: ' %}<br>
+    <i class="fas fa-plus"></i><strong> {% trans 'Add' %}</strong><br> 
+    {% trans 'and filling out the form.' %}
+    {% trans 'Repeat this process for each payment.' %}
+  </div>
+  <!-- step 3 -->
+  <div class="mb-2">
+    <span class="badge badge-pill badge-secondary">{% trans 'step' %} 3</span><br> 
+    {% trans 'Fill in the payment method fields.' %}<br>
+    {% trans 'Do not forget to inform the bank ' %}
+    <strong> &nbsp;{% trans 'Bank flag' %} </strong><br>
+    {% trans 'and the transaction id number ' %}
+    <strong> &nbsp;{% trans 'Ctrl number' %} </strong>.
+  </div>
+  <!-- step 4 -->
+  <div class="mb-2">
+    <span class="badge badge-pill badge-secondary">{% trans 'step' %} 4</span><br> 
+    {% trans 'Select and upload the digital voucher provided by your bank, through the field:' %}
+    <strong> {% trans 'Voucher img' %} </strong> &nbsp;&nbsp; 
+    <small> {% trans '(only in .jpg format for now)' %}</small>
+  </div>
+  <!-- step 5 -->
+  <div class="mb-4">
+    <span class="badge badge-pill badge-secondary">{% trans 'step' %} 5</span><br> 
+    {% trans 'When all payment method fields are filled in, the button: ' %}<br>
+    <i class="fa-solid fa-coins"></i><strong> {% trans 'Pay now' %}</strong><br>
+    {% trans ' will be enabled. Click on it to submit your payment.' %}
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+    <i class="fas fa-times "></i>
+    Close
+  </button>
+</div>
+
+<style type="text/css">
+  .modal-body {
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+</style>

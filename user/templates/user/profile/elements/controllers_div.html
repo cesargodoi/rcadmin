@@ -1,0 +1,30 @@
+{% load i18n %}
+<div class="alert text-right">
+  <button 
+    class="btn btn-primary d-none" 
+    id="payNow"
+    onclick="document.getElementById('newOrderForm').submit();"
+  >
+    <i class="fa-solid fa-coins"></i>
+    {% trans 'Pay now' %}
+  </button>
+  <button 
+    class="btn btn-info" 
+    id="howToPay"
+    data-toggle="modal" 
+    data-target="#userOrderModal"
+    hx-get="{% url 'user_how_to_pay' %}"
+    hx-target="#modalBody"
+  >
+    <i class="fa-solid fa-person-chalkboard"></i>
+    {% trans 'How to pay' %}
+  </button>
+  <a 
+    type="button" 
+    class="btn btn-secondary" 
+    href="{% url 'user_payments' %}"
+  >
+    <i class="fa-solid fa-xmark"></i>
+    {% trans 'Cancel' %}
+  </a>
+</div>

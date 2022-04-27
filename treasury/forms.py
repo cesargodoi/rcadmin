@@ -27,7 +27,12 @@ class PaymentForm(forms.ModelForm):
             "ref_month": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
-            "value": forms.widgets.NumberInput(attrs={"placeholder": "0.00"}),
+            "value": forms.widgets.NumberInput(
+                attrs={
+                    "placeholder": "0.00",
+                    "list": "suggestedValues",
+                }
+            ),
         }
 
     field_order = ["paytype", "event", "person", "ref_month", "value", "obs"]

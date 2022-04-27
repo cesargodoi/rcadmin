@@ -113,6 +113,7 @@ def order_add_person(request):
 @permission_required("treasury.add_order")
 def order_add_payment(request):
     template_name = "treasury/order/elements/payment_add.html"
+
     if request.method == "POST":
         template_name = "treasury/order/elements/payment.html"
 

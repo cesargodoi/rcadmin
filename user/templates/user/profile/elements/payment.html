@@ -26,7 +26,7 @@
     <div class="col-md-1 text-right">
       <button
         class="btn btn-light btn-sm text-danger"
-        hx-delete="{% url 'order_del_payment' object.id %}"
+        hx-delete="{% url 'user_del_payment' object.id %}"
         hx-confirm="{% trans 'Do you really want to delete this payment?' %}"
         hx-target="closest #payments"
         hx-swap="outerHTML swap:500ms"

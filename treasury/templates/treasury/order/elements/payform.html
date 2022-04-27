@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="row mt-1 mb-0 pt-2 border-top" id="obj{{ object.id }}">
   <div class="col-md-3">
     <strong>{{ object.payform_type.1 }}</strong>
@@ -23,7 +24,7 @@
       <button
         class="btn btn-light btn-sm text-danger"
         hx-delete="{% url 'order_del_payform' object.id %}"
-        hx-confirm="Deseja mesmo deletar este forma de pagamento?"
+        hx-confirm="{% trans 'Do you really want to delete this payment method?' %}"
         hx-target="closest #payforms"
         hx-swap="outerHTML swap:500ms"
       >
