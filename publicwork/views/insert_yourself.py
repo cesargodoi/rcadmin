@@ -114,7 +114,7 @@ def confirm_email(request, token):
     _seeker = get_object_or_404(TempRegOfSeeker, pk=token)
     # get dates
     time_now = datetime.utcnow()
-    token_time = _seeker.solicited_on.replace(tzinfo=None) + timedelta(days=1)
+    token_time = _seeker.solicited_on.replace(tzinfo=None) + timedelta(days=5)
 
     if time_now < token_time:
         new_seeker = dict(

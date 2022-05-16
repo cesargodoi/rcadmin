@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load base_extras %}
 {% load crispy_forms_tags %}
 
 <div class="modal-header">
@@ -95,28 +96,32 @@
       action="{% url 'order_update_status' request.session.order.id %}" 
       method="POST"
     >
-      {% csrf_token %}
-      {{ form_update_status.status | as_crispy_field }}
+      {% if request.user.is_superuser or request.user|has_group:"treasury" %}
+        {% csrf_token %}
+        {{ form_update_status.status | as_crispy_field }}
+      {% endif %}
       <div>
-        <button 
-          class="btn btn-info ml-1" 
-          type="submit"
-        >
-          <i class="fa-solid fa-check"></i>
-          {% trans 'Update' %}
-        </button>
-        {% if not request.session.order.self_payed %}
-        <a class="btn btn-warning" 
-          href="{% url 'order_update' request.session.order.id %}">
-          <i class="fas fa-edit"></i> 
-          {% trans 'Edit' %}
-        </a>
+        {% if request.user.is_superuser or request.user|has_group:"treasury" %}
+          <button 
+            class="btn btn-info ml-1" 
+            type="submit"
+          >
+            <i class="fa-solid fa-check"></i>
+            {% trans 'Update' %}
+          </button>
+          {% if not request.session.order.self_payed %}
+            <a class="btn btn-warning" 
+              href="{% url 'order_update' request.session.order.id %}">
+              <i class="fas fa-edit"></i> 
+              {% trans 'Edit' %}
+            </a>
+          {% endif %}
+          <a class="btn btn-danger" 
+            href="{% url 'order_delete' request.session.order.id %}">
+            <i class="fas fa-trash-alt"></i> 
+            {% trans 'Delete' %}
+          </a>
         {% endif %}
-        <a class="btn btn-danger" 
-          href="{% url 'order_delete' request.session.order.id %}">
-          <i class="fas fa-trash-alt"></i> 
-          {% trans 'Delete' %}
-        </a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           <i class="fas fa-times "></i>
           Close
