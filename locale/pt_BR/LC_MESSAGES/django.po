@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 09:25-0300\n"
-"PO-Revision-Date: 2022-02-21 16:35-0306\n"
-"Last-Translator: Anonymous User <jady.s.m@gmail.com>\n"
+"POT-Creation-Date: 2022-05-17 15:01-0300\n"
+"PO-Revision-Date: 2022-05-17 16:56-0306\n"
+"Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Translated-Using: django-rosetta 0.9.7\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: base/templates/base/404.html:18
 msgid "Oops!"
@@ -70,24 +70,12 @@ msgstr "Ação não permitida!"
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_fields_to_persons.html:43
 #: base/templates/base/import_persons.html:43
-#: event/templates/event/activity_home.html:21
 #: person/templates/person/elements/confirm_to_import.html:23
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:23
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:23
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
 #: publicwork/templates/publicwork/reports/navbar.html:33
-#: treasury/templates/treasury/bankflags.html:22
-#: treasury/templates/treasury/confirm_del.html:17
-#: treasury/templates/treasury/confirm_delete.html:30
-#: treasury/templates/treasury/confirm_register.html:19
 #: treasury/templates/treasury/elements/treasury_navbar.html:53
-#: treasury/templates/treasury/forms_of_payments.html:23
-#: treasury/templates/treasury/order_add_payform.html:17
-#: treasury/templates/treasury/order_add_payment.html:18
-#: treasury/templates/treasury/order_create.html:22
-#: treasury/templates/treasury/order_detail.html:24
-#: treasury/templates/treasury/payments.html:23
-#: treasury/templates/treasury/paytypes.html:23
 #: user/templates/user/auth/password_change_done.html:13
 #: user/templates/user/forms/form.html:18
 #: user/templates/user/profile/confirm_del.html:20
@@ -101,7 +89,6 @@ msgid "Atention!"
 msgstr "Atenção!"
 
 #: base/templates/base/confirm_delete.html:9
-#: treasury/templates/treasury/confirm_del.html:8
 msgid "Are you sure you want to delete"
 msgstr "Tem certeza que deseja apagar"
 
@@ -117,9 +104,7 @@ msgstr "Tem certeza que deseja apagar"
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:19
 #: publicwork/templates/publicwork/listener/confirm.html:30
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:18
-#: treasury/templates/treasury/confirm_del.html:13
-#: treasury/templates/treasury/confirm_delete.html:25
-#: treasury/templates/treasury/confirm_register.html:14
+#: treasury/templates/treasury/elements/confirm_delete.html:25
 #: user/templates/user/profile/confirm_del.html:16
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:29
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:32
@@ -131,6 +116,7 @@ msgstr "Confirmar"
 #: center/templates/center/confirm_delete.html:24
 #: center/templates/center/confirm_reinsert.html:22
 #: center/templates/center/navbar.html:73
+#: event/templates/event/activity/navbar.html:29
 #: event/templates/event/frequencies-add.html:18
 #: event/templates/event/navbar.html:61
 #: person/templates/person/elements/confirm_to_delete_freq.html:23
@@ -141,7 +127,7 @@ msgstr "Confirmar"
 #: person/templates/person/forms/membership.html:17
 #: person/templates/person/frequency_insert.html:11
 #: person/templates/person/membership_ps_insert.html:12
-#: person/templates/person/navbar.html:142
+#: person/templates/person/navbar.html:151
 #: publicwork/templates/publicwork/groups/actions.html:23
 #: publicwork/templates/publicwork/groups/navbar.html:97
 #: publicwork/templates/publicwork/lecture/navbar.html:47
@@ -152,9 +138,16 @@ msgstr "Confirmar"
 #: publicwork/templates/publicwork/seeker/add_or_change.html:18
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:22
 #: publicwork/templates/publicwork/seeker/navbar.html:103
+#: treasury/templates/treasury/bankflag/navbar.html:28
+#: treasury/templates/treasury/elements/confirm_delete.html:30
+#: treasury/templates/treasury/form_of_payment/navbar.html:28
+#: treasury/templates/treasury/navbar.html:56
+#: treasury/templates/treasury/order/create.html:12
+#: treasury/templates/treasury/payment/navbar.html:28
+#: treasury/templates/treasury/paytype/navbar.html:28
 #: user/templates/user/auth/password_change_form.html:18
-#: user/templates/user/profile/add_payment.html:18
-#: user/templates/user/profile/new_order.html:20
+#: user/templates/user/profile/elements/add_payment.html:18
+#: user/templates/user/profile/new_order.html:13
 #: user/templates/user/profile/scan_qrcode_event.html:10
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:33
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:36
@@ -214,6 +207,7 @@ msgstr "Trabalho Público"
 
 #: base/templates/base/elements/menu.html:35 base/templates/base/home.html:108
 #: treasury/templates/treasury/elements/treasury_navbar.html:5
+#: treasury/templates/treasury/navbar.html:6
 msgid "Treasury"
 msgstr "Tesouraria"
 
@@ -222,19 +216,21 @@ msgid "Admin"
 msgstr "Admin"
 
 #: base/templates/base/elements/menu_admin.html:6
-#: event/templates/event/activity_home.html:7 event/views/activity.py:18
+#: event/templates/event/activity/activities.html:4
+#: event/templates/event/activity/navbar.html:7 event/views/activity.py:18
 msgid "Activities"
 msgstr "Atividades"
 
 #: base/templates/base/elements/menu_admin.html:8
-#: treasury/templates/treasury/order_create.html:59
-#: treasury/templates/treasury/order_detail.html:69
-#: treasury/templates/treasury/payments.html:7
+#: treasury/templates/treasury/order/detail.html:41
+#: treasury/templates/treasury/order/elements/payments_div.html:6
+#: treasury/templates/treasury/payment/navbar.html:6
+#: treasury/templates/treasury/payment/payments.html:4
 #: treasury/templates/treasury/reports/payments_by_person.html:30
 #: treasury/views/payments.py:21
+#: user/templates/user/profile/elements/payments_div.html:6
 #: user/templates/user/profile/navbar-ant.html:22
 #: user/templates/user/profile/navbar.html:28
-#: user/templates/user/profile/new_order.html:29
 msgid "Payments"
 msgstr "Contribuições"
 
@@ -247,6 +243,8 @@ msgid "Payment types"
 msgstr "Tipos de Pagamentos"
 
 #: base/templates/base/elements/menu_admin.html:11
+#: treasury/templates/treasury/bankflag/bankflags.html:4
+#: treasury/views/bankflag.py:21
 msgid "Banks or Flags"
 msgstr "Bancos e Cartões"
 
@@ -286,7 +284,7 @@ msgstr "Salvar"
 #: base/templates/base/form.html:23
 #: person/templates/person/forms/historic.html:24
 #: person/templates/person/forms/membership.html:23
-#: treasury/templates/treasury/order_create.html:28
+#: treasury/templates/treasury/order/create.html:20
 #: user/templates/user/forms/form.html:28
 msgid "Create"
 msgstr "Criar"
@@ -297,7 +295,8 @@ msgstr "Criar"
 #: publicwork/templates/publicwork/listener/update.html:12
 #: publicwork/templates/publicwork/seeker/add_or_change.html:11
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
-#: treasury/templates/treasury/order_create.html:28
+#: treasury/templates/treasury/order/create.html:22
+#: treasury/templates/treasury/order/detail.html:110
 #: user/templates/user/forms/form.html:28
 #: workgroup/templates/workgroup/membership_update.html:13
 msgid "Update"
@@ -355,7 +354,6 @@ msgstr "todos os tipos"
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:40
 #: person/templates/person/info.html:44
-#: treasury/templates/treasury/paytypes.html:38
 #: user/templates/user/profile/info.html:53
 msgid "type"
 msgstr "tipo"
@@ -376,7 +374,7 @@ msgstr "Frequências por período"
 #: base/templates/base/searchs/seeker.html:54
 #: base/templates/base/searchs/seeker.html:59
 #: publicwork/templates/publicwork/seeker/info.html:18
-#: treasury/templates/treasury/order_detail.html:55
+#: treasury/templates/treasury/order/detail.html:30
 msgid "status"
 msgstr "status"
 
@@ -439,6 +437,7 @@ msgid "import fields to persons"
 msgstr "importar pessoas"
 
 #: center/templates/center/centers.html:70
+#: event/templates/event/activity/activities.html:25
 #: event/templates/event/elements/events.html:74
 #: person/templates/person/membership.html:48
 #: person/templates/person/persons.html:83
@@ -446,10 +445,14 @@ msgstr "importar pessoas"
 #: publicwork/templates/publicwork/groups/seekers.html:110
 #: publicwork/templates/publicwork/lecture/lectures.html:86
 #: publicwork/templates/publicwork/seeker/seekers.html:97
-#: treasury/templates/treasury/orders.html:36
+#: treasury/templates/treasury/bankflag/bankflags.html:54
+#: treasury/templates/treasury/form_of_payment/forms_of_payments.html:65
+#: treasury/templates/treasury/order/orders.html:25
+#: treasury/templates/treasury/payment/payments.html:80
+#: treasury/templates/treasury/paytype/paytypes.html:58
 #: workgroup/templates/workgroup/member/members.html:58
 #: workgroup/templates/workgroup/mentoring/frequencies.html:50
-#: workgroup/templates/workgroup/workgroups.html:66
+#: workgroup/templates/workgroup/workgroups.html:68
 msgid "choose your search terms"
 msgstr "escolha seus termos da pesquisa"
 
@@ -489,9 +492,7 @@ msgstr "Endereço"
 #: center/templates/center/forms/center.html:41
 #: center/templates/center/info.html:29
 #: person/templates/person/forms/person.html:47
-#: person/templates/person/info.html:28
-#: treasury/templates/treasury/order_create.html:143
-#: user/templates/user/forms/form.html:61
+#: person/templates/person/info.html:28 user/templates/user/forms/form.html:61
 #: user/templates/user/profile/info.html:30
 msgid "Others"
 msgstr "Outros"
@@ -569,26 +570,26 @@ msgstr "Núcleo"
 
 #: center/templates/center/navbar.html:32
 #: center/templates/center/navbar.html:42 event/templates/event/navbar.html:39
-#: person/templates/person/navbar.html:78
+#: person/templates/person/navbar.html:87
 #: publicwork/templates/publicwork/groups/navbar.html:60
 #: publicwork/templates/publicwork/lecture/navbar.html:29
 #: publicwork/templates/publicwork/seeker/navbar.html:51
-#: treasury/templates/treasury/order_detail.html:12
+#: treasury/templates/treasury/order/detail.html:116
 #: user/templates/user/profile/navbar.html:42
 #: workgroup/templates/workgroup/navbar.html:39
 msgid "Edit"
 msgstr "Editar"
 
 #: center/templates/center/navbar.html:50 event/templates/event/navbar.html:47
-#: person/templates/person/navbar.html:86
+#: person/templates/person/navbar.html:95
 #: publicwork/templates/publicwork/lecture/navbar.html:37
 #: publicwork/templates/publicwork/seeker/navbar.html:60
-#: treasury/templates/treasury/order_detail.html:18
+#: treasury/templates/treasury/order/detail.html:122
 msgid "Delete"
 msgstr "Apagar"
 
 #: center/templates/center/navbar.html:58
-#: person/templates/person/navbar.html:94
+#: person/templates/person/navbar.html:103
 #: publicwork/templates/publicwork/groups/navbar.html:76
 #: publicwork/templates/publicwork/seeker/navbar.html:68
 msgid "Reinsert"
@@ -617,9 +618,9 @@ msgstr "atualizar núcleo"
 #: publicwork/views/historic.py:95 publicwork/views/lecture.py:136
 #: publicwork/views/listener.py:111 publicwork/views/listener.py:211
 #: publicwork/views/seeker.py:142 treasury/views/bankflag.py:87
-#: treasury/views/form_of_payment.py:83 treasury/views/order.py:442
-#: treasury/views/payments.py:83 treasury/views/paytypes.py:84
-#: workgroup/views/membership.py:98 workgroup/views/mentoring.py:275
+#: treasury/views/form_of_payment.py:83 treasury/views/order.py:476
+#: treasury/views/payments.py:83 treasury/views/paytypes.py:87
+#: workgroup/views/membership.py:101 workgroup/views/mentoring.py:275
 #: workgroup/views/workgroup.py:122
 msgid "confirm to delete"
 msgstr "confirme para deletar"
@@ -643,15 +644,29 @@ msgid_plural "%d events were successfully marked as 'actives'."
 msgstr[0] "%d evento foi marcado com sucesso como 'ativo'."
 msgstr[1] "%d eventos foram marcados com sucesso como 'ativos'."
 
-#: event/templates/event/activity_home.html:16
+#: event/templates/event/activity/activities.html:27
+#, fuzzy
+#| msgid "centers not found"
+msgid "activities not found"
+msgstr "núcleos não encontrados"
+
+#: event/templates/event/activity/activity.html:22
+msgid "is multi date"
+msgstr "é multi-data"
+
+#: event/templates/event/activity/navbar.html:22
 #: publicwork/templates/publicwork/seeker/add_or_change.html:11
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
-#: treasury/templates/treasury/bankflags.html:17
-#: treasury/templates/treasury/forms_of_payments.html:17
-#: treasury/templates/treasury/order_create.html:66
-#: treasury/templates/treasury/order_create.html:104
-#: treasury/templates/treasury/payments.html:17
-#: treasury/templates/treasury/paytypes.html:17
+#: treasury/templates/treasury/bankflag/navbar.html:21
+#: treasury/templates/treasury/form_of_payment/navbar.html:21
+#: treasury/templates/treasury/order/elements/payforms_div.html:18
+#: treasury/templates/treasury/order/elements/payment_add.html:26
+#: treasury/templates/treasury/order/elements/payments_div.html:18
+#: treasury/templates/treasury/payment/navbar.html:21
+#: treasury/templates/treasury/paytype/navbar.html:21
+#: user/templates/user/profile/elements/how_to_pay.html:26
+#: user/templates/user/profile/elements/payment_add.html:26
+#: user/templates/user/profile/elements/payments_div.html:18
 #: workgroup/templates/workgroup/mentoring/add_frequencies.html:12
 msgid "Add"
 msgstr "Adicionar"
@@ -683,16 +698,6 @@ msgstr "QR - Code"
 #: event/templates/event/detail.html:52
 msgid "Scan this QR-Code to sign-in Event"
 msgstr "Leia este QR - Code para fazer login no evento"
-
-#: event/templates/event/elements/activity_card.html:18 rcadmin/common.py:48
-#: treasury/templates/treasury/bankflags.html:35
-#: treasury/templates/treasury/paytypes.html:39 user/models.py:62
-msgid "active"
-msgstr "ativo"
-
-#: event/templates/event/elements/activity_card.html:22
-msgid "is multi date"
-msgstr "é multi-data"
 
 #: event/templates/event/elements/events.html:42
 #: publicwork/templates/publicwork/lecture/lectures.html:64
@@ -841,7 +846,7 @@ msgstr "Info"
 #: person/templates/person/detail.html:17
 #: person/templates/person/forms/historic.html:24
 #: person/templates/person/navbar.html:40
-#: person/templates/person/navbar.html:106
+#: person/templates/person/navbar.html:115
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
 #: publicwork/templates/publicwork/seeker/detail.html:21
 #: publicwork/templates/publicwork/seeker/navbar.html:27
@@ -857,7 +862,7 @@ msgstr "Histórico"
 #: person/templates/person/detail.html:23
 #: person/templates/person/forms/membership.html:23
 #: person/templates/person/navbar.html:52
-#: person/templates/person/navbar.html:126
+#: person/templates/person/navbar.html:135
 msgid "Membership"
 msgstr "Grupos"
 
@@ -870,9 +875,7 @@ msgstr "Grupos"
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:8
 #: publicwork/templates/publicwork/listener/confirm.html:8
 #: publicwork/templates/publicwork/seeker/confirm_to_reinsert.html:8
-#: treasury/templates/treasury/confirm_del.html:7
-#: treasury/templates/treasury/confirm_delete.html:7
-#: treasury/templates/treasury/confirm_register.html:7
+#: treasury/templates/treasury/elements/confirm_delete.html:7
 #: user/templates/user/profile/confirm_del.html:8
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:8
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:8
@@ -1004,8 +1007,8 @@ msgid "Insert Membership"
 msgstr "Inserir Membro"
 
 #: person/templates/person/navbar.html:7
-#: person/templates/person/navbar.html:67
-#: treasury/templates/treasury/order_create.html:36
+#: person/templates/person/navbar.html:68
+#: treasury/templates/treasury/order/elements/person_div.html:6
 msgid "Person"
 msgstr "Aluno"
 
@@ -1017,7 +1020,11 @@ msgstr "Ferramentas"
 msgid "Import from Seekers"
 msgstr "Importar de Buscadores"
 
-#: person/templates/person/navbar.html:116
+#: person/templates/person/navbar.html:80
+msgid "Card"
+msgstr ""
+
+#: person/templates/person/navbar.html:125
 #: publicwork/templates/publicwork/seeker/navbar.html:80
 #: workgroup/templates/workgroup/member/navbar.html:40
 msgid "Frequency"
@@ -1032,9 +1039,9 @@ msgid "frequencies list"
 msgstr "lista de frequências"
 
 #: person/views/frequency_ps.py:52 person/views/membership_ps.py:54
-#: publicwork/views/group.py:333 publicwork/views/group.py:406
+#: publicwork/views/group.py:336 publicwork/views/group.py:409
 #: publicwork/views/listener.py:47 publicwork/views/listener.py:143
-#: workgroup/views/membership.py:34 workgroup/views/mentoring.py:199
+#: workgroup/views/membership.py:35 workgroup/views/mentoring.py:199
 msgid "confirm to insert"
 msgstr "confirme para inserir"
 
@@ -1058,7 +1065,7 @@ msgstr "lista de membros"
 msgid "insert membership"
 msgstr "inserir membro"
 
-#: person/views/membership_ps.py:96 workgroup/views/membership.py:82
+#: person/views/membership_ps.py:96 workgroup/views/membership.py:85
 msgid "update membership"
 msgstr "atualizar membro"
 
@@ -1120,13 +1127,13 @@ msgstr "desde"
 #: publicwork/templates/publicwork/groups/groups.html:3
 #: publicwork/templates/publicwork/home.html:42
 #: publicwork/templates/publicwork/navbar.html:29
-#: workgroup/templates/workgroup/mentoring/groups.html:3
+#: workgroup/templates/workgroup/mentoring/groups.html:4
 msgid "Groups"
 msgstr "Grupos"
 
 #: publicwork/templates/publicwork/groups/groups.html:68
 #: workgroup/templates/workgroup/mentoring/groups.html:53
-#: workgroup/templates/workgroup/workgroups.html:68
+#: workgroup/templates/workgroup/workgroups.html:70
 msgid "groups not found"
 msgstr "grupos não encontrados"
 
@@ -1196,8 +1203,8 @@ msgstr "Palestras"
 
 #: publicwork/templates/publicwork/home.html:50
 #: publicwork/templates/publicwork/reports/menu.html:5
+#: treasury/templates/treasury/home.html:34
 #: treasury/templates/treasury/reports/menu.html:5
-#: treasury/templates/treasury/treasury_home.html:34
 msgid "Reports"
 msgstr "Relatórios"
 
@@ -1524,23 +1531,23 @@ msgstr "atualizar grupo"
 msgid "group detail | frequencies"
 msgstr "detalhes do grupo | frequências"
 
-#: publicwork/views/group.py:294
+#: publicwork/views/group.py:297
 msgid "add frequencies"
 msgstr "adicionar frequências"
 
-#: publicwork/views/group.py:356
+#: publicwork/views/group.py:359
 msgid "group add member"
 msgstr "adicionar membro no grupo"
 
-#: publicwork/views/group.py:379 publicwork/views/group.py:456
+#: publicwork/views/group.py:382 publicwork/views/group.py:459
 msgid "confirm to remove"
 msgstr "confirme para remover"
 
-#: publicwork/views/group.py:399
+#: publicwork/views/group.py:402
 msgid "The mentor has been inserted on group!"
 msgstr "O mentor foi inserido no grupo!"
 
-#: publicwork/views/group.py:434
+#: publicwork/views/group.py:437
 msgid "group add mentor"
 msgstr "adicionar mentor no aluno"
 
@@ -1695,6 +1702,10 @@ msgstr "5o Aspecto"
 #: rcadmin/common.py:44
 msgid "6th. Aspect"
 msgstr "6o Aspecto"
+
+#: rcadmin/common.py:48 user/models.py:62
+msgid "active"
+msgstr "ativo"
 
 #: rcadmin/common.py:49
 msgid "licensed"
@@ -1876,7 +1887,11 @@ msgstr "em espera"
 msgid "restriction"
 msgstr "restrição"
 
-#: rcadmin/common.py:221
+#: rcadmin/common.py:129
+msgid "Badge"
+msgstr ""
+
+#: rcadmin/common.py:222
 msgid ""
 "Phone number must be entered in the format: '+1234567890'.             Up to"
 " 15 digits allowed."
@@ -1884,40 +1899,36 @@ msgstr ""
 "O número de telefone deve ser inserido no formato: '+1234567890'. São "
 "permitidos até 15 dígitos."
 
-#: treasury/templates/treasury/bankflags.html:7 treasury/views/bankflag.py:21
-msgid "BankFlags"
-msgstr "BankFlags"
+#: treasury/templates/treasury/bankflag/bankflags.html:56
+#: treasury/templates/treasury/form_of_payment/forms_of_payments.html:67
+#: treasury/templates/treasury/order/orders.html:27
+#, fuzzy
+#| msgid "payments not found"
+msgid "forms of payments not found"
+msgstr "Contribuições não encontradas"
 
-#: treasury/templates/treasury/bankflags.html:34
-#: treasury/templates/treasury/paytypes.html:37
-msgid "name"
-msgstr "nome"
+#: treasury/templates/treasury/bankflag/navbar.html:6
+#, fuzzy
+#| msgid "Banks or Flags"
+msgid "Banks and Flags"
+msgstr "Bancos e Cartões"
 
-#: treasury/templates/treasury/confirm_delete.html:9
+#: treasury/templates/treasury/elements/confirm_delete.html:9
 msgid "You want to delete"
 msgstr "Você deseja apagar"
 
-#: treasury/templates/treasury/confirm_delete.html:11
+#: treasury/templates/treasury/elements/confirm_delete.html:11
 msgid "But this is part of a payment order"
-msgstr "Mas isso faz parte de um pedido de pagamento"
+msgstr "Mas isso faz parte de um contribuição"
 
-#: treasury/templates/treasury/confirm_delete.html:13
+#: treasury/templates/treasury/elements/confirm_delete.html:13
 msgid "You can only delete it using the payment order"
-msgstr "Você só pode excluí-lo usando o pedido de pagamento"
+msgstr "Você só pode excluí-lo usando a contribuição (payment order)"
 
-#: treasury/templates/treasury/confirm_delete.html:16
+#: treasury/templates/treasury/elements/confirm_delete.html:16
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:9
 msgid "Are you shure you want to delete"
 msgstr "Tem certeza que deseja apagar"
-
-#: treasury/templates/treasury/confirm_register.html:8
-msgid "Do you confirm the registration procedure?"
-msgstr "Você confirma o procedimento de registro?"
-
-#: treasury/templates/treasury/elements/order.html:17
-#: treasury/templates/treasury/order_detail.html:33
-msgid "made by the pupil"
-msgstr "feito pelo aluno"
 
 #: treasury/templates/treasury/elements/payform_by_type.html:12
 #: treasury/templates/treasury/elements/payment_by_paytype.html:12
@@ -1928,11 +1939,11 @@ msgstr "parcial"
 #: treasury/templates/treasury/elements/payment_by_paytype.html:27
 #: treasury/templates/treasury/elements/payments_summary.html:25
 #: treasury/templates/treasury/elements/payments_summary.html:36
-#: treasury/templates/treasury/order_create.html:79
-#: treasury/templates/treasury/order_create.html:117
-#: treasury/templates/treasury/order_detail.html:78
-#: treasury/templates/treasury/order_detail.html:96
-#: user/templates/user/profile/new_order.html:49
+#: treasury/templates/treasury/order/detail.html:48
+#: treasury/templates/treasury/order/detail.html:63
+#: treasury/templates/treasury/order/elements/payforms_div.html:26
+#: treasury/templates/treasury/order/elements/payments_div.html:26
+#: user/templates/user/profile/elements/payments_div.html:26
 msgid "TOTAL"
 msgstr "TOTAL"
 
@@ -1962,178 +1973,207 @@ msgid "Use"
 msgstr "Usar"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:18
-#: treasury/templates/treasury/treasury_home.html:21
-#: treasury/views/order.py:42
+#: treasury/templates/treasury/home.html:21
+#: treasury/templates/treasury/navbar.html:15
+#: treasury/templates/treasury/order/orders.html:4 treasury/views/order.py:44
 msgid "Orders"
 msgstr "Contribuições"
 
 #: treasury/templates/treasury/elements/treasury_navbar.html:30
 #: treasury/templates/treasury/elements/treasury_navbar.html:39
-#: treasury/templates/treasury/treasury_home.html:27
+#: treasury/templates/treasury/home.html:27
+#: treasury/templates/treasury/navbar.html:29
+#: treasury/templates/treasury/navbar.html:40
 #: user/templates/user/profile/navbar.html:69
 msgid "New order"
 msgstr "Nova contribuição"
 
-#: treasury/templates/treasury/forms_of_payments.html:7
+#: treasury/templates/treasury/form_of_payment/forms_of_payments.html:4
+#: treasury/templates/treasury/form_of_payment/navbar.html:6
 msgid "Forms of Payments"
 msgstr "Formas de Pagamentos"
 
-#: treasury/templates/treasury/forms_of_payments.html:35
-msgid "payment type"
-msgstr "tipo de pagamento"
+#: treasury/templates/treasury/home.html:15
+msgid "Actions"
+msgstr "Ações"
 
-#: treasury/templates/treasury/forms_of_payments.html:36
-msgid "bank or flag"
-msgstr "Banco ou Cartão"
+#: treasury/templates/treasury/home.html:40
+#: treasury/templates/treasury/reports/menu.html:7
+msgid "Cash balance"
+msgstr "Balaço de caixa"
 
-#: treasury/templates/treasury/forms_of_payments.html:37
-msgid "ctrl"
-msgstr "ctrl"
+#: treasury/templates/treasury/home.html:46
+#: treasury/templates/treasury/reports/menu.html:8
+#: treasury/templates/treasury/reports/period_payments.html:10
+#: treasury/views/reports.py:112
+msgid "Period payments"
+msgstr "Contribuições por período"
 
-#: treasury/templates/treasury/forms_of_payments.html:38
-msgid "complement"
-msgstr "complemento"
+#: treasury/templates/treasury/home.html:52
+#: treasury/templates/treasury/reports/payments_by_person.html:12
+msgid "Payments by person"
+msgstr "Contribuições por pessoa"
 
-#: treasury/templates/treasury/forms_of_payments.html:39
-msgid "value"
-msgstr "valor"
+#: treasury/templates/treasury/order/create.html:24
+msgid "Order"
+msgstr "Contribuição"
 
-#: treasury/templates/treasury/forms_of_payments.html:40
-msgid "order"
-msgstr "pedido"
-
-#: treasury/templates/treasury/order_add_payform.html:11
-#: treasury/templates/treasury/order_add_payform.html:23
-msgid "Add form of payment"
-msgstr "Adicionar forma de pagamento"
-
-#: treasury/templates/treasury/order_add_payment.html:12
-#: treasury/templates/treasury/order_add_payment.html:24
-#: user/templates/user/profile/add_payment.html:12
-#: user/templates/user/profile/add_payment.html:25
-msgid "Add payment"
-msgstr "Adicionar contribuição"
-
-#: treasury/templates/treasury/order_create.html:14
-#: user/templates/user/profile/new_order.html:13
+#: treasury/templates/treasury/order/create.html:39
+#: user/templates/user/profile/elements/controllers_div.html:9
+#: user/templates/user/profile/elements/how_to_pay.html:50
 msgid "Pay now"
 msgstr "Pagar"
 
-#: treasury/templates/treasury/order_create.html:28
-msgid "Order"
-msgstr "Pedido"
+#: treasury/templates/treasury/order/create.html:47
+#: user/templates/user/profile/elements/controllers_div.html:28
+#| msgid "canceled"
+msgid "Cancel"
+msgstr "Cancelar"
 
-#: treasury/templates/treasury/order_create.html:97
-#: treasury/templates/treasury/order_detail.html:88
-msgid "Forms of Payment"
-msgstr "Formas de Pagamento"
-
-#: treasury/templates/treasury/order_create.html:125
-msgid "missing"
-msgstr "ausente"
-
-#: treasury/templates/treasury/order_create.html:149
-#: user/templates/user/profile/new_order.html:124
-msgid "Description"
-msgstr "Descrição"
-
-#: treasury/templates/treasury/order_create.html:159
-msgid "Status"
-msgstr "Status"
-
-#: treasury/templates/treasury/order_detail.html:31
+#: treasury/templates/treasury/order/detail.html:7
 msgid "Order Detail"
-msgstr "Detalhe do pedido"
+msgstr "Detalhe da Contribuição"
 
-#: treasury/templates/treasury/order_detail.html:44
+#: treasury/templates/treasury/order/detail.html:9
+#: treasury/templates/treasury/order/elements/order.html:24
+msgid "made by the pupil"
+msgstr "feito pelo aluno"
+
+#: treasury/templates/treasury/order/detail.html:22
 msgid "person"
 msgstr "aluno"
 
-#: treasury/templates/treasury/order_detail.html:50
+#: treasury/templates/treasury/order/detail.html:26
 msgid "date"
 msgstr "data"
 
-#: treasury/templates/treasury/order_detail.html:113
-msgid "Update status"
-msgstr "Atualizar status"
+#: treasury/templates/treasury/order/detail.html:56
+msgid "Forms of Payment"
+msgstr "Formas de Pagamento"
 
-#: treasury/templates/treasury/order_detail.html:123
+#: treasury/templates/treasury/order/detail.html:71
 msgid "description"
 msgstr "descrição"
 
-#: treasury/templates/treasury/order_detail.html:132
+#: treasury/templates/treasury/order/detail.html:81
 msgid "Voucher"
 msgstr "Comprovante"
 
-#: treasury/templates/treasury/orders.html:38
-msgid "orders not found"
-msgstr "ordens não encontradas"
+#: treasury/templates/treasury/order/elements/others_div.html:9
+#: user/templates/user/profile/elements/payform_div copy.html:31
+#: user/templates/user/profile/elements/payform_div.html:23
+msgid "Description"
+msgstr "Descrição"
 
-#: treasury/templates/treasury/payments.html:98
-msgid "Payments not found"
-msgstr "Pagamentos não encontrados"
+#: treasury/templates/treasury/order/elements/others_div.html:20
+msgid "Status"
+msgstr "Status"
 
-#: treasury/templates/treasury/paytypes.html:7
-msgid "PayTypes"
-msgstr "Tipos de Pagamentos"
+#: treasury/templates/treasury/order/elements/payform.html:27
+#, fuzzy
+#| msgid "Are you sure you want to delete the center"
+msgid "Do you really want to delete this payment method?"
+msgstr "Tem certeza que deseja apagar o núcleo"
+
+#: treasury/templates/treasury/order/elements/payform_add.html:12
+#: treasury/templates/treasury/order/elements/payform_add.html:23
+#, fuzzy
+#| msgid "Add payment"
+msgid "Add payform"
+msgstr "Adicionar contribuição"
+
+#: treasury/templates/treasury/order/elements/payforms_div.html:6
+msgid "Payforms"
+msgstr "Forma de Pagamento"
+
+#: treasury/templates/treasury/order/elements/payforms_div.html:33
+msgid "due"
+msgstr "diferença"
+
+#: treasury/templates/treasury/order/elements/payment.html:30
+#: user/templates/user/profile/elements/payment.html:30
+#, fuzzy
+#| msgid "Are you sure you want to delete the center"
+msgid "Do you really want to delete this payment?"
+msgstr "Tem certeza que deseja apagar o núcleo"
+
+#: treasury/templates/treasury/order/elements/payment_add.html:14
+#: user/templates/user/profile/elements/add_payment.html:12
+#: user/templates/user/profile/elements/add_payment.html:25
+#: user/templates/user/profile/elements/payment_add.html:14
+msgid "Add payment"
+msgstr "Adicionar contribuição"
+
+#: treasury/templates/treasury/order/elements/search_results.html:16
+msgid "No search results"
+msgstr ""
+
+#: treasury/templates/treasury/payment/payments.html:82
+#: user/templates/user/profile/payments.html:25
+msgid "payments not found"
+msgstr "Contribuições não encontradas"
+
+#: treasury/templates/treasury/paytype/navbar.html:6
+#: treasury/templates/treasury/paytype/paytypes.html:4
+#, fuzzy
+#| msgid "Forms of payments"
+msgid "Types of payment"
+msgstr "Formas de Pagamento"
+
+#: treasury/templates/treasury/paytype/paytypes.html:60
+#, fuzzy
+#| msgid "payments not found"
+msgid "types of payments not found"
+msgstr "Contribuições não encontradas"
 
 #: treasury/templates/treasury/reports/cash_balance.html:10
 #: treasury/views/reports.py:79
 msgid "Cash Balance"
 msgstr "Balanço de Caixa"
 
-#: treasury/templates/treasury/reports/menu.html:7
-#: treasury/templates/treasury/treasury_home.html:40
-msgid "Cash balance"
-msgstr "Balaço de caixa"
-
-#: treasury/templates/treasury/reports/menu.html:8
-#: treasury/templates/treasury/reports/period_payments.html:10
-#: treasury/templates/treasury/treasury_home.html:46
-#: treasury/views/reports.py:112
-msgid "Period payments"
-msgstr "Contribuições por período"
-
 #: treasury/templates/treasury/reports/menu.html:9
 #: treasury/views/reports.py:155
 msgid "Payment by person"
 msgstr "Contribuição por pessoa"
 
-#: treasury/templates/treasury/reports/payments_by_person.html:12
-#: treasury/templates/treasury/treasury_home.html:52
-msgid "Payments by person"
-msgstr "Contribuições por pessoa"
-
 #: treasury/templates/treasury/reports/payments_by_person.html:43
 msgid "select a person"
 msgstr "selecionar um aluno"
 
-#: treasury/templates/treasury/treasury_home.html:15
-msgid "Actions"
-msgstr "Ações"
-
 #: treasury/views/bankflag.py:33
-msgid "The BankFlag has been created!"
+#, fuzzy
+#| msgid "The BankFlag has been created!"
+msgid "The Bank or Flag has been created!"
 msgstr "O BankFlag foi criado!"
 
 #: treasury/views/bankflag.py:43
-msgid "Create BankFlag"
+#, fuzzy
+#| msgid "Create BankFlag"
+msgid "Create Bank or flag"
 msgstr "Criar BankFlag"
 
 #: treasury/views/bankflag.py:56
-msgid "The BankFlag has been updated!"
+#, fuzzy
+#| msgid "The BankFlag has been updated!"
+msgid "The Bank or Flag has been updated!"
 msgstr "O BankFlag foi atualizado!"
 
 #: treasury/views/bankflag.py:65
-msgid "Update BankFlag"
+#, fuzzy
+#| msgid "Update BankFlag"
+msgid "Update Bank or Flag"
 msgstr "Atualizar BankFlag"
 
 #: treasury/views/bankflag.py:78
-msgid "The BankFlag has been inactivated!"
+#, fuzzy
+#| msgid "The BankFlag has been inactivated!"
+msgid "The Bank or Flag has been inactivated!"
 msgstr "O BankFlag foi inativado!"
 
 #: treasury/views/bankflag.py:81
-msgid "The BankFlag has been deleted!"
+#, fuzzy
+#| msgid "The BankFlag has been deleted!"
+msgid "The Bank or Flag has been deleted!"
 msgstr "O BankFlag foi apagado!"
 
 #: treasury/views/form_of_payment.py:21
@@ -2160,33 +2200,29 @@ msgstr "Atualizar forma de pagamento"
 msgid "The Form of Payment has been deleted!"
 msgstr "A forma de pagamento foi excluída!"
 
-#: treasury/views/order.py:74 treasury/views/order.py:171
+#: treasury/views/order.py:81 treasury/views/order.py:193
 msgid "Create Order"
-msgstr "Criar Pedido"
+msgstr "Registrar Contribuição"
 
-#: treasury/views/order.py:189 treasury/views/order.py:260 user/views.py:269
-msgid "confirm delete"
-msgstr "confirmar exclusão"
-
-#: treasury/views/order.py:242
+#: treasury/views/order.py:276
 msgid "Add Form of Payment"
 msgstr "Adicionar Forma de Pagamento"
 
-#: treasury/views/order.py:320
-msgid "confirm register"
-msgstr "confirmar registro"
-
-#: treasury/views/order.py:400
+#: treasury/views/order.py:434
 msgid "View Order"
-msgstr "Ver Pedido"
+msgstr "Ver Contribuição"
 
-#: treasury/views/order.py:414
+#: treasury/views/order.py:448
 msgid "Edit Order"
-msgstr "Editar Pedido"
+msgstr "Editar Contribuição"
 
 #: treasury/views/payments.py:33
 msgid "The Payment has been created!"
 msgstr "O pagamento foi criado!"
+
+#: treasury/views/payments.py:39 treasury/views/payments.py:62
+msgid "Payment"
+msgstr "Pagamento"
 
 #: treasury/views/payments.py:43
 msgid "Create Payment"
@@ -2204,29 +2240,39 @@ msgstr "Atualizar Pagamento"
 msgid "The Payment has been deleted!"
 msgstr "O Pagamento foi apagado!"
 
-#: treasury/views/paytypes.py:30
+#: treasury/views/paytypes.py:33
 msgid "The PayType has been created!"
 msgstr "O Tipo de Pagamento foi criado!"
 
-#: treasury/views/paytypes.py:40
-msgid "Create PayType"
-msgstr "Criar Tipo de Pagamento"
+#: treasury/views/paytypes.py:43
+#, fuzzy
+#| msgid "Create Form of Payment"
+msgid "Create type of payment"
+msgstr "Criar forma de pagamento"
 
-#: treasury/views/paytypes.py:53
-msgid "The PayType has been updated!"
-msgstr "O Tipo de Pagamento foi atualizado!"
+#: treasury/views/paytypes.py:56
+#, fuzzy
+#| msgid "The Form of Payment has been updated!"
+msgid "The types of payment has been updated!"
+msgstr "A forma de pagamento foi atualizada!"
 
-#: treasury/views/paytypes.py:62
-msgid "Update PayType"
-msgstr "Atualizar Tipo de Pagamento"
-
-#: treasury/views/paytypes.py:75
-msgid "The PayType has been inactivated!"
-msgstr "O Tipo de Pagamento foi inativado!"
+#: treasury/views/paytypes.py:65
+#, fuzzy
+#| msgid "Update Form of Payment"
+msgid "Update type of payment"
+msgstr "Atualizar forma de pagamento"
 
 #: treasury/views/paytypes.py:78
-msgid "The PayType has been deleted!"
-msgstr "O Tipo de Pagamento foi apagado!"
+#, fuzzy
+#| msgid "The PayType has been inactivated!"
+msgid "The types of payment has been inactivated!"
+msgstr "O Tipo de Pagamento foi inativado!"
+
+#: treasury/views/paytypes.py:81
+#, fuzzy
+#| msgid "The Form of Payment has been deleted!"
+msgid "The types of payment has been deleted!"
+msgstr "A forma de pagamento foi excluída!"
 
 #: treasury/views/reports.py:45
 msgid "treasury"
@@ -2432,6 +2478,99 @@ msgstr "Redefinir senha"
 msgid "Are you sure you want to delete?"
 msgstr "Tem certeza que deseja apagar?"
 
+#: user/templates/user/profile/elements/controllers_div.html:20
+#: user/templates/user/profile/elements/how_to_pay.html:5
+msgid "How to pay"
+msgstr "Como pagar"
+
+#: user/templates/user/profile/elements/how_to_pay.html:13
+msgid "pix-key"
+msgstr "chave-PIX"
+
+#: user/templates/user/profile/elements/how_to_pay.html:18
+#: user/templates/user/profile/elements/how_to_pay.html:24
+#: user/templates/user/profile/elements/how_to_pay.html:32
+#: user/templates/user/profile/elements/how_to_pay.html:41
+#: user/templates/user/profile/elements/how_to_pay.html:48
+msgid "step"
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:19
+msgid "Transfer, deposit or PIX at your bank."
+msgstr "Realize a transferência, depósito ou PIX em seu banco."
+
+#: user/templates/user/profile/elements/how_to_pay.html:20
+msgid "For PIX use image or pix-key above."
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:25
+msgid "Enter payments by clicking: "
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:27
+#, fuzzy
+#| msgid "Please fill in the form below:"
+msgid "and filling out the form."
+msgstr "Por favor, preencha o formulário a seguir:"
+
+#: user/templates/user/profile/elements/how_to_pay.html:28
+msgid "Repeat this process for each payment."
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:33
+msgid "Fill in the payment method fields."
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:34
+msgid "Do not forget to inform the bank "
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:35
+#, fuzzy
+#| msgid "Bank-flag"
+msgid "Bank flag"
+msgstr "Bank-flag"
+
+#: user/templates/user/profile/elements/how_to_pay.html:36
+msgid "and the transaction id number "
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:37
+msgid "Ctrl number"
+msgstr "número de Controle"
+
+#: user/templates/user/profile/elements/how_to_pay.html:42
+#, fuzzy
+#| msgid ""
+#| "Take the digital voucher provided by your bank (.jpg file format only)"
+msgid ""
+"Select and upload the digital voucher provided by your bank, through the "
+"field:"
+msgstr ""
+"Pegue o comprovante digital fornecido por seu banco (somente formato de "
+"arquivo .jpg)"
+
+#: user/templates/user/profile/elements/how_to_pay.html:43
+msgid "Voucher img"
+msgstr "Comprovante"
+
+#: user/templates/user/profile/elements/how_to_pay.html:44
+msgid "(only in .jpg format for now)"
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:49
+msgid "When all payment method fields are filled in, the button: "
+msgstr ""
+
+#: user/templates/user/profile/elements/how_to_pay.html:51
+msgid " will be enabled. Click on it to submit your payment."
+msgstr ""
+
+#: user/templates/user/profile/elements/payform_div copy.html:6
+#: user/templates/user/profile/elements/payform_div.html:4
+msgid "Form of Payment"
+msgstr "Forma de Pagamento"
+
 #: user/templates/user/profile/frequencies.html:22
 #: user/templates/user/profile/historic.html:22
 #: user/templates/user/profile/payments.html:15
@@ -2474,109 +2613,16 @@ msgstr "Alterar"
 msgid "Scan QR-CODE"
 msgstr "Ler QR-CODE"
 
-#: user/templates/user/profile/new_order.html:36
-#: user/templates/user/profile/new_order.html:85
-msgid "Payment"
-msgstr "Pagamento"
+#: user/templates/user/profile/new_order.html:19
+#| msgid "New order"
+msgid "New Order"
+msgstr "Nova contribuição"
 
-#: user/templates/user/profile/new_order.html:67
-msgid "To make your contributions and payments follow the instructions"
-msgstr "Para fazer suas contribuições e pagamentos, siga as instruções"
-
-#: user/templates/user/profile/new_order.html:75
-#: user/templates/user/profile/new_order.html:158
-msgid "pix-key"
-msgstr "chave-PIX"
-
-#: user/templates/user/profile/new_order.html:80
-msgid "Transfer, deposit or PIX at your bank."
-msgstr "Realize a transferência, depósito ou PIX em seu banco."
-
-#: user/templates/user/profile/new_order.html:81
-msgid ""
-"Use the \"Description\" field in your bank app to identify your contribution"
-" via PIX."
-msgstr ""
-"Use o campo de Descrição no aplicativo de seu banco para identificar sua "
-"contribuição via PIX."
-
-#: user/templates/user/profile/new_order.html:82
-#| msgid "Take the .pdf or .jpg digital voucher provided by your bank"
-msgid "Take the digital voucher provided by your bank (.jpg file format only)"
-msgstr ""
-"Pegue o comprovante digital fornecido por seu banco (somente formato de "
-"arquivo .jpg)"
-
-#: user/templates/user/profile/new_order.html:83
-msgid ""
-"In this program you will be able to make payments and contributions in your "
-"name only."
-msgstr ""
-"Neste programa você conseguirá fazer os pagamentos e contribuições apenas em"
-" seu nome."
-
-#: user/templates/user/profile/new_order.html:84
-msgid ""
-"For collective payments and contributions (two or more people) contact your "
-"core treasury."
-msgstr ""
-"Para pagamentos e contribuições coletivas (duas ou mais pessoas) procure a "
-"tesouraria de seu núcleo."
-
-#: user/templates/user/profile/new_order.html:85
-msgid "To start, click on"
-msgstr "Para iniciar, clique em"
-
-#: user/templates/user/profile/new_order.html:99
-msgid "Form of Payment"
-msgstr "Forma de Pagamento"
-
-#: user/templates/user/profile/new_order.html:138
-#| msgid ""
-#| "In order to complete your contribution, have your deposit, transfer or PIX "
-#| "receipt scanned (.pdf or .jpg)"
-msgid ""
-"In order to complete your contribution, have your deposit, transfer or PIX "
-"receipt scanned in .jpg file format"
-msgstr ""
-"Para concluir sua contribuição tenha o comprovante de depósito, "
-"transferência ou PIX digitalizado no formato de arquivo .jpg"
-
-#: user/templates/user/profile/new_order.html:139
-msgid "Voucher img"
-msgstr "Comprovante"
-
-#: user/templates/user/profile/new_order.html:139
-msgid "Upload the file to the system"
-msgstr "Faça upload do arquivo para o sistema"
-
-#: user/templates/user/profile/new_order.html:145
-msgid "Bank-flag"
-msgstr "Bank-flag"
-
-#: user/templates/user/profile/new_order.html:145
-msgid "choose the option that matches your bank."
-msgstr "escolha a opção que corresponda ao seu banco."
-
-#: user/templates/user/profile/new_order.html:146
-msgid "Ctrl number"
-msgstr "número de Controle"
-
-#: user/templates/user/profile/new_order.html:146
-msgid "Deposit, transfer or PIX identification number."
-msgstr "Número de identificação do depósito, transferência ou PIX."
-
-#: user/templates/user/profile/new_order.html:157
-msgid "Payments with PIX: use pix-key or QR-Code"
-msgstr "Pagamentos com PIX: use a chave-pix ou o QR-Code"
-
-#: user/templates/user/profile/new_order.html:161
-msgid ""
-"Use the \"Description\" field in your banks application to identify your "
-"contribution via PIX."
-msgstr ""
-"Use o campo de Descrição no aplicativo de seu banco para identificar sua "
-"contribuição via PIX."
+#: user/templates/user/profile/payment.html:25
+#, fuzzy
+#| msgid "made by the pupil"
+msgid "made by myself"
+msgstr "feito pelo aluno"
 
 #: user/templates/user/profile/payments.html:3
 msgid "Latest payments"
@@ -2586,34 +2632,30 @@ msgstr "Últimas contribuições"
 msgid "payments"
 msgstr "contribuições"
 
-#: user/templates/user/profile/payments.html:25
-msgid "payments not found"
-msgstr "Contribuições não encontradas"
-
 #: user/templates/user/profile/scan_qrcode_event.html:21
 msgid "Scan the Event QR-CODE"
 msgstr "Ler o QR-CODE do evento"
 
-#: user/views.py:40
+#: user/views.py:43
 msgid "My Profile has been updated!"
 msgstr "Meu perfil foi atualizado!"
 
-#: user/views.py:48
+#: user/views.py:51
 msgid "update profile"
 msgstr "atualizar perfil"
 
-#: user/views.py:88
+#: user/views.py:94
 #, python-format
 msgid "You are registered for the event: %s"
 msgstr "Você está inscrito para o evento: %s"
 
-#: user/views.py:175
+#: user/views.py:186
 msgid "Create my order"
-msgstr "Criar meu pedido"
+msgstr "Criar minha contribuição"
 
-#: user/views.py:247
+#: user/views.py:275
 msgid "Create my order - add payment"
-msgstr "Criar meu pedido - adicionar pagamento"
+msgstr "Criar minha contribuição - adicionar pagamento"
 
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:13
 msgid "This working group has"
@@ -2655,15 +2697,15 @@ msgstr "selecionar um evento"
 msgid "Workgroup"
 msgstr "Grupo de Trabalho"
 
-#: workgroup/views/membership.py:27
+#: workgroup/views/membership.py:28
 msgid "The person has been inserted on workgroup!"
 msgstr "O aluno foi inserido no grupo!"
 
-#: workgroup/views/membership.py:60
+#: workgroup/views/membership.py:61
 msgid "create membership"
 msgstr "criar membro"
 
-#: workgroup/views/membership.py:76
+#: workgroup/views/membership.py:79
 msgid "The Membership has been updated!"
 msgstr "O membro foi atualizado!"
 
@@ -2727,6 +2769,122 @@ msgstr "O Grupo de trabalho foi atualizado!"
 #: workgroup/views/workgroup.py:100
 msgid "update workgroup"
 msgstr "atualizar grupo de trabalho"
+
+#~ msgid "BankFlags"
+#~ msgstr "BankFlags"
+
+#~ msgid "name"
+#~ msgstr "nome"
+
+#~ msgid "Do you confirm the registration procedure?"
+#~ msgstr "Você confirma o procedimento de registro?"
+
+#~ msgid "payment type"
+#~ msgstr "tipo de pagamento"
+
+#~ msgid "bank or flag"
+#~ msgstr "Banco ou Cartão"
+
+#~ msgid "ctrl"
+#~ msgstr "ctrl"
+
+#~ msgid "complement"
+#~ msgstr "complemento"
+
+#~ msgid "value"
+#~ msgstr "valor"
+
+#~ msgid "order"
+#~ msgstr "contribuição"
+
+#~ msgid "Add form of payment"
+#~ msgstr "Adicionar forma de pagamento"
+
+#~ msgid "missing"
+#~ msgstr "ausente"
+
+#~ msgid "Update status"
+#~ msgstr "Atualizar status"
+
+#~ msgid "orders not found"
+#~ msgstr "ordens não encontradas"
+
+#~ msgid "Payments not found"
+#~ msgstr "Pagamentos não encontrados"
+
+#~ msgid "PayTypes"
+#~ msgstr "Tipos de Pagamentos"
+
+#~ msgid "confirm delete"
+#~ msgstr "confirmar exclusão"
+
+#~ msgid "confirm register"
+#~ msgstr "confirmar registro"
+
+#~ msgid "Create PayType"
+#~ msgstr "Criar Tipo de Pagamento"
+
+#~ msgid "The PayType has been updated!"
+#~ msgstr "O Tipo de Pagamento foi atualizado!"
+
+#~ msgid "Update PayType"
+#~ msgstr "Atualizar Tipo de Pagamento"
+
+#~ msgid "The PayType has been deleted!"
+#~ msgstr "O Tipo de Pagamento foi apagado!"
+
+#~ msgid "To make your contributions and payments follow the instructions"
+#~ msgstr "Para fazer suas contribuições e pagamentos, siga as instruções"
+
+#~ msgid ""
+#~ "Use the \"Description\" field in your bank app to identify your contribution"
+#~ " via PIX."
+#~ msgstr ""
+#~ "Use o campo de Descrição no aplicativo de seu banco para identificar sua "
+#~ "contribuição via PIX."
+
+#~ msgid ""
+#~ "In this program you will be able to make payments and contributions in your "
+#~ "name only."
+#~ msgstr ""
+#~ "Neste programa você conseguirá fazer os pagamentos e contribuições apenas em"
+#~ " seu nome."
+
+#~ msgid ""
+#~ "For collective payments and contributions (two or more people) contact your "
+#~ "core treasury."
+#~ msgstr ""
+#~ "Para pagamentos e contribuições coletivas (duas ou mais pessoas) procure a "
+#~ "tesouraria de seu núcleo."
+
+#~ msgid "To start, click on"
+#~ msgstr "Para iniciar, clique em"
+
+#~ msgid ""
+#~ "In order to complete your contribution, have your deposit, transfer or PIX "
+#~ "receipt scanned in .jpg file format"
+#~ msgstr ""
+#~ "Para concluir sua contribuição tenha o comprovante de depósito, "
+#~ "transferência ou PIX digitalizado no formato de arquivo .jpg"
+
+#~ msgid "Upload the file to the system"
+#~ msgstr "Faça upload do arquivo para o sistema"
+
+#~ msgid "choose the option that matches your bank."
+#~ msgstr "escolha a opção que corresponda ao seu banco."
+
+#~ msgid "Deposit, transfer or PIX identification number."
+#~ msgstr "Número de identificação do depósito, transferência ou PIX."
+
+#~ msgid "Payments with PIX: use pix-key or QR-Code"
+#~ msgstr "Pagamentos com PIX: use a chave-pix ou o QR-Code"
+
+#~ msgid ""
+#~ "Use the \"Description\" field in your banks application to identify your "
+#~ "contribution via PIX."
+#~ msgstr ""
+#~ "Use o campo de Descrição no aplicativo de seu banco para identificar sua "
+#~ "contribuição via PIX."
 
 #, fuzzy
 #~ msgid "file format"
