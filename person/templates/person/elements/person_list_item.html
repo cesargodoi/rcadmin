@@ -1,0 +1,85 @@
+{% if forloop.last %}
+  <div 
+    hx-get="{% url 'person_home' %}?page={{ page|add:1 }}" 
+    hx-trigger="revealed" 
+    hx-swap="afterend"
+    hx-target="this"
+    class="row border-top border-secondary pb-2 pt-2 {% if not obj.is_active %}
+                                                       text-danger
+                                                     {% elif obj.center != request.user.person.center %}
+                                                       text-secondary
+                                                     {% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
+      {% endif %}
+    {% endif %}
+  
+  >
+{% else %}
+  <div 
+    class="row border-top border-secondary pb-2 pt-2 {% if not obj.is_active %}
+                                                       text-danger
+                                                     {% elif obj.center != request.user.person.center %}
+                                                       text-secondary
+                                                     {% endif %}"
+    {% if obj.click_link %}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        onclick="location.href='{{ obj.click_link }}';"
+        style="cursor: pointer;"
+      {% endif %}
+    {% endif %}
+  >
+{% endif %}
+
+  <div class="col-sm-5">
+    <strong>
+      {{ forloop.counter|add:conter }} &nbsp;&nbsp;{{ obj.short_name }}
+    </strong>
+    &nbsp;&nbsp; 
+    <small>
+      <em>{{ obj.user.profile.city }} ({{ obj.user.profile.state }}-{{ obj.user.profile.country }})</em> 
+    </small>
+  </div>
+
+  <div class="col-sm-1 small">
+    {{ obj.get_aspect_display }}
+  </div>
+
+  <div class="col-sm-2 small align-middle">
+    {% if obj.user.profile.phone_1 %}
+      <i class="fas fa-phone"></i> 
+      {{ obj.user.profile.phone_1 }}
+    {% elif obj.user.profile.phone_2 %}
+      <i class="fas fa-phone"></i> 
+      {{ obj.user.profile.phone_2 }}
+    {% endif %}
+  </div>
+
+  <div class="col-sm-3 small align-middle">
+    {% if obj.user.email %}
+      <i class="fas fa-envelope"></i> 
+      {{ obj.user.email }}
+    {% endif %}
+  </div>
+
+  <div class="col-sm-1 text-right">
+    {% if flag == "group" and obj.publicworkgroup_set.count %}
+      <i class="fas fa-user-check mr-1"></i>
+    {% elif flag == "membership" and object in obj.workgroup_set.all %}
+      <i class="fas fa-user-check mr-1"></i>
+    {% elif flag == "person" %}
+      <strong>
+        {% if obj.status not in 'ACT,---' %}{{ obj.get_status_display }}{% endif %}
+      </strong>
+    {% elif obj.is_active %}
+      <a type="button" 
+        href="{{ obj.add_link }}"
+        class="btn btn-light text-primary btn-sm">
+        <i class="fas fa-plus"></i> 
+      </a>
+    {% endif %}
+  </div>
+
+</div>

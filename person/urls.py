@@ -12,6 +12,7 @@ from .views import (
 # person
 urlpatterns = [
     path("", person.person_home, name="person_home"),
+    path("person-scroll", person.person_scroll, name="person_scroll"),
     path("<uuid:id>/detail/", person.person_detail, name="person_detail"),
     path("create/", person.person_create, name="person_create"),
     path("<uuid:id>/update/", person.person_update, name="person_update"),

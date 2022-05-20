@@ -32,7 +32,7 @@ def search_person(request, obj):
     if not request.session.get("search"):
         get_base_search(request)
     adjust_session(
-        request, ["ps_term", "ps_aspect", "ps_status", "page", "all"]
+        request, ["ps_term", "ps_aspect", "ps_status", "all"]
     )
     # basic query
     search = request.session["search"]
@@ -55,6 +55,35 @@ def search_person(request, obj):
         query.add(q, Q.AND)
 
     return (obj.objects.filter(query).order_by("name_sa"), search["page"])
+
+# def search_person(request, obj):
+#     # checking for search in request.session
+#     if not request.session.get("search"):
+#         get_base_search(request)
+#     adjust_session(
+#         request, ["ps_term", "ps_aspect", "ps_status", "page", "all"]
+#     )
+#     # basic query
+#     search = request.session["search"]
+#     _query = [Q(is_active=True), Q(center=request.user.person.center)]
+#     # adding more complexity
+#     if search["ps_term"]:
+#         _query.append(Q(name_sa__icontains=search["ps_term"]))
+#     if search["ps_aspect"] != "all":
+#         _query.append(Q(aspect=search["ps_aspect"]))
+#     if search["ps_status"] != "all":
+#         _query.append(Q(status=search["ps_status"]))
+#         if search["ps_status"] in ["DIS", "REM", "DEA"]:
+#             _query.remove(Q(is_active=True))
+#     if search["all"] == "on":
+#         _query.remove(Q(is_active=True))
+#         _query.remove(Q(center=request.user.person.center))
+#     # generating query
+#     query = Q()
+#     for q in _query:
+#         query.add(q, Q.AND)
+
+#     return (obj.objects.filter(query).order_by("name_sa"), search["page"])
 
 
 #  event  ####################################################################

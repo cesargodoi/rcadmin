@@ -28,12 +28,26 @@ from ..models import Historic, Person
 @login_required
 @permission_required("person.view_person")
 def person_home(request):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "person/elements/person_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "person/home.html"
+        page = 1
+
+    # get limitby
+    _limitby = (regs * (page - 1), regs * page)
+    print(_limitby)
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_person(request, Person)
-        object_list = paginator(queryset, page=page)
+        queryset, page_ = search_person(request, Person)
+        # object_list = paginator(queryset, page=page)
+        object_list = queryset[_limitby[0]:_limitby[1]]
         # add action links
         for item in object_list:
             item.click_link = reverse("person_detail", args=[item.id])
@@ -44,6 +58,8 @@ def person_home(request):
             )
 
     context = {
+        "page": page,
+        "conter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "aspect_list": ASPECTS,
@@ -52,7 +68,11 @@ def person_home(request):
         "nav": "home",
         "flag": "person",
     }
-    return render(request, "person/home.html", context)
+    return render(request, template_name, context)
+
+
+def person_scroll(request):
+    ...
 
 
 @login_required
