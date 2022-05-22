@@ -10,14 +10,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-
-from rcadmin.common import (
-    ASPECTS,
-    STATUS,
-    paginator,
-    clear_session,
-    short_name,
-)
+from rcadmin.common import ASPECTS, STATUS, clear_session
 from user.models import User
 from base.searchs import search_person
 
@@ -37,29 +30,27 @@ def person_home(request):
     else:
         template_name = "person/home.html"
         page = 1
-
     # get limitby
-    _limitby = (regs * (page - 1), regs * page)
-    print(_limitby)
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page_ = search_person(request, Person)
-        # object_list = paginator(queryset, page=page)
-        object_list = queryset[_limitby[0]:_limitby[1]]
+        queryset = search_person(request, Person)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.click_link = reverse("person_detail", args=[item.id])
             item.local = "{} ({}-{})".format(
-                short_name(item.user.profile.city),
+                item.user.profile.city,
                 item.user.profile.state,
                 item.user.profile.country,
             )
 
     context = {
         "page": page,
-        "conter": (page - 1) * 10,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "aspect_list": ASPECTS,
@@ -69,10 +60,6 @@ def person_home(request):
         "flag": "person",
     }
     return render(request, template_name, context)
-
-
-def person_scroll(request):
-    ...
 
 
 @login_required

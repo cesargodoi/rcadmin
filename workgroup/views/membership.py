@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.models import Group
 
 from person.models import Person
-from rcadmin.common import ASPECTS, STATUS, paginator, clear_session
+from rcadmin.common import ASPECTS, STATUS, clear_session
 
 from ..forms import MembershipForm
 from ..models import Membership, Workgroup
@@ -16,6 +16,18 @@ from base.searchs import search_person
 @login_required
 @permission_required("workgroup.add_membership")
 def membership_insert(request, workgroup_id):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/elements/person_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/membership_insert.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     workgroup = Workgroup.objects.get(pk=workgroup_id)
 
@@ -42,27 +54,34 @@ def membership_insert(request, workgroup_id):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_person(request, Person)
-        object_list = paginator(queryset, page=page)
+        queryset = search_person(request, Person)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.add_link = (
                 reverse("membership_insert", args=[workgroup_id])
                 + f"?pk={ item.pk }"
             )
+            item.local = "{} ({}-{})".format(
+                item.user.profile.city,
+                item.user.profile.state,
+                item.user.profile.country,
+            )
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
-        "goback_link": reverse("membership_insert", args=[workgroup.pk]),
         "aspect_list": ASPECTS,
         "status_list": STATUS,
-        "form": MembershipForm(initial={"workgroup": workgroup}),
         "title": _("create membership"),
+        "goback_link": reverse("membership_insert", args=[workgroup.pk]),
+        "form": MembershipForm(initial={"workgroup": workgroup}),
         "object": workgroup,
         "flag": "membership",
     }
-    return render(request, "workgroup/membership_insert.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

@@ -1,12 +1,6 @@
 {% load i18n %}
 
-<h4>{% trans 'Persons' %}</h4>
-
 {% if object_list %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
 
   {% include "person/elements/person_list.html" %}
 
@@ -15,9 +9,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      {% trans 'choose your search terms' %}
+        {% trans 'choose your search terms' %}
       {% else %}
-      {% trans 'persons not found in the search' %}
+        {% trans 'persons not found in the search' %}
       {% endif %}
     </h4> 
   </div> 

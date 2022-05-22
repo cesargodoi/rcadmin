@@ -1,10 +1,10 @@
 {% load i18n %}
 
-<h4>{% trans 'Add Mentor' %}</h4>
+<h4>{% trans 'Insert Mentor' %}</h4>
 <form class="form-control-sm border-top" method="GET">
   {% csrf_token %}
   {% include "base/searchs/person.html" %}
 </form>
 <br>
 
-{% include 'person/persons.html' %}
+{% include 'publicwork/elements/person_list.html' %}

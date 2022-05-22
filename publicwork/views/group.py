@@ -390,6 +390,19 @@ def group_remove_member(request, group_pk, member_pk):
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_mentor(request, pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/elements/person_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
+    object_list = None
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -416,18 +429,24 @@ def group_add_mentor(request, pk):
 
     if request.GET.get("init"):
         clear_session(request, ["search"])
-        object_list = None
     else:
-        queryset, page = search_person(request, Person)
-        object_list = paginator(queryset, page=page)
+        queryset = search_person(request, Person)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.add_link = (
                 reverse("group_add_mentor", args=[pk])
                 + f"?person_pk={ item.pk }"
             )
+            item.local = "{} ({}-{})".format(
+                item.user.profile.city,
+                item.user.profile.state,
+                item.user.profile.country,
+            )
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": pw_group,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
@@ -440,7 +459,7 @@ def group_add_mentor(request, pk):
         "pk": pk,
         "flag": "group",
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

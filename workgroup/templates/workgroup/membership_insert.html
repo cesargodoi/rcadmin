@@ -5,24 +5,26 @@
 
 {% block content %}
 
-<div class="text-right mb-2 mt-4">
-  <a class="btn btn-light text-info mt-2 mr-3"
-    href="{% url 'workgroup_detail' object.pk %}">
-    <i class="fas fa-chevron-left"></i> 
-    {% trans 'Back' %}
-  </a>
-</div>
-
-<article class="media content-section">
-  <div class="media-body">
-    <h4>{% trans 'Insert Membership' %}</h4>
-    <form class="form-control-sm border-top" method="GET">
-      {% csrf_token %}
-      {% include "base/searchs/person.html" %}
-    </form>
-    <br>
-    {% include 'person/persons.html' %}
-
+  <div class="text-right mb-2 mt-4">
+    <a class="btn btn-light text-info mt-2 mr-3"
+      href="{% url 'workgroup_detail' object.pk %}">
+      <i class="fas fa-chevron-left"></i> 
+      {% trans 'Back' %}
+    </a>
   </div>
-</article>
+
+  <article class="media content-section">
+    <div class="media-body">
+      <h4>{% trans 'Insert Membership' %}</h4>
+      <form class="form-control-sm border-top" method="GET">
+        {% csrf_token %}
+        {% include "base/searchs/person.html" %}
+      </form>
+      <br>
+
+      {% include 'workgroup/elements/person_list.html' %}
+
+    </div>
+  </article>
+  <br>
 {% endblock %}
