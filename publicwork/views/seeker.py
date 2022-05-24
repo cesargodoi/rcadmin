@@ -23,17 +23,32 @@ from ..models import Seeker
 @login_required
 @permission_required("publicwork.view_seeker")
 def seeker_home(request):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/seeker/elements/seeker_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/seeker/home.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_seeker(request, Seeker)
-        object_list = paginator(queryset, 20, page=page)
+        queryset = search_seeker(request, Seeker)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
-            item.click_link = reverse("seeker_detail", args=[item.pk])
+            item.to_detail = reverse("seeker_detail", args=[item.pk])
+            item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
@@ -43,7 +58,7 @@ def seeker_home(request):
         "user_center": str(request.user.person.center.pk),
         "nav": "sk_home",
     }
-    return render(request, "publicwork/seeker/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

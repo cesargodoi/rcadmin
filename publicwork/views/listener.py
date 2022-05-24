@@ -21,6 +21,18 @@ from ..models import Lecture, Seeker, Listener
 @login_required
 @permission_required("publicwork.add_listener")
 def add_listener(request, lect_pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/listener/elements/seeker_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/listener/add.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     lecture = Lecture.objects.get(pk=lect_pk)
 
@@ -55,13 +67,16 @@ def add_listener(request, lect_pk):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_seeker(request, Seeker)
-        object_list = paginator(queryset, page=page)
+        queryset = search_seeker(request, Seeker)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.add_link = reverse("add_listener", args=[lect_pk])
+            item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("add_listener", args=[lecture.pk]),
@@ -72,7 +87,7 @@ def add_listener(request, lect_pk):
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
     }
-    return render(request, "publicwork/listener/add.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

@@ -11,16 +11,17 @@
     <em>{{ obj.get_aspect_display }}</em>
     &nbsp;&nbsp;&nbsp;
     <em>{{ obj.local }}</em> 
-    &nbsp;&nbsp;&nbsp;
     {% if obj.user.profile.phone_1 %}
+      &nbsp;&nbsp;&nbsp;
       <i class="fas fa-phone"></i> 
       {{ obj.user.profile.phone_1 }}
     {% elif obj.user.profile.phone_2 %}
+      &nbsp;&nbsp;&nbsp;
       <i class="fas fa-phone"></i> 
       {{ obj.user.profile.phone_2 }}
     {% endif %}
-    &nbsp;&nbsp;&nbsp;
     {% if obj.user.email %}
+      &nbsp;&nbsp;&nbsp;
       <i class="fas fa-envelope"></i> 
       {{ obj.user.email }}
     {% endif %}

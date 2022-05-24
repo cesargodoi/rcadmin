@@ -137,7 +137,7 @@ def search_seeker(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("name_sa"), search["page"])
+    return obj.objects.filter(query).order_by("name_sa")
 
 
 #  lecture  ###################################################################
@@ -248,7 +248,6 @@ def get_date(request, dtx, days=0):
     date = (
         datetime.strptime(request.GET[dtx], "%Y-%m-%d")
         if request.GET.get(dtx)
-        # else timezone.now() - timedelta(days)
         else datetime.strptime(request.session["search"][dtx], "%Y-%m-%d")
     )
     return date.strftime("%Y-%m-%d")
