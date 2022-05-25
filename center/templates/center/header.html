@@ -1,32 +1,28 @@
 {% load i18n %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-10">
-          {{ object.get_center_type_display }}
-        </div>
-        <div class="col text-right">
-          {% if users %}
-          <span class="badge badge-pill badge-primary">{{ users }} {% trans 'pupils' %}</span>
-          {% endif %}
-        </div>
-      </div>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-10">
+      {{ object.get_center_type_display }}
     </div>
-    <h3>
-      {{ object.name }}
-      {% if object.center_type != 'CNF' and object.conf_center %}
-      &nbsp;&nbsp;
-      <small class="text-muted">
-        {% trans 'conference center'%}: {{ object.conf_center.name }}
-        ({{ object.conf_center.get_country_display }})
-      </small>
+    <div class="col text-right">
+      {% if users %}
+      <span class="badge badge-pill badge-primary">{{ users }} {% trans 'pupils' %}</span>
       {% endif %}
-      {% if not object.is_active %}
-      &nbsp;&nbsp;
-      <span class="badge badge-pill badge-danger"> {% trans 'inactive' %} </span>
-      {% endif %}
-    </h3>
+    </div>
   </div>
-</article>
+</div>
+<h3>
+  {{ object.name }}
+  {% if object.center_type != 'CNF' and object.conf_center %}
+  &nbsp;&nbsp;
+  <small class="text-muted">
+    {% trans 'conference center'%}: {{ object.conf_center.name }}
+    ({{ object.conf_center.get_country_display }})
+  </small>
+  {% endif %}
+  {% if not object.is_active %}
+  &nbsp;&nbsp;
+  <span class="badge badge-pill badge-danger"> {% trans 'inactive' %} </span>
+  {% endif %}
+</h3>

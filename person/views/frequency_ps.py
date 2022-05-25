@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 
 from event.models import Event
 from base.searchs import search_event
-from rcadmin.common import paginator, ACTIVITY_TYPES, clear_session
+from rcadmin.common import ACTIVITY_TYPES, clear_session
 
 from ..models import Person
 
@@ -14,23 +14,49 @@ from ..models import Person
 @login_required
 @permission_required("event.view_event")
 def frequency_ps_list(request, person_id):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "person/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "person/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     person = Person.objects.get(id=person_id)
     queryset = person.frequency_set.all().order_by("-event__date")
-    object_list = paginator(queryset, page=request.GET.get("page"))
+    object_list = queryset[_from:_to]
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "title": _("frequencies list"),
         "object": person,  # to header element,
         "nav": "detail",
         "tab": "frequencies",
     }
-    return render(request, "person/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("person.change_person")
 def frequency_ps_insert(request, person_id):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "person/elements/event_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "person/frequency_insert.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     person = Person.objects.get(id=person_id)
 
@@ -58,13 +84,15 @@ def frequency_ps_insert(request, person_id):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_event(request, Event)
-        object_list = paginator(queryset, page=page)
+        queryset, page_ = search_event(request, Event)
+        object_list = queryset[_from:_to]
         # add action links
         for member in object_list:
             member.add_link = reverse("frequency_ps_insert", args=[person_id])
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("insert frequencies"),
@@ -74,7 +102,7 @@ def frequency_ps_insert(request, person_id):
         ],
         "person_id": person_id,  # to goback
     }
-    return render(request, "person/frequency_insert.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

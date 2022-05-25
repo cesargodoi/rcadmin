@@ -5,11 +5,12 @@
 
 {% include "person/navbar.html" %}
 
-{% include "person/header.html" %}
-
 <article class="media content-section">
   <div class="media-body">
 
+    {% include "person/header.html" %}
+
+    <br>
     {% if tab == "info" %}
       <h4>{% trans 'Info' %}</h4>
       {% include "person/info.html" %}

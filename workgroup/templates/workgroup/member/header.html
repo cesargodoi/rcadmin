@@ -1,42 +1,38 @@
 {% load i18n %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-9">
-          {{ object.center }}
-          {% if object.aspect != "--" %}
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <em>{{ object.get_aspect_display }}</em>
-          {% endif %}
-        </div>
-        <div class="col-3 text-right">
-          {% if object.reg %}
-          <strong>{{ object.reg }}</strong>
-          {% endif %}
-          {% if not object.is_active %}
-          <span class="badge badge-pill badge-danger">{% trans 'inactive' %}</span>
-          {% endif %}
-        </div>
-      </div>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-9">
+      {{ object.center }}
+      {% if object.aspect != "--" %}
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <em>{{ object.get_aspect_display }}</em>
+      {% endif %}
     </div>
-    <div class="row">
-      <div class="col-10">
-        <h3>
-          {{ object.name }} &nbsp;&nbsp;
-          {% if object.user.profile.city and object.user.profile.state and object.user.profile.country %}
-          <small class="text-muted">
-            <em>{{ object.user.profile.city }} - {{ object.user.profile.state }} ({{ object.user.profile.country }})</em>
-          </small>
-          {% endif %}
-        </h3>
-      </div>
-      <div class="col-2 text-right">
-        {% if ranking %}
-        <h3>{{ ranking }} <i class="fas fa-star"></i></h3>
-        {% endif %}
-      </div>
+    <div class="col-3 text-right">
+      {% if object.reg %}
+      <strong>{{ object.reg }}</strong>
+      {% endif %}
+      {% if not object.is_active %}
+      <span class="badge badge-pill badge-danger">{% trans 'inactive' %}</span>
+      {% endif %}
     </div>
   </div>
-</article>
+</div>
+<div class="row">
+  <div class="col-10">
+    <h3>
+      {{ object.name }} &nbsp;&nbsp;
+      {% if object.user.profile.city and object.user.profile.state and object.user.profile.country %}
+      <small class="text-muted">
+        <em>{{ object.user.profile.city }} - {{ object.user.profile.state }} ({{ object.user.profile.country }})</em>
+      </small>
+      {% endif %}
+    </h3>
+  </div>
+  <div class="col-2 text-right">
+    {% if ranking %}
+    <h3>{{ ranking }} <i class="fas fa-star"></i></h3>
+    {% endif %}
+  </div>
+</div>

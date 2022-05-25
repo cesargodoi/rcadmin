@@ -37,7 +37,8 @@
   <strong>{{ obj.get_status_display }}</strong> 
   {% if obj.add_link %}
     {% if obj.pk in pre_listeners %}
-      &nbsp;&nbsp;&nbsp;<i class="fas fa-user-check mr-1"></i>
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-user-check mr-1"></i>
     {% else %}
       <a type="button" 
         href="{{ obj.add_link }}?seek_pk={{ obj.pk }}"
@@ -47,7 +48,8 @@
     {% endif %}
   {% elif obj.add_in_group %}
     {% if obj.publicworkgroup_set.count %}
-      &nbsp;&nbsp;&nbsp;<i class="fas fa-user-check mr-1"></i>
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-user-check mr-1"></i>
     {% else %}
       <a type="button" 
         href="{{ obj.add_in_group }}?seek_pk={{ obj.pk }}"

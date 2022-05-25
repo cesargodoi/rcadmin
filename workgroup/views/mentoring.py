@@ -46,6 +46,18 @@ def mentoring_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_group_detail(request, pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/mentoring/elements/person_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/mentoring/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     if request.session.get("frequencies"):
         del request.session["frequencies"]
 
@@ -57,14 +69,21 @@ def mentoring_group_detail(request, pk):
     ]
     members = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")]
 
-    object_list = paginator(members, 25, request.GET.get("page"))
+    object_list = members[_from:_to]
     # add action links
-    for member in object_list:
-        member.click_link = reverse(
-            "mentoring_member_detail", args=[pk, member.person.pk]
+    for item in object_list:
+        item.click_link = reverse(
+            "mentoring_member_detail", args=[pk, item.person.pk]
+        )
+        item.local = "{} ({}-{})".format(
+            item.person.user.profile.city,
+            item.person.user.profile.state,
+            item.person.user.profile.country,
         )
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": workgroup,
         "object_list": object_list,
         "mentors": mentors,
@@ -73,7 +92,7 @@ def mentoring_group_detail(request, pk):
         "tab": "members",
         "goback": reverse("mentoring_home"),
     }
-    return render(request, "workgroup/mentoring/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -133,21 +152,34 @@ def mentoring_member_detail(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_frequencies(request, group_pk, person_pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/member/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/member/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     obj = Person.objects.get(pk=person_pk)
-    page = request.GET["page"] if request.GET.get("page") else 1
-    object_list = obj.frequency_set.all().order_by("-event__date")
+    object_list = obj.frequency_set.all().order_by("-event__date")[_from:_to]
     ranking = sum([f.ranking for f in object_list])
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": obj,
         "title": _("member detail | frequencies"),
-        "object_list": paginator(object_list, page=page),
+        "object_list": object_list,
         "nav": "detail",
         "tab": "frequencies",
         "ranking": ranking,
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/member/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -171,6 +203,18 @@ def mentoring_member_historic(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def membership_add_frequency(request, group_pk, person_pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/member/elements/event_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/member/add_frequency.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     person = Person.objects.get(pk=person_pk)
 
@@ -205,8 +249,8 @@ def membership_add_frequency(request, group_pk, person_pk):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_event(request, Event)
-        object_list = paginator(queryset, page=page)
+        queryset, page_ = search_event(request, Event)
+        object_list = queryset[_from:_to]
         # add action links
         for member in object_list:
             member.add_link = reverse(
@@ -214,6 +258,8 @@ def membership_add_frequency(request, group_pk, person_pk):
             )
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": person,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
@@ -222,7 +268,7 @@ def membership_add_frequency(request, group_pk, person_pk):
         "pre_freqs": [obj.event.pk for obj in person.frequency_set.all()],
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/member/add_frequency.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -280,6 +326,18 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_add_frequencies(request, group_pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/mentoring/elements/event_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/mentoring/add_frequencies.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     workgroup = Workgroup.objects.get(pk=group_pk)
 
     if request.GET.get("event_pk"):
@@ -317,8 +375,8 @@ def mentoring_add_frequencies(request, group_pk):
         clear_session(request, ["search"])
         object_list = None
     else:
-        queryset, page = search_event(request, Event)
-        object_list = paginator(queryset, page=page)
+        queryset, page_ = search_event(request, Event)
+        object_list = queryset[_from:_to]
 
     mentors = [
         mtr.person.short_name
@@ -327,9 +385,11 @@ def mentoring_add_frequencies(request, group_pk):
     ]
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
+        "object_list": object_list,
         "object": workgroup,
         "mentors": mentors,
-        "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_detail", args=[group_pk]),
         "title": _("workgroup add members"),
@@ -338,7 +398,7 @@ def mentoring_add_frequencies(request, group_pk):
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/mentoring/add_frequencies.html", context)
+    return render(request, template_name, context)
 
 
 # handlers

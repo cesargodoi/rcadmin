@@ -1,0 +1,37 @@
+{% load base_extras %}
+{% load i18n %}
+
+<div class="col-sm-1">
+  <small>{{ obj.event.date|date:'d/m/y' }}</small>
+</div>
+<div class="col-sm-3">
+  {{ obj.event.activity.name }}
+</div>
+<div class="col-sm-1 small">
+  <strong>{{ obj.event.activity.get_activity_type_display }}</strong>
+</div>
+<div class="col-sm-2 small">
+  {{ obj.event.center }}
+</div>
+<div class="col-sm-3 small">
+  {% if obj.observations %}
+    {{ obj.observations }}
+  {% endif%}
+</div>
+<div class="col-sm-2 text-right">
+  {% if obj.ranking > 0 %}
+    {{ obj.ranking }}
+    <i class="fas fa-star"></i>
+  {% endif %}
+  &nbsp;&nbsp;
+  <a type="button" 
+    href="{% url 'membership_update_frequency' group_pk object.pk obj.pk %}"
+    class="btn btn-light text-warning btn-sm">
+    <i class="fas fa-edit"></i>
+  </a>
+  <a type="button" 
+    href="{% url 'membership_remove_frequency' group_pk object.pk obj.pk %}"
+    class="btn btn-light text-danger btn-sm">
+    <i class="fas fa-trash-alt text-danger"></i>
+  </a>
+</div>

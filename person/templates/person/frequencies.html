@@ -2,42 +2,7 @@
 
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for obj in object_list %}
-    <div class="row border-top border-secondary pb-2 pt-2">
-
-      <div class="col-sm-2">
-        <strong>{{ obj.event.date | date:"d/m/Y" }}</strong>
-      </div>
-
-      <div class="col-sm-5">
-        <strong>{{ obj.event.activity }}</strong>
-        <small class="text-muted">
-          {{ obj.event.center }}
-        </small>
-      </div>
-
-      <div class="col-sm-3 small align-middle">
-        {{ obj.get_aspect_display }}
-      </div>
-
-      <div class="col-sm text-right">
-        <a type="button" 
-          class="btn btn-light text-danger btn-sm"
-          href="{% url 'frequency_ps_delete' object.id obj.event.id %}">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      </div>
-      
-    </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
+  {% include "person/elements/frequency_list.html" %}
 
 {% else %}
 

@@ -1,0 +1,26 @@
+{% load base_extras %}
+{% load i18n %}
+
+<div class="col-sm-1">
+  <strong>{{ obj.person.reg }}</strong>
+</div>
+
+<div class="col-sm-4">
+  <strong>{{ obj.person.name }}</strong>
+</div>
+
+<div class="col-sm-2 small">
+  {{ obj.person.center }}
+</div>
+
+<div class="col-sm-2 align-middle">
+  <em>{{ obj.get_aspect_display }}</em>
+</div>
+
+<div class="col-sm text-right">
+  <a type="button" 
+    href="{% url 'frequency_delete' object.pk obj.person.pk %}"
+    class="btn btn-light text-danger btn-sm">
+    <i class="fas fa-trash-alt"></i>
+  </a>
+</div>

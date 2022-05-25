@@ -1,0 +1,17 @@
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == 10 %}
+    <div 
+      hx-get="{% url 'mentoring_group_detail' object.pk %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+      class="row border-top border-secondary pb-2 pt-2"
+    >
+  {% else %}
+    <div class="row border-top border-secondary pb-2 pt-2">
+  {% endif %}
+
+  {% include "workgroup/mentoring/elements/person_list_item.html" %}
+
+  </div>
+{% endfor %}
