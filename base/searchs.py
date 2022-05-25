@@ -23,7 +23,7 @@ def search_center(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("name"), search["page"])
+    return obj.objects.filter(query).order_by("name")
 
 
 #  person  ####################################################################

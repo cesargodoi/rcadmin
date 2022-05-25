@@ -7,8 +7,11 @@
     &nbsp;&nbsp;
     {{ obj.name }}
   </strong>
-  <em class="small">
-    &nbsp;&nbsp;&nbsp;{{ obj.local }} | {{ obj.center }}
+  <small>
+    <em>
+      &nbsp;&nbsp;&nbsp;
+      <i class="fa-solid fa-location-dot"></i> {{ obj.local }} | {{ obj.center }}
+    </em>
     {% if obj.phone %}
       &nbsp;&nbsp;&nbsp;
       <i class="fas fa-phone"></i> 
@@ -19,15 +22,15 @@
       <i class="fas fa-envelope"></i> 
       {{ obj.email }}
     {% endif %}
-  </em>
-  {% if obj.center != request.user.person.center %}
-    &nbsp;&nbsp;&nbsp;
-    <span class="badge badge-pill badge-secondary">{% trans 'only view' %}</span>
-  {% endif %}
-  {% if not obj.is_active and obj.status != 'ITD' %}
-    &nbsp;&nbsp;&nbsp;
-    <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
-  {% endif %}
+    {% if obj.center != request.user.person.center %}
+      &nbsp;&nbsp;&nbsp;
+      <span class="badge badge-pill badge-secondary">{% trans 'only view' %}</span>
+    {% endif %}
+    {% if not obj.is_active and obj.status != 'ITD' %}
+      &nbsp;&nbsp;&nbsp;
+      <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
+    {% endif %}
+  </small>
 </div>
 
 <div class="col-sm-2 small text-right">

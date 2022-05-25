@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
-from rcadmin.common import paginator, clear_session
+from rcadmin.common import clear_session
 from base.searchs import search_center
 from django.http.response import Http404
 from person.models import Person
@@ -15,23 +15,37 @@ from .models import Center
 @login_required
 @permission_required("center.view_center")
 def center_home(request):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "center/elements/center_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "center/home.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_center(request, Center)
-        object_list = paginator(queryset, page=page)
+        queryset = search_center(request, Center)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.click_link = reverse("center_detail", args=[item.pk])
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("center home"),
         "nav": "home",
     }
-    return render(request, "center/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
