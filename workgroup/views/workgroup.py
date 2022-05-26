@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import WORKGROUP_TYPES, paginator, clear_session
+from rcadmin.common import WORKGROUP_TYPES, clear_session
 from base.searchs import search_workgroup
 
 from ..forms import WorkgroupForm
@@ -89,6 +89,7 @@ def workgroup_detail(request, pk):
 @login_required
 @permission_required("workgroup.add_workgroup")
 def workgroup_create(request):
+    template_name = "base/form.html"
     if request.method == "POST":
         form = WorkgroupForm(request.POST)
         if form.is_valid():
@@ -104,12 +105,13 @@ def workgroup_create(request):
         "title": _("create workgroup"),
         "to_create": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("workgroup.change_workgroup")
 def workgroup_update(request, pk):
+    template_name = "base/form.html"
     workgroup = Workgroup.objects.get(pk=pk)
     if request.method == "POST":
         form = WorkgroupForm(request.POST, instance=workgroup)
@@ -129,12 +131,13 @@ def workgroup_update(request, pk):
         "title": _("update workgroup"),
         "pk": pk,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("workgroup.delete_workgroup")
 def workgroup_delete(request, pk):
+    template_name = "workgroup/elements/confirm_to_delete_workgroup.html"
     workgroup = Workgroup.objects.get(pk=pk)
     if request.method == "POST":
         if workgroup.members:
@@ -150,6 +153,4 @@ def workgroup_delete(request, pk):
         ],
         "title": _("confirm to delete"),
     }
-    return render(
-        request, "workgroup/elements/confirm_to_delete_workgroup.html", context
-    )
+    return render(request, template_name, context)

@@ -164,7 +164,7 @@ def search_lecture(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("-date"), search["page"])
+    return obj.objects.filter(query).order_by("-date")
 
 
 #  pw group  ##################################################################

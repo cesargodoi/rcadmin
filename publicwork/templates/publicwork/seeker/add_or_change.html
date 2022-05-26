@@ -5,11 +5,11 @@
 
 <div class="text-right mb-2 mt-4">
   {% if tab == "historic" %}
-  <a class="btn btn-{% if add %}primary{% else %}warning{% endif %} mt-2" href="#"
-    onclick="document.getElementById('form').submit();">
-    <i class="fas fa-check"></i>
-    {% if add %} {% trans 'Add' %} {% else %} {% trans 'Update' %} {% endif %}
-  </a>
+    <a class="btn btn-{% if add %}primary{% else %}warning{% endif %} mt-2" href="#"
+      onclick="document.getElementById('form').submit();">
+      <i class="fas fa-check"></i>
+      {% if add %} {% trans 'Add' %} {% else %} {% trans 'Update' %} {% endif %}
+    </a>
   {% endif %}
 
   <a class="btn btn-light text-info mt-2 mr-3"
@@ -23,9 +23,9 @@
   <div class="media-body">
 
     {% if tab == "frequencies" %}
-    {% include "publicwork/seeker/add_frequency.html" %}
+      {% include "publicwork/seeker/add_frequency.html" %}
     {% elif tab == "historic" %}
-    {% include "publicwork/seeker/create_historic.html" %}
+      {% include "publicwork/seeker/create_historic.html" %}
     {% endif %}
     
   </div>

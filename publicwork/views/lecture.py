@@ -16,24 +16,38 @@ from ..models import Lecture
 @login_required
 @permission_required("publicwork.view_lecture")
 def lecture_home(request):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/lecture/elements/lecture_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/lecture/home.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_lecture(request, Lecture)
-        object_list = paginator(queryset, page=page)
+        queryset = search_lecture(request, Lecture)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.click_link = reverse("lecture_detail", args=[item.pk])
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("lecture home"),
         "type_list": LECTURE_TYPES,
         "nav": "lc_home",
     }
-    return render(request, "publicwork/lecture/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

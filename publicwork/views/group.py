@@ -264,6 +264,18 @@ def get_frequencies(ids):
 @login_required
 @permission_required("publicwork.add_listener")
 def group_add_frequencies(request, pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/groups/elements/lecture_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -296,8 +308,8 @@ def group_add_frequencies(request, pk):
                 Listener.objects.create(**new_freq)
         return redirect("group_detail", pk=pk)
 
-    queryset, page = search_lecture(request, Lecture)
-    object_list = paginator(queryset, page=page)
+    queryset = search_lecture(request, Lecture)
+    object_list = queryset[_from:_to]
     # add action links
     for item in object_list:
         item.add_freqs_link = (
@@ -305,6 +317,8 @@ def group_add_frequencies(request, pk):
         )
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": pw_group,
         "object_list": object_list,
         "title": _("add frequencies"),
@@ -313,7 +327,7 @@ def group_add_frequencies(request, pk):
         "type_list": LECTURE_TYPES,
         "pk": pk,
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 # add member

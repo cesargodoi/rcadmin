@@ -132,6 +132,18 @@ def remove_listener(request, lect_pk, lstn_pk):
 @login_required
 @permission_required("publicwork.add_listener")
 def add_frequency(request, pk):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/listener/elements/lecture_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/seeker/add_or_change.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     seeker = Seeker.objects.get(pk=pk)
 
@@ -166,13 +178,15 @@ def add_frequency(request, pk):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_lecture(request, Lecture)
-        object_list = paginator(queryset, page=page)
+        queryset = search_lecture(request, Lecture)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.add_link = reverse("add_frequency", args=[pk])
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object": seeker,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
@@ -184,7 +198,7 @@ def add_frequency(request, pk):
         "add": True,
         "goback": reverse("seeker_frequencies", args=[pk]),
     }
-    return render(request, "publicwork/seeker/add_or_change.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
