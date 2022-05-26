@@ -1,22 +1,21 @@
 {% load base_extras %}
 {% load i18n %}
 
-<div class="col-sm-2">
-  <strong>{{ obj.event.date | date:"d/m/Y" }}</strong>
+<div class="col-sm-1">
+  <strong>{{ obj.event.date|date:"d/m/y" }}</strong>
 </div>
 
-<div class="col-sm-5">
+<div class="col-sm-9">
   <strong>{{ obj.event.activity }}</strong>
-  <small class="text-muted">
+  <small>
+    &nbsp;&nbsp;&nbsp;
     {{ obj.event.center }}
+    &nbsp;&nbsp;&nbsp;
+    <em>({{ obj.get_aspect_display }})</em>
   </small>
 </div>
 
-<div class="col-sm-3 small align-middle">
-  {{ obj.get_aspect_display }}
-</div>
-
-<div class="col-sm text-right">
+<div class="col-sm-2 text-right">
   <a type="button" 
     class="btn btn-light text-danger btn-sm"
     href="{% url 'frequency_ps_delete' object.id obj.event.id %}">

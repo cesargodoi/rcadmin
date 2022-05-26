@@ -1,34 +1,30 @@
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-10">
-          {{ object.center }}
-        </div>
-        <div class="col text-right">
-          <strong>{{ object.get_workgroup_type_display }}</strong>
-        </div>
-      </div>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-10">
+      {{ object.center }}
     </div>
-    <div class="row">
-      <div class="col-10">
-        <h4>
-          {{ object.name }} 
-          {% if object.aspect != '--' %}
-          &nbsp;&nbsp;
-          <small class="text-muted">{{ object.get_aspect_display }}</small>
-          {% endif %}
-        </h4>
-      </div>
-      <div class="col text-right">
-        {% if object.members.all|length > 0 %}
-          <strong>{{ object.members.all|length }}</strong> 
-          <i class="fas fa-users"></i>  
-        {% endif %}
-      </div>
+    <div class="col text-right">
+      <strong>{{ object.get_workgroup_type_display }}</strong>
     </div>
-    {% if object.description %}
-    <p><small class="text-muted">{{ object.description }}</small></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-10">
+    <h4>
+      {{ object.name }} 
+      {% if object.aspect != '--' %}
+      &nbsp;&nbsp;
+      <small class="text-muted">{{ object.get_aspect_display }}</small>
+      {% endif %}
+    </h4>
+  </div>
+  <div class="col text-right">
+    {% if object.members.all|length > 0 %}
+      <strong>{{ object.members.all|length }}</strong> 
+      <i class="fas fa-users"></i>  
     {% endif %}
   </div>
-</article>
+</div>
+{% if object.description %}
+<p><small class="text-muted">{{ object.description }}</small></p>
+{% endif %}

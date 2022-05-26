@@ -84,7 +84,7 @@ def frequency_ps_insert(request, person_id):
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page_ = search_event(request, Event)
+        queryset = search_event(request, Event)
         object_list = queryset[_from:_to]
         # add action links
         for member in object_list:

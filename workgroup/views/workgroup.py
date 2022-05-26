@@ -14,17 +14,31 @@ from ..models import Workgroup
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_home(request):
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/elements/workgroup_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/home.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
+
     object_list = None
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
-        queryset, page = search_workgroup(request, Workgroup)
-        object_list = paginator(queryset, page=page)
+        queryset = search_workgroup(request, Workgroup)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.click_link = reverse("workgroup_detail", args=[item.pk])
 
     context = {
+        "page": page,
+        "counter": (page - 1) * 10,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("workgroup_home"),
@@ -32,29 +46,44 @@ def workgroup_home(request):
         "workgroup_types": WORKGROUP_TYPES,
         "nav": "home",
     }
-    return render(request, "workgroup/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_detail(request, pk):
-    obj = Workgroup.objects.get(pk=pk)
+    # get page
+    regs = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/member/elements/member_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = regs * (page - 1), regs * page
 
-    queryset = obj.membership_set.all().order_by("person__name_sa")
+    object = Workgroup.objects.get(pk=pk)
 
-    object_list = paginator(queryset, 25, request.GET.get("page"))
+    queryset = object.membership_set.all().order_by("person__name_sa")
+
+    object_list = queryset[_from:_to]
+
     # add action links
     for member in object_list:
         member.click_link = reverse("membership_update", args=[pk, member.pk])
         member.del_link = reverse("membership_delete", args=[pk, member.pk])
 
     context = {
-        "object": obj,
+        "page": page,
+        "counter": (page - 1) * 10,
+        "object": object,
         "object_list": object_list,
         "title": _("workgroup detail"),
         "nav": "detail",
     }
-    return render(request, "workgroup/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

@@ -5,19 +5,17 @@
   <strong>{{ obj.person.reg }}</strong>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-9">
   <strong>{{ obj.person.name }}</strong>
+  <small>
+    &nbsp;&nbsp;&nbsp;
+    <em>{{ obj.get_aspect_display }}</em>
+    &nbsp;&nbsp;&nbsp;
+    {{ obj.person.center }}
+  </small>
 </div>
 
-<div class="col-sm-2 small">
-  {{ obj.person.center }}
-</div>
-
-<div class="col-sm-2 align-middle">
-  <em>{{ obj.get_aspect_display }}</em>
-</div>
-
-<div class="col-sm text-right">
+<div class="col-sm-2 text-right">
   <a type="button" 
     href="{% url 'frequency_delete' object.pk obj.person.pk %}"
     class="btn btn-light text-danger btn-sm">

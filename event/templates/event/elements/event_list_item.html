@@ -1,13 +1,11 @@
 {% load base_extras %}
 {% load i18n %}
 
-<div class="col-sm-2">
-  {{ forloop.counter|add:counter }}
-  &nbsp;&nbsp;
-  {{ obj.date|date:'d/m/y' }}
+<div class="col-sm-1">
+  <strong>{{ obj.date|date:'d/m/y' }}</strong>
 </div>
 
-<div class="col-sm-7">
+<div class="col-sm-8">
   <strong>{{ obj.activity.name }}</strong>
   &nbsp;&nbsp;&nbsp;
   <em class="small">{{ obj.center }}</em>
@@ -22,8 +20,7 @@
     <a type="button" 
       href="{% url 'mentoring_add_frequencies' group_pk %}?event_pk={{ obj.pk }}"
       class="btn btn-light text-primary btn-sm">
-      <i class="fas fa-check"></i>
-      {% trans 'Select' %}
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
     </a>
   {% elif not nav == "home" and obj.is_active %}
     {% if obj.pk not in pre_freqs %}

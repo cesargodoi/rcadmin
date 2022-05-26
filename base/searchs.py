@@ -79,7 +79,7 @@ def search_event(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("-date"), search["page"])
+    return obj.objects.filter(query).order_by("-date")
 
 
 #  workgroups  ################################################################
@@ -104,7 +104,7 @@ def search_workgroup(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("name"), search["page"])
+    return obj.objects.filter(query).order_by("name")
 
 
 #  seeker  ####################################################################

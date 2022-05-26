@@ -4,51 +4,7 @@
 
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.person.is_active %}danger{% elif obj.person.center != request.user.person.center %}warning{% endif %}"
-    {% if obj.click_link %}
-      {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
-        onclick="location.href='{{ obj.click_link }}';"
-        style="cursor: pointer;"
-      {% endif %}
-    {% endif %}>
-
-    <div class="col-sm-5">
-      <strong>{{ obj.person.short_name }}</strong>
-      &nbsp;&nbsp;
-      <small>{{ obj.person.center }}</small>
-    </div>
-
-    <div class="col-sm-3 align-middle">
-      {{ obj.person.get_aspect_display }}
-      &nbsp;&nbsp;
-      <small>{% trans 'since' %}: <strong>{{ obj.person.aspect_date|date:"d/m/y" }}</strong></small>
-    </div>
-
-    <div class="col-sm-2 align-middle">
-      <strong>{{ obj.get_role_type_display }}</strong>
-    </div>
-
-    <div class="col-sm text-right">
-      {% if obj.del_link %}
-        <a type="button" 
-          href="{{ obj.del_link }}"
-          class="btn btn-light text-danger btn-sm">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      {% endif %}
-    </div>
-
-  </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
+  {% include "workgroup/member/elements/member_list.html" %}
 
 {% else %}
 

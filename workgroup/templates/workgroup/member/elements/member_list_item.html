@@ -1,0 +1,39 @@
+{% load i18n %}
+<div class="col-sm-5">
+  <strong>
+    {{ forloop.counter|add:counter }}
+    &nbsp;&nbsp;
+    {{ obj.person.short_name }}
+  </strong>
+  &nbsp;&nbsp;
+  <small>{{ obj.person.center }}</small>
+</div>
+
+<div class="col-sm-3 align-middle">
+  {{ obj.person.get_aspect_display }}
+  &nbsp;&nbsp;
+  <small>{% trans 'since' %}: <strong>{{ obj.person.aspect_date|date:"d/m/y" }}</strong></small>
+</div>
+
+<div class="col-sm-2 align-middle">
+  <strong>{{ obj.get_role_type_display }}</strong>
+</div>
+
+<div class="col-sm text-right">
+  {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
+    {% if obj.click_link %}
+      <a type="button" 
+         href="{{ obj.click_link }}"
+         class="btn btn-light text-warning btn-sm">
+        <i class="fas fa-edit"></i>
+      </a>
+    {% endif %}
+    {% if obj.del_link %}
+      <a type="button" 
+         href="{{ obj.del_link }}"
+         class="btn btn-light text-danger btn-sm">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    {% endif %}
+  {% endif %}
+</div>
