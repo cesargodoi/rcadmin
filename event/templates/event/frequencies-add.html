@@ -35,7 +35,21 @@
         <code>432, 345, 165, 675, 1276, 1021</code>
       </small>
     </div>
-
+    {% if unknown %}
+      <div class="alert alert-danger">
+        <h5 class="border-bottom font-title">{% trans 'Unknown records' %}!</h5>
+        {% for item in unknown %}
+          {{ item }},
+        {% endfor %}
+        <div class="d-flex flex-row-reverse">
+          <a class="btn btn-danger mt-2"
+            href="{% url 'event_detail' object.pk %}">
+            <i class="fa-solid fa-xmark"></i> 
+            {% trans 'Ignore' %}
+          </a>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </article>
 
