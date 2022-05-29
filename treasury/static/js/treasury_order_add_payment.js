@@ -1,4 +1,4 @@
-modal = document.getElementById('userOrderModal');
+modal = document.getElementById('orderModal');
 divIdEvent = document.getElementById('div_id_event');
 idEvent = document.getElementById('id_event');
 idPaytype = document.getElementById("id_paytype");

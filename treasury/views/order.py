@@ -2,8 +2,8 @@ from datetime import datetime
 
 from django import forms
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import redirect, render, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -26,9 +26,11 @@ from ..models import BankFlags, Order, PayTypes
 @login_required
 @permission_required("treasury.view_order")
 def orders(request):
+    template_name = "treasury/order/home.html"
     object_list = None
     if request.session.get("order"):
-        del request.session["order"]
+        clear_session(request, ["order"])
+        # del request.session["order"]
     if request.GET.get("init"):
         clear_session(request, ["search"])
     else:
@@ -42,7 +44,12 @@ def orders(request):
         "title": _("Orders"),
         "nav": "order",
     }
-    return render(request, "treasury/order/home.html", context)
+    return render(request, template_name, context)
+
+
+def to_clear_session(request):
+    clear_session(request, ["order"])
+    return HttpResponse("")
 
 
 @login_required
@@ -77,20 +84,39 @@ def order_create(request):
     return render(request, "treasury/order/create.html", context)
 
 
-def order_search_person(request):
-    if request.is_ajax():
-        term = request.GET.get("term")
-        persons = Person.objects.filter(
-            name__icontains=term, center=request.user.person.center
-        )[:20]
-        results = [person.name for person in persons]
-        return JsonResponse(results, safe=False)
+@require_http_methods(["GET"])
+def search_person_by_name(request):
+    template_name = "treasury/order/elements/search_results.html"
+    results = (
+        Person.objects.filter(
+            name__icontains=request.GET.get("term"),
+            center=request.user.person.center,
+        )[:10]
+        if request.GET.get("term")
+        else None
+    )
 
-    return render(request, "treasury/order/create.html")
+    context = {"results": results}
+    return render(request, template_name, context)
 
 
+@require_http_methods(["GET"])
+def order_add_person(request):
+    _name = request.GET.get("name")
+    _id = request.GET.get("id")
+    request.session["order"]["person"] = {"name": _name, "id": _id}
+    request.session.modified = True
+    return HttpResponse(_name)
+
+
+@login_required
+@permission_required("treasury.add_order")
 def order_add_payment(request):
+    template_name = "treasury/order/elements/payment_add.html"
+
     if request.method == "POST":
+        template_name = "treasury/order/elements/payment.html"
+
         _ids = (
             [int(i["id"]) for i in request.session["order"]["payments"]]
             if request.session["order"]["payments"]
@@ -142,7 +168,9 @@ def order_add_payment(request):
 
         request.session["order"]["payments"].append(new)
         request.session.modified = True
-        return redirect("order_create")
+
+        context = {"object": new}
+        return render(request, template_name, context)
 
     # change queryset for person field and set current person as initial
     persons = Person.objects.filter(center=request.user.person.center)
@@ -162,36 +190,40 @@ def order_add_payment(request):
     PaymentForm.base_fields["event"] = forms.ModelChoiceField(queryset=events)
 
     context = {
+        "title": _("Create Order"),
         "form": PaymentForm(
             initial={
                 "person": current_person,
                 "ref_month": timezone.now().date(),
             }
         ),
-        "title": _("Create Order"),
+        "hx_post": reverse("order_add_payment"),
+        "hx_target": "#payments",
+        "hx_swap": "beforeend",
     }
-    return render(request, "treasury/order/add_payment.html", context)
+    return render(request, template_name, context)
 
 
+@require_http_methods(["DELETE"])
 def order_del_payment(request, pay_id):
-    if request.method == "POST":
-        for payment in request.session["order"]["payments"]:
-            if payment["id"] == pay_id:
-                request.session["order"]["total_payments"] -= float(
-                    payment["value"]
-                )
-                request.session["order"]["missing"] -= float(payment["value"])
-                request.session["order"]["payments"].remove(payment)
-                break
-        request.session.modified = True
-        return redirect("order_create")
+    template_name = "treasury/order/elements/payments.html"
+    for payment in request.session["order"]["payments"]:
+        if payment["id"] == pay_id:
+            request.session["order"]["total_payments"] -= float(
+                payment["value"]
+            )
+            request.session["order"]["missing"] -= float(payment["value"])
+            request.session["order"]["payments"].remove(payment)
+            break
+    request.session.modified = True
 
-    context = {"title": _("confirm delete")}
-    return render(request, "treasury/order/confirm_del.html", context)
+    return render(request, template_name)
 
 
 def order_add_payform(request):
+    template_name = "treasury/order/elements/payform_add.html"
     if request.method == "POST":
+        template_name = "treasury/order/elements/payform.html"
         _ids = (
             [int(i["id"]) for i in request.session["order"]["payforms"]]
             if request.session["order"]["payments"]
@@ -233,97 +265,99 @@ def order_add_payform(request):
 
         request.session["order"]["payforms"].append(new)
         request.session.modified = True
-        return redirect("order_create")
+
+        context = {"object": new}
+        return render(request, template_name, context)
 
     context = {
         "form": FormOfPaymentForm(
             initial={"value": request.session["order"]["missing"]}
         ),
         "title": _("Add Form of Payment"),
+        "hx_post": reverse("order_add_payform"),
+        "hx_target": "#payforms",
+        "hx_swap": "beforeend",
     }
-    return render(request, "treasury/order/add_payform.html", context)
+    return render(request, template_name, context)
 
 
+@require_http_methods(["DELETE"])
 def order_del_payform(request, pay_id):
-    if request.method == "POST":
-        for payform in request.session["order"]["payforms"]:
-            if payform["id"] == pay_id:
-                request.session["order"]["total_payforms"] -= float(
-                    payform["value"]
-                )
-                request.session["order"]["missing"] += float(payform["value"])
-                request.session["order"]["payforms"].remove(payform)
-                break
-        request.session.modified = True
-        return redirect("order_create")
-
-    context = {"title": _("confirm delete")}
-    return render(request, "treasury/order/confirm_del.html", context)
-
-
-def order_register(request):
-    if request.method == "POST":
-        # get payer
-        payer = Person.objects.get(id=request.session["order"]["person"]["id"])
-
-        # create or update order
-        if request.session["order"].get("id"):
-            order = Order.objects.get(id=request.session["order"]["id"])
-            order.payments.all().delete()
-            order.form_of_payments.all().delete()
-            order.amount = request.session["order"]["total_payments"]
-            order.status = request.session["order"]["status"]
-            order.description = request.session["order"]["description"]
-            order.save()
-        else:
-            order = Order.objects.create(
-                center=request.user.person.center,
-                person=payer,
-                amount=request.session["order"]["total_payments"],
-                status=request.session["order"]["status"],
-                description=request.session["order"]["description"],
+    template_name = "treasury/order/elements/payforms.html"
+    for payform in request.session["order"]["payforms"]:
+        if payform["id"] == pay_id:
+            request.session["order"]["total_payforms"] -= float(
+                payform["value"]
             )
-
-        # get payments
-        for pay in request.session["order"]["payments"]:
-            payment = {
-                "paytype": PayTypes.objects.get(id=pay["paytype"]["id"]),
-                "person": Person.objects.get(id=pay["person"]["id"]),
-                "ref_month": pay["ref_month"]["ref"],
-                "event": Event.objects.get(id=pay["event"]["id"])
-                if pay["event"]
-                else None,
-                "value": pay["value"],
-                "obs": pay["obs"],
-            }
-            order.payments.create(**payment)
-
-        # get payforms
-        for pf in request.session["order"]["payforms"]:
-            payform = {
-                "payform_type": pf["payform_type"][0],
-                "bank_flag": BankFlags.objects.get(id=pf["bank_flag"]["id"])
-                if pf["bank_flag"]
-                else None,
-                "ctrl_number": pf["ctrl_number"],
-                "complement": pf["complement"],
-                "value": pf["value"],
-            }
-            order.form_of_payments.create(**payform)
-
-        return redirect("orders")
-
-    request.session["order"]["description"] = request.GET.get("description")
-    request.session["order"]["status"] = request.GET.get("status")
+            request.session["order"]["missing"] += float(payform["value"])
+            request.session["order"]["payforms"].remove(payform)
+            break
     request.session.modified = True
 
-    context = {"title": _("confirm register")}
-    return render(request, "treasury/order/confirm_register.html", context)
+    return render(request, template_name)
+
+
+@require_http_methods(["POST"])
+def order_register(request):
+    request.session["order"]["description"] = request.POST.get("description")
+    request.session["order"]["status"] = request.POST.get("status")
+    request.session.modified = True
+
+    # get payer
+    payer = Person.objects.get(id=request.session["order"]["person"]["id"])
+
+    # create or update order
+    if request.session["order"].get("id"):
+        order = Order.objects.get(id=request.session["order"]["id"])
+        order.payments.all().delete()
+        order.form_of_payments.all().delete()
+        order.amount = request.session["order"]["total_payments"]
+        order.status = request.session["order"]["status"]
+        order.description = request.session["order"]["description"]
+        order.save()
+    else:
+        order = Order.objects.create(
+            center=request.user.person.center,
+            person=payer,
+            amount=request.session["order"]["total_payments"],
+            status=request.session["order"]["status"],
+            description=request.session["order"]["description"],
+        )
+
+    # get payments
+    for pay in request.session["order"]["payments"]:
+        payment = {
+            "paytype": PayTypes.objects.get(id=pay["paytype"]["id"]),
+            "person": Person.objects.get(id=pay["person"]["id"]),
+            "ref_month": pay["ref_month"]["ref"],
+            "event": Event.objects.get(id=pay["event"]["id"])
+            if pay["event"]
+            else None,
+            "value": pay["value"],
+            "obs": pay["obs"],
+        }
+        order.payments.create(**payment)
+
+    # get payforms
+    for pf in request.session["order"]["payforms"]:
+        payform = {
+            "payform_type": pf["payform_type"][0],
+            "bank_flag": BankFlags.objects.get(id=pf["bank_flag"]["id"])
+            if pf["bank_flag"]
+            else None,
+            "ctrl_number": pf["ctrl_number"],
+            "complement": pf["complement"],
+            "value": pf["value"],
+        }
+        order.form_of_payments.create(**payform)
+
+    return redirect("orders")
 
 
 @login_required
 @permission_required("treasury.view_order")
 def order_detail(request, id):
+    template_name = "treasury/order/detail.html"
     order = Order.objects.get(id=id)
     _status = [o for o in ORDER_STATUS if o[0] == order.status]
     request.session["order"] = {
@@ -404,7 +438,7 @@ def order_detail(request, id):
         ),
         "goback": reverse("orders"),
     }
-    return render(request, "treasury/order/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

@@ -1,0 +1,39 @@
+{% load i18n %}
+
+<div class="alert d-none" id="payformsDiv">
+  <div class="row mb-1">
+    <div class="col-md-8">
+      <h5>{% trans 'Payforms' %}</h5>
+    </div>
+    <div class="col-md-4 text-right">
+      <a 
+        type="button" 
+        class="btn btn-light btn-sm text-info" 
+        data-toggle="modal" 
+        data-target="#orderModal"
+        hx-get="{% url 'order_add_payform' %}"
+        hx-target="#modalBody"
+      >
+        <i class="fas fa-plus "></i> 
+        {% trans 'Add' %}
+      </a>
+    </div>
+  </div>
+
+  {% include "treasury/order/elements/payforms.html" %}
+
+  <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold" id="showTotalPayforms">
+    <div class="col-sm-9 text-right">{% trans 'TOTAL' %}:</div>
+    <div class="col-sm-2 text-right" id="totalPayforms">
+      {{ request.session.order.total_payforms | floatformat:2 }}
+    </div>
+  </div>
+
+  <div class="row mb-0 font-weight-bold text-danger" id="showDue">
+    <div class="col-sm-9 text-right">{% trans 'due' %}:</div>
+    <div class="col-sm-2 text-right" id="due">
+      {{ request.session.order.missing | floatformat:2 }}
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+{% load i18n %}
+
+<div class="alert d-none" id="othersDiv">
+  <form id="registerForm" action="{% url 'order_register' %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-8">
+        <div class="form-group">
+          <label for="description">{% trans 'Description' %}</label>
+          <input type="text" 
+            class="form-control" 
+            id="description" 
+            name="description"
+            value="{{ request.session.order.description }}">
+        </div>
+      </div>
+
+      <div class="col-4">
+        <label for="status" class=" requiredField">
+          {% trans 'Status' %}
+        </label>
+        <div class="">
+          <select name="status" 
+            id="status" 
+            class="select form-control">
+            {% for st in status %}
+            <option 
+              value="{{ st.0 }}" 
+              {% if request.session.order.status.cod == st.0 %}selected{% endif %}>
+              {{ st.1 }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

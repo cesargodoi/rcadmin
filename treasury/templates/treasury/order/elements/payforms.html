@@ -1,0 +1,5 @@
+<div id="payforms">
+  {% for object in request.session.order.payforms %}
+    {% include "treasury/order/elements/payform.html" %}
+  {% endfor %}
+</div>

@@ -1,0 +1,25 @@
+{% load i18n %}
+<div class="alert">
+  <div class="row">
+    <div class="col-sm-8 mt-2">
+      <h5>
+        {% trans 'Person' %}: &nbsp;&nbsp;&nbsp;
+        <span id="personName">
+          {% if request.session.order.person %}
+            {{ request.session.order.person.name }} 
+          {% endif %}
+        </span> &nbsp;&nbsp;
+        <small>
+          <a href="#" class="d-none" id="toChange">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </a>
+        </small>
+      </h5>
+    </div>
+    <div class="col-sm-4">
+      <div class="" id="searchForm">
+        {% include "treasury/order/elements/form_search_person.html" %}
+      </div>
+    </div>
+  </div>
+</div>

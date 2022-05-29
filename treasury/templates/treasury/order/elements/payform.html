@@ -1,0 +1,39 @@
+{% load i18n %}
+<div class="row mt-1 mb-0 pt-2 border-top" id="obj{{ object.id }}">
+  <div class="col-md-3">
+    <strong>{{ object.payform_type.1 }}</strong>
+  </div>
+  <div class="col-sm-7">
+    <small class="text-muted">
+      {% if object.bank_flag %}
+        {{ object.bank_flag.name }} &nbsp;
+      {% endif %}
+      {% if object.ctrl_number %}
+        | &nbsp; {{ object.ctrl_number }}
+      {% endif %}
+      {% if object.complement %}
+        | &nbsp; <em>{{ object.complement }}</em>
+      {% endif %}
+    </small>
+  </div>
+  {% if not detail %}
+    <div class="col-sm-1 mt-1 mb-1 text-right" id="value-{{ object.id }}">
+      {{ object.value | floatformat:2 }}
+    </div>
+    <div class="col-sm-1 text-right">
+      <button
+        class="btn btn-light btn-sm text-danger"
+        hx-delete="{% url 'order_del_payform' object.id %}"
+        hx-confirm="{% trans 'Do you really want to delete this payment method?' %}"
+        hx-target="closest #payforms"
+        hx-swap="outerHTML swap:500ms"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+  {% else %}
+    <div class="col-sm-2 mt-1 mb-1 text-right" id="value-{{ object.id }}">
+      {{ object.value | floatformat:2 }}
+    </div>
+  {% endif %}
+</div>

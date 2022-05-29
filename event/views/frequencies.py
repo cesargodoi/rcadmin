@@ -31,39 +31,43 @@ def frequency_delete(request, pk, person_id):
 @login_required
 @permission_required(["event.change_event", "person.change_person"])
 def frequencies_add(request, pk):
-    obj = Event.objects.get(pk=pk)
+    object = Event.objects.get(pk=pk)
+    regs_on_event = [fr.person.reg for fr in object.frequency_set.all()]
+    regs, unknown = [], []
 
     if request.method == "POST":
         from_request = set(
-            request.POST.get("frequencies").replace(" ", "").split(",")
+            [
+                reg
+                for reg in request.POST.get("frequencies")
+                .replace(" ", "")
+                .split(",")
+                if reg
+            ]
         )
-        regs, unknow = [], []
+
         for reg in from_request:
-            try:
-                person = Person.objects.get(reg=reg)
-                # object.frequencies.add(person)
-                obj.frequency_set.create(
-                    person=person,
-                    event=obj,
-                    aspect=person.aspect,
-                )
-                regs.append(reg)
-            except Exception:
-                unknow.append(reg)
+            if reg not in regs_on_event:
+                try:
+                    person = Person.objects.get(reg=reg)
+                    object.frequency_set.create(
+                        person=person,
+                        event=object,
+                        aspect=person.aspect,
+                    )
+                    regs.append(reg)
+                except Exception:
+                    unknown.append(reg)
         if len(regs) > 0:
             message = f"{len(regs)} persons were launched at this Event. "
             messages.success(request, message)
-        if unknow:
-            message = (
-                f"{len(unknow)} registration numbers are unknown: {unknow}"
-            )
-            messages.warning(request, message)
-
-        return redirect("event_detail", pk=pk)
+        if not unknown:
+            return redirect("event_detail", pk=pk)
 
     context = {
-        "object": obj,
+        "object": object,
         "form": FrequenciesAddForm(),
         "title": _("insert frequencies"),
+        "unknown": unknown if len(unknown) > 0 else None,
     }
     return render(request, "event/frequencies-add.html", context)

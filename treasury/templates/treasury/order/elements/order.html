@@ -1,8 +1,13 @@
 {% load i18n %}
 
-<div class="row border-top border-secondary pb-2 pt-2" 
-  onclick="location.href='{% url 'order_detail' object.id %}';" 
-  style="cursor: pointer;">
+<div 
+  class="row border-top border-secondary pb-2 pt-2" 
+  style="cursor: pointer;"
+  data-toggle="modal" 
+  data-target="#showOrderModal"
+  hx-get="{% url 'order_detail' object.id %}"
+  hx-target="#modalBody"
+>
   <div class="col-sm-2">
     <strong> {{ object.created_on | date:"d/m/y" }}</strong>
   </div>
@@ -12,7 +17,7 @@
   <div class="col-sm-2">
     {{ object.payments.count }} payment{{ object.payments.count|pluralize }}
   </div>
-  <div class="col-sm-2">
+  <div class="col-sm-2 text-right">
     <small>
       {% if object.self_payed %}
       <span class="badge badge-pill badge-secondary">
@@ -22,7 +27,7 @@
     </small>
   </div>
   <div class="col-sm-2 text-right">
-    <span class="text-{% if object.status == 'PND' %}info
+    <span class="font-italic text-{% if object.status == 'PND' %}info
                 {% elif object.status == 'CCL' %}danger
                 {% else %}success{% endif %}">
       <small>
@@ -30,7 +35,7 @@
       </small>
     </span>
     &nbsp;
-    <span class="badge badge-pill badge-{% if object.status == 'PND' %}info
+    <span class="font-weight-bold text-{% if object.status == 'PND' %}info
                 {% elif object.status == 'CCL' %}danger
                 {% else %}success{% endif %}">
       {{ object.amount }}

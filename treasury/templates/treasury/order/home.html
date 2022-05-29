@@ -20,4 +20,20 @@
   </div>
 </article>
 
+<div id="showOrderModal" class="modal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div id="modalBody" class="modal-content text-dark">
+      <!-- modal body -->
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  $('#showOrderModal').on('hidden.bs.modal', function (event) {
+    htmx.ajax('GET', "{% url 'clear_session' %}", {target:'#modalBody', swap:'outerHTML'})
+  })
+</script>
+{% endblock scripts %}

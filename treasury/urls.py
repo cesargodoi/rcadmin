@@ -85,29 +85,31 @@ urlpatterns += [
 # orders
 urlpatterns += [
     path("orders/", order.orders, name="orders"),
+    path("orders/clear-session", order.to_clear_session, name="clear_session"),
     path("order/create", order.order_create, name="order_create"),
     path(
-        "order/search_person/",
-        order.order_search_person,
-        name="order_search_person",
+        "order/search-person-by-name/",
+        order.search_person_by_name,
+        name="search_person_by_name",
     ),
+    path("order/add-person/", order.order_add_person, name="order_add_person"),
     path(
-        "order/add_payment/",
+        "order/add-payment/",
         order.order_add_payment,
         name="order_add_payment",
     ),
     path(
-        "order/del_payment/<int:pay_id>/",
+        "order/del-payment/<int:pay_id>/",
         order.order_del_payment,
         name="order_del_payment",
     ),
     path(
-        "order/add_payform/",
+        "order/add-payform/",
         order.order_add_payform,
         name="order_add_payform",
     ),
     path(
-        "order/del_payform/<int:pay_id>/",
+        "order/del-payform/<int:pay_id>/",
         order.order_del_payform,
         name="order_del_payform",
     ),
@@ -132,7 +134,7 @@ urlpatterns += [
         name="order_delete",
     ),
     path(
-        "order/<uuid:id>/update_status/",
+        "order/<uuid:id>/update-status/",
         order.order_update_status,
         name="order_update_status",
     ),

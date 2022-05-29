@@ -1,18 +1,11 @@
 {% extends "base/base.html" %}
 {% load i18n %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 
 <div class="text-right mb-2 mt-4">
-  {% if request.session.my_order.total_payments != 0.0 %}
-  <button 
-    class="btn btn-primary" 
-    onclick="checkForm()" id="pay-now">
-    <i class="fas fa-money-bill-wave-alt"></i> 
-    {% trans 'Pay now' %}
-  </button>
-  {% endif %}
   <a type="button" 
     class="btn btn-light text-info mr-3"
     href="{% url 'user_payments' %}">
@@ -21,160 +14,47 @@
   </a>
 </div>
 
-{% if request.session.my_order.person %}
 <article class="media content-section">
   <div class="media-body">
-    <div class="row  mt-2 mb-2">
-      <div class="col-sm-6">
-        <h5>{% trans 'Payments' %}</h5>
-      </div>
-      <div class="col-sm-6">
-        <a type="button" 
-          class="btn btn-light btn-sm text-primary float-right" 
-          href="{% url 'user_add_payment' %}">
-          <i class="fas fa-plus "></i> 
-          {% trans 'Payment' %}
-        </a>
-      </div>
-    </div>
+    <h2 class="border-bottom pb-2 pl-4">{% trans 'New Order' %}</h2>
 
-    {% if request.session.my_order.payments %}
-
-      {% for object in request.session.my_order.payments %}
-      {% include "treasury/elements/payment.html" %}
-      {% endfor %}
-
-      <table class="table table-hover table-sm mt-2">
-        <tr>
-          <th class="text-right">{% trans 'TOTAL' %}:</th>
-          <th class="text-right" id="totPayment" width="10%">
-            {{ request.session.my_order.total_payments|floatformat:2 }}
-          </th>
-          <th width="28px"></th>
-        </tr>
-      </table>
-    
-    {% endif %}
+    {% include "user/profile/elements/payments_div.html" %}
+    {% include "user/profile/elements/payform_div.html" %}
+    {% include "user/profile/elements/controllers_div.html" %}
     
   </div>
 </article>
-{% endif %}
 
-{% if not request.session.my_order.payments %}
-  <article class="media content-section">
-    <div class="media-body">
-      <div class="alert alert-secondary mt-2">
-        <h4 class="profile-payments-title">{% trans 'To make your contributions and payments follow the instructions' %}:</h4>
-        <div class="row">
-          <div class="col-sm-4" id="payform_type">
-            <img 
-              src="{{ object.person.center.pix_image.url }}" 
-              class="img-fluid mb-4">
-          </div>
-          <div class="col-sm-8">
-            <p><strong>{% trans 'pix-key' %}: </strong></p>
-            <p class="h2">{{ object.person.center.pix_key }}</p>
 
-            <hr>
-            <ul>
-              <li>{% trans 'Transfer, deposit or PIX at your bank.' %}</li>
-              <li>{% trans 'Use the "Description" field in your bank app to identify your contribution via PIX.' %}</li>
-              <li>{% trans 'Take the digital voucher provided by your bank (.jpg file format only)' %}</li>
-              <li>{% trans 'In this program you will be able to make payments and contributions in your name only.' %}</li>
-              <li>{% trans 'For collective payments and contributions (two or more people) contact your core treasury.' %}</li>
-              <li>{% trans 'To start, click on' %} <strong class="text-primary">+ {% trans 'Payment' %}</strong> </li>
-            </ul>
-          </div>
-        </div>
-        <div id="id_value"></div>
-      </div>
-    </div>
-  </article>
-{% endif %}
-
-{% if request.session.my_order.payments %}
-<article class="media content-section">
-  <div class="media-body">
-    <div class="row">
-      <div class="col-lg-6">
-        <h5>{% trans 'Form of Payment' %}</h5>
-        <form id="form" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="row">
-            <div class="col-lg-6" id="payform_type">
-              {{ form.type | as_crispy_field }}
-            </div>
-            <div class="col-lg-6">
-              {{ form.value | as_crispy_field }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              {{ form.bank_flag | as_crispy_field }}
-            </div>
-            <div class="col-lg-6">
-              {{ form.ctrl_number | as_crispy_field }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              {{ form.voucher_img | as_crispy_field }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="description">{% trans 'Description' %}</label>
-            <input type="text" 
-              class="form-control" 
-              id="description" 
-              name="description"
-              value="{{ request.session.my_order.description }}">
-          </div>
-        </form>
-      </div>
-      <div class="col-lg-6">
-
-        <div class="alert alert-secondary">
-          <div class="row">
-            <div class="col-sm-12">
-              <p>{% trans 'In order to complete your contribution, have your deposit, transfer or PIX receipt scanned in .jpg file format' %}</p>
-              <p><strong>{% trans 'Voucher img' %}: </strong>{% trans 'Upload the file to the system' %}</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-12">
-              <p> <strong>{% trans 'Bank-flag' %}: </strong>{% trans 'choose the option that matches your bank.' %}</p>
-              <p> <strong>{% trans 'Ctrl number' %}: </strong>{% trans 'Deposit, transfer or PIX identification number.' %}</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-6" id="payform_type">
-              <img 
-                src="{{ object.person.center.pix_image.url }}" 
-                class="img-fluid">
-            </div>
-            <div class="col-sm-6">
-              <p>{% trans 'Payments with PIX: use pix-key or QR-Code' %}</p>
-              <p><strong>{% trans 'pix-key' %}:</strong></p>
-              {{ object.person.center.pix_key }}
-              <hr>
-              <p>{% trans 'Use the "Description" field in your banks application to identify your contribution via PIX.' %}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<div id="userOrderModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div id="modalBody" class="modal-content text-dark">
+      <!-- modal body -->
     </div>
   </div>
-</article>
-
-{% endif %}
+</div>
 
 {% endblock %}
 
 {% block scripts %}
 
-{% load static %}
-<script type="text/javascript" src="{% static 'js/profile_add_paymentform.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/profile_order_create.js' %}" defer></script>
+
+<script>
+  // CSRF request in the headers
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+  })
+
+  // variables that will be used later
+  var modal = null;
+  var divIdEvent = null;
+  var idEvent = null;
+  var idPaytype = null;
+  var idPayformType = null;
+  var divIdBankFlag = null;
+  var divIdCtrlNumber = null;
+  var divIdVoucherImg = null;
+</script>
 
 {% endblock %}

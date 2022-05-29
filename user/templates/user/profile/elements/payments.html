@@ -1,0 +1,5 @@
+<div id="payments">
+  {% for object in request.session.my_order.payments %}
+    {% include "user/profile/elements/payment.html" %}
+  {% endfor %}
+</div>
