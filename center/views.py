@@ -15,8 +15,8 @@ from .models import Center
 @login_required
 @permission_required("center.view_center")
 def center_home(request):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "center/elements/center_list.html"
@@ -25,7 +25,7 @@ def center_home(request):
         template_name = "center/home.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     if request.GET.get("init"):
@@ -39,7 +39,7 @@ def center_home(request):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("center home"),

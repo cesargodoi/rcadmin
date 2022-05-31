@@ -14,8 +14,8 @@ from ..models import Workgroup
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_home(request):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/elements/workgroup_list.html"
@@ -24,7 +24,7 @@ def workgroup_home(request):
         template_name = "workgroup/home.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     if request.GET.get("init"):
@@ -38,7 +38,7 @@ def workgroup_home(request):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("workgroup_home"),
@@ -52,8 +52,8 @@ def workgroup_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_detail(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/member/elements/member_list.html"
@@ -62,7 +62,7 @@ def workgroup_detail(request, pk):
         template_name = "workgroup/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object = Workgroup.objects.get(pk=pk)
 
@@ -77,7 +77,7 @@ def workgroup_detail(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": object,
         "object_list": object_list,
         "title": _("workgroup detail"),

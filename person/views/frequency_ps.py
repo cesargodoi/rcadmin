@@ -14,8 +14,8 @@ from ..models import Person
 @login_required
 @permission_required("event.view_event")
 def frequency_ps_list(request, person_id):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "person/elements/frequency_list.html"
@@ -24,7 +24,7 @@ def frequency_ps_list(request, person_id):
         template_name = "person/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     person = Person.objects.get(id=person_id)
     queryset = person.frequency_set.all().order_by("-event__date")
@@ -32,7 +32,7 @@ def frequency_ps_list(request, person_id):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "title": _("frequencies list"),
         "object": person,  # to header element,
@@ -45,8 +45,8 @@ def frequency_ps_list(request, person_id):
 @login_required
 @permission_required("person.change_person")
 def frequency_ps_insert(request, person_id):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "person/elements/event_list.html"
@@ -55,7 +55,7 @@ def frequency_ps_insert(request, person_id):
         template_name = "person/frequency_insert.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     person = Person.objects.get(id=person_id)
@@ -92,7 +92,7 @@ def frequency_ps_insert(request, person_id):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("insert frequencies"),

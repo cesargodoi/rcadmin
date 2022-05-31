@@ -14,8 +14,8 @@ from ..models import Event
 @login_required
 @permission_required("event.view_event")
 def event_home(request):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "event/elements/event_list.html"
@@ -24,7 +24,7 @@ def event_home(request):
         template_name = "event/home.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     if request.GET.get("init"):
@@ -38,7 +38,7 @@ def event_home(request):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "title": _("event home"),
@@ -52,7 +52,7 @@ def event_home(request):
 @permission_required("event.view_event")
 def event_detail(request, pk):
     # get page
-    regs = 10
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "event/elements/frequency_list.html"
@@ -61,7 +61,7 @@ def event_detail(request, pk):
         template_name = "event/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object = Event.objects.get(pk=pk)
     queryset = object.frequency_set.all().order_by("person__name_sa")
@@ -69,7 +69,7 @@ def event_detail(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": object,
         "object_list": object_list,
         "title": _("event detail"),

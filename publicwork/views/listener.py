@@ -4,7 +4,6 @@ from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
 from rcadmin.common import (
-    paginator,
     clear_session,
     SEEKER_STATUS,
     LECTURE_TYPES,
@@ -21,8 +20,8 @@ from ..models import Lecture, Seeker, Listener
 @login_required
 @permission_required("publicwork.add_listener")
 def add_listener(request, lect_pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/listener/elements/seeker_list.html"
@@ -31,7 +30,7 @@ def add_listener(request, lect_pk):
         template_name = "publicwork/listener/add.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     lecture = Lecture.objects.get(pk=lect_pk)
@@ -76,7 +75,7 @@ def add_listener(request, lect_pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("add_listener", args=[lecture.pk]),
@@ -132,8 +131,8 @@ def remove_listener(request, lect_pk, lstn_pk):
 @login_required
 @permission_required("publicwork.add_listener")
 def add_frequency(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/listener/elements/lecture_list.html"
@@ -142,7 +141,7 @@ def add_frequency(request, pk):
         template_name = "publicwork/seeker/add_or_change.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     seeker = Seeker.objects.get(pk=pk)
@@ -186,7 +185,7 @@ def add_frequency(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": seeker,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,

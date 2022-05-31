@@ -16,8 +16,8 @@ from base.searchs import search_person
 @login_required
 @permission_required("workgroup.add_membership")
 def membership_insert(request, workgroup_id):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/elements/person_list.html"
@@ -26,7 +26,7 @@ def membership_insert(request, workgroup_id):
         template_name = "workgroup/membership_insert.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     workgroup = Workgroup.objects.get(pk=workgroup_id)
@@ -70,7 +70,7 @@ def membership_insert(request, workgroup_id):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
         "aspect_list": ASPECTS,

@@ -73,8 +73,8 @@ def group_home(request):
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_detail(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/groups/elements/seeker_list.html"
@@ -83,7 +83,7 @@ def group_detail(request, pk):
         template_name = "publicwork/groups/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
@@ -101,7 +101,7 @@ def group_detail(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": pw_group,
         "object_list": object_list,
         "active_members": len(object_list),
@@ -264,8 +264,8 @@ def get_frequencies(ids):
 @login_required
 @permission_required("publicwork.add_listener")
 def group_add_frequencies(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/groups/elements/lecture_list.html"
@@ -274,7 +274,7 @@ def group_add_frequencies(request, pk):
         template_name = "publicwork/groups/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
@@ -318,7 +318,7 @@ def group_add_frequencies(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": pw_group,
         "object_list": object_list,
         "title": _("add frequencies"),
@@ -334,8 +334,8 @@ def group_add_frequencies(request, pk):
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_member(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/groups/elements/seeker_list.html"
@@ -344,7 +344,7 @@ def group_add_member(request, pk):
         template_name = "publicwork/groups/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     belongs_center(request, pk, PublicworkGroup)
@@ -392,7 +392,7 @@ def group_add_member(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": pw_group,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
@@ -432,8 +432,8 @@ def group_remove_member(request, group_pk, member_pk):
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_mentor(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "publicwork/elements/person_list.html"
@@ -442,7 +442,7 @@ def group_add_mentor(request, pk):
         template_name = "publicwork/groups/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     belongs_center(request, pk, PublicworkGroup)
@@ -488,7 +488,7 @@ def group_add_mentor(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": pw_group,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,

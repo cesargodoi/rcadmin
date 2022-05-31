@@ -46,8 +46,8 @@ def mentoring_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_group_detail(request, pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/mentoring/elements/person_list.html"
@@ -56,7 +56,7 @@ def mentoring_group_detail(request, pk):
         template_name = "workgroup/mentoring/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     if request.session.get("frequencies"):
         del request.session["frequencies"]
@@ -83,7 +83,7 @@ def mentoring_group_detail(request, pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": workgroup,
         "object_list": object_list,
         "mentors": mentors,
@@ -152,8 +152,8 @@ def mentoring_member_detail(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_frequencies(request, group_pk, person_pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/member/elements/frequency_list.html"
@@ -162,14 +162,14 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
         template_name = "workgroup/member/detail.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     obj = Person.objects.get(pk=person_pk)
     object_list = obj.frequency_set.all().order_by("-event__date")[_from:_to]
     ranking = sum([f.ranking for f in object_list])
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": obj,
         "title": _("member detail | frequencies"),
         "object_list": object_list,
@@ -203,8 +203,8 @@ def mentoring_member_historic(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def membership_add_frequency(request, group_pk, person_pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/member/elements/event_list.html"
@@ -213,7 +213,7 @@ def membership_add_frequency(request, group_pk, person_pk):
         template_name = "workgroup/member/add_frequency.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     object_list = None
     person = Person.objects.get(pk=person_pk)
@@ -259,7 +259,7 @@ def membership_add_frequency(request, group_pk, person_pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object": person,
         "object_list": object_list,
         "init": True if request.GET.get("init") else False,
@@ -326,8 +326,8 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_add_frequencies(request, group_pk):
-    # get page
-    regs = 10
+    # set limit of registers
+    LIMIT = 10
     # select template and page of pagination
     if request.htmx:
         template_name = "workgroup/mentoring/elements/event_list.html"
@@ -336,7 +336,7 @@ def mentoring_add_frequencies(request, group_pk):
         template_name = "workgroup/mentoring/add_frequencies.html"
         page = 1
     # get limitby
-    _from, _to = regs * (page - 1), regs * page
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     workgroup = Workgroup.objects.get(pk=group_pk)
 
@@ -386,7 +386,7 @@ def mentoring_add_frequencies(request, group_pk):
 
     context = {
         "page": page,
-        "counter": (page - 1) * 10,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "object": workgroup,
         "mentors": mentors,
