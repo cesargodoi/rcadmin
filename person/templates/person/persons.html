@@ -1,7 +1,8 @@
 {% load i18n %}
 
 {% if object_list %}
-
+  
+  {% include "base/elements/search_result.html" %}
   {% include "person/elements/person_list.html" %}
 
 {% else %}

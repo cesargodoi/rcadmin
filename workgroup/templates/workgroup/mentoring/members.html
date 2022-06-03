@@ -1,9 +1,15 @@
 {% load i18n %}
 
-<h4>{% trans 'Members' %}</h4>
-
 {% if object_list %}
-
+  
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Members' %}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
   {% include "workgroup/mentoring/elements/person_list.html" %}
 
 {% else %}

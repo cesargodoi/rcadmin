@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import ACTIVITY_TYPES, paginator, clear_session
+from rcadmin.common import ACTIVITY_TYPES, clear_session
 from base.searchs import search_event
 
 from person.models import Person
@@ -67,9 +67,11 @@ def mentoring_group_detail(request, pk):
     mentors = [
         mtr.person.short_name for mtr in _members if mtr.role_type == "MTR"
     ]
-    members = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")]
+    count = len([mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")])
+    object_list = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")][
+        _from:_to
+    ]
 
-    object_list = members[_from:_to]
     # add action links
     for item in object_list:
         item.click_link = reverse(
@@ -82,10 +84,12 @@ def mentoring_group_detail(request, pk):
         )
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": workgroup,
         "object_list": object_list,
+        "count": count,
+        "object": workgroup,
         "mentors": mentors,
         "title": _("workgroup detail"),
         "nav": "detail",
@@ -98,6 +102,18 @@ def mentoring_group_detail(request, pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_group_frequencies(request, pk):
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/mentoring/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/mentoring/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+
     if request.session.get("frequencies"):
         del request.session["frequencies"]
 
@@ -109,7 +125,8 @@ def mentoring_group_frequencies(request, pk):
     ]
     members = [mbr for mbr in _members if mbr.role_type in ("MBR", "CTT")]
 
-    object_list = paginator(members, 25, request.GET.get("page"))
+    count = len(members)
+    object_list = members[_from:_to]
 
     # add action links
     for member in object_list:
@@ -121,15 +138,19 @@ def mentoring_group_frequencies(request, pk):
         member.rank = sum(ranks)
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": workgroup,
-        "object_list": sorted(object_list, key=lambda x: x.rank, reverse=True),
         "mentors": mentors,
         "title": _("workgroup detail"),
         "nav": "detail",
         "tab": "frequencies",
         "goback": reverse("mentoring_home"),
     }
-    return render(request, "workgroup/mentoring/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -165,14 +186,18 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
     _from, _to = LIMIT * (page - 1), LIMIT * page
 
     obj = Person.objects.get(pk=person_pk)
+    count = obj.frequency_set.all().count()
     object_list = obj.frequency_set.all().order_by("-event__date")[_from:_to]
     ranking = sum([f.ranking for f in object_list])
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": obj,
         "title": _("member detail | frequencies"),
-        "object_list": object_list,
         "nav": "detail",
         "tab": "frequencies",
         "ranking": ranking,
@@ -185,19 +210,37 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_historic(request, group_pk, person_pk):
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "workgroup/member/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "workgroup/member/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+
     obj = Person.objects.get(pk=person_pk)
     page = request.GET["page"] if request.GET.get("page") else 1
-    object_list = obj.historic_set.all().order_by("-date")
+    count = obj.historic_set.all().count()
+    object_list = obj.historic_set.all().order_by("-date")[_from:_to]
+
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": obj,
         "title": _("member detail | historic"),
-        "object_list": paginator(object_list, page=page),
         "nav": "detail",
         "tab": "historic",
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
-    return render(request, "workgroup/member/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -215,7 +258,6 @@ def membership_add_frequency(request, group_pk, person_pk):
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
 
-    object_list = None
     person = Person.objects.get(pk=person_pk)
 
     if request.GET.get("pk"):
@@ -247,21 +289,27 @@ def membership_add_frequency(request, group_pk, person_pk):
         )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page_ = search_event(request, Event)
-        object_list = queryset[_from:_to]
+        object_list, count = search_event(request, Event, _from, _to)
         # add action links
         for member in object_list:
             member.add_link = reverse(
                 "membership_add_frequency", args=[group_pk, person_pk]
             )
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": person,
         "object_list": object_list,
+        "count": count,
+        "object": person,
         "init": True if request.GET.get("init") else False,
         "title": _("insert frequencies"),
         "type_list": ACTIVITY_TYPES,
@@ -372,11 +420,10 @@ def mentoring_add_frequencies(request, group_pk):
         return redirect("mentoring_group_detail", pk=group_pk)
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
-        object_list = None
     else:
-        queryset, page_ = search_event(request, Event)
-        object_list = queryset[_from:_to]
+        object_list, count = search_event(request, Event, _from, _to)
 
     mentors = [
         mtr.person.short_name
@@ -384,10 +431,16 @@ def mentoring_add_frequencies(request, group_pk):
         if mtr.role_type == "MTR"
     ]
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "object": workgroup,
         "mentors": mentors,
         "init": True if request.GET.get("init") else False,

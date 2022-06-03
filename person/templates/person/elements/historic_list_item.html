@@ -1,0 +1,25 @@
+{% load i18n %}
+<div class="col-sm-2">
+  <strong>{{ obj.date | date:"d/m/Y" }}</strong>
+</div>
+
+<div class="col-sm-2">
+  <strong>{{ obj.get_occurrence_display }}</strong>
+</div>
+
+<div class="col-sm-6 small align-middle">
+  {{ obj.description | truncatechars:50 }}
+</div>
+
+<div class="col-sm text-right">
+  <a type="button" 
+    href="{% url 'historic_update' object.id obj.pk %}"
+    class="btn btn-light text-warning btn-sm">
+    <i class="fas fa-edit"></i>
+  </a>
+  <a type="button" 
+    class="btn btn-light text-danger btn-sm"
+    href="{% url 'historic_delete' object.id obj.pk %}">
+    <i class="fas fa-trash-alt"></i>
+  </a>
+</div>

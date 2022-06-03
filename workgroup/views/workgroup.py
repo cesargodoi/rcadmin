@@ -26,20 +26,21 @@ def workgroup_home(request):
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
 
-    object_list = None
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_workgroup(request, Workgroup)
-        object_list = queryset[_from:_to]
+        object_list, count = search_workgroup(request, Workgroup, _from, _to)
         # add action links
         for item in object_list:
             item.click_link = reverse("workgroup_detail", args=[item.pk])
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("workgroup_home"),
         "title": _("workgroups"),
@@ -66,9 +67,10 @@ def workgroup_detail(request, pk):
 
     object = Workgroup.objects.get(pk=pk)
 
-    queryset = object.membership_set.all().order_by("person__name_sa")
-
-    object_list = queryset[_from:_to]
+    count = object.membership_set.all().count()
+    object_list = object.membership_set.all().order_by("person__name_sa")[
+        _from:_to
+    ]
 
     # add action links
     for member in object_list:
@@ -76,9 +78,11 @@ def workgroup_detail(request, pk):
         member.del_link = reverse("membership_delete", args=[pk, member.pk])
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object": object,
+        "count": count,
         "object_list": object_list,
         "title": _("workgroup detail"),
         "nav": "detail",

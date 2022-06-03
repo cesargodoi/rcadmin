@@ -74,6 +74,7 @@ def add_listener(request, lect_pk):
             item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
@@ -184,6 +185,7 @@ def add_frequency(request, pk):
             item.add_link = reverse("add_frequency", args=[pk])
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object": seeker,

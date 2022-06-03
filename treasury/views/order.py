@@ -35,7 +35,7 @@ def orders(request):
         clear_session(request, ["search"])
     else:
         queryset, page = search_order(request, Order)
-        object_list = paginator(queryset, 25, page=page)
+        object_list = paginator(queryset, 10, page=page)
 
     context = {
         "object_list": object_list,

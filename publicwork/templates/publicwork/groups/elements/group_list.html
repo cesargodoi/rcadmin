@@ -1,8 +1,7 @@
-{% load i18n %}
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
-      hx-get="{% url 'group_add_frequencies' pk %}?page={{ page|add:1 }}" 
+      hx-get="{% url 'group_home' %}?page={{ page|add:1 }}" 
       hx-trigger="revealed" 
       hx-swap="afterend"
       hx-target="this"
@@ -14,7 +13,7 @@
     >
   {% endif %}
 
-    {% include "publicwork/lecture/elements/lecture_list_item.html" %}
+    {% include "publicwork/groups/elements/group_list_item.html" %}
     
   </div>
 {% endfor %}

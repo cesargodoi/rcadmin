@@ -4,19 +4,15 @@
 
 {% include 'publicwork/navbar.html' %}
 
-{% if not request.user|has_group:"publicwork_jr" %}
 <article class="media content-section mb-1">
   <div class="media-body">
+    {% if not request.user|has_group:"publicwork_jr" %}
     <form class="form-control-sm mt-1" method="GET">
       {% csrf_token %}
       {% include "base/searchs/pw_group.html" %}
     </form>
-  </div>
-</article>
-{% endif %}
-
-<article class="media content-section mb-1">
-  <div class="media-body">
+    {% endif %}
+    <br>
     {% include 'publicwork/groups/groups.html' %}
   </div>
 </article>

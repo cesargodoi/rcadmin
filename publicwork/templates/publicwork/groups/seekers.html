@@ -1,20 +1,35 @@
 {% load base_extras %}
 {% load i18n %}
 
-<h4>{% if table_title %}{{ table_title }}{% else %}{% trans 'Seekers' %}{% endif %}</h4>
+{% if table_title %}
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{{ table_title }}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
+{% else %}
+  {% include "base/elements/search_result.html" %}
+{% endif %}
 
 {% if object_list %}
-
-  {% include "publicwork/groups/elements/seeker_list.html" %}
+  
+  {% if nav == "add_member" %}
+    {% include "publicwork/groups/elements/seeker_list_to_add.html" %}
+  {% else %}
+    {% include "publicwork/groups/elements/seeker_list.html" %}
+  {% endif %}
 
 {% else %}
 
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      {% trans 'choose your search terms' %}
+        {% trans 'choose your search terms' %}
       {% else %}
-      {% trans 'seekers not found' %}
+        {% trans 'seekers not found' %}
       {% endif %}
     </h4> 
   </div>  

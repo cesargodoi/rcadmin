@@ -28,12 +28,19 @@ def frequency_ps_list(request, person_id):
 
     person = Person.objects.get(id=person_id)
     queryset = person.frequency_set.all().order_by("-event__date")
+    count = len(queryset)
     object_list = queryset[_from:_to]
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "title": _("frequencies list"),
         "object": person,  # to header element,
         "nav": "detail",
@@ -57,7 +64,6 @@ def frequency_ps_insert(request, person_id):
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
 
-    object_list = None
     person = Person.objects.get(id=person_id)
 
     if request.GET.get("pk"):
@@ -82,18 +88,24 @@ def frequency_ps_insert(request, person_id):
         )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_event(request, Event)
-        object_list = queryset[_from:_to]
+        object_list, count = search_event(request, Event, _from, _to)
         # add action links
         for member in object_list:
             member.add_link = reverse("frequency_ps_insert", args=[person_id])
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "title": _("insert frequencies"),
         "type_list": ACTIVITY_TYPES,

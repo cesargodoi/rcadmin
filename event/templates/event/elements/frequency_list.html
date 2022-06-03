@@ -1,5 +1,5 @@
 {% for obj in object_list %}
-  {% if forloop.last and forloop.counter == 10 %}
+  {% if forloop.last and forloop.counter == LIMIT %}
     <div 
       hx-get="{% url 'event_detail' object.pk %}?page={{ page|add:1 }}" 
       hx-trigger="revealed" 

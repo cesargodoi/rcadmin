@@ -2,25 +2,15 @@
 
 {% if object_list %}
 
-{% if object_list.has_other_pages %}
-{% include "base/elements/paginator.html" %}
-{% endif %}
-
-{% for hist in object_list %}
-<div class="row border-top border-secondary mt-2 pt-2">
-  <div class="col-sm-1">
-    <small>{{ hist.date|date:'d/m/Y' }}</small>
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Historic' %}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
   </div>
-  <div class="col-sm-2">
-    {{ hist.get_occurrence_display }}
-  </div>
-  <div class="col-sm-8">
-    {% if hist.description %}
-      {{ hist.description }}
-    {% endif %}
-  </div> 
-</div>
-{% endfor %}
+  {% include "workgroup/member/elements/historic_list.html" %}
 
 {% else %}
 

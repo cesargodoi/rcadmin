@@ -25,21 +25,26 @@ def event_home(request):
         page = 1
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
-
-    object_list = None
+    # get object_list and count
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_event(request, Event)
-        object_list = queryset[_from:_to]
+        object_list, count = search_event(request, Event, _from, _to)
         # add action links
         for item in object_list:
             item.click_link = reverse("event_detail", args=[item.pk])
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "title": _("event home"),
         "type_list": ACTIVITY_TYPES,
@@ -51,6 +56,7 @@ def event_home(request):
 @login_required
 @permission_required("event.view_event")
 def event_detail(request, pk):
+    object = Event.objects.get(pk=pk)
     # get page
     LIMIT = 10
     # select template and page of pagination
@@ -62,16 +68,18 @@ def event_detail(request, pk):
         page = 1
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
-
-    object = Event.objects.get(pk=pk)
-    queryset = object.frequency_set.all().order_by("person__name_sa")
-    object_list = queryset[_from:_to]
+    # get object_list and count
+    _object_list = object.frequency_set.all().order_by("person__name_sa")
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": object,
         "object_list": object_list,
+        "count": count,
+        "object": object,
         "title": _("event detail"),
         "nav": "detail",
     }

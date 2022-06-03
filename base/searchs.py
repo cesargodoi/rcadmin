@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 #  center  ####################################################################
-def search_center(request, obj):
+def search_center(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -23,11 +23,14 @@ def search_center(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("name")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name")[_from:_to]
+
+    return (objects, count)
 
 
 #  person  ####################################################################
-def search_person(request, obj):
+def search_person(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -52,11 +55,14 @@ def search_person(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("name_sa")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name_sa")[_from:_to]
+
+    return (objects, count)
 
 
 #  event  ####################################################################
-def search_event(request, obj):
+def search_event(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -79,11 +85,14 @@ def search_event(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("-date")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("-date")[_from:_to]
+
+    return (objects, count)
 
 
 #  workgroups  ################################################################
-def search_workgroup(request, obj):
+def search_workgroup(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -104,11 +113,14 @@ def search_workgroup(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("name")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name")[_from:_to]
+
+    return (objects, count)
 
 
 #  seeker  ####################################################################
-def search_seeker(request, obj):
+def search_seeker(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -137,11 +149,14 @@ def search_seeker(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("name_sa")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name_sa")[_from:_to]
+
+    return (objects, count)
 
 
 #  lecture  ###################################################################
-def search_lecture(request, obj):
+def search_lecture(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -164,11 +179,14 @@ def search_lecture(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return obj.objects.filter(query).order_by("-date")
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("-date")[_from:_to]
+
+    return (objects, count)
 
 
 #  pw group  ##################################################################
-def search_pw_group(request, obj):
+def search_pw_group(request, obj, _from, _to):
     # checking for search in request.session
     if not request.session.get("search"):
         get_base_search(request)
@@ -181,7 +199,7 @@ def search_pw_group(request, obj):
         _query.append(Q(name__icontains=search["pw_name"]))
     if search["center"]:
         _query.remove(Q(center=request.user.person.center))
-        _query.append(Q(center__pk=search["center"]))
+        _query.append(Q(center=search["center"]))
     if search["all"] == "on":
         _query.remove(Q(is_active=True))
         if Q(center=request.user.person.center) in _query:
@@ -191,7 +209,10 @@ def search_pw_group(request, obj):
     for q in _query:
         query.add(q, Q.AND)
 
-    return (obj.objects.filter(query).order_by("name"), search["page"])
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name")[_from:_to]
+
+    return (objects, count)
 
 
 #  orders  ####################################################################
@@ -257,9 +278,7 @@ def adjust_session(request, fields):
     search = request.session["search"]
     for field in fields:
         if field == "all":
-            if request.GET.get(field) == "on":
-                search[field] = request.GET[field]
-            if request.GET.get(field) == "off":
+            if request.GET.get(field) in ("on", "off"):
                 search[field] = request.GET[field]
         elif field in ["dt1", "dt2", "dt", "date"]:
             search[field] = (

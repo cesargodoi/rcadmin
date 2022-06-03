@@ -1,7 +1,7 @@
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
-      hx-get="{% url 'mentoring_group_detail' object.pk %}?page={{ page|add:1 }}" 
+      hx-get="{% url 'person_historic' object.pk %}?page={{ page|add:1 }}" 
       hx-trigger="revealed" 
       hx-swap="afterend"
       hx-target="this"
@@ -11,7 +11,7 @@
     <div class="row border-top border-secondary pb-2 pt-2">
   {% endif %}
 
-  {% include "workgroup/mentoring/elements/person_list_item.html" %}
+  {% include "person/elements/historic_list_item.html" %}
 
   </div>
 {% endfor %}

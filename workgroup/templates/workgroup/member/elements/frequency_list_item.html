@@ -2,16 +2,13 @@
 {% load i18n %}
 
 <div class="col-sm-1">
-  <small>{{ obj.event.date|date:'d/m/y' }}</small>
+  <strong>{{ obj.event.date|date:'d/m/y' }}</strong>
 </div>
 <div class="col-sm-3">
-  {{ obj.event.activity.name }}
+  <strong>{{ obj.event.activity.name }}</strong>
 </div>
-<div class="col-sm-1 small">
-  <strong>{{ obj.event.activity.get_activity_type_display }}</strong>
-</div>
-<div class="col-sm-2 small">
-  {{ obj.event.center }}
+<div class="col-sm-3 small">
+  <strong>{{ obj.event.activity.get_activity_type_display }}</strong> | {{ obj.event.center }}
 </div>
 <div class="col-sm-3 small">
   {% if obj.observations %}

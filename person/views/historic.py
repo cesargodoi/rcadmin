@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from rcadmin.common import paginator
 
 from ..forms import HistoricForm
 from ..models import Historic, Person
@@ -14,21 +13,42 @@ from ..models import Historic, Person
 @login_required
 @permission_required("person.view_historic")
 def person_historic(request, person_id):
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "person/elements/historic_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "person/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+
     queryset = Historic.objects.filter(person=person_id).order_by("-date")
     person = (
         queryset[0].person if queryset else Person.objects.get(id=person_id)
     )
 
-    object_list = paginator(queryset, page=request.GET.get("page"))
+    count = len(queryset)
+    object_list = queryset[_from:_to]
+
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "title": _("historic list"),
         "object": person,  # to header element
         "nav": "detail",
         "tab": "historic",
     }
-    return render(request, "person/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

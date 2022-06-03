@@ -1,7 +1,11 @@
 {% load base_extras %}
 {% load i18n %}
 
-<h4>{% if table_title %}{{ table_title }}{% else %}{% trans 'Seekers' %}{% endif %}</h4>
+{% if table_title %}
+  <h4>{{ table_title }}</h4>
+{% else %}
+  {% include "base/elements/search_result.html" %}
+{% endif %}
 
 {% if object_list %}
 
@@ -12,9 +16,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      {% trans 'choose your search terms' %}
+        {% trans 'choose your search terms' %}
       {% else %}
-      {% trans 'seekers not found' %}
+        {% trans 'seekers not found' %}
       {% endif %}
     </h4> 
   </div>  

@@ -13,10 +13,6 @@
     {% include "treasury/order/elements/order.html" %}
   {% endfor %}
 
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
-
 {% else %}
 
   <div class="alert alert-secondary">

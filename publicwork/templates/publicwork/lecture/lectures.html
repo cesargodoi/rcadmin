@@ -1,9 +1,8 @@
 {% load i18n %}
 
-<h4>{% trans 'Lectures' %}</h4>
-
 {% if object_list %}
-
+  
+  {% include "base/elements/search_result.html" %}
   {% include "publicwork/lecture/elements/lecture_list.html" %}
 
 {% else %}

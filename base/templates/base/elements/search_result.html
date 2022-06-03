@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if count %}
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Search result' %}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records were found in the database' %}</p>
+    </div>
+  </div>
+{% endif %}

@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from rcadmin.common import (
-    paginator,
     belongs_center,
     clear_session,
     SEEKER_STATUS,
@@ -39,27 +38,40 @@ from ..models import (
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_home(request):
-    object_list = None
-    clear_session(request, ["pwg", "search", "frequencies"])
-
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/groups/elements/group_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/home.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+    # get object_list and count
     if request.GET.get("init") or request.user.groups.filter(
         name="publicwork_jr"
     ):
-        clear_session(request, ["search"])
-        object_list = request.user.person.publicworkgroup_set.all()
-        for item in object_list:
-            item.actives = item.members.filter(is_active=True).count()
-            item.click_link = reverse("group_detail", args=[item.pk])
+        count = request.user.person.publicworkgroup_set.count() or None
+        object_list = request.user.person.publicworkgroup_set.all() or {}
+        clear_session(request, ["pwg", "search", "frequencies"])
     else:
-        queryset, page = search_pw_group(request, PublicworkGroup)
-        object_list = paginator(queryset, page=page)
-        # add action links
-        for item in object_list:
-            item.actives = item.members.filter(is_active=True).count()
-            item.click_link = reverse("group_detail", args=[item.pk])
+        object_list, count = search_pw_group(
+            request, PublicworkGroup, _from, _to
+        )
+
+    # add action links
+    for item in object_list:
+        item.actives = item.members.filter(is_active=True).count()
+        item.click_link = reverse("group_detail", args=[item.pk])
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_home"),
         "title": _("public work - groups"),
@@ -67,7 +79,7 @@ def group_home(request):
         "user_center": str(request.user.person.center.pk),
         "nav": "gp_home",
     }
-    return render(request, "publicwork/groups/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -88,9 +100,14 @@ def group_detail(request, pk):
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    object_list = pw_group.members.exclude(
+
+    _object_list = pw_group.members.exclude(
         status__in=("ITD", "RST", "STD")
-    ).order_by("name")[_from:_to]
+    ).order_by("name")
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
+
     # add action links
     for item in object_list:
         item.to_detail = (
@@ -100,10 +117,12 @@ def group_detail(request, pk):
         item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": pw_group,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "active_members": len(object_list),
         "title": _("group detail"),
         "nav": "info",
@@ -212,28 +231,42 @@ def group_reinsert(request, pk):
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_frequencies(request, pk):
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/groups/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
-    page = request.GET["page"] if request.GET.get("page") else 1
 
     pw_group = PublicworkGroup.objects.get(pk=pk)
     active_members = pw_group.members.exclude(status__in=("ITD", "RST", "STD"))
-    frequencies = get_frequencies([mbr.id for mbr in active_members])
+    _object_list = get_frequencies([mbr.id for mbr in active_members])
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": pw_group,
         "title": _("group detail | frequencies"),
-        "object_list": paginator(
-            sorted(frequencies, key=lambda x: x["rank"], reverse=True),
-            20,
-            page=page,
-        ),
         "active_members": len(active_members),
         "nav": "frequencies",
         "now": datetime.now().date(),
     }
 
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 # handlers
@@ -264,18 +297,6 @@ def get_frequencies(ids):
 @login_required
 @permission_required("publicwork.add_listener")
 def group_add_frequencies(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/groups/elements/lecture_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/groups/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -307,9 +328,20 @@ def group_add_frequencies(request, pk):
                 )
                 Listener.objects.create(**new_freq)
         return redirect("group_detail", pk=pk)
-
-    queryset = search_lecture(request, Lecture)
-    object_list = queryset[_from:_to]
+    
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/groups/elements/lecture_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+    # get object_list and count
+    object_list, count = search_lecture(request, Lecture, _from, _to)
     # add action links
     for item in object_list:
         item.add_freqs_link = (
@@ -317,10 +349,12 @@ def group_add_frequencies(request, pk):
         )
 
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": pw_group,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "title": _("add frequencies"),
         "nav": "add_frequencies",
         "goback": reverse("group_detail", args=[pk]),
@@ -334,19 +368,6 @@ def group_add_frequencies(request, pk):
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_member(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/groups/elements/seeker_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/groups/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-
-    object_list = None
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -380,21 +401,39 @@ def group_add_member(request, pk):
             context,
         )
 
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/groups/elements/seeker_list_to_add.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+    # get object_list and count
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_seeker(request, Seeker)
-        object_list = queryset[_from:_to]
+        object_list, count = search_seeker(request, Seeker, _from, _to)
         # add action links
         for item in object_list:
             item.add_in_group = reverse("group_add_member", args=[pk])
             item.local = f"{item.city} ({item.state}-{item.country})"
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": pw_group,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_member", args=[pw_group.pk]),
         "status_list": SEEKER_STATUS,
@@ -432,19 +471,6 @@ def group_remove_member(request, group_pk, member_pk):
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_mentor(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/elements/person_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/groups/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-
-    object_list = None
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -468,12 +494,23 @@ def group_add_mentor(request, pk):
             "publicwork/groups/confirm_add_member_or_mentor.html",
             context,
         )
-
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/elements/person_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/groups/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+    # get object_list and count
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_person(request, Person)
-        object_list = queryset[_from:_to]
+        object_list, count = search_person(request, Person, _from, _to)
         # add action links
         for item in object_list:
             item.add_link = (
@@ -486,11 +523,17 @@ def group_add_mentor(request, pk):
                 item.user.profile.country,
             )
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
-        "object": pw_group,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_mentor", args=[pw_group.pk]),
         "aspect_list": ASPECTS,
