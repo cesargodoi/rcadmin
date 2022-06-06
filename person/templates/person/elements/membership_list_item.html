@@ -1,0 +1,27 @@
+{% load i18n %}
+<div class="col-sm-4">
+  <strong>{{ obj.workgroup.name }}</strong>
+</div>
+
+<div class="col-sm-2">
+  <strong>{{ obj.get_role_type_display }}</strong>
+</div>
+
+<div class="col-sm-4 small align-middle">
+  {% if obj.observations %}
+    {{ obj.observations }}
+  {% endif %}
+</div>
+
+<div class="col-sm text-right">
+  <a type="button" 
+    href="{% url 'membership_ps_update' object.id obj.pk %}"
+    class="btn btn-light text-warning btn-sm">
+    <i class="fas fa-edit"></i>
+  </a>
+  <a type="button" 
+    class="btn btn-light text-danger btn-sm"
+    href="{% url 'membership_ps_delete' object.id obj.pk %}">
+    <i class="fas fa-trash-alt"></i>
+  </a>
+</div>

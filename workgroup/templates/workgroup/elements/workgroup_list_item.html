@@ -1,10 +1,8 @@
 {% load i18n %}
-<div class="col-sm-4">
-  <strong>
-    {{ forloop.counter|add:counter }}
-    &nbsp;&nbsp;
-    {{ obj.name }}
-  </strong>
+<div class="col-sm-5">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
 </div>
 
 <div class="col-sm-2 small align-middle">
@@ -36,18 +34,6 @@
     {% if obj.members.all|length > 0 %}
       <strong>{{ obj.members.all|length }}</strong> 
       <i class="fas fa-users"></i> 
-    {% endif %}
-  {% endif %}
-</div>
-
-<div class="col-sm-1 text-right">
-  {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
-    {% if obj.click_link %}
-      <a type="button" 
-         href="{{ obj.click_link }}"
-         class="btn btn-light text-info btn-sm">
-        <i class="fas fa-eye"></i>
-      </a>
     {% endif %}
   {% endif %}
 </div>

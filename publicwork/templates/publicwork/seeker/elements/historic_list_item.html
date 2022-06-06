@@ -2,26 +2,28 @@
 <div class="col-sm-2">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
   &nbsp;&nbsp;
-  <strong>{{ obj.date | date:"d/m/Y" }}</strong>
+  <strong>{{ obj.date|date:'d/m/y' }}</strong>
 </div>
 
 <div class="col-sm-2">
   <strong>{{ obj.get_occurrence_display }}</strong>
 </div>
 
-<div class="col-sm-6 small align-middle">
-  {{ obj.description | truncatechars:50 }}
+<div class="col-sm-6 small">
+  {% if obj.description %}
+    {{ obj.description }}
+  {% endif %}
 </div>
 
-<div class="col-sm text-right">
+<div class="col-sm-2 text-right">
   <a type="button" 
-    href="{% url 'historic_update' object.id obj.pk %}"
+    href="{{ obj.click_link }}"
     class="btn btn-light text-warning btn-sm">
     <i class="fas fa-edit"></i>
   </a>
   <a type="button" 
-    class="btn btn-light text-danger btn-sm"
-    href="{% url 'historic_delete' object.id obj.pk %}">
+    href="{% url 'delete_historic' object.pk obj.pk %}"
+    class="btn btn-light text-danger btn-sm">
     <i class="fas fa-trash-alt"></i>
   </a>
-</div>
+</div>  

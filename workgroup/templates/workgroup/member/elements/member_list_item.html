@@ -1,10 +1,8 @@
 {% load i18n %}
 <div class="col-sm-5">
-  <strong>
-    {{ forloop.counter|add:counter }}
-    &nbsp;&nbsp;
-    {{ obj.person.short_name }}
-  </strong>
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.person.short_name }}</strong>
   &nbsp;&nbsp;
   <small>{{ obj.person.center }}</small>
 </div>

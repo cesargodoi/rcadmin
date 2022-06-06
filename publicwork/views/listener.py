@@ -64,9 +64,10 @@ def add_listener(request, lect_pk):
         )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_seeker(request, Seeker)
+        queryset, count = search_seeker(request, Seeker, _from, _to)
         object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
@@ -78,6 +79,7 @@ def add_listener(request, lect_pk):
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("add_listener", args=[lecture.pk]),
         "status_list": SEEKER_STATUS,
@@ -144,7 +146,6 @@ def add_frequency(request, pk):
     # get limitby
     _from, _to = LIMIT * (page - 1), LIMIT * page
 
-    object_list = None
     seeker = Seeker.objects.get(pk=pk)
 
     if request.GET.get("lect_pk"):
@@ -176,10 +177,10 @@ def add_frequency(request, pk):
         )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset = search_lecture(request, Lecture)
-        object_list = queryset[_from:_to]
+        object_list, count = search_lecture(request, Lecture, _from, _to)
         # add action links
         for item in object_list:
             item.add_link = reverse("add_frequency", args=[pk])
@@ -190,6 +191,7 @@ def add_frequency(request, pk):
         "counter": (page - 1) * LIMIT,
         "object": seeker,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
         "title": _("add frequency"),

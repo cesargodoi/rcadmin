@@ -1,9 +1,11 @@
 {% load i18n %}
-<div class="col-sm-1">
+<div class="col-sm-2">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
   <strong>{{ obj.date|date:'d/m/y' }}</strong>
 </div>
 
-<div class="col-sm-8">
+<div class="col-sm-7">
   <strong>
     {{ obj.theme }}
   </strong>
@@ -48,16 +50,6 @@
     {% if obj.listeners.all|length > 0 %}
       <strong>{{ obj.listeners.all|length }}</strong> 
       <i class="fas fa-users"></i>
-    {% endif %}
-  {% endif %}
-
-  {% if obj.center == request.user.person.center or request.user.is_superuser %}
-    {% if obj.click_link %}
-      <a type="button" 
-        href="{{ obj.click_link }}"
-        class="btn btn-light text-info btn-sm">
-        <i class="fas fa-eye"></i>
-      </a>
     {% endif %}
   {% endif %}
 </div>    

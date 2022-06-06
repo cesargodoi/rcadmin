@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from rcadmin.common import (
-    paginator,
     belongs_center,
     clear_session,
     SEEKER_STATUS,
@@ -23,6 +22,7 @@ from ..models import Seeker
 @login_required
 @permission_required("publicwork.view_seeker")
 def seeker_home(request):
+    clear_session(request, ["pwg"])
     # set limit of registers
     LIMIT = 10
     # select template and page of pagination
@@ -74,7 +74,6 @@ def seeker_detail(request, pk):
     age = (date.today() - seeker.birth).days // 365
     if request.GET.get("pwg"):
         request.session["pwg"] = request.GET["pwg"]
-
     context = {
         "object": seeker,
         "title": _("seeker detail"),
@@ -184,22 +183,39 @@ def seeker_reinsert(request, pk):
 @permission_required("publicwork.view_seeker")
 def seeker_frequencies(request, pk):
     belongs_center(request, pk, Seeker)
-    page = request.GET["page"] if request.GET.get("page") else 1
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/seeker/elements/frequency_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/seeker/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     seeker = Seeker.objects.get(pk=pk)
-    frequencies = seeker.listener_set.all()
-    ranking = sum([f.ranking for f in frequencies])
+    _object_list = seeker.listener_set.all()
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
+    ranking = sum([f.ranking for f in _object_list])
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": seeker,
         "title": _("seeker detail | frequencies"),
-        "object_list": paginator(frequencies, page=page),
         "nav": "seeker",
         "tab": "frequencies",
         "ranking": ranking,
     }
 
-    return render(request, "publicwork/seeker/detail.html", context)
+    return render(request, template_name, context)
 
 
 # seeker historic
@@ -207,22 +223,37 @@ def seeker_frequencies(request, pk):
 @permission_required("publicwork.view_seeker")
 def seeker_historic(request, pk):
     belongs_center(request, pk, Seeker)
-    page = request.GET["page"] if request.GET.get("page") else 1
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/seeker/elements/historic_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/seeker/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
     seeker = Seeker.objects.get(pk=pk)
-    historics = seeker.historicofseeker_set.all().order_by("-date")
+    _object_list = seeker.historicofseeker_set.all().order_by("-date")
 
-    object_list = paginator(historics, page=page)
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
     # add action links
     for item in object_list:
         item.click_link = reverse("update_historic", args=[pk, item.pk])
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": seeker,
         "title": _("seeker detail | historic"),
-        "object_list": object_list,
         "nav": "seeker",
         "tab": "historic",
     }
 
-    return render(request, "publicwork/seeker/detail.html", context)
+    return render(request, template_name, context)

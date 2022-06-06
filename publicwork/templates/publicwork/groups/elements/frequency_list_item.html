@@ -1,5 +1,7 @@
 {% load i18n %}
 <div class="col-sm-4">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
   <strong>{{ obj.name }}</strong>
   {% if obj.center != request.user.person.center %}
     &nbsp;&nbsp;

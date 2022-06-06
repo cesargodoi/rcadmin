@@ -17,6 +17,10 @@ ul {
   margin: 0;
 }
 
+.is-link {
+  cursor: pointer;
+}
+
 .bg-steel {
   background-color: var(--background-cabecalho);
 }
@@ -299,16 +303,18 @@ th:nth-child(3) {
 #submenu .nav-link {
   color: rgba(var(--nav-font), 0.7);
 }
+
 #submenu .nav-link.active {
   color: rgba(var(--nav-font), 1);
   font-weight: bold;
 }
+
 #submenu .nav-link:hover {
   color: rgba(var(--nav-font), 1);
 }
 
 
-#submenu .navbar-brand{
+#submenu .navbar-brand {
   color: var(--color-font);
 }
 
@@ -436,6 +442,6 @@ p {
   margin-bottom: 1rem;
 }
 
-.font-title{
+.font-title {
   color: #444444;
 }

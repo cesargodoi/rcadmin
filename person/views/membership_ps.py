@@ -15,22 +15,39 @@ from ..models import Person
 @login_required
 @permission_required("workgroup.view_membership")
 def membership_ps_list(request, person_id):
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "person/elements/membership_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "person/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
+
     queryset = Membership.objects.filter(person=person_id).order_by(
         "workgroup"
     )
     person = (
         queryset[0].person if queryset else Person.objects.get(id=person_id)
     )
-    object_list = paginator(queryset, page=request.GET.get("page"))
+    count = len(queryset)
+    object_list = queryset[_from:_to]
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "title": _("membership list"),
         "object": person,  # to header element
         "nav": "detail",
         "tab": "membership",
     }
-    return render(request, "person/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

@@ -10,9 +10,9 @@
       <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
     </div>
   </div>
-{% else %}
-  {% include "base/elements/search_result.html" %}
-{% endif %}
+  {% else %}
+    {% include "base/elements/search_result.html" %}
+  {% endif %}
 
 {% if object_list %}
   

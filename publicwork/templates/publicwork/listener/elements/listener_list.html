@@ -1,0 +1,32 @@
+{% load i18n %}
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == LIMIT %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 {% if obj.seeker.status == 'ITD' %}
+                                                         text-info
+                                                       {% elif not obj.seeker.is_active %}
+                                                         text-danger
+                                                       {% elif obj.seeker.center != request.user.person.center %}
+                                                         text-warning
+                                                       {% endif %}"
+      hx-get="{% url 'lecture_detail' object.pk %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+    >
+  {% else %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 {% if obj.seeker.status == 'ITD' %}
+                                                         text-info
+                                                       {% elif not obj.seeker.is_active %}
+                                                         text-danger
+                                                       {% elif obj.seeker.center != request.user.person.center %}
+                                                         text-warning
+                                                       {% endif %}"
+    >
+  {% endif %}
+
+    {% include "publicwork/listener/elements/listener_list_item.html" %}
+    
+  </div>
+{% endfor %}

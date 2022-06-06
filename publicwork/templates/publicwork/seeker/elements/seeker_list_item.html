@@ -2,11 +2,9 @@
 {% load i18n %}
 
 <div class="col-sm-10">
-  <strong>
-    {{ forloop.counter|add:counter }}
-    &nbsp;&nbsp;
-    {{ obj.name }}
-  </strong>
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
   <small>
     <em>
       &nbsp;&nbsp;&nbsp;
@@ -63,16 +61,6 @@
         href="{{ obj.del_member }}"
         class="btn btn-light text-danger btn-sm">
         <i class="fas fa-trash"></i>
-      </a>
-    {% endif %}
-  {% endif %}
-
-  {% if obj.to_detail %}
-    {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
-      <a type="button" 
-        href="{{ obj.to_detail }}"
-        class="btn btn-light text-primary btn-sm">
-        <i class="fas fa-eye"></i>
       </a>
     {% endif %}
   {% endif %}

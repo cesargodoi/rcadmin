@@ -1,10 +1,8 @@
 {% load i18n %}
 <div class="col-sm-5">
-  <strong>
-    {{ forloop.counter|add:counter }}
-    &nbsp;&nbsp;
-    {{ obj.name }}
-  </strong>
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
   &nbsp;&nbsp;
   <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
     {{ obj.center }}
@@ -32,14 +30,5 @@
   {% if obj.actives %}
     <strong>{{ obj.actives }}</strong> 
     <i class="fas fa-users"></i>
-  {% endif %}
-  {% if obj.click_link %}
-    {% if obj.center == request.user.person.center or request.user.is_superuser %}
-      <a type="button" 
-        href="{{ obj.click_link }}"
-        class="btn btn-light text-primary btn-sm">
-        <i class="fas fa-eye"></i>
-      </a>
-    {% endif %}
   {% endif %}
 </div>

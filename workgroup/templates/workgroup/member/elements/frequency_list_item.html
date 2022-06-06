@@ -1,16 +1,20 @@
 {% load base_extras %}
 {% load i18n %}
 
-<div class="col-sm-1">
+<div class="col-sm-6">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
   <strong>{{ obj.event.date|date:'d/m/y' }}</strong>
-</div>
-<div class="col-sm-3">
+  &nbsp;&nbsp;&nbsp;
   <strong>{{ obj.event.activity.name }}</strong>
+  &nbsp;&nbsp;&nbsp;
+  <small>
+    {{ obj.event.center }} 
+    &nbsp;&nbsp;
+    <em>({{ obj.event.activity.get_activity_type_display }})</em>
+  </small>
 </div>
-<div class="col-sm-3 small">
-  <strong>{{ obj.event.activity.get_activity_type_display }}</strong> | {{ obj.event.center }}
-</div>
-<div class="col-sm-3 small">
+<div class="col-sm-4 small">
   {% if obj.observations %}
     {{ obj.observations }}
   {% endif%}

@@ -2,52 +2,24 @@
 
 {% if object_list %} 
 
-  {% if object_list.has_other_pages %} 
-  {% include "base/elements/paginator.html" %} 
-  {% endif %}
-
-  {% for wg_obj in object_list %}
-    <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'membership_ps_update' object.id wg_obj.pk %}';"
-        style="cursor: pointer;">
-
-      <div class="col-sm-4">
-        <strong>{{ wg_obj.workgroup.name }}</strong>
-      </div>
-
-      <div class="col-sm-2">
-        <strong>{{ wg_obj.get_role_type_display }}</strong>
-      </div>
-
-      <div class="col-sm-4 small align-middle">
-        {% if wg_obj.observations %}
-          {{ wg_obj.observations }}
-        {% endif %}
-      </div>
-
-      <div class="col-sm text-right">
-        <a type="button" 
-          class="btn btn-light text-danger btn-sm"
-          href="{% url 'membership_ps_delete' object.id wg_obj.pk %}">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      </div>
-      
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Membership' %}</h4>
     </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %} 
-  {% include "base/elements/paginator.html" %} 
-  {% endif %} 
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
+  {% include "person/elements/membership_list.html" %} 
 
 {% else %}
 
 <div class="alert alert-secondary">
   <h4 class="alert-heading">
     {% if init %}
-    {% trans 'choose your search terms' %}
+      {% trans 'choose your search terms' %}
     {% else %}
-    {% trans 'membership not found' %}
+      {% trans 'membership not found' %}
     {% endif %}
   </h4> 
 </div>

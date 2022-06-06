@@ -1,42 +1,37 @@
 {% load i18n %}
-
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-6">
-          {{ object.date|date:'d/m/y' }}
-        </div>
-        <div class="col-6 text-right">
-          {% if object.center != request.user.person.center %}
-          &nbsp;&nbsp;&nbsp;
-          <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
-          {% endif %}
-          {% if not object.is_active %}
-          <span class="badge badge-pill badge-danger">{% trans 'inactive' %}</span>
-          {% endif %}
-          <strong>{{ object.get_type_display }}</strong>
-        </div>
-      </div>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-6">
+      {{ object.date|date:'d/m/y' }}
     </div>
-    <div class="row">
-      <div class="col-10">
-        <h4>
-          {{ object.theme }}
-          <small class="text-muted ">
-            &nbsp;&nbsp; {{ object.center }}
-          </small>
-        </h4>
-      </div>
-      <div class="col text-right">
-        {% if object.listeners.all|length > 0 %}
-          {{ object.listeners.all|length }}
-          <i class="fas fa-users"></i>
-        {% endif %}
-      </div>
+    <div class="col-6 text-right">
+      {% if object.center != request.user.person.center %}
+        &nbsp;&nbsp;&nbsp;
+        <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
+      {% endif %}
+      {% if not object.is_active %}
+        <span class="badge badge-pill badge-danger">{% trans 'inactive' %}</span>
+      {% endif %}
+      <strong>{{ object.get_type_display }}</strong>
     </div>
-    {% if object.description %}
-    <p><small class="text-muted">{{ object.description }}</small></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-10">
+    <h4>
+      {{ object.theme }}
+      <small class="text-muted ">
+        &nbsp;&nbsp; {{ object.center }}
+      </small>
+    </h4>
+  </div>
+  <div class="col text-right">
+    {% if object.listeners.all|length > 0 %}
+      {{ object.listeners.all|length }}
+      <i class="fas fa-users"></i>
     {% endif %}
   </div>
-</article>
+</div>
+{% if object.description %}
+  <p><small class="text-muted">{{ object.description }}</small></p>
+{% endif %}

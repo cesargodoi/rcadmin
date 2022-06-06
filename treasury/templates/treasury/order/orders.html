@@ -1,17 +1,10 @@
 {% load base_extras %}
 {% load i18n %}
 
-<h4>{% trans 'Orders' %}</h4>
-
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for object in object_list %}
-    {% include "treasury/order/elements/order.html" %}
-  {% endfor %}
+  {% include "base/elements/search_result.html" %}
+  {% include "treasury/order/elements/order_list.html" %}
 
 {% else %}
 

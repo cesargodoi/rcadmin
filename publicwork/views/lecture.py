@@ -5,7 +5,7 @@ from django.http.response import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import paginator, LECTURE_TYPES, clear_session
+from rcadmin.common import LECTURE_TYPES, clear_session
 from base.searchs import search_lecture
 
 
@@ -59,20 +59,38 @@ def lecture_home(request):
 @permission_required("publicwork.view_lecture")
 def lecture_detail(request, pk):
     lect_object = Lecture.objects.get(pk=pk)
-    queryset = lect_object.listener_set.all().order_by("seeker__name_sa")
+    # set limit of registers
+    LIMIT = 10
+    # select template and page of pagination
+    if request.htmx:
+        template_name = "publicwork/listener/elements/listener_list.html"
+        page = int(request.GET.get("page"))
+    else:
+        template_name = "publicwork/lecture/detail.html"
+        page = 1
+    # get limitby
+    _from, _to = LIMIT * (page - 1), LIMIT * page
 
-    object_list = paginator(queryset, 25, page=request.GET.get("page"))
+    _object_list = lect_object.listener_set.all().order_by("seeker__name_sa")
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
+
     # add action links
     for item in object_list:
         item.click_link = reverse("update_listener", args=[pk, item.pk])
         item.del_link = reverse("remove_listener", args=[pk, item.pk])
 
     context = {
-        "object": lect_object,
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
+        "object": lect_object,
         "title": _("lecture detail"),
     }
-    return render(request, "publicwork/lecture/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

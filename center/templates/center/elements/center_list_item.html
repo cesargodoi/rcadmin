@@ -1,12 +1,8 @@
-{% load base_extras %}
 {% load i18n %}
-
 <div class="col-sm-10">
-  <strong>
-    {{ forloop.counter|add:counter }}
-    &nbsp;&nbsp;
-    {{ obj.name }}
-  </strong>
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
   <small class="{% if not obj.is_active %}text-danger{% endif %}">
     &nbsp;&nbsp;&nbsp;
     <em>{{ obj.get_center_type_display }}</em>
@@ -38,15 +34,5 @@
     <i class="fas fa-toggle-on"></i>
   {% else %} 
     <i class="fas fa-toggle-off text-muted"></i>
-  {% endif %}
-
-  {% if obj.click_link %}
-    {% if request.user.is_superuser or request.user|has_group:"office" %}
-      <a type="button" 
-        href="{{ obj.click_link }}"
-        class="btn btn-light text-primary btn-sm">
-        <i class="fas fa-eye"></i>
-      </a>
-    {% endif %}
   {% endif %}
 </div>

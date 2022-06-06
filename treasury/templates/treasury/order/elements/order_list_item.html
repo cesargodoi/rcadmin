@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<div class="col-sm-2">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.created_on | date:"d/m/y" }}</strong>
+</div>
+<div class="col-sm-4">
+  {{ obj.person.name }}
+</div>
+<div class="col-sm-2">
+  {{ obj.payments.count }} payment{{ obj.payments.count|pluralize }}
+</div>
+<div class="col-sm-1 text-right">
+  <small>
+    {% if obj.self_payed %}
+    <span class="badge badge-pill badge-secondary">
+      {% trans 'made by the pupil' %}
+    </span>
+    {% endif %}
+  </small>
+</div>
+<div class="col-sm-3 text-right">
+  <span class="font-italic text-{% if obj.status == 'PND' %}info
+              {% elif obj.status == 'CCL' %}danger
+              {% else %}success{% endif %}">
+    <small>
+      {{ obj.get_status_display }}
+    </small>
+  </span>
+  &nbsp;
+  <span class="font-weight-bold text-{% if obj.status == 'PND' %}info
+              {% elif obj.status == 'CCL' %}danger
+              {% else %}success{% endif %}">
+    {{ obj.amount }}
+  </span>
+</div>

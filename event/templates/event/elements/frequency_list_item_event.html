@@ -1,11 +1,13 @@
 {% load base_extras %}
 {% load i18n %}
 
-<div class="col-sm-1">
+<div class="col-sm-2">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
   <strong>{{ obj.event.date|date:"d/m/y" }}</strong>
 </div>
 
-<div class="col-sm-9">
+<div class="col-sm-8">
   <strong>{{ obj.event.activity }}</strong>
   <small>
     &nbsp;&nbsp;&nbsp;

@@ -2,18 +2,18 @@
 
 {% block content %}
 
-{% include "center/navbar.html" %}
+  {% include "center/navbar.html" %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <form class="form-control-sm mt-1" method="GET">
-      {% csrf_token %}
-      {% include "base/searchs/center.html" %}
-    </form>
-    <br>
-    {% include "base/elements/search_result.html" %}
-    {% include 'center/centers.html' %}
-  </div>
-</article>
+  <article class="media content-section mb-1">
+    <div class="media-body">
+      <form class="form-control-sm mt-1" method="GET">
+        {% csrf_token %}
+        {% include "base/searchs/center.html" %}
+      </form>
+      <br>
+      {% include "base/elements/search_result.html" %}
+      {% include 'center/centers.html' %}
+    </div>
+  </article>
 
 {% endblock %}
