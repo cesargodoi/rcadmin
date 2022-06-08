@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="col-sm-5">
-  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  <small class="text-muted align-top">{{ pos }}</small>
   &nbsp;&nbsp;
   <strong>{{ obj.person.short_name }}</strong>
   &nbsp;&nbsp;
@@ -22,7 +22,7 @@
     {% if obj.update_link %}
       <button 
         type="button" 
-        onclick="addEditData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+        onclick="addEditData('{{ obj.update_link }}?pos={{ pos }}')"
         class="btn btn-light text-warning btn-sm"
       >
         <i class="fas fa-edit"></i>

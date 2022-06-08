@@ -4,7 +4,11 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import ACTIVITY_TYPES, clear_session
+from rcadmin.common import (
+    ACTIVITY_TYPES,
+    clear_session,
+    get_template_and_pagination,
+)
 from base.searchs import search_event
 
 from ..forms import EventForm
@@ -14,18 +18,10 @@ from ..models import Event
 @login_required
 @permission_required("event.view_event")
 def event_home(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "event/elements/event_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "event/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-    # get object_list and count
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "event/home.html", "event/elements/event_list.html"
+    )
+
     if request.GET.get("init"):
         object_list, count = None, None
         clear_session(request, ["search"])
@@ -57,18 +53,11 @@ def event_home(request):
 @permission_required("event.view_event")
 def event_detail(request, pk):
     object = Event.objects.get(pk=pk)
-    # get page
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "event/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "event/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-    # get object_list and count
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "event/detail.html", "event/elements/frequency_list.html"
+    )
+
     _object_list = object.frequency_set.all().order_by("person__name_sa")
     count = len(_object_list)
     object_list = _object_list[_from:_to]

@@ -6,7 +6,11 @@ from django.utils.translation import gettext as _
 
 from event.models import Event
 from base.searchs import search_event
-from rcadmin.common import ACTIVITY_TYPES, clear_session
+from rcadmin.common import (
+    ACTIVITY_TYPES,
+    clear_session,
+    get_template_and_pagination,
+)
 
 from ..models import Person
 
@@ -14,17 +18,9 @@ from ..models import Person
 @login_required
 @permission_required("event.view_event")
 def frequency_ps_list(request, person_id):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "person/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "person/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "person/detail.html", "person/elements/frequency_list.html"
+    )
 
     person = Person.objects.get(id=person_id)
     queryset = person.frequency_set.all().order_by("-event__date")
@@ -52,17 +48,11 @@ def frequency_ps_list(request, person_id):
 @login_required
 @permission_required("person.change_person")
 def frequency_ps_insert(request, person_id):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "person/elements/event_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "person/frequency_insert.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "person/frequency_insert.html",
+        "person/elements/event_list.html",
+    )
 
     person = Person.objects.get(id=person_id)
 

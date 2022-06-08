@@ -23,9 +23,6 @@
     {% endif %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <!-- Font Awesome -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
 
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
 
@@ -59,9 +56,6 @@
 
     <!-- htmx -->
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
-    <!--
-    <script src="https://unpkg.com/htmx.org@1.6.0" integrity="sha384-G4dtlRlMBrk5fEiRXDsLjriPo8Qk5ZeHVVxS8KhX6D7I9XXJlNqbdvRlp9/glk5D" crossorigin="anonymous"></script>
-    -->
 
     <!-- Font Awesome-->
     <script src="https://kit.fontawesome.com/7286c67a7a.js" crossorigin="anonymous"></script>
@@ -80,6 +74,10 @@
           },
         });
       }
+
+      document.body.addEventListener('htmx:configRequest', (event) => {
+          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
     </script>
 
     {% block scripts %}{% endblock %}

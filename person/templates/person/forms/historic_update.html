@@ -4,14 +4,14 @@
 <form 
   id="form"
   hx-post="{{ to_update }}?pos={{pos}}"
-  hx-target="#MBR{{ mbr_pk }}"
+  hx-target="#HST{{ hst_pk }}"
   hx-swap="innerHTML"
 >
   {% csrf_token %}
 
   <div class="modal-header">
     <h5 class="modal-title">
-      {% trans 'Update Membership' %}
+      {% trans 'Update Historic' %}
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -19,17 +19,6 @@
   </div>
 
   <div class="modal-body">
-    <table class="table table-sm">
-      <tr>
-        <th class="small" width="20%">{% trans 'person' %}</th>
-        <td>
-          <strong>{{ object.person.name }}</strong> 
-          &nbsp;&nbsp; 
-          <small class="text-muted font-italic">{{ object.person.center }}</small>
-        </td>
-      </tr>
-    </table>
-    <hr>
     {{ form | crispy }}
   </div>
   <div class="modal-footer">

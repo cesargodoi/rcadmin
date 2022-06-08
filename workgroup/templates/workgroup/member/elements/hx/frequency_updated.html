@@ -1,8 +1,7 @@
 {% load base_extras %}
 {% load i18n %}
-
 <div class="col-sm-6">
-  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  <small class="text-muted align-top">{{ pos }}</small>
   &nbsp;&nbsp;
   <strong>{{ obj.event.date|date:'d/m/y' }}</strong>
   &nbsp;&nbsp;&nbsp;
@@ -26,7 +25,7 @@
   {% endif %}
   &nbsp;&nbsp;
   <button type="button" 
-    onclick="addEditData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+    onclick="addEditData('{{ obj.update_link }}?pos={{ pos }}')"
     class="btn btn-light text-warning btn-sm">
     <i class="fas fa-edit"></i>
   </button>

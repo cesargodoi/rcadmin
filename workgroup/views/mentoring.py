@@ -1,12 +1,17 @@
 from datetime import datetime, date
 
+from django.http import QueryDict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import ACTIVITY_TYPES, clear_session
+from rcadmin.common import (
+    ACTIVITY_TYPES,
+    clear_session,
+    get_template_and_pagination,
+)
 from base.searchs import search_event
 
 from person.models import Person
@@ -46,17 +51,11 @@ def mentoring_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_group_detail(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/mentoring/elements/person_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/mentoring/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/mentoring/detail.html",
+        "workgroup/mentoring/elements/person_list.html",
+    )
 
     if request.session.get("frequencies"):
         del request.session["frequencies"]
@@ -102,17 +101,11 @@ def mentoring_group_detail(request, pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_group_frequencies(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/mentoring/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/mentoring/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/mentoring/detail.html",
+        "workgroup/mentoring/elements/frequency_list.html",
+    )
 
     if request.session.get("frequencies"):
         del request.session["frequencies"]
@@ -173,22 +166,25 @@ def mentoring_member_detail(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_frequencies(request, group_pk, person_pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/member/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/member/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/member/detail.html",
+        "workgroup/member/elements/frequency_list.html",
+    )
 
     obj = Person.objects.get(pk=person_pk)
     count = obj.frequency_set.all().count()
     object_list = obj.frequency_set.all().order_by("-event__date")[_from:_to]
     ranking = sum([f.ranking for f in object_list])
+
+    # add action links
+    for item in object_list:
+        item.update_link = reverse(
+            "membership_update_frequency", args=[group_pk, person_pk, item.pk]
+        )
+        item.del_link = reverse(
+            "membership_remove_frequency", args=[group_pk, person_pk, item.pk]
+        )
 
     context = {
         "LIMIT": LIMIT,
@@ -210,17 +206,11 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_member_historic(request, group_pk, person_pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/member/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/member/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/member/detail.html",
+        "workgroup/member/elements/historic_list.html",
+    )
 
     obj = Person.objects.get(pk=person_pk)
     page = request.GET["page"] if request.GET.get("page") else 1
@@ -246,17 +236,11 @@ def mentoring_member_historic(request, group_pk, person_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def membership_add_frequency(request, group_pk, person_pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/member/elements/event_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/member/add_frequency.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/member/add_frequency.html",
+        "workgroup/member/elements/event_list.html",
+    )
 
     person = Person.objects.get(pk=person_pk)
 
@@ -326,28 +310,41 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
     frequency = Frequency.objects.get(pk=freq_pk)
 
     if request.method == "POST":
-        frequency.ranking = (
-            int(request.POST["ranking"]) if request.POST.get("ranking") else 0
-        )
-        frequency.observations = request.POST["observations"]
-        frequency.save()
-        messages.success(request, _("The frequency has been updated!"))
-        return redirect(
-            "mentoring_member_frequencies",
-            group_pk=group_pk,
-            person_pk=person_pk,
-        )
+        data = QueryDict(request.body).dict()
+        form = MentoringFrequencyForm(data, instance=frequency)
+        if form.is_valid():
+            form.save()
 
+            frequency.update_link = reverse(
+                "membership_update_frequency",
+                args=[group_pk, person_pk, frequency.pk],
+            )
+            frequency.del_link = reverse(
+                "membership_remove_frequency",
+                args=[group_pk, person_pk, frequency.pk],
+            )
+
+            template_name = (
+                "workgroup/member/elements/hx/frequency_updated.html"
+            )
+            context = {"obj": frequency, "pos": request.GET.get("pos")}
+            return render(request, template_name, context)
+
+    template_name = "workgroup/member/frequency_update.html"
     context = {
+        "form": MentoringFrequencyForm(instance=frequency),
         "object": person,
         "event": frequency.event,
-        "form": MentoringFrequencyForm(instance=frequency),
-        "title": _("update frequency | person side"),
+        "to_update": reverse(
+            "membership_update_frequency", args=[group_pk, person_pk, freq_pk]
+        ),
         "goback": reverse(
             "mentoring_member_frequencies", args=[group_pk, person_pk]
         ),
+        "freq_pk": freq_pk,
+        "pos": request.GET.get("pos"),
     }
-    return render(request, "workgroup/member/update_frequency.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -374,17 +371,11 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_add_frequencies(request, group_pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/mentoring/elements/event_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/mentoring/add_frequencies.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/mentoring/add_frequencies.html",
+        "workgroup/mentoring/elements/event_list.html",
+    )
 
     workgroup = Workgroup.objects.get(pk=group_pk)
 

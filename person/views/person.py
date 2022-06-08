@@ -10,7 +10,12 @@ from django.utils import timezone
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import ASPECTS, STATUS, clear_session
+from rcadmin.common import (
+    ASPECTS,
+    STATUS,
+    clear_session,
+    get_template_and_pagination,
+)
 from user.models import User
 from base.searchs import search_person
 
@@ -21,18 +26,10 @@ from ..models import Historic, Person
 @login_required
 @permission_required("person.view_person")
 def person_home(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "person/elements/person_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "person/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-    # get object_list and count
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "person/home.html", "person/elements/person_list.html"
+    )
+
     if request.GET.get("init"):
         object_list, count = None, None
         clear_session(request, ["search"])

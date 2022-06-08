@@ -5,7 +5,11 @@ from django.http.response import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import LECTURE_TYPES, clear_session
+from rcadmin.common import (
+    LECTURE_TYPES,
+    clear_session,
+    get_template_and_pagination,
+)
 from base.searchs import search_lecture
 
 
@@ -16,17 +20,11 @@ from ..models import Lecture
 @login_required
 @permission_required("publicwork.view_lecture")
 def lecture_home(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/lecture/elements/lecture_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/lecture/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/lecture/home.html",
+        "publicwork/lecture/elements/lecture_list.html",
+    )
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -59,17 +57,12 @@ def lecture_home(request):
 @permission_required("publicwork.view_lecture")
 def lecture_detail(request, pk):
     lect_object = Lecture.objects.get(pk=pk)
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/listener/elements/listener_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/lecture/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/lecture/detail.html",
+        "publicwork/listener/elements/listener_list.html",
+    )
 
     _object_list = lect_object.listener_set.all().order_by("seeker__name_sa")
 

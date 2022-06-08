@@ -10,6 +10,7 @@ from rcadmin.common import (
     belongs_center,
     clear_session,
     SEEKER_STATUS,
+    get_template_and_pagination,
 )
 
 from center.models import Center
@@ -23,17 +24,12 @@ from ..models import Seeker
 @permission_required("publicwork.view_seeker")
 def seeker_home(request):
     clear_session(request, ["pwg"])
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/seeker/elements/seeker_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/seeker/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/seeker/home.html",
+        "publicwork/seeker/elements/seeker_list.html",
+    )
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -183,17 +179,12 @@ def seeker_reinsert(request, pk):
 @permission_required("publicwork.view_seeker")
 def seeker_frequencies(request, pk):
     belongs_center(request, pk, Seeker)
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/seeker/elements/frequency_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/seeker/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/seeker/detail.html",
+        "publicwork/seeker/elements/frequency_list.html",
+    )
 
     seeker = Seeker.objects.get(pk=pk)
     _object_list = seeker.listener_set.all()
@@ -223,17 +214,12 @@ def seeker_frequencies(request, pk):
 @permission_required("publicwork.view_seeker")
 def seeker_historic(request, pk):
     belongs_center(request, pk, Seeker)
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/seeker/elements/historic_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/seeker/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/seeker/detail.html",
+        "publicwork/seeker/elements/historic_list.html",
+    )
 
     seeker = Seeker.objects.get(pk=pk)
     _object_list = seeker.historicofseeker_set.all().order_by("-date")

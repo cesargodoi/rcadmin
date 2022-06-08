@@ -1,6 +1,7 @@
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
+      id="MBR{{ obj.pk }}"
       class="row border-top border-secondary pb-2 pt-2 {% if not obj.person.is_active %}
                                                          text-danger
                                                        {% elif obj.person.center != request.user.person.center %}
@@ -13,6 +14,7 @@
     >
   {% else %}
     <div 
+      id="MBR{{ obj.pk }}"
       class="row border-top border-secondary pb-2 pt-2 {% if not obj.person.is_active %}
                                                          text-danger
                                                        {% elif obj.person.center != request.user.person.center %}

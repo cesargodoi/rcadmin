@@ -15,6 +15,7 @@ from rcadmin.common import (
     PAYFORM_TYPES,
     short_name,
     clear_session,
+    get_template_and_pagination,
 )
 from base.searchs import search_order
 
@@ -25,18 +26,11 @@ from ..models import BankFlags, Order, PayTypes
 @login_required
 @permission_required("treasury.view_order")
 def orders(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "treasury/order/elements/order_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "treasury/order/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-    # get object_list and count
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "treasury/order/home.html",
+        "treasury/order/elements/order_list.html",
+    )
 
     if request.session.get("order"):
         clear_session(request, ["order"])

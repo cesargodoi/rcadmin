@@ -8,6 +8,7 @@ from base.searchs import search_center
 from django.http.response import Http404
 from person.models import Person
 
+from rcadmin.common import get_template_and_pagination
 from .forms import CenterForm, SelectNewCenterForm
 from .models import Center
 
@@ -15,18 +16,10 @@ from .models import Center
 @login_required
 @permission_required("center.view_center")
 def center_home(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "center/elements/center_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "center/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-    # get object_list and count
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "center/home.html", "center/elements/center_list.html"
+    )
+
     if request.GET.get("init"):
         object_list, count = None, None
         clear_session(request, ["search"])

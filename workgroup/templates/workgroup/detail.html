@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -12,4 +13,17 @@
   </div>
 </article>
 
-{% endblock %}
+{% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function addEditData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

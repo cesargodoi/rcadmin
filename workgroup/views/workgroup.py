@@ -4,7 +4,11 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from rcadmin.common import WORKGROUP_TYPES, clear_session
+from rcadmin.common import (
+    WORKGROUP_TYPES,
+    clear_session,
+    get_template_and_pagination,
+)
 from base.searchs import search_workgroup
 
 from ..forms import WorkgroupForm
@@ -14,17 +18,11 @@ from ..models import Workgroup
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_home(request):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/elements/workgroup_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/home.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/home.html",
+        "workgroup/elements/workgroup_list.html",
+    )
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -53,17 +51,11 @@ def workgroup_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 def workgroup_detail(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/member/elements/member_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/detail.html",
+        "workgroup/member/elements/member_list.html",
+    )
 
     object = Workgroup.objects.get(pk=pk)
 
@@ -74,7 +66,7 @@ def workgroup_detail(request, pk):
 
     # add action links
     for member in object_list:
-        member.click_link = reverse("membership_update", args=[pk, member.pk])
+        member.update_link = reverse("membership_update", args=[pk, member.pk])
         member.del_link = reverse("membership_delete", args=[pk, member.pk])
 
     context = {

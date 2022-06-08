@@ -7,6 +7,7 @@ from rcadmin.common import (
     clear_session,
     SEEKER_STATUS,
     LECTURE_TYPES,
+    get_template_and_pagination,
 )
 from django.urls import reverse
 
@@ -20,17 +21,11 @@ from ..models import Lecture, Seeker, Listener
 @login_required
 @permission_required("publicwork.add_listener")
 def add_listener(request, lect_pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/listener/elements/seeker_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/listener/add.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/listener/add.html"
+        "publicwork/listener/elements/seeker_list.html",
+    )
 
     object_list = None
     lecture = Lecture.objects.get(pk=lect_pk)
@@ -134,19 +129,13 @@ def remove_listener(request, lect_pk, lstn_pk):
 @login_required
 @permission_required("publicwork.add_listener")
 def add_frequency(request, pk):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "publicwork/listener/elements/lecture_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "publicwork/seeker/add_or_change.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
-
     seeker = Seeker.objects.get(pk=pk)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/seeker/add_or_change.html",
+        "publicwork/listener/elements/lecture_list.html",
+    )
 
     if request.GET.get("lect_pk"):
         lecture = Lecture.objects.get(pk=request.GET["lect_pk"])

@@ -1,11 +1,14 @@
 from datetime import datetime
 
+from django.http import QueryDict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from rcadmin.common import get_template_and_pagination
 from ..forms import HistoricForm
 from ..models import Historic, Person
 
@@ -13,17 +16,9 @@ from ..models import Historic, Person
 @login_required
 @permission_required("person.view_historic")
 def person_historic(request, person_id):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "person/elements/historic_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "person/detail.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "person/detail.html", "person/elements/historic_list.html"
+    )
 
     queryset = Historic.objects.filter(person=person_id).order_by("-date")
     person = (
@@ -32,6 +27,13 @@ def person_historic(request, person_id):
 
     count = len(queryset)
     object_list = queryset[_from:_to]
+
+    # add action links
+    for item in object_list:
+        item.update_link = reverse(
+            "historic_update", args=[person_id, item.pk]
+        )
+        item.del_link = reverse("historic_delete", args=[person_id, item.pk])
 
     if not request.htmx and object_list:
         message = f"{count} records were found in the database"
@@ -84,8 +86,10 @@ def historic_create(request, person_id):
 @permission_required("person.change_historic")
 def historic_update(request, person_id, pk):
     historic = Historic.objects.get(pk=pk)
+
     if request.method == "POST":
-        form = HistoricForm(request.POST, instance=historic)
+        data = QueryDict(request.body).dict()
+        form = HistoricForm(data, instance=historic)
         if form.is_valid():
             form.save()
             adjust_person_side(
@@ -93,15 +97,26 @@ def historic_update(request, person_id, pk):
                 request.POST["occurrence"],
                 request.POST["date"],
             )
-            messages.success(request, "The Historic has been updated!")
-        return redirect("person_historic", person_id=person_id)
 
+            historic.update_link = reverse(
+                "historic_update", args=[person_id, pk]
+            )
+            historic.del_link = reverse(
+                "historic_delete", args=[person_id, pk]
+            )
+
+            template_name = "person/elements/hx/historic_updated.html"
+            context = {"obj": historic, "pos": request.GET.get("pos")}
+            return render(request, template_name, context)
+
+    template_name = "person/forms/historic_update.html"
     context = {
         "form": HistoricForm(instance=historic),
-        "title": _("update historic"),
-        "person_id": person_id,  # to header element
+        "to_update": reverse("historic_update", args=[person_id, pk]),
+        "hst_pk": pk,
+        "pos": request.GET.get("pos"),
     }
-    return render(request, "person/forms/historic.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

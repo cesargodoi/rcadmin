@@ -19,17 +19,6 @@
   </div>
 
   <div class="modal-body">
-    <table class="table table-sm">
-      <tr>
-        <th class="small" width="20%">{% trans 'person' %}</th>
-        <td>
-          <strong>{{ object.person.name }}</strong> 
-          &nbsp;&nbsp; 
-          <small class="text-muted font-italic">{{ object.person.center }}</small>
-        </td>
-      </tr>
-    </table>
-    <hr>
     {{ form | crispy }}
   </div>
   <div class="modal-footer">

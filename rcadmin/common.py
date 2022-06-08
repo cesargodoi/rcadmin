@@ -319,6 +319,20 @@ def get_filename(instance, field=None):
     return f"{name}.{ext}"
 
 
+def get_template_and_pagination(request, tmplt, tmplt_htmx, limit=10):
+    # select template and page of pagination
+    if request.htmx:
+        template_name = tmplt_htmx
+        page = int(request.GET.get("page", 1))
+    else:
+        template_name = tmplt
+        page = 1
+    # get limitby
+    _from, _to = limit * (page - 1), limit * page
+
+    return (limit, template_name, _from, _to, page)
+
+
 #  sanitize csv ###############################################################
 # lists to sanitize class
 DEFAULT_COLUMNS = [

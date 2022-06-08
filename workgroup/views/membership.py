@@ -1,3 +1,4 @@
+from django.http import QueryDict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
@@ -6,7 +7,12 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.models import Group
 
 from person.models import Person
-from rcadmin.common import ASPECTS, STATUS, clear_session
+from rcadmin.common import (
+    ASPECTS,
+    STATUS,
+    clear_session,
+    get_template_and_pagination,
+)
 
 from ..forms import MembershipForm
 from ..models import Membership, Workgroup
@@ -16,17 +22,11 @@ from base.searchs import search_person
 @login_required
 @permission_required("workgroup.add_membership")
 def membership_insert(request, workgroup_id):
-    # set limit of registers
-    LIMIT = 10
-    # select template and page of pagination
-    if request.htmx:
-        template_name = "workgroup/elements/person_list.html"
-        page = int(request.GET.get("page"))
-    else:
-        template_name = "workgroup/membership_insert.html"
-        page = 1
-    # get limitby
-    _from, _to = LIMIT * (page - 1), LIMIT * page
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "workgroup/membership_insert.html",
+        "workgroup/elements/person_list.html",
+    )
 
     workgroup = Workgroup.objects.get(pk=workgroup_id)
 
@@ -96,21 +96,32 @@ def membership_update(request, workgroup_id, pk):
     membership = Membership.objects.get(pk=pk)
 
     if request.method == "POST":
-        form = MembershipForm(request.POST, instance=membership)
+        data = QueryDict(request.body).dict()
+        form = MembershipForm(data, instance=membership)
         if form.is_valid():
             form.save()
             ensure_mentoring_permission(form.cleaned_data["person"])
 
-            messages.success(request, _("The Membership has been updated!"))
+            membership.update_link = reverse(
+                "membership_update", args=[workgroup_id, pk]
+            )
+            membership.del_link = reverse(
+                "membership_delete", args=[workgroup_id, pk]
+            )
 
-        return redirect("workgroup_detail", pk=workgroup_id)
+            template_name = "workgroup/member/elements/hx/member_updated.html"
+            context = {"obj": membership, "pos": request.GET.get("pos")}
+            return render(request, template_name, context)
 
+    template_name = "workgroup/membership_update.html"
     context = {
         "form": MembershipForm(instance=membership),
-        "title": _("update membership"),
-        "object": membership.workgroup,
+        "object": membership,
+        "to_update": reverse("membership_update", args=[workgroup_id, pk]),
+        "mbr_pk": pk,
+        "pos": request.GET.get("pos"),
     }
-    return render(request, "workgroup/membership_update.html", context)
+    return render(request, template_name, context)
 
 
 @login_required

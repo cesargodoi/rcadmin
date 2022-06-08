@@ -4,14 +4,14 @@
 <form 
   id="form"
   hx-post="{{ to_update }}?pos={{pos}}"
-  hx-target="#MBR{{ mbr_pk }}"
+  hx-target="#FRQ{{ freq_pk }}"
   hx-swap="innerHTML"
 >
   {% csrf_token %}
 
   <div class="modal-header">
     <h5 class="modal-title">
-      {% trans 'Update Membership' %}
+      {% trans 'Update Frequency' %}
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -21,12 +21,16 @@
   <div class="modal-body">
     <table class="table table-sm">
       <tr>
-        <th class="small" width="20%">{% trans 'person' %}</th>
-        <td>
-          <strong>{{ object.person.name }}</strong> 
-          &nbsp;&nbsp; 
-          <small class="text-muted font-italic">{{ object.person.center }}</small>
-        </td>
+        <th class="small" width="20%">{% trans 'date' %}</th>
+        <td><strong>{{ event.date | date:"d/m/y" }}</strong></td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'event' %}</th>
+        <td>{{ event.activity.name }} &nbsp;&nbsp; <small class="font-italic">{{ event.activity.get_activity_type_display }}</small></td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'local' %}</th>
+        <td>{{ event.center }}</td>
       </tr>
     </table>
     <hr>

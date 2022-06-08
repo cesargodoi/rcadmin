@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="col-sm-4">
-  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  <small class="text-muted align-top">{{ pos }}</small>
   &nbsp;&nbsp;
   <strong>{{ obj.workgroup.name }}</strong>
   
@@ -30,7 +30,7 @@
   {% if obj.update_link %}
     <button 
       type="button" 
-      onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+      onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
       class="btn btn-light text-warning btn-sm"
     >
       <i class="fas fa-edit"></i>
@@ -39,11 +39,8 @@
   {% if obj.del_link %}
     <button
       type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
       class="btn btn-light text-danger btn-sm"
-      hx-confirm="{% trans 'Are you sure you want to complete this action?' %}"
-      hx-delete="{{ obj.del_link }}" 
-      hx-target="#membershipList" 
-      hx-swap="innerHTML"
     >
       <i class="fas fa-trash-alt"></i>
     </button>
