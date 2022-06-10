@@ -1,32 +1,62 @@
-{% extends "base/base.html" %}
 {% load i18n %}
-
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% if hst_pk %}
+  <form 
+    id="form"
+    hx-post="{{ to_update }}?pos={{pos}}"
+    hx-target="#HST{{ hst_pk }}"
+    hx-swap="innerHTML"
+  >
+{% else %}
+  <form method="POST" action="{{ to_create }}">
+{% endif %}
 
-<div class="text-right mb-3">
-  <button 
-    class="btn btn-{% if to_create %}primary{% else %}warning{% endif %} mt-2"
-    onclick="document.getElementById('form').submit();">
-    <i class="fas fa-check"></i> {% trans 'Save' %}
-  </button>
-  <a class="btn btn-light text-info mt-2 mr-3"
-    href="{% url 'person_historic' person_id %}">
-    <i class="fas fa-chevron-left"></i> 
-    {% trans 'Back' %}
-  </a>
-</div>
+  {% csrf_token %}
 
-
-<article class="media content-section">
-  <div class="media-body">
-    <h4>{% if to_create %}{% trans 'Create' %}{% else %}{% trans 'Update' %}{% endif %} {% trans 'Historic' %}</h4>
-    <form method="POST" enctype="multipart/form-data" id="form">
-      {% csrf_token %}
-      {{ form | crispy }}
-    </form>
+  <div class="modal-header {% if hst_pk %}bg-warning{% else %}bg-primary{% endif %}">
+    <h4 class="modal-title {% if hst_pk %}text-dark{% else %}text-light{% endif %}">
+      {{ title }}
+    </h4>
+    <button 
+      type="button" 
+      class="close {% if hst_pk %}text-dark{% else %}text-light{% endif %}" 
+      data-dismiss="modal" 
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-</article>
 
-{% endblock %}
+  <div class="modal-body">
+    {{ form | crispy }}
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      <button 
+        type="submit"
+        class="btn {% if hst_pk %}btn-warning{% else %}btn-primary{% endif %}"
+      >
+        <i class="fas fa-edit"></i>
+        {% if hst_pk %}
+          {% trans 'Update' %}
+        {% else %}
+          {% trans 'Create' %}
+        {% endif %}
+      </button>
+    </div>
+  </div>
+</form>
+
+<style type="text/css">
+  h5 {color: black;}
+</style>

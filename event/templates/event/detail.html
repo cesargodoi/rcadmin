@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
@@ -7,8 +8,9 @@
 
 <article class="media content-section">
   <div class="media-body">
-
-    {% include 'event/header.html' %}
+    <div id="eventHeader">
+      {% include 'event/header.html' %}
+    </div>
 
     <br>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -62,4 +64,17 @@
   </div>
 </article>
 
+{% include "base/elements/modal_form.html" %}
+
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

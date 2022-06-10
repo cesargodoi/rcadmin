@@ -18,9 +18,11 @@
 </div>
 
 <div class="col-sm-2 text-right">
-  <a type="button" 
+  <button 
+    type="button" 
+    onclick="manageData('{{ obj.del_link }}')"
     class="btn btn-light text-danger btn-sm"
-    href="{% url 'frequency_ps_delete' object.id obj.event.id %}">
+  >
     <i class="fas fa-trash-alt"></i>
-  </a>
+  </button>
 </div>

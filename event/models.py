@@ -33,7 +33,7 @@ class Event(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
     qr_code = models.ImageField(upload_to="event_qr_codes", blank=True)
     center = models.ForeignKey("center.Center", on_delete=models.PROTECT)
-    date = models.DateField(null=True, blank=True)
+    date = models.DateField()
     end_date = models.DateField("end", null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
     status = models.CharField(

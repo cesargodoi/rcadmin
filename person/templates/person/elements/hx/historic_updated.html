@@ -24,10 +24,12 @@
     </button>
   {% endif %}
   {% if obj.del_link %}
-    <a type="button" 
-        href="{{ obj.del_link }}"
-        class="btn btn-light text-danger btn-sm">
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
+      class="btn btn-light text-danger btn-sm"
+    >
       <i class="fas fa-trash-alt"></i>
-    </a>
+    </button>
   {% endif %}
 </div>

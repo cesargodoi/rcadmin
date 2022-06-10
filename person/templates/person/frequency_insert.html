@@ -1,6 +1,7 @@
 {% extends "base/base.html" %}
-{% load crispy_forms_tags %}
+{% load static %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -21,8 +22,24 @@
     </form>
     <br>
     {% include "base/elements/search_result.html" %}
-    {% include 'person/elements/event_list.html' %}
+    <div id="eventList">
+      {% include 'person/elements/event_list.html' %}
+    </div>
 
   </div>
 </article>
-{% endblock %}
+
+{% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

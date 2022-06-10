@@ -8,7 +8,6 @@ from django.utils.translation import gettext as _
 
 from rcadmin.common import (
     WORKGROUP_TYPES,
-    paginator,
     clear_session,
     get_template_and_pagination,
 )
@@ -61,7 +60,6 @@ def membership_ps_list(request, person_id):
 @login_required
 @permission_required("workgroup.add_membership")
 def membership_ps_create(request, person_id):
-    object_list = None
     person = Person.objects.get(id=person_id)
 
     if request.GET.get("pk"):
@@ -74,14 +72,17 @@ def membership_ps_create(request, person_id):
             )
             return redirect("membership_ps_list", person_id=person_id)
 
+        template_name = "person/confirm/insert.html"
         context = {
-            "insert_to": f"{workgroup.name} {workgroup.center}",
-            "title": _("confirm to insert"),
-            "person": person,  # to header element
+            "object": f"{person.name} ➜ {workgroup}",
+            # "insert_to": f"{workgroup.name} {workgroup.center}",
+            "confirm_link": "{}?pk={}".format(
+                reverse("membership_ps_create", args=[person_id]),
+                request.GET.get("pk"),
+            ),
+            # "person": person.name,
         }
-        return render(
-            request, "person/elements/confirm_to_insert.html", context
-        )
+        return render(request, template_name, context)
 
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -94,7 +95,7 @@ def membership_ps_create(request, person_id):
         clear_session(request, ["search"])
     else:
         queryset, count = search_workgroup(request, Workgroup, _from, _to)
-        object_list = paginator(queryset, page=page)
+        object_list = queryset[_from:_to]
 
     context = {
         "LIMIT": LIMIT,
@@ -155,9 +156,22 @@ def membership_ps_update(request, person_id, pk):
     return render(request, template_name, context)
 
 
-@require_http_methods(["DELETE"])
+@require_http_methods(["GET", "DELETE"])
 @login_required
 @permission_required("workgroup.delete_membership")
 def membership_ps_delete(request, person_id, pk):
-    Membership.objects.get(pk=pk).delete()
-    return redirect("membership_ps_list", person_id=person_id)
+    if request.method == "DELETE":
+        Membership.objects.get(pk=pk).delete()
+        return redirect("membership_ps_list", person_id=person_id)
+    else:
+        membership = Membership.objects.get(pk=pk)
+
+        template_name = "person/confirm/delete.html"
+        context = {
+            "object": "{} ➜ {}".format(
+                membership.person.name, membership.workgroup
+            ),
+            "del_link": reverse("membership_ps_delete", args=[person_id, pk]),
+            "target": "#membershipList",
+        }
+        return render(request, template_name, context)

@@ -82,49 +82,68 @@ def event_create(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            message = _("The Event has been created!")
-            messages.success(request, message)
-            return redirect(reverse("event_home") + "?init=on")
 
+        LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+            request, "event/home.html", "event/elements/event_list.html"
+        )
+        object_list, count = search_event(request, Event, _from, _to)
+        # add action links
+        for item in object_list:
+            item.click_link = reverse("event_detail", args=[item.pk])
+
+        template_name = "event/elements/event_list.html"
+        context = {
+            "LIMIT": LIMIT,
+            "page": page,
+            "counter": (page - 1) * LIMIT,
+            "object_list": object_list,
+            "count": count,
+        }
+        return render(request, template_name, context)
+
+    template_name = "event/forms/event.html"
     context = {
+        "title": _("Create historic"),
         "form": EventForm(initial={"made_by": request.user}),
-        "form_name": "Event",
-        "form_path": "event/forms/event.html",
-        "goback": reverse("event_home"),
-        "title": _("create event"),
-        "to_create": True,
+        "callback_link": reverse("event_create"),
+        "target": "eventList",
+        "swap": "innerHTML",
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("event.change_event")
 def event_update(request, pk):
-    object = Event.objects.get(pk=pk)
+    obj = Event.objects.get(pk=pk)
+
     if request.method == "POST":
-        form = EventForm(request.POST, instance=object)
+        form = EventForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            message = _("The Event has been updated!")
-            messages.success(request, message)
-            return redirect("event_detail", pk=pk)
 
+        return render(request, "event/header.html", {"object": obj})
+
+    print()
+    template_name = "event/forms/event.html"
     context = {
-        "form": EventForm(instance=object),
-        "form_name": "Event",
-        "form_path": "event/forms/event.html",
-        "goback": reverse("event_detail", args=[pk]),
         "title": _("update event"),
-        "pk": pk,
+        "form": EventForm(instance=obj),
+        "callback_link": reverse("event_update", args=[pk]),
+        "target": "eventHeader",
+        "swap": "innerHTML",
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("event.delete_event")
 def event_delete(request, pk):
-    object = Event.objects.get(pk=pk)
-    if object.frequencies.all():
+    template_name = "event/confirm/delete.html"
+    event = Event.objects.get(pk=pk)
+
+    if event.frequencies.all():
         message = _(
             """
         You cannot delete an event if it has frequencies launched.\n
@@ -132,19 +151,18 @@ def event_delete(request, pk):
         """
         )
         context = {
-            "title": _("action not allowed"),
-            "message": message,
+            "allowed": False,
+            "object": message,
         }
-        return render(request, "base/action_not_allowed.html", context)
+        return render(request, template_name, context)
 
     if request.method == "POST":
-        object.delete()
-        message = _("The Event has been deleted!")
-        messages.success(request, message)
-        return redirect(reverse("event_home") + "?init=on")
+        event.delete()
+        return redirect("event_home")
 
     context = {
-        "object": object,
-        "title": _("confirm to delete"),
+        "allowed": True,
+        "object": event,
+        "del_link": reverse("event_delete", args=[pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)

@@ -1,10 +1,10 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<div class="modal-header">
-  <h5 class="modal-title">
+<div class="modal-header bg-danger">
+  <h4 class="modal-title text-light">
     {% trans 'Atention' %}!
-  </h5>
+  </h4>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -12,22 +12,11 @@
 
 <div class="modal-body">
   <p>{% trans 'Are you shure you want to remove' %}: <br>
-    <strong>{{ object }}</strong> 
-  <hr>
+  <strong>{{ object }}</strong> 
 </div>
 
 <div class="modal-footer">
   <div class="text-right">
-    <button 
-      type="button"
-      class="btn btn-danger"
-      hx-delete="{{ del_link }}" 
-      hx-target="membershipList" 
-      hx-swap="outerHTML"
-    >
-      <i class="fas fa-edit"></i>
-      {% trans 'Confirm' %}
-    </button>
     <button 
       type="button" 
       class="btn btn-secondary" 
@@ -37,9 +26,15 @@
       <i class="fas fa-xmark"></i>
       {% trans 'Cancel' %}
     </button>
+    <button 
+      type="button"
+      class="btn btn-danger"
+      hx-delete="{{ del_link }}" 
+      hx-target="{{ target }}" 
+      hx-swap="innerHTML"
+    >
+      <i class="fas fa-edit"></i>
+      {% trans 'Confirm' %}
+    </button>
   </div>
 </div>
-
-<style type="text/css">
-  h5 {color: black;}
-</style>

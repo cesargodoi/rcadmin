@@ -3,6 +3,7 @@ from datetime import datetime
 from django.http import QueryDict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -67,7 +68,9 @@ def historic_create(request, person_id):
             messages.success(request, "The Historic has been created!")
         return redirect("person_historic", person_id=person_id)
 
+    template_name = "person/forms/historic.html"
     context = {
+        "title": _("Create historic"),
         "form": HistoricForm(
             initial={
                 "person": person,
@@ -75,11 +78,10 @@ def historic_create(request, person_id):
                 "date": timezone.now(),
             }
         ),
-        "title": _("create historic"),
-        "to_create": True,
+        "to_create": reverse("historic_create", args=[person_id]),
         "person_id": person_id,  # to header element
     }
-    return render(request, "person/forms/historic.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -109,8 +111,9 @@ def historic_update(request, person_id, pk):
             context = {"obj": historic, "pos": request.GET.get("pos")}
             return render(request, template_name, context)
 
-    template_name = "person/forms/historic_update.html"
+    template_name = "person/forms/historic.html"
     context = {
+        "title": _("Update Historic"),
         "form": HistoricForm(instance=historic),
         "to_update": reverse("historic_update", args=[person_id, pk]),
         "hst_pk": pk,
@@ -119,20 +122,24 @@ def historic_update(request, person_id, pk):
     return render(request, template_name, context)
 
 
+@require_http_methods(["GET", "DELETE"])
 @login_required
 @permission_required("person.delete_historic")
 def historic_delete(request, person_id, pk):
     historic = Historic.objects.get(pk=pk)
-    if request.method == "POST":
+
+    if request.method == "DELETE":
         adjust_status_or_aspect(historic)
         historic.delete()
         return redirect("person_historic", person_id=person_id)
 
+    template_name = "person/confirm/delete.html"
     context = {
         "object": historic,
-        "title": _("confirm to delete"),
+        "del_link": reverse("historic_delete", args=[person_id, pk]),
+        "target": "#historicList",
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 # handlers

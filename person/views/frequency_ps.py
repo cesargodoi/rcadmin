@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -26,6 +27,11 @@ def frequency_ps_list(request, person_id):
     queryset = person.frequency_set.all().order_by("-event__date")
     count = len(queryset)
     object_list = queryset[_from:_to]
+    # add action links
+    for item in object_list:
+        item.del_link = reverse(
+            "frequency_ps_delete", args=[person_id, item.event.id]
+        )
 
     if not request.htmx and object_list:
         message = f"{count} records were found in the database"
@@ -69,13 +75,15 @@ def frequency_ps_insert(request, person_id):
             return redirect("frequency_ps_list", person_id=person_id)
 
         context = {
-            "person": person,
-            "insert_to": f"{event.activity.name} {event.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {} - {}".format(
+                person.name, event.activity.name, event.center
+            ),
+            "confirm_link": "{}?pk={}".format(
+                reverse("frequency_ps_insert", args=[person_id]),
+                request.GET.get("pk"),
+            ),
         }
-        return render(
-            request, "person/elements/confirm_to_insert.html", context
-        )
+        return render(request, "person/confirm/insert.html", context)
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -107,21 +115,23 @@ def frequency_ps_insert(request, person_id):
     return render(request, template_name, context)
 
 
+@require_http_methods(["GET", "DELETE"])
 @login_required
 @permission_required("person.change_person")
 def frequency_ps_delete(request, person_id, event_id):
     person = Person.objects.get(id=person_id)
     event = Event.objects.get(pk=event_id)
-    if request.method == "POST":
+
+    if request.method == "DELETE":
         person.event_set.remove(event)
-        messages.success(request, "The Frequency has been removed!")
         return redirect("frequency_ps_list", person_id=person_id)
 
+    template_name = "person/confirm/delete.html"
     context = {
-        "person": person,
-        "event": event,
-        "title": _("confirm to delete"),
+        "object": "{} ➜ {} - {}".format(
+            person.name, event.activity.name, event.center
+        ),
+        "del_link": reverse("frequency_ps_delete", args=[person_id, event_id]),
+        "target": "#frequencyList",
     }
-    return render(
-        request, "person/elements/confirm_to_delete_freq.html", context
-    )
+    return render(request, template_name, context)

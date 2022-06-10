@@ -39,11 +39,8 @@
   {% if obj.del_link %}
     <button
       type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
       class="btn btn-light text-danger btn-sm"
-      hx-confirm="{% trans 'Are you sure you want to complete this action?' %}"
-      hx-delete="{{ obj.del_link }}" 
-      hx-target="#membershipList" 
-      hx-swap="innerHTML"
     >
       <i class="fas fa-trash-alt"></i>
     </button>
