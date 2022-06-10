@@ -1,6 +1,7 @@
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
-    <div 
+    <div
+      id="FRQ{{ obj.pk }}"
       class="row border-top border-secondary pb-2 pt-2 {% if not obj.person.is_active %}
                                                          text-danger
                                                        {% elif obj.person.center != request.user.person.center %}
@@ -12,7 +13,8 @@
       hx-target="this"
     >
   {% else %}
-    <div 
+    <div
+      id="FRQ{{ obj.pk }}"
       class="row border-top border-secondary pb-2 pt-2 {% if not obj.person.is_active %}
                                                          text-danger
                                                        {% elif obj.person.center != request.user.person.center %}

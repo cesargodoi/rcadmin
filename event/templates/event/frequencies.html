@@ -9,7 +9,9 @@
       <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
     </div>
   </div>
-  {% include "event/elements/frequency_list.html" %}
+  <div id="frequencyList">
+    {% include "event/elements/frequency_list.html" %}
+  </div>
 
 {% else %}
 

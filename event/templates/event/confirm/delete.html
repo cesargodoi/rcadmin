@@ -18,7 +18,15 @@
 </div>
 
 <div class="modal-footer">
+  {% if event %}
   <form method="POST" action="{{ del_link }}">
+  {% else %}
+  <form
+    hx-delete="{{ del_link }}"
+    hx-target="#frequencyList"
+    hx-swap="innerHTML"
+  >
+  {% endif %}
     {% csrf_token %}
     <div class="text-right">
       <button 

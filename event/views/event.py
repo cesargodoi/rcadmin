@@ -61,6 +61,9 @@ def event_detail(request, pk):
     _object_list = object.frequency_set.all().order_by("person__name_sa")
     count = len(_object_list)
     object_list = _object_list[_from:_to]
+    # add action links
+    for item in object_list:
+        item.del_link = reverse("frequency_delete", args=[pk, item.person.pk])
 
     context = {
         "LIMIT": LIMIT,
@@ -98,6 +101,8 @@ def event_create(request):
             "counter": (page - 1) * LIMIT,
             "object_list": object_list,
             "count": count,
+            "init": True if request.GET.get("init") else False,
+            "nav": "home",
         }
         return render(request, template_name, context)
 
@@ -124,7 +129,6 @@ def event_update(request, pk):
 
         return render(request, "event/header.html", {"object": obj})
 
-    print()
     template_name = "event/forms/event.html"
     context = {
         "title": _("update event"),
@@ -164,5 +168,6 @@ def event_delete(request, pk):
         "allowed": True,
         "object": event,
         "del_link": reverse("event_delete", args=[pk]),
+        "event": True,
     }
     return render(request, template_name, context)
