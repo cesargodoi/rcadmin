@@ -1,143 +1,42 @@
-{% load base_extras %}
 {% load i18n %}
-
-
 <div class="row border-top border-secondary pt-3">
-  <div class="col-md-3 text-center">
-
-    <img 
-      class="img-thumbnail rounded mx-auto d-block mb-4" 
-      src="{{ object.user.profile.image.url }}">
-
+  <div id="tabImage" class="col-md-3 text-center">
+    {% include 'person/elements/tab_image.html' %}
   </div>
   <div class="col-md-9">
-
-    <!-- <article class="media content-section">
-      <div class="media-body"> -->
         
-        <ul class="nav nav-pills" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic"
-              aria-selected="true">
-              {% trans 'Basic' %}
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other"
-              aria-selected="false">
-              {% trans 'Others' %}
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address"
-              aria-selected="false">
-              {% trans 'Address' %}
-            </a>
-          </li>
-        </ul>
-  
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-            <br>
-            <table class="table table-hover table-sm">
-              <tr>
-                <th width="120px">{% trans 'type' %}</th>
-                <td>{{ object.get_person_type_display }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'aspect' %}</th>
-                <td>
-                  {{ object.get_aspect_display }}
-                  {% if object.aspect_date %}
-                    &nbsp;&nbsp;<strong>since</strong>&nbsp;&nbsp;
-                    {{ object.aspect_date|date:"d/m/Y" }} 
-                    &nbsp;&nbsp;<small class="text-muted">({{ object.aspect_date|timesince:date }})</small>
-                  {% endif %}
-                </td>
-              </tr>
-              <tr>
-                <th>{% trans 'phone' %}</th>
-                <td>{{ object.user.profile.phone_1 }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'phone alt' %}</th>
-                <td>{{ object.user.profile.phone_2 }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'email' %}</th>
-                <td>{{ object.user.email }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'birth' %}</th>
-                <td>
-                  {{ object.birth|date:"d/m/Y" }}
-                  &nbsp;&nbsp; <small class="text-mute">{% trans 'age' %}</small> &nbsp;&nbsp;
-                  {{ age }} {% trans 'years' %}
-                </td>
-              </tr>
-              <tr>
-                <th>{% trans 'id card' %}</th>
-                <td>{{ object.id_card }}</td>
-              </tr>
-            </table>
-          </div>
-          <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
-            <br>
-            <table class="table table-hover table-sm">
-  
-              <tr>
-                <th width="120px">{% trans 'gender' %}</th>
-                <td>{{ object.user.profile.get_gender_display }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'profession' %}</th>
-                <td>{{ object.user.profile.profession }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'marital status' %}</th>
-                <td>{{ object.user.profile.marital_status }}</td>
-              </tr>
-              <tr class="text-danger">
-                <th>{% trans 'sos contact' %}</th>
-                <td>
-                  {{ object.user.profile.sos_contact }}
-                </td>
-              </tr>
-              <tr class="text-danger">
-                <th>{% trans 'sos phone' %}</th>
-                <td>
-                  {{ object.user.profile.sos_phone }}
-                </td>
-              </tr>
-              {% if request.user.is_superuser or request.user|has_group:"office" %}
-              <tr>
-                <th>{% trans 'observations' %}</th>
-                <td>
-                  <div class="form-group">
-                    <textarea class="form-control" rows="3" disabled>
-                      {{ object.observations }}
-                    </textarea>
-                  </div>
-                </td>
-              </tr>
-              {% endif %}
-            </table>
-          </div>
-          <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
-            <br>
-            <table class="table table-hover table-sm">
-              <tr>
-                <th width="120px">{% trans 'address' %}</th>
-                <td>
-                  {% include "person/elements/address.html" %}                  
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+    <ul class="nav nav-pills" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#tabBasic" role="tab" aria-controls="basic"
+          aria-selected="true">
+          {% trans 'Basic' %}
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="other-tab" data-toggle="tab" href="#tabOthers" role="tab" aria-controls="other"
+          aria-selected="false">
+          {% trans 'Others' %}
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="address-tab" data-toggle="tab" href="#tabAddress" role="tab" aria-controls="address"
+          aria-selected="false">
+          {% trans 'Address' %}
+        </a>
+      </li>
+    </ul>
 
-      <!-- </div>
-    </article> -->
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="tabBasic" role="tabpanel" aria-labelledby="basic-tab">
+        {% include 'person/elements/tab_basic.html' %}
+      </div>
+      <div class="tab-pane fade" id="tabOthers" role="tabpanel" aria-labelledby="other-tab">
+        {% include 'person/elements/tab_others.html' %}
+      </div>
+      <div class="tab-pane fade" id="tabAddress" role="tabpanel" aria-labelledby="address-tab">
+        {% include 'person/elements/tab_address.html' %}
+      </div>
+    </div>
 
   </div>
 

@@ -1,31 +1,34 @@
 {% load i18n %}
-<div class="col-sm-10">
+<div class="col-sm-4 ">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
   &nbsp;&nbsp;
-  <strong>{{ obj.short_name }}</strong>
-  <small>
-    &nbsp;&nbsp;&nbsp;
+  <strong data-toggle="tooltip" data-placement="top" title="{{ obj.name }}">
+    {{ obj.name | truncatechars:25 }}
+  </strong>
+  <small class="float-right">
     <em>{{ obj.get_aspect_display }}</em>
-    &nbsp;&nbsp;&nbsp;
-    <i class="fa-solid fa-location-dot"></i> <em>{{ obj.local }}</em> 
-    {% if obj.user.profile.phone_1 %}
-      &nbsp;&nbsp;&nbsp;
-      <i class="fas fa-phone"></i> 
-      {{ obj.user.profile.phone_1 }}
-    {% elif obj.user.profile.phone_2 %}
-      &nbsp;&nbsp;&nbsp;
-      <i class="fas fa-phone"></i> 
-      {{ obj.user.profile.phone_2 }}
-    {% endif %}
-    {% if obj.user.email %}
-      &nbsp;&nbsp;&nbsp;
-      <i class="fas fa-envelope"></i> 
-      {{ obj.user.email }}
-    {% endif %}
   </small>
 </div>
 
-<div class="col-sm-2 text-right">
+<div class="col-sm-7 small">    
+  <i class="fa-solid fa-location-dot"></i> <em>{{ obj.local }}</em> 
+  {% if obj.user.profile.phone_1 %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-phone"></i> 
+    {{ obj.user.profile.phone_1 }}
+  {% elif obj.user.profile.phone_2 %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-phone"></i> 
+    {{ obj.user.profile.phone_2 }}
+  {% endif %}
+  {% if obj.user.email %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-envelope"></i> 
+    {{ obj.user.email }}
+  {% endif %}
+</div>
+
+<div class="col-sm-1 text-right">
   {% if flag == "group" and obj.publicworkgroup_set.count %}
     <i class="fas fa-user-check mr-1"></i>
   {% elif flag == "membership" and object in obj.workgroup_set.all %}

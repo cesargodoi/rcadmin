@@ -16,25 +16,39 @@
 </div>
 
 <div class="modal-footer">
-  <div class="text-right">
-    <button 
-      type="button" 
-      class="btn btn-secondary" 
-      data-dismiss="modal" 
-      aria-label="Close"
-    >
-      <i class="fas fa-xmark"></i>
-      {% trans 'Cancel' %}
-    </button>
-    <button 
-      type="button"
-      class="btn btn-danger"
-      hx-delete="{{ del_link }}" 
-      hx-target="{{ target }}" 
-      hx-swap="innerHTML"
-    >
-      <i class="fas fa-edit"></i>
-      {% trans 'Confirm' %}
-    </button>
-  </div>
+  {% if not target %}
+    <form method="POST" action="{{ del_link }}">
+      {% csrf_token %}
+  {% endif %}
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      {% if target %}
+        <button 
+          type="button"
+          class="btn btn-danger"
+          hx-delete="{{ del_link }}" 
+          hx-target="{{ target }}" 
+          hx-swap="innerHTML"
+        >
+          <i class="fas fa-edit"></i>
+          {% trans 'Confirm' %}
+        </button>
+      {% else %}
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-edit"></i>
+          {% trans 'Confirm' %}
+        </button>
+      {% endif %}
+    </div>
+  {% if not target %}
+    </form>
+  {% endif %}
 </div>

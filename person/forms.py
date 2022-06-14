@@ -44,3 +44,68 @@ class HistoricForm(forms.ModelForm):
             "person": forms.HiddenInput(),
             "made_by": forms.HiddenInput(),
         }
+
+
+# partial forms - BASIC
+class BasicFormPerson(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = "__all__"
+        exclude = ["user", "aspect", "aspect_date", "status", "observations"]
+        widgets = {
+            "birth": forms.widgets.DateInput(
+                format="%Y-%m-%d", attrs={"type": "date"}
+            ),
+        }
+        widgets.update(HIDDEN_AUTH_FIELDS)
+
+
+class BasicFormProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["social_name", "phone_1", "phone_2"]
+
+
+# partial forms - OTHERS
+class OthersFormPerson(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ["observations"]
+        widgets = {"observations": forms.Textarea(attrs={"rows": 2})}
+
+
+class OthersFormProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            "gender",
+            "profession",
+            "marital_status",
+            "sos_contact",
+            "sos_phone",
+        ]
+
+
+# partial forms - ADDRESS
+class AddressFormProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            "address",
+            "number",
+            "complement",
+            "district",
+            "city",
+            "state",
+            "country",
+            "zip_code",
+        ]
+
+
+# partial forms - IMAGE
+class ImageFormProfile(forms.ModelForm):
+    # remove = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = ["image"]
