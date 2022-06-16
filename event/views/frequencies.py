@@ -47,7 +47,7 @@ def frequency_delete(request, pk, person_id):
     template_name = "event/confirm/delete.html"
     context = {
         "allowed": True,
-        "object": f"{person.name} ➜ {event}",
+        "object": f"{person.name} ⛔️ {event}",
         "del_link": reverse("frequency_delete", args=[pk, person_id]),
     }
     return render(request, template_name, context)

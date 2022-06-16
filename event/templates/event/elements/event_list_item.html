@@ -24,11 +24,13 @@
     </a>
   {% elif not nav == "home" and obj.is_active %}
     {% if obj.pk not in pre_freqs %}
-      <a type="button" 
-        href="{{ obj.add_link }}?pk={{ obj.pk }}"
-        class="btn btn-light text-primary btn-sm">
+      <button 
+        type="button" 
+        onclick="manageData('{{ obj.add_link }}?pk={{ obj.pk }}')"
+        class="btn btn-light text-primary btn-sm"
+      >
         <i class="fas fa-plus"></i>
-      </a>
+      </button>
     {% else %}
       <i class="fas fa-user-check mr-1"></i>
     {% endif %}

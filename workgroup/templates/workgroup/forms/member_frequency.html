@@ -1,20 +1,23 @@
-{% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form 
-  id="form"
-  hx-post="{{ callback_link }}"
-  hx-target="#{{ target }}"
-  hx-swap="{{ swap }}"
->
+{% if update %}
+  <form 
+    id="form"
+    hx-post="{{ callback_link }}?pos={{pos}}"
+    hx-target="#FRQ{{ freq_pk }}"
+    hx-swap="innerHTML"
+  >
+{% else %}
+  <form id="form" method="POST" action="{{ callback_link }}">
+{% endif %}
 
   {% csrf_token %}
 
   <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
     <h4 class="modal-title {% if update %}text-dark{% else %}text-light{% endif %}">
       {{ title }}
-    </h4>
+    </h5>
     <button 
       type="button" 
       class="close {% if update %}text-dark{% else %}text-light{% endif %}" 
@@ -25,14 +28,35 @@
     </button>
   </div>
 
-  <div id="modalBody" class="modal-body">
-    {{ form.name | as_crispy_field }}
-    {{ form.workgroup_type | as_crispy_field }}
-    {{ form.aspect | as_crispy_field }}
-    {{ form.center | as_crispy_field }}
-    {{ form.description | as_crispy_field }}
-    {{ form.made_by | as_crispy_field }}
-    {{ form.is_active | as_crispy_field }}
+  <div class="modal-body">
+    <table class="table table-sm">
+      {% if person %}
+      <tr>
+        <th class="small" width="20%">{% trans 'name' %}</th>
+        <td><strong>{{ person }}</strong></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <th class="small" width="20%">{% trans 'event' %}</th>
+        <th>
+          {{ event.activity.name }} 
+          &nbsp;&nbsp; 
+          <small class="font-italic">
+            {{ event.activity.get_activity_type_display }}
+          </small>
+        </th>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'date' %}</th>
+        <td><strong>{{ event.date | date:"d/m/y" }}</strong></td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'local' %}</th>
+        <td>{{ event.center }}</td>
+      </tr>
+    </table>
+    <hr>
+    {{ form | crispy }}
   </div>
 
   <div class="modal-footer">
@@ -59,10 +83,9 @@
       </button>
     </div>
   </div>
+
 </form>
 
 <style type="text/css">
   h5 {color: black;}
 </style>
-
-<script src="{% static 'js/workgroup.js' %}" defer></script>

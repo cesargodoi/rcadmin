@@ -24,14 +24,22 @@
     <i class="fas fa-star"></i>
   {% endif %}
   &nbsp;&nbsp;
-  <button type="button" 
-    onclick="addEditData('{{ obj.update_link }}?pos={{ pos }}')"
-    class="btn btn-light text-warning btn-sm">
-    <i class="fas fa-edit"></i>
-  </button>
-  <a type="button" 
-    href="{{ obj.del_link }}"
-    class="btn btn-light text-danger btn-sm">
-    <i class="fas fa-trash-alt text-danger"></i>
-  </a>
+  {% if obj.update_link %}
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
+      class="btn btn-light text-warning btn-sm"
+    >
+      <i class="fas fa-edit"></i>
+    </button>
+  {% endif %}
+  {% if obj.del_link %}
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
+      class="btn btn-light text-danger btn-sm"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  {% endif %}
 </div>

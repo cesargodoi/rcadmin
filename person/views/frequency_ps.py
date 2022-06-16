@@ -128,7 +128,7 @@ def frequency_ps_delete(request, person_id, event_id):
 
     template_name = "person/confirm/delete.html"
     context = {
-        "object": "{} ➜ {} - {}".format(
+        "object": "{} ⛔️ {} - {}".format(
             person.name, event.activity.name, event.center
         ),
         "del_link": reverse("frequency_ps_delete", args=[person_id, event_id]),

@@ -7,7 +7,9 @@
 
 <article class="media content-section">
   <div class="media-body">
-    {% include "workgroup/header.html" %}
+    <div id="workgroupHeader"> 
+      {% include "workgroup/header.html" %}
+    </div>
     <br>
     {% include 'workgroup/member/members.html' %}
   </div>
@@ -19,7 +21,7 @@
 
 {% block scripts %}
   <script>
-    function addEditData(url) {
+    function manageData(url) {
       htmx.ajax('GET', url, '#formBody')
     }
   </script>

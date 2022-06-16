@@ -39,17 +39,13 @@ def membership_insert(request, workgroup_id):
                 request, _("The person has been inserted on workgroup!")
             )
             return redirect("workgroup_detail", pk=workgroup_id)
-
+        template_name = ("workgroup/confirm/insert.html",)
         context = {
-            "person": person,
-            "insert_to": f"{workgroup.name} {workgroup.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {}".format(person.name, workgroup.name),
+            "confirm_link": reverse(membership_insert, args=[workgroup_id])
+            + f"?pk={request.GET.get('pk')}",
         }
-        return render(
-            request,
-            "workgroup/elements/confirm_to_insert_membership.html",
-            context,
-        )
+        return render(request, template_name, context)
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -113,7 +109,7 @@ def membership_update(request, workgroup_id, pk):
             context = {"obj": membership, "pos": request.GET.get("pos")}
             return render(request, template_name, context)
 
-    template_name = "workgroup/membership_update.html"
+    template_name = "workgroup/forms/membership_update.html"
     context = {
         "form": MembershipForm(instance=membership),
         "object": membership,
@@ -128,15 +124,20 @@ def membership_update(request, workgroup_id, pk):
 @permission_required("workgroup.delete_membership")
 def membership_delete(request, workgroup_id, pk):
     membership = Membership.objects.get(pk=pk)
+
     if request.method == "POST":
         membership.delete()
         return redirect("workgroup_detail", pk=workgroup_id)
 
+    template_name = "workgroup/confirm/delete.html"
     context = {
-        "object": membership,
-        "title": _("confirm to delete"),
+        "object": "{} ⛔️ {}".format(
+            membership.person.name, membership.workgroup.name
+        ),
+        # "object": membership,
+        "del_link": reverse("membership_delete", args=[workgroup_id, pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 #  handlers

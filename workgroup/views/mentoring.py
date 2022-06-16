@@ -255,22 +255,25 @@ def membership_add_frequency(request, group_pk, person_pk):
                 ranking=request.POST.get("ranking"),
                 observations=request.POST.get("observations"),
             )
-            messages.success(request, _("The frequency has been inserted!"))
+
             return redirect(
                 "mentoring_member_frequencies",
                 group_pk=group_pk,
                 person_pk=person_pk,
             )
 
+        template_name = "workgroup/forms/member_frequency.html"
         context = {
-            "object": person,
+            "person": person.name,
+            "event": event,
             "form": MentoringFrequencyForm,
-            "insert_to": f"{event.activity.name} {event.center}",
-            "title": _("confirm to insert"),
+            "callback_link": reverse(
+                "membership_add_frequency", args=[group_pk, person_pk]
+            )
+            + f"?pk={request.GET.get('pk')}",
+            "title": _("Confirm to insert"),
         }
-        return render(
-            request, "workgroup/elements/confirm_add_frequency.html", context
-        )
+        return render(request, template_name, context)
 
     if request.GET.get("init"):
         object_list, count = None, None
@@ -330,12 +333,12 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
             context = {"obj": frequency, "pos": request.GET.get("pos")}
             return render(request, template_name, context)
 
-    template_name = "workgroup/member/frequency_update.html"
+    template_name = "workgroup/forms/member_frequency.html"
     context = {
         "form": MentoringFrequencyForm(instance=frequency),
         "object": person,
         "event": frequency.event,
-        "to_update": reverse(
+        "callback_link": reverse(
             "membership_update_frequency", args=[group_pk, person_pk, freq_pk]
         ),
         "goback": reverse(
@@ -343,6 +346,8 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
         ),
         "freq_pk": freq_pk,
         "pos": request.GET.get("pos"),
+        "title": _("Confirm to update"),
+        "update": True,
     }
     return render(request, template_name, context)
 
@@ -354,18 +359,25 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 
     if request.method == "POST":
         frequency.delete()
-        messages.success(request, _("The frequency has been removed!"))
+
         return redirect(
             "mentoring_member_frequencies",
             group_pk=group_pk,
             person_pk=person_pk,
         )
 
+    template_name = "workgroup/confirm/delete.html"
     context = {
-        "object": frequency,
-        "title": _("confirm to delete"),
+        "object": "{} ⛔️ {} - {}".format(
+            frequency.person.name,
+            frequency.event.activity.name,
+            frequency.event.center,
+        ),
+        "del_link": reverse(
+            "membership_remove_frequency", args=[group_pk, person_pk, freq_pk]
+        ),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
