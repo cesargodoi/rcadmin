@@ -1,12 +1,15 @@
 {% load i18n %}
-<div class="col-sm-10">
+<div class="col-sm-4">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
   &nbsp;&nbsp;
   <strong>{{ obj.name }}</strong>
-  <small class="{% if not obj.is_active %}text-danger{% endif %}">
-    &nbsp;&nbsp;&nbsp;
+  <small class="float-right">
     <em>{{ obj.get_center_type_display }}</em>
-  
+  </small>
+</div>
+
+<div class="col-sm-7">
+  <small class="{% if not obj.is_active %}text-secondary{% endif %}">
     {% if obj.city and obj.state and obj.country %}
       &nbsp;&nbsp;&nbsp;
       <i class="fa-solid fa-location-dot"></i> 
@@ -25,11 +28,10 @@
       &nbsp;&nbsp;&nbsp;
       <i class="fas fa-envelope"></i> {{ obj.email }}
     {% endif %}
-
   </small>
 </div>
 
-<div class="col-sm-2 text-right">
+<div class="col-sm-1 text-right">
   {% if obj.is_active %} 
     <i class="fas fa-toggle-on"></i>
   {% else %} 

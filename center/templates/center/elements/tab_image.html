@@ -1,0 +1,20 @@
+{% load i18n %}
+{% if object.image.url %}
+  <img 
+    id="image"
+    class="img-thumbnail rounded mx-auto d-block mb-2" 
+    src="{{ object.image.url }}"
+  >
+{% else %}
+  Não tem imagem
+{% endif %}
+<div class="text-right" style="position: relative; float: right; top: -3rem; right: .5rem">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'center_update_image' object.id %}')"
+  >
+    <i class="fas fa-edit"></i> 
+    {% trans 'Change' %}
+  </a>
+</div>

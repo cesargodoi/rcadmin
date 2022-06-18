@@ -1,0 +1,38 @@
+{% load base_extras %}
+{% load i18n %}
+<br>
+<table class="table table-hover table-sm">
+  <tr>
+    <th width="20%">{% trans 'address' %}</th>
+    <td>
+      <address>
+        {{ object.address }}, {{ object.number }}
+        {% if object.complement %}
+          &nbsp;&nbsp;
+          <small class="text-muted">
+            <em>{{ object.complement }}</em>
+          </small>
+        {% endif %}
+        <br>
+        {{ object.district }} -
+        {{ object.city }} -
+        {{ object.state }}
+        <br>
+        {{ object.country }} -
+        {{ object.zip_code }}
+      </address>
+    </td>
+  </tr>
+</table>
+{% if request.user|has_group:"office" and request.user.person.center_id == object.id or request.user.is_superuser %}
+  <div class="text-right">
+    <a 
+      href="#"
+      class="btn btn-sm btn-outline-warning mb-4" 
+      onclick="manageData('{% url 'center_update_address' object.id %}')"
+    >
+      <i class="fas fa-edit"></i> 
+      {% trans 'Edit' %}
+    </a>
+  </div>
+{% endif %}

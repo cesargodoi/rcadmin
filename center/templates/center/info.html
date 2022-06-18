@@ -3,121 +3,53 @@
 <ul class="nav nav-pills" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
     <a class="nav-link active" 
-      id="contacts-tab" 
+      id="basic-tab" 
       data-toggle="tab" 
-      href="#contacts" 
+      href="#tabBasic" 
       role="tab" 
-      aria-controls="contacts"
-      aria-selected="true">{% trans 'Contacts' %}</a>
+      aria-controls="basic"
+      aria-selected="true">{% trans 'Basic' %}</a>
   </li>
   <li class="nav-item" role="presentation">
     <a class="nav-link" 
       id="address-tab" 
       data-toggle="tab" 
-      href="#address" 
+      href="#tabAddress" 
       role="tab" 
       aria-controls="address"
       aria-selected="false">{% trans 'Address' %}</a>
   </li>
   <li class="nav-item" role="presentation">
     <a class="nav-link" 
-      id="other-tab" 
+      id="others-tab" 
       data-toggle="tab" 
-      href="#other" 
+      href="#tabOthers" 
       role="tab" 
-      aria-controls="other"
+      aria-controls="others"
       aria-selected="false">{% trans 'Others' %}</a>
   </li>
 </ul>
 
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" 
-    id="contacts" 
+    id="tabBasic" 
     role="tabpanel" 
     aria-labelledby="contacts-tab">
-    <br>
-    <table class="table table-hover table-sm">
-      <tr>
-        <th width="20%">{% trans 'phone' %}</th>
-        <td>{{ object.phone_1 }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'backup phone' %}</th>
-        <td>{{ object.phone_2 }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'email' %}</th>
-        <td>{{ object.email }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'secretary' %}</th>
-        <td>
-          {% if object.secretary %}
-          <a href="{% url 'person_detail' object.secretary.person.id %}">
-            {{ object.secretary.person.name }}
-          </a>
-          {% endif %}
-        </td>
-      </tr>
-    </table>
+    {% include 'center/elements/tab_basic.html' %}
   </div>
 
   <div class="tab-pane fade" 
-    id="address" 
+    id="tabAddress" 
     role="tabpanel" 
     aria-labelledby="address-tab">
-    <br>
-    <table class="table table-hover table-sm">
-      <tr>
-        <th width="20%">{% trans 'address' %}</th>
-        <td>
-          <address>
-            {{ object.address }}, {{ object.number }}
-            {% if object.complement %}
-            &nbsp;&nbsp;
-            <small class="text-muted">
-              <em>{{ object.complement }}</em>
-            </small>
-            {% endif %}
-            <br>
-            {{ object.district }} -
-            {{ object.city }} -
-            {{ object.state }}
-            <br>
-            {{ object.country }} -
-            {{ object.zip_code }}
-          </address>
-        </td>
-      </tr>
-    </table>
+    {% include 'center/elements/tab_address.html' %}
   </div>
 
   <div class="tab-pane fade" 
-    id="other" 
+    id="tabOthers" 
     role="tabpanel" 
     aria-labelledby="other-tab">
-    <br>
-    <table class="table table-hover table-sm">
-      <tr>
-        <th width="20%">{% trans 'short name' %}</th>
-        <td>{{ object.short_name }}</td>
-      </tr>
-      <tr>
-        <th>{% trans 'pix key' %}</th>
-        <td>
-          {% if object.pix_key %}
-          {{ object.pix_key }} &nbsp;&nbsp;
-          <a href="#" data-toggle="modal" data-target="#showPix">
-            <i class="fas fa-eye"></i>
-          </a>
-          {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <th>{% trans 'observations' %}</th>
-        <td>{{ object.observations }}</td>
-      </tr>
-    </table>
+    {% include 'center/elements/tab_others.html' %}
   </div>
 
 </div>
@@ -128,12 +60,12 @@
   tabindex="-1" 
   aria-labelledby="showPixLabel" 
   aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="showPixLabel">{% trans 'Center PIX' %}</h5>
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title text-light" id="showPixLabel">{% trans 'Center PIX' %}</h5>
         <button type="button" 
-          class="close" 
+          class="close text-light" 
           data-dismiss="modal" 
           aria-label="Close">
           <span aria-hidden="true">&times;</span>

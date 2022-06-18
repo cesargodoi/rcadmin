@@ -1,7 +1,6 @@
 from datetime import date
 
 from django.contrib import messages
-from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.http.response import Http404
@@ -104,30 +103,24 @@ def person_create(request):
     if request.method == "POST":
         try:
             # creating a new user
-            email = request.POST["email"]
-            password = BaseUserManager().make_random_password()
-            new_user = User.objects.create_user(
-                email=email,
-                password=password,
-            )
+            new_user = User.objects.create_user(email=request.POST["email"])
             # add user in "user" group
-            user_group = Group.objects.get(name="user")
-            new_user.groups.add(user_group)
+            new_user.groups.add(Group.objects.get(name="user"))
             # updating the user.profile
-            profile_form = ProfileForm(
-                request.POST, request.FILES, instance=new_user.profile
-            )
+            profile_form = ProfileForm(request.POST, instance=new_user.profile)
             if profile_form.is_valid():
                 profile_form.save()
             # updating the user.person
             person_form = PersonForm(request.POST, instance=new_user.person)
             if person_form.is_valid():
                 person_form.save()
-            # add password in observations
-            new_user.person.observations += f"\nfirst password: {password}"
             # the center is the same as the center of the logged in user
             new_user.person.center = request.user.person.center
             new_user.person.save()
+            # adjust social_name in profile
+            new_user.profile.social_name = new_user.person.short_name
+            new_user.profile.save()
+
             message = f"The Person '{request.POST['name']}' has been created!"
             messages.success(request, message)
             return redirect("person_detail", id=new_user.person.pk)
@@ -143,15 +136,12 @@ def person_create(request):
 
     context = {
         "user_form": user_form,
-        "profile_form": profile_form,
         "person_form": person_form,
-        "form_name": "Person",
-        "form_path": "person/forms/person.html",
-        "goback": reverse("person_home"),
-        "title": _("create person"),
-        "to_create": True,
+        "profile_form": profile_form,
+        "callback_link": reverse("person_create"),
+        "title": _("Create person"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, "person/forms/create_person.html", context)
 
 
 #  partial updates

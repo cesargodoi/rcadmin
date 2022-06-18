@@ -14,15 +14,13 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = "__all__"
-        exclude = ["user"]
+        fields = ["gender", "city", "state", "country"]
 
 
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = "__all__"
-        exclude = ["user", "aspect", "aspect_date", "status"]
+        fields = ["name", "birth", "is_active", "made_by", "observations"]
         widgets = {
             "observations": forms.Textarea(attrs={"rows": 2}),
             "birth": forms.widgets.DateInput(
@@ -104,8 +102,6 @@ class AddressFormProfile(forms.ModelForm):
 
 # partial forms - IMAGE
 class ImageFormProfile(forms.ModelForm):
-    # remove = forms.BooleanField(required=False)
-
     class Meta:
         model = Profile
         fields = ["image"]

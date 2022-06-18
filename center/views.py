@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
+from django.http import QueryDict
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from rcadmin.common import clear_session
@@ -9,7 +10,14 @@ from django.http.response import Http404
 from person.models import Person
 
 from rcadmin.common import get_template_and_pagination
-from .forms import CenterForm, SelectNewCenterForm
+from .forms import (
+    CenterForm,
+    SelectNewCenterForm,
+    BasicCenterForm,
+    AddressCenterForm,
+    OthersCenterForm,
+    ImageCenterForm,
+)
 from .models import Center
 
 
@@ -69,57 +77,151 @@ def center_detail(request, pk):
 @permission_required("center.add_center")
 def center_create(request):
     if request.method == "POST":
-        form = CenterForm(request.POST, request.FILES)
+        data = QueryDict(request.body).dict()
+        form = CenterForm(data, request.FILES)
         if form.is_valid():
             form.save()
-            message = f"The Center '{request.POST['name']}' has been created!"
+
+            message = f"The Center '{data['name']}' has been created!"
             messages.success(request, message)
-            return redirect(reverse("center_home") + "?init=on")
+
+            center = Center.objects.get(name=data["name"])
+            return redirect(reverse("center_detail", args=[center.id]))
         else:
             message = "There are some errors in the form, please correct them."
             messages.warning(request, message)
 
+    template_name = "center/forms/create_center.html"
     context = {
         "form": CenterForm(
             request.POST or None, initial={"made_by": request.user}
         ),
-        "form_name": "Center",
-        "form_path": "center/forms/center.html",
-        "goback": reverse("center_home"),
-        "title": _("create center"),
-        "to_create": True,
+        "callback_link": reverse("center_create"),
+        "title": _("Create center"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("center.change_center")
-def center_update(request, pk):
+def center_update_basic(request, pk):
     persons = [psn.id for psn in Person.objects.filter(center=pk)]
     if request.user.person.pk in persons or request.user.is_superuser:
         center = Center.objects.get(pk=pk)
 
         if request.method == "POST":
-            form = CenterForm(request.POST, request.FILES, instance=center)
+            form = BasicCenterForm(request.POST, instance=center)
             if form.is_valid():
                 form.save()
                 message = (
                     f"The Center '{request.POST['name']}' has been updated!"
                 )
                 messages.success(request, message)
-                return redirect("center_detail", pk=pk)
+            return redirect("center_detail", pk=pk)
     else:
         raise Http404
 
+    template_name = "center/forms/tab_basic.html"
     context = {
-        "form": CenterForm(instance=center),
-        "form_name": "Center",
-        "form_path": "center/forms/center.html",
-        "goback": reverse("center_detail", args=[pk]),
-        "title": _("update center"),
-        "id": pk,
+        "title": _("Update basic info"),
+        "form": BasicCenterForm(instance=center),
+        "callback_link": reverse("center_update_basic", args=[pk]),
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.change_center")
+def center_update_address(request, pk):
+    persons = [psn.id for psn in Person.objects.filter(center=pk)]
+    if request.user.person.pk in persons or request.user.is_superuser:
+        center = Center.objects.get(pk=pk)
+
+        if request.method == "POST":
+            form = AddressCenterForm(request.POST, instance=center)
+            if form.is_valid():
+                form.save()
+
+            template_name = "center/elements/tab_address.html"
+            return render(request, template_name, {"object": center})
+
+    else:
+        raise Http404
+
+    template_name = "center/forms/tab_address.html"
+    context = {
+        "title": _("Update address info"),
+        "form": AddressCenterForm(instance=center),
+        "callback_link": reverse("center_update_address", args=[pk]),
+        "target": "tabAddress",
+        "swap": "innerHTML",
+        "update": True,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.change_center")
+def center_update_others(request, pk):
+    persons = [psn.id for psn in Person.objects.filter(center=pk)]
+    if request.user.person.pk in persons or request.user.is_superuser:
+        center = Center.objects.get(pk=pk)
+
+        if request.method == "POST":
+            form = OthersCenterForm(
+                request.POST, request.FILES, instance=center
+            )
+            if form.is_valid():
+                form.save()
+
+            template_name = "center/elements/tab_others.html"
+            return render(request, template_name, {"object": center})
+
+    else:
+        raise Http404
+
+    template_name = "center/forms/tab_others.html"
+    context = {
+        "title": _("Update others info"),
+        "form": OthersCenterForm(instance=center),
+        "callback_link": reverse("center_update_others", args=[pk]),
+        "target": "tabOthers",
+        "swap": "innerHTML",
+        "update": True,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.change_center")
+def center_update_image(request, pk):
+    persons = [psn.id for psn in Person.objects.filter(center=pk)]
+    if request.user.person.pk in persons or request.user.is_superuser:
+        center = Center.objects.get(pk=pk)
+
+        if request.method == "POST":
+            form = ImageCenterForm(
+                request.POST, request.FILES, instance=center
+            )
+            if form.is_valid():
+                form.save()
+
+            return redirect("center_detail", pk=pk)
+
+    else:
+        raise Http404
+
+    template_name = "center/forms/tab_image.html"
+    context = {
+        "title": _("Update image info"),
+        "form": ImageCenterForm(instance=center),
+        "callback_link": reverse("center_update_image", args=[pk]),
+        "target": "tabImage",
+        "swap": "innerHTML",
+        "update": True,
+    }
+    return render(request, template_name, context)
 
 
 @login_required
@@ -127,6 +229,7 @@ def center_update(request, pk):
 def center_delete(request, pk):
     center = Center.objects.get(pk=pk)
     if request.method == "POST":
+        # new_center returns conf_center
         if request.POST.get("conf_center"):
             _center = Center.objects.get(pk=request.POST.get("conf_center"))
             persons = center.person_set.all()
@@ -135,14 +238,15 @@ def center_delete(request, pk):
                 person.save()
         center.is_active = False
         center.save()
-        return redirect(reverse("center_home") + "?init=on")
+        return redirect("center_home")
 
+    template_name = "center/confirm/delete.html"
     context = {
         "object": center,
+        "del_link": reverse("center_delete", args=[pk]),
         "new_center": SelectNewCenterForm() if center.person_set.all() else "",
-        "title": _("confirm to delete"),
     }
-    return render(request, "center/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -152,10 +256,11 @@ def center_reinsert(request, pk):
     if request.method == "POST":
         center.is_active = True
         center.save()
-        return redirect(reverse("center_home") + "?init=on")
+        return redirect("center_home")
 
+    template_name = "center/confirm/reinsert.html"
     context = {
         "object": center,
-        "title": _("confirm to reinsert"),
+        "reinsert_link": reverse("center_reinsert", args=[pk]),
     }
-    return render(request, "center/confirm_reinsert.html", context)
+    return render(request, template_name, context)

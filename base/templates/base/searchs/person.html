@@ -6,12 +6,12 @@
       <input name="ps_term"
             class="form-control"
             id="ps_term"
-            placeholder="person"
+            placeholder="{% trans 'person' %}"
             {% if request.session.search.ps_term %}value={{ request.session.search.ps_term }}{% endif %}>
       <div class="input-group-append">
         <div class="input-group-text">
           <a href="?ps_term=+" class="text-secondary">
-            <i class="fas fa-backspace"></i>
+            <i class="fas fa-backspace" data-toggle="tooltip" data-placement="top" title="{% trans "Clear" %}"></i>
           </a>
         </div>
       </div>
