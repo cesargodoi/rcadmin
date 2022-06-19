@@ -1,18 +1,35 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
-{% include 'publicwork/navbar.html' %}
+  {% include 'publicwork/navbar.html' %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <form class="form-control-sm mt-1" method="GET">
-      {% csrf_token %}
-      {% include "base/searchs/seeker.html" %}
-    </form>
-    <br>
-    {% include 'publicwork/seeker/seekers.html' %}
-  </div>
-</article>
+  <article class="media content-section mb-1">
+    <div class="media-body">
+      <form class="form-control-sm mt-1" method="GET">
+        {% include "base/searchs/seeker.html" %}
+      </form>
+      <br>
+      {% include 'publicwork/seeker/seekers.html' %}
+    </div>
+  </article>
 
-{% endblock %}
+  {% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    }); 
+
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

@@ -6,7 +6,7 @@
                                                                  text-info
                                                                {% elif obj.status == 'STD' %}
                                                                  text-success
-                                                               {% elif not obj.is_active %}
+                                                               {% elif not obj.is_active or obj.status == 'RST' %}
                                                                  text-danger
                                                                {% elif obj.center != request.user.person.center %}
                                                                  text-secondary
@@ -27,7 +27,7 @@
                                                                  text-info
                                                                {% elif obj.status == 'STD' %}
                                                                  text-success
-                                                               {% elif not obj.is_active %}
+                                                               {% elif not obj.is_active or obj.status == 'RST' %}
                                                                  text-danger
                                                                {% elif obj.center != request.user.person.center %}
                                                                  text-secondary

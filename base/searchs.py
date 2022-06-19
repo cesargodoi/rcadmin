@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+import operator
 from django.db.models import Q
 from django.utils import timezone
 
@@ -138,7 +139,9 @@ def search_seeker(request, obj, _from, _to):
         _query.append(Q(name_sa__icontains=search["sk_name"]))
     if search["sk_city"]:
         _query.append(Q(city__icontains=search["sk_city"]))
-    if search["sk_status"] != "all":
+    if search["sk_status"] == "all":
+        _query.append(Q(status__in=("NEW", "MBR", "INS")))
+    else:
         _query.append(Q(status=search["sk_status"]))
     if search["center"]:
         _query.remove(Q(center=request.user.person.center))

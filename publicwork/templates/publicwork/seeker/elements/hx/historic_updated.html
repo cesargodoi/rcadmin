@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="col-sm-2">
-  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  <small class="text-muted align-top">{{ pos }}</small>
   &nbsp;&nbsp;
   <strong>{{ obj.date|date:'d/m/y' }}</strong>
 </div>
@@ -19,15 +19,13 @@
   <a 
     href="#"
     class="btn btn-light text-warning btn-sm" 
-    onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+    onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
   >
     <i class="fas fa-edit"></i> 
   </a>
-  <a 
-    href="#"
-    class="btn btn-light text-danger btn-sm" 
-    onclick="manageData('{{ obj.delete_link }}')"
-  >
-    <i class="fas fa-trash-alt"></i> 
+  <a type="button" 
+    href="{{ obj.delete_link }}"
+    class="btn btn-light text-danger btn-sm">
+    <i class="fas fa-trash-alt"></i>
   </a>
 </div>  

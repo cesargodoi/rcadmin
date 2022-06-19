@@ -28,7 +28,7 @@ class SeekerForm(forms.ModelForm):
         model = Seeker
         fields = "__all__"
         widgets = {
-            "observations": forms.Textarea(attrs={"rows": 3}),
+            "observations": forms.Textarea(attrs={"rows": 2}),
             "birth": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
@@ -67,7 +67,7 @@ class HistoricForm(forms.ModelForm):
         model = HistoricOfSeeker
         exclude = ["listeners"]
         widgets = {
-            "descriptions": forms.Textarea(attrs={"rows": 2}),
+            "description": forms.Textarea(attrs={"rows": 2}),
             "date": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),

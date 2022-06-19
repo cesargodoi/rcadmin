@@ -53,7 +53,7 @@ def seeker_home(request):
         "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
-        "status_list": SEEKER_STATUS,
+        "status_list": [stt for stt in SEEKER_STATUS if stt[0] != "OBS"],
         "title": _("seeker home"),
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
@@ -91,20 +91,20 @@ def seeker_create(request):
             messages.success(request, message)
             return redirect(reverse("seeker_home") + "?init=on")
 
+    seeker_form = SeekerForm(
+        initial={
+            "made_by": request.user,
+            "center": request.user.person.center,
+        }
+    )
+
+    template_name = "publicwork/seeker/forms/seeker.html"
     context = {
-        "form": SeekerForm(
-            initial={
-                "made_by": request.user,
-                "center": request.user.person.center,
-            }
-        ),
-        "form_name": "Seeker",
-        "form_path": "publicwork/forms/seeker.html",
-        "goback": reverse("seeker_home"),
-        "title": _("create seeker"),
-        "to_create": True,
+        "form": seeker_form,
+        "callback_link": reverse("seeker_create"),
+        "title": _("Create seeker"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -127,15 +127,14 @@ def seeker_update(request, pk):
         initial={"made_by": request.user},
     )
 
+    template_name = "publicwork/seeker/forms/seeker.html"
     context = {
         "form": seeker_form,
-        "form_name": "Seeker",
-        "form_path": "publicwork/forms/seeker.html",
-        "goback": reverse("seeker_detail", args=[pk]),
-        "title": _("update seeker"),
-        "pk": pk,
+        "callback_link": reverse("seeker_update", args=[pk]),
+        "title": _("Update seeker"),
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -152,11 +151,12 @@ def seeker_delete(request, pk):
             seeker.delete()
         return redirect("seeker_home")
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
         "object": seeker,
-        "title": _("confirm to delete"),
+        "del_link": reverse("seeker_delete", args=[pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -166,12 +166,14 @@ def seeker_reinsert(request, pk):
     if request.method == "POST":
         seeker.is_active = True
         seeker.save()
-        return redirect(reverse("seeker_home") + "?init=on")
+        return redirect("seeker_home")
 
-    context = {"object": seeker, "title": _("confirm to reinsert")}
-    return render(
-        request, "publicwork/seeker/confirm_to_reinsert.html", context
-    )
+    template_name = "publicwork/confirm/reinsert.html"
+    context = {
+        "object": seeker,
+        "reinsert_link": reverse("seeker_reinsert", args=[pk]),
+    }
+    return render(request, template_name, context)
 
 
 # seeker frequencies
@@ -228,7 +230,8 @@ def seeker_historic(request, pk):
     object_list = _object_list[_from:_to]
     # add action links
     for item in object_list:
-        item.click_link = reverse("update_historic", args=[pk, item.pk])
+        item.update_link = reverse("update_historic", args=[pk, item.pk])
+        item.delete_link = reverse("delete_historic", args=[pk, item.pk])
 
     context = {
         "LIMIT": LIMIT,

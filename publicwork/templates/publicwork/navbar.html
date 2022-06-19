@@ -42,10 +42,13 @@
 
     {% if nav == "sk_home" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'seeker_create' %}">
-          <i class="fas fa-plus"></i> 
-          {% trans 'Seeker' %}
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'seeker_create' %}')"
+        >
+          <i class="fas fa-plus"></i>
+          {% trans 'Seeker' %}  
         </a>
       </li>
     {% endif %}

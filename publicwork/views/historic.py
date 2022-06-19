@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
@@ -25,15 +26,12 @@ def create_historic(request, pk):
                     request.POST.get("occurrence"),
                     request.POST.get("date"),
                 )
-            if request.POST["occurrence"] in ("RST", "STD"):
-                seeker.is_active = False
-                seeker.save()
-            messages.success(request, _("The Historic has been created!"))
 
+            messages.success(request, "The Historic has been created!")
         return redirect("seeker_historic", pk=pk)
 
+    template_name = "publicwork/seeker/forms/historic.html"
     context = {
-        "object": seeker,
         "form": HistoricForm(
             initial={
                 "seeker": seeker,
@@ -42,12 +40,12 @@ def create_historic(request, pk):
                 "made_by": request.user,
             }
         ),
-        "title": _("add historic"),
-        "tab": "historic",
-        "add": True,
-        "goback": reverse("seeker_historic", args=[pk]),
+        "title": _("Create historic"),
+        "callback_link": reverse("create_historic", args=[pk]),
+        "target": "historicList",
+        "swap": "innerHTML",
     }
-    return render(request, "publicwork/seeker/add_or_change.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -55,6 +53,7 @@ def create_historic(request, pk):
 def update_historic(request, seek_pk, hist_pk):
     seeker = Seeker.objects.get(pk=seek_pk)
     historic = HistoricOfSeeker.objects.get(pk=hist_pk)
+
     if request.method == "POST":
         form = HistoricForm(request.POST, instance=historic)
         if form.is_valid():
@@ -65,18 +64,29 @@ def update_historic(request, seek_pk, hist_pk):
                     request.POST.get("occurrence"),
                     request.POST.get("date"),
                 )
-            messages.success(request, _("The Historic has been updated!"))
 
-        return redirect("seeker_historic", pk=seek_pk)
+        historic.update_link = reverse(
+            "update_historic", args=[seek_pk, hist_pk]
+        )
+        historic.delete_link = reverse(
+            "delete_historic", args=[seek_pk, hist_pk]
+        )
 
+        template_name = "publicwork/seeker/elements/hx/historic_updated.html"
+        context = {"obj": historic, "pos": request.GET.get("pos", "cadê")}
+        return render(request, template_name, context)
+
+    template_name = "publicwork/seeker/forms/historic.html"
     context = {
-        "object": seeker,
         "form": HistoricForm(instance=historic),
-        "title": _("change historic"),
-        "tab": "historic",
-        "goback": reverse("seeker_historic", args=[seek_pk]),
+        "title": _("Update historic"),
+        "callback_link": reverse("update_historic", args=[seek_pk, hist_pk]),
+        "target": f"HST{hist_pk}",
+        "swap": "innerHTML",
+        "pos": request.GET.get("pos"),
+        "update": True,
     }
-    return render(request, "publicwork/seeker/add_or_change.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -90,11 +100,12 @@ def delete_historic(request, seek_pk, hist_pk):
             adjust_seeker_side(historic.seeker, reverse=True)
         return redirect("seeker_historic", pk=seek_pk)
 
+    template_name = "publicwork/seeker/confirm/delete.html"
     context = {
         "object": historic,
-        "title": _("confirm to delete"),
+        "callback": reverse("delete_historic", args=[seek_pk, hist_pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 # handlers

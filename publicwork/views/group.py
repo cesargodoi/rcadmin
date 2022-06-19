@@ -407,7 +407,12 @@ def group_add_member(request, pk):
         "object": pw_group,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_member", args=[pw_group.pk]),
-        "status_list": SEEKER_STATUS,
+        "status_list": [
+            stt
+            for stt in SEEKER_STATUS
+            if stt[0] not in ("OBS", "ITD", "STD", "RST")
+        ],
+        "only_actives": True,
         "title": _("group add member"),
         "nav": "add_member",
         "goback": reverse("group_detail", args=[pk]),

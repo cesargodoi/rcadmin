@@ -23,7 +23,7 @@ from ..models import Lecture, Seeker, Listener
 def add_listener(request, lect_pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
-        "publicwork/listener/add.html"
+        "publicwork/listener/add.html",
         "publicwork/listener/elements/seeker_list.html",
     )
 
@@ -77,7 +77,12 @@ def add_listener(request, lect_pk):
         "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("add_listener", args=[lecture.pk]),
-        "status_list": SEEKER_STATUS,
+        "status_list": [
+            stt
+            for stt in SEEKER_STATUS
+            if stt[0] not in ("OBS", "ITD", "STD", "RST")
+        ],
+        "only_actives": True,
         "pre_listeners": [seek.pk for seek in lecture.listeners.all()],
         "title": _("add listener"),
         "object": lecture,

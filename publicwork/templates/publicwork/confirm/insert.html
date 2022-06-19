@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="modal-header bg-success">
+<div class="modal-header bg-primary">
   <h4 class="modal-title text-light">{% trans 'Atention' %}!</h4>
   <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -11,13 +11,13 @@
 </div>
 
 <div class="modal-body">
-  <p>{% trans 'Are you shure you want to reinsert' %}: <br>
+  <p>{% trans 'Are you shure you want to insert' %}: <br>
     <strong>{{ object }}</strong> 
 </div>
 
 <div class="modal-footer">
   <div class="text-right">
-    <form method="POST" action="{{ reinsert_link }}">
+    <form method="POST" action="{{ confirm_link }}">
       {% csrf_token %}
       <button 
         type="button" 
@@ -30,7 +30,7 @@
       </button>
       <button 
         type="submit"
-        class="btn btn-success"
+        class="btn btn-primary"
       >
         <i class="fas fa-edit"></i>
         {% trans 'Confirm' %}

@@ -134,6 +134,7 @@ def person_create(request):
         request.POST or None, initial={"made_by": request.user}
     )
 
+    template_name = "person/forms/create_person.html"
     context = {
         "user_form": user_form,
         "person_form": person_form,
@@ -141,7 +142,7 @@ def person_create(request):
         "callback_link": reverse("person_create"),
         "title": _("Create person"),
     }
-    return render(request, "person/forms/create_person.html", context)
+    return render(request, template_name, context)
 
 
 #  partial updates
@@ -323,12 +324,7 @@ def person_delete(request, id):
             add_historic(person, "REM", request.user)
         else:
             person.user.delete()
-        return redirect(reverse("person_home") + "?init=on")
-
-    context = {
-        "object": person,
-        "title": _("confirm to delete"),
-    }
+        return redirect("person_home")
 
     template_name = "person/confirm/delete.html"
     context = {
@@ -354,7 +350,7 @@ def person_reinsert(request, id):
     template_name = "person/confirm/reinsert.html"
     context = {
         "object": person,
-        "confirm_link": reverse("person_reinsert", args=[id]),
+        "reinsert_link": reverse("person_reinsert", args=[id]),
     }
     return render(request, template_name, context)
 

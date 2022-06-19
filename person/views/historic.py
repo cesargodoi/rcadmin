@@ -78,7 +78,7 @@ def historic_create(request, person_id):
                 "date": timezone.now(),
             }
         ),
-        "to_create": reverse("historic_create", args=[person_id]),
+        "callback_link": reverse("historic_create", args=[person_id]),
         "person_id": person_id,  # to header element
     }
     return render(request, template_name, context)
@@ -115,9 +115,11 @@ def historic_update(request, person_id, pk):
     context = {
         "title": _("Update Historic"),
         "form": HistoricForm(instance=historic),
-        "to_update": reverse("historic_update", args=[person_id, pk]),
-        "hst_pk": pk,
+        "callback_link": reverse("historic_update", args=[person_id, pk]),
+        "target": f"HST{pk}",
+        "swap": "innerHTML",
         "pos": request.GET.get("pos"),
+        "update": True,
     }
     return render(request, template_name, context)
 
