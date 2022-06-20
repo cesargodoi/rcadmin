@@ -40,9 +40,11 @@
   {% if obj.click_link %}
     {% if obj.seeker.status != 'ITD'%}
       {% if obj.center == request.user.person.center or request.user.is_superuser %}
-        <a type="button" 
-          href="{{ obj.click_link }}"
-          class="btn btn-light text-warning btn-sm">
+        <a 
+          href="#"
+          class="btn btn-light text-warning btn-sm" 
+          onclick="manageData('{{ obj.click_link }}')"
+        >
           <i class="fas fa-edit"></i>
         </a>
       {% endif %}
@@ -51,9 +53,9 @@
   {% if obj.seeker.status != 'ITD' %}
     {% if obj.del_link %}
       <a 
-        type="button" 
-        class="btn btn-light text-danger btn-sm"
-        href="{{ obj.del_link }}"
+        href="#"
+        class="btn btn-light text-danger btn-sm" 
+        onclick="manageData('{{ obj.del_link }}')"
       >
         <i class="fas fa-trash-alt"></i>
       </a>

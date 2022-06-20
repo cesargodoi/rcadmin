@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% load crispy_forms_tags %}
@@ -17,7 +18,6 @@
   <div class="media-body">
     <h4>{% trans 'Add listener' %}</h4>
     <form class="form-control-sm border-top" method="GET">
-      {% csrf_token %}
       {% include "base/searchs/seeker.html" %}
     </form>
     <br>
@@ -27,4 +27,21 @@
   </div>
 </article>
 
-{% endblock %}
+  {% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    }); 
+
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

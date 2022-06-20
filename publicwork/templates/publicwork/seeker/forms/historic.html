@@ -60,12 +60,8 @@
         type="submit"
         class="btn {% if update %}btn-warning{% else %}btn-primary{% endif %}"
       >
-        <i class="fas fa-edit"></i>
-        {% if update %}
-          {% trans 'update' %}
-        {% else %}
-          {% trans 'Create' %}
-        {% endif %}
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
       </button>
     </div>
   </div>

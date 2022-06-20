@@ -1,26 +1,17 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% if update %}
-  <form 
-    id="form"
-    hx-post="{{ callback_link }}?pos={{pos}}"
-    hx-target="#FRQ{{ freq_pk }}"
-    hx-swap="innerHTML"
-  >
-{% else %}
-  <form id="form" method="POST" action="{{ callback_link }}">
-{% endif %}
+<form id="form" method="POST" action="{{ callback }}">
 
   {% csrf_token %}
 
-  <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
-    <h4 class="modal-title {% if update %}text-dark{% else %}text-light{% endif %}">
+  <div class="modal-header bg-primary">
+    <h4 class="modal-title text-light">
       {{ title }}
     </h5>
     <button 
       type="button" 
-      class="close {% if update %}text-dark{% else %}text-light{% endif %}" 
+      class="close text-light" 
       data-dismiss="modal" 
       aria-label="Close"
     >
@@ -30,29 +21,33 @@
 
   <div class="modal-body">
     <table class="table table-sm">
-      {% if person %}
       <tr>
-        <th class="small" width="20%">{% trans 'name' %}</th>
-        <td><strong>{{ person }}</strong></td>
-      </tr>
-      {% endif %}
-      <tr>
-        <th class="small" width="20%">{% trans 'event' %}</th>
-        <th>
-          {{ event.activity.name }} 
+        <th class="small" width="20%">{% trans 'seeker' %}</th>
+        <td>
+          <strong>{{ seeker.name }}</strong>
           &nbsp;&nbsp; 
           <small class="font-italic">
-            {{ event.activity.get_activity_type_display }}
+            {{ seeker.center}}
+          </small>
+        </td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'lecture' %}</th>
+        <th>
+          {{ lecture.theme }} 
+          &nbsp;&nbsp; 
+          <small class="font-italic">
+            {{ lecture.get_type_display }}
           </small>
         </th>
       </tr>
       <tr>
         <th class="small" width="20%">{% trans 'date' %}</th>
-        <td><strong>{{ event.date | date:"d/m/y" }}</strong></td>
+        <td><strong>{{ lecture.date | date:"d/m/y" }}</strong></td>
       </tr>
       <tr>
         <th class="small" width="20%">{% trans 'local' %}</th>
-        <td>{{ event.center }}</td>
+        <td>{{ lecture.center }}</td>
       </tr>
     </table>
     <hr>
@@ -72,10 +67,10 @@
       </button>
       <button 
         type="submit"
-        class="btn {% if update %}btn-warning{% else %}btn-primary{% endif %}"
+        class="btn btn-primary"
       >
         <i class="fas fa-check"></i>
-        {% trans 'Confirm' %}
+          {% trans 'Confirm' %}
       </button>
     </div>
   </div>

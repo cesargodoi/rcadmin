@@ -55,8 +55,11 @@
   
     {% if nav == "lc_home" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'lecture_create' %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'lecture_create' %}')"
+        >
           <i class="fas fa-plus"></i> 
           {% trans 'Lecture' %}
         </a>
@@ -65,8 +68,11 @@
   
     {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary"
-          href="{% url 'group_create' %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'group_create' %}')"
+        >
           <i class="fas fa-plus"></i> 
           {% trans 'Group' %}
         </a>

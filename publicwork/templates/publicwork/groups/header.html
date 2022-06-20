@@ -39,9 +39,11 @@
         {{ mentor.short_name }} 
         {% if nav == 'info' %}
           {% if not request.user|has_group:"publicwork_jr" %}
-            <a type="button" 
-              href="{% url 'group_remove_mentor' object.pk mentor.pk %}"
-              class="btn btn-light text-danger btn-sm ml-1"> 
+            <a 
+              href="#"
+              class="btn btn-light text-danger btn-sm ml-1" 
+              onclick="manageData('{% url 'group_remove_mentor' object.pk mentor.pk %}')"
+            >
               <i class="fas fa-trash-alt"></i>
             </a>
           {% endif %}
@@ -49,4 +51,8 @@
       </div>
     {% endfor %}
   </div>
+{% endif %}
+
+{% if object.description %}
+  <p><small class="text-muted">{{ object.description }}</small></p>
 {% endif %}

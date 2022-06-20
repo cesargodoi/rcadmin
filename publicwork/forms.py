@@ -58,6 +58,7 @@ class ListenerForm(forms.ModelForm):
         model = Listener
         fields = ["ranking", "observations"]
         widgets = {
+            "observations": forms.Textarea(attrs={"rows": 2}),
             "ranking": forms.widgets.NumberInput(attrs={"min": 0, "max": 2}),
         }
 
@@ -81,6 +82,6 @@ class GroupForm(forms.ModelForm):
         model = PublicworkGroup
         exclude = ["mentors", "members"]
         widgets = {
-            "descriptions": forms.Textarea(attrs={"rows": 2}),
+            "description": forms.Textarea(attrs={"rows": 2}),
         }
         widgets.update(HIDDEN_AUTH_FIELDS)

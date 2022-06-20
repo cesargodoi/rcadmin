@@ -2,11 +2,7 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form 
-  hx-post="{{ callback_link }}"
-  hx-target="#{{ target }}"
-  hx-swap="{{ swap }}"
->
+<form method="POST" action="{{ callback }}">
 
   {% csrf_token %}
 
@@ -26,41 +22,7 @@
 
   <div class="modal-body">
 
-    <div class="row">
-      <div class="col-md-8">
-        {{ form.address | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ form.number | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ form.complement | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ form.district | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8">
-        {{ form.city | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ form.state | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ form.country | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ form.zip_code | as_crispy_field }}
-      </div>
-    </div>
+    {{ form | crispy }}
 
   </div>
 
@@ -85,5 +47,3 @@
     </div>
   </div>
 </form>
-
-<script src="{% static 'js/address.js' %}" defer></script>

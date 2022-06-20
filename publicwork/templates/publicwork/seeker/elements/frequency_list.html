@@ -1,6 +1,7 @@
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
+      id="FRQ{{ obj.pk }}"
       class="row border-top border-secondary mt-2 pt-2"
       hx-get="{% url 'seeker_frequencies' object.pk %}?page={{ page|add:1 }}" 
       hx-trigger="revealed" 
@@ -9,6 +10,7 @@
     >
   {% else %}
     <div 
+      id="FRQ{{ obj.pk }}"  
       class="row border-top border-secondary mt-2 pt-2"
     >
   {% endif %}

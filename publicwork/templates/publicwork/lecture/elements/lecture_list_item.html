@@ -34,10 +34,12 @@
     {% if obj.pk in pre_freqs %}
       <i class="fas fa-user-check mr-1"></i>
     {% else %}
-      <a type="button" 
-        href="{{ obj.add_link}}?lect_pk={{ obj.pk }}"
-        class="btn btn-light text-primary btn-sm">
-        <i class="fas fa-plus"></i>
+      <a 
+        href="#"
+        class="btn btn-light text-primary btn-sm" 
+        onclick="manageData('{{ obj.add_link}}?lect_pk={{ obj.pk }}')"
+      >
+        <i class="fas fa-plus"></i> 
       </a>
     {% endif %}
   {% elif obj.add_freqs_link %}

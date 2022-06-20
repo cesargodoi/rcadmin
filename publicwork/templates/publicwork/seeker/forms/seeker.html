@@ -2,7 +2,11 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form method="POST" action="{{ callback_link }}" enctype="multipart/form-data">
+<form 
+  method="POST" 
+  action="{{ callback }}" 
+  enctype="multipart/form-data"
+>
   {% csrf_token %}
 
   <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
@@ -83,12 +87,8 @@
         type="submit"
         class="btn {% if update %}btn-warning{% else %}btn-primary{% endif %}"
       >
-        <i class="fas fa-edit"></i>
-        {% if update %}
-          {% trans 'update' %}
-        {% else %}
-          {% trans 'Create' %}
-        {% endif %}
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
       </button>
     </div>
   </div>

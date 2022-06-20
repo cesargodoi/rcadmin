@@ -23,13 +23,18 @@
     <i class="fas fa-star"></i>
   {% endif %}
   &nbsp;&nbsp;
-  <a type="button" 
-    href="{% url 'update_frequency' object.pk obj.pk %}"
-    class="btn btn-light text-warning btn-sm">
-    <i class="fas fa-edit"></i>
+  <a 
+    href="#"
+    class="btn btn-light text-warning btn-sm" 
+    onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+  >
+    <i class="fas fa-edit"></i> 
   </a>
-  <a type="button" href="{% url 'remove_frequency' object.pk obj.pk %}"
-    class="btn btn-light text-danger btn-sm">
-    <i class="fas fa-trash-alt"></i>
+  <a 
+    href="#"
+    class="btn btn-light text-danger btn-sm" 
+    onclick="manageData('{{ obj.delete_link }}')"
+  >
+    <i class="fas fa-trash-alt"></i> 
   </a>
 </div>  

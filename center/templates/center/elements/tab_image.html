@@ -1,13 +1,15 @@
+{% load static %}
 {% load i18n %}
-{% if object.image.url %}
+
+{% if object.image %}
   <img 
-    id="image"
     class="img-thumbnail rounded mx-auto d-block mb-2" 
     src="{{ object.image.url }}"
   >
 {% else %}
-  Não tem imagem
+  <img src="{% static 'img/default_center.jpg' %}" class="card-img-top" alt="...">
 {% endif %}
+
 <div class="text-right" style="position: relative; float: right; top: -3rem; right: .5rem">
   <a 
     href="#"

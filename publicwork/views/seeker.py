@@ -87,9 +87,11 @@ def seeker_create(request):
         seeker_form = SeekerForm(request.POST, request.FILES)
         if seeker_form.is_valid():
             seeker_form.save()
+
             message = f"The Seeker '{request.POST['name']}' has been created!"
             messages.success(request, message)
-            return redirect(reverse("seeker_home") + "?init=on")
+
+        return redirect("seeker_home")
 
     seeker_form = SeekerForm(
         initial={
@@ -101,7 +103,7 @@ def seeker_create(request):
     template_name = "publicwork/seeker/forms/seeker.html"
     context = {
         "form": seeker_form,
-        "callback_link": reverse("seeker_create"),
+        "callback": reverse("seeker_create"),
         "title": _("Create seeker"),
     }
     return render(request, template_name, context)
@@ -130,7 +132,7 @@ def seeker_update(request, pk):
     template_name = "publicwork/seeker/forms/seeker.html"
     context = {
         "form": seeker_form,
-        "callback_link": reverse("seeker_update", args=[pk]),
+        "callback": reverse("seeker_update", args=[pk]),
         "title": _("Update seeker"),
         "update": True,
     }
@@ -141,6 +143,7 @@ def seeker_update(request, pk):
 @permission_required("publicwork.delete_seeker")
 def seeker_delete(request, pk):
     seeker = Seeker.objects.get(pk=pk)
+
     if request.method == "POST":
         if seeker.listener_set.count():
             seeker.is_active = False
@@ -163,6 +166,7 @@ def seeker_delete(request, pk):
 @permission_required("publicwork.add_seeker")
 def seeker_reinsert(request, pk):
     seeker = Seeker.objects.get(pk=pk)
+
     if request.method == "POST":
         seeker.is_active = True
         seeker.save()
@@ -192,8 +196,13 @@ def seeker_frequencies(request, pk):
     _object_list = seeker.listener_set.all()
 
     count = len(_object_list)
-    object_list = _object_list[_from:_to]
     ranking = sum([f.ranking for f in _object_list])
+
+    object_list = _object_list[_from:_to]
+    # add action links
+    for item in object_list:
+        item.update_link = reverse("update_frequency", args=[pk, item.pk])
+        item.delete_link = reverse("remove_frequency", args=[pk, item.pk])
 
     context = {
         "LIMIT": LIMIT,

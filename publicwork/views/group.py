@@ -127,25 +127,26 @@ def group_create(request):
         pw_group_form = GroupForm(request.POST)
         if pw_group_form.is_valid():
             pw_group_form.save()
+
             message = f"The Group '{request.POST['name']}' has been created!"
-
             messages.success(request, message)
-            return redirect(reverse("group_home") + "?init=on")
 
+        return redirect("group_home")
+
+    group_form = GroupForm(
+        initial={
+            "made_by": request.user,
+            "center": request.user.person.center,
+        }
+    )
+
+    template_name = "publicwork/groups/forms/group.html"
     context = {
-        "form": GroupForm(
-            initial={
-                "made_by": request.user,
-                "center": request.user.person.center,
-            }
-        ),
-        "form_name": "Group",
-        "form_path": "publicwork/forms/group.html",
-        "goback": reverse("group_home"),
-        "title": _("create goup"),
-        "to_create": True,
+        "form": group_form,
+        "callback": reverse("group_create"),
+        "title": _("Create group"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -168,52 +169,53 @@ def group_update(request, pk):
         initial={"made_by": request.user},
     )
 
+    template_name = "publicwork/groups/forms/group.html"
     context = {
         "form": pw_group_form,
-        "form_name": "Group",
-        "form_path": "publicwork/forms/group.html",
-        "goback": reverse("group_detail", args=[pk]),
-        "title": _("update group"),
-        "pk": pk,
+        "callback": reverse("group_update", args=[pk]),
+        "title": _("Update group"),
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.delete_publicworkgroup")
 def group_delete(request, pk):
     pw_group = PublicworkGroup.objects.get(pk=pk)
+
     if request.method == "POST":
         if pw_group.members.count() > 0 or pw_group.mentors.count() > 0:
             pw_group.is_active = False
             pw_group.save()
         else:
             pw_group.delete()
-        return redirect(reverse("group_home") + "?init=on")
+        return redirect("group_home")
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
         "object": pw_group,
-        "title": _("confirm to delete"),
+        "del_link": reverse("group_delete", args=[pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.add_publicworkgroup")
 def group_reinsert(request, pk):
     pw_group = PublicworkGroup.objects.get(pk=pk)
+
     if request.method == "POST":
         pw_group.is_active = True
         pw_group.save()
-        return redirect(reverse("group_home") + "?init=on")
+        return redirect("group_home")
 
+    template_name = "publicwork/confirm/reinsert.html"
     context = {
         "object": pw_group,
-        "title": _("confirm to reinsert"),
+        "reinsert_link": reverse("group_reinsert", args=[pk]),
     }
-    return render(
-        request, "publicwork/seeker/confirm_to_reinsert.html", context
-    )
+    return render(request, template_name, context)
 
 
 # seeker frequencies
@@ -361,22 +363,25 @@ def group_add_member(request, pk):
                     date=date,
                     description=f"Entered in '{pw_group}' group.",
                 )
+
             seeker.status = "MBR"
             seeker.status_date = date
             seeker.save()
+
             messages.success(request, "The member has been inserted on group!")
             return redirect("group_detail", pk=pk)
 
+        template_name = "publicwork/confirm/insert.html"
         context = {
-            "member": seeker.name,
-            "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {} ({})".format(
+                seeker.name, pw_group.name, pw_group.center
+            ),
+            "confirm_link": "{}?seek_pk={}".format(
+                reverse("group_add_member", args=[pk]),
+                request.GET["seek_pk"],
+            ),
         }
-        return render(
-            request,
-            "publicwork/groups/confirm_add_member_or_mentor.html",
-            context,
-        )
+        return render(request, template_name, context)
 
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -431,16 +436,17 @@ def group_remove_member(request, group_pk, member_pk):
 
     if request.method == "POST":
         pw_group.members.remove(member)
+
         return redirect("group_detail", pk=group_pk)
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
-        "member": member.name,
-        "group": pw_group,
-        "title": _("confirm to remove"),
+        "object": "{} ⛔️ {} ({})".format(
+            member.name, pw_group.name, pw_group.center
+        ),
+        "del_link": reverse("group_remove_member", args=[group_pk, member_pk]),
     }
-    return render(
-        request, "publicwork/groups/confirm_remove_member.html", context
-    )
+    return render(request, template_name, context)
 
 
 # add mentor
@@ -460,16 +466,17 @@ def group_add_mentor(request, pk):
             )
             return redirect("group_detail", pk=pk)
 
+        template_name = "publicwork/confirm/insert.html"
         context = {
-            "member": person.name,
-            "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {} ({})".format(
+                person.name, pw_group.name, pw_group.center
+            ),
+            "confirm_link": "{}?person_pk={}".format(
+                reverse("group_add_mentor", args=[pk]),
+                request.GET["person_pk"],
+            ),
         }
-        return render(
-            request,
-            "publicwork/groups/confirm_add_member_or_mentor.html",
-            context,
-        )
+        return render(request, template_name, context)
 
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -528,14 +535,17 @@ def group_remove_mentor(request, group_pk, mentor_pk):
         pw_group.mentors.remove(mentor)
         return redirect("group_detail", pk=group_pk)
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
-        "member": mentor.name,
-        "group": pw_group,
-        "title": _("confirm to remove"),
+        "object": "{} ⛔️ {} ({})".format(
+            mentor.name, pw_group.name, pw_group.center
+        ),
+        "del_link": reverse("group_remove_mentor", args=[group_pk, mentor_pk]),
+        # "member": mentor.name,
+        # "group": pw_group,
+        # "title": _("confirm to remove"),
     }
-    return render(
-        request, "publicwork/groups/confirm_remove_member.html", context
-    )
+    return render(request, template_name, context)
 
 
 # handlers

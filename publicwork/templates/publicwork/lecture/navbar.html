@@ -23,16 +23,22 @@
 
     {% if object.center == request.user.person.center or request.user.is_superuser %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-          href="{% url 'lecture_update' object.pk %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+          onclick="manageData('{% url 'lecture_update' object.pk %}')"
+        >
           <i class="fas fa-edit"></i> 
-          {% trans 'Edit' %}
+          {% trans 'Edit' %} 
         </a>
       </li>
       {% if object.listeners.count == 0 %}
         <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-            href="{% url 'lecture_delete' object.pk %}">
+          <a 
+            href="#"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+            onclick="manageData('{% url 'lecture_delete' object.pk %}')"
+          >
             <i class="fas fa-trash-alt"></i> 
             {% trans 'Delete' %}
           </a>

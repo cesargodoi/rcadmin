@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from rcadmin.common import SEEKER_STATUS
 from ..forms import HistoricForm
 from ..models import Seeker, HistoricOfSeeker
 
@@ -73,7 +74,7 @@ def update_historic(request, seek_pk, hist_pk):
         )
 
         template_name = "publicwork/seeker/elements/hx/historic_updated.html"
-        context = {"obj": historic, "pos": request.GET.get("pos", "cadê")}
+        context = {"obj": historic, "pos": request.GET.get("pos")}
         return render(request, template_name, context)
 
     template_name = "publicwork/seeker/forms/historic.html"
@@ -102,7 +103,10 @@ def delete_historic(request, seek_pk, hist_pk):
 
     template_name = "publicwork/seeker/confirm/delete.html"
     context = {
-        "object": historic,
+        "object": "{} ⛔️ {}".format(
+            historic.seeker.name,
+            dict(SEEKER_STATUS)[historic.occurrence].upper(),
+        ),
         "callback": reverse("delete_historic", args=[seek_pk, hist_pk]),
     }
     return render(request, template_name, context)

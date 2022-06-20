@@ -2,11 +2,16 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form 
-  hx-post="{{ callback_link }}"
-  hx-target="#{{ target }}"
-  hx-swap="{{ swap }}"
->
+{% if update %}
+  <form 
+    id="form"
+    hx-post="{{ callback_link }}?pos={{pos}}"
+    hx-target="#{{ target }}"
+    hx-swap="{{ swap }}"
+  >
+{% else %}
+  <form method="POST" action="{{ callback_link }}">
+{% endif %}
 
   {% csrf_token %}
 
@@ -25,42 +30,28 @@
   </div>
 
   <div class="modal-body">
-
-    <div class="row">
-      <div class="col-md-8">
-        {{ form.address | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ form.number | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ form.complement | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ form.district | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8">
-        {{ form.city | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ form.state | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ form.country | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ form.zip_code | as_crispy_field }}
-      </div>
-    </div>
+    <table class="table table-sm">
+      <tr>
+        <th class="small" width="20%">{% trans 'lecture' %}</th>
+        <th>
+          {{ object.lecture.theme }} 
+          &nbsp;&nbsp; 
+          <small class="font-italic">
+            {{ object.lecture.get_type_display }}
+          </small>
+        </th>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'date' %}</th>
+        <td><strong>{{ object.lecture.date | date:"d/m/y" }}</strong></td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'local' %}</th>
+        <td>{{ object.lecture.center }}</td>
+      </tr>
+    </table>
+    <hr>
+    {{ form | crispy }}
 
   </div>
 
@@ -85,5 +76,3 @@
     </div>
   </div>
 </form>
-
-<script src="{% static 'js/address.js' %}" defer></script>

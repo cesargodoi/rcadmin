@@ -1,21 +1,28 @@
 {% load i18n %}
-<div class="col-sm-2">
+<div class="col-sm-5 font-weight-bold">
   <small class="text-muted align-top">{{ pos }}</small>
   &nbsp;&nbsp;
-  <strong>{{ obj.date|date:'d/m/y' }}</strong>
+  {{ obj.lecture.date|date:'d/m/y' }}
+  &nbsp;&nbsp;&nbsp;
+  {{ obj.lecture.theme }}
 </div>
 
-<div class="col-sm-2">
-  <strong>{{ obj.get_occurrence_display }}</strong>
+<div class="col-sm-2 small">
+  {{ obj.lecture.center }}
+  &nbsp;&nbsp;
+  <em>({{ obj.lecture.get_type_display }})</em>
 </div>
 
-<div class="col-sm-6 small">
-  {% if obj.description %}
-    {{ obj.description }}
-  {% endif %}
+<div class="col-sm-3 small">
+  {{ obj.observations }}
 </div>
 
 <div class="col-sm-2 text-right">
+  {% if obj.ranking > 0 %}
+    {{ obj.ranking }}
+    <i class="fas fa-star"></i>
+  {% endif %}
+  &nbsp;&nbsp;
   <a 
     href="#"
     class="btn btn-light text-warning btn-sm" 
