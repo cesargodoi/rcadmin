@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 
-import operator
 from django.db.models import Q
 from django.utils import timezone
 
@@ -264,7 +263,7 @@ def get_base_search(request):
         "sk_status": "all",
         "ps_status": "all",
         "dt1": (timezone.now() - timedelta(30)).strftime("%Y-%m-%d"),
-        "dt2": timezone.now().strftime("%Y-%m-%d"),
+        "dt2": (timezone.now() + timedelta(30)).strftime("%Y-%m-%d"),
         "ev_type": "all",
         "lc_type": "all",
         "wg_type": "all",

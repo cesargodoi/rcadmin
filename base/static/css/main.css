@@ -147,13 +147,38 @@ a.article-title:hover {
   width: 10rem;
 }
 
-.toast-hide {
-  background-color: var(--background-cabecalho);
-  border-radius: 5px;
-  padding: .5rem;
+.photo-cover {
+  object-fit: cover;
+  width: 13em;
+  height: 13em;
+  border: solid #666 2px
+}
+
+.photo-edit-button {
+  position: relative;
+  float: right;
+  top: -2.2rem;
+  right: .8rem
+}
+
+.toast {
+  -ms-flex-preferred-size: 25rem;
+  flex-basis: 25rem;
+  max-width: 25rem;
+  min-height: 4rem;
+  padding: 2rem;
+  font-size: .875rem;
   color: white;
-  width: 290px;
-  height: auto;
+  background-color: var(--background-cabecalho);
+  border-radius: 0.5rem;
+  background-clip: padding-box;
+  border: 1px solid rgba(24, 23, 23, 0.1);
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
+  opacity: 0;
+}
+
+.fade {
+  transition: opacity .3s linear;
 }
 
 .tamanho-img {

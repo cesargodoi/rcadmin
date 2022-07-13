@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% load base_extras %}
 {% load i18n %}
+{% load base_extras %}
 
 {% block content %}
 
@@ -10,7 +10,17 @@
   <div class="article-metadata">{% trans 'Welcome to' %}</div>
   <div class="row">
     <div class="col-lg-2">
-        <img src="{{ object.image.url }}" class="round-circle article-img" >
+      {% if object.image %}
+        <img 
+          class="rounded-circle article-img" 
+          src="{{ object.image.url }}"
+        >
+      {% else %}
+        <img 
+          class="rounded-circle article-img"
+          src="{% static 'img/default_center.jpg' %}"
+        >
+      {% endif %}
     </div>
     
     <div class="media-body col-lg-10">

@@ -1,20 +1,23 @@
+{% load static %}
 {% load i18n %}
-{% if object.user.profile.image.url %}
-<img 
-  id="image"
-  class="img-thumbnail rounded mx-auto d-block mb-2" 
-  src="{{ object.user.profile.image.url }}"
->
+
+{% if object.user.profile.image %}
+  <img 
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{{ object.user.profile.image.url }}"
+  >
 {% else %}
-Não tem imagem
+  <img
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{% static 'img/default_profile.jpg' %}"
+  >
 {% endif %}
-<div class="text-right" style="position: relative; float: right; top: -3rem; right: .5rem">
+<div class="text-right photo-edit-button">
   <a 
     href="#"
     class="btn btn-sm btn-outline-warning mb-4" 
     onclick="manageData('{% url 'person_update_image' object.id %}')"
   >
     <i class="fas fa-edit"></i> 
-    {% trans 'Change' %}
   </a>
 </div>

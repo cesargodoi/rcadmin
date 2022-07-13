@@ -126,7 +126,7 @@ SEEKER_STATUS = (
     ("STD", _("stand by")),
     ("RST", _("restriction")),
 )
-RESPOSABILITIES = (("BDG", _("Badge")),)
+RESPOSABILITIES = (("BDG", _("Badge")), ("SCR", _("Secretary")))
 BR_REGIONS = {
     "SP": ["SP"],
     "RJ": ["RJ", "ES"],
@@ -331,6 +331,13 @@ def get_template_and_pagination(request, tmplt, tmplt_htmx, limit=10):
     _from, _to = limit * (page - 1), limit * page
 
     return (limit, template_name, _from, _to, page)
+
+
+def get_pagination(request, limit=10):
+    page = int(request.GET.get("page", 1)) if request.htmx else 1
+    _from = limit * (page - 1)
+    _to = limit * page
+    return (page, _from, _to, limit)
 
 
 #  sanitize csv ###############################################################

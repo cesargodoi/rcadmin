@@ -3,20 +3,22 @@
 
 {% if object.image %}
   <img 
-    class="img-thumbnail rounded mx-auto d-block mb-2" 
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
     src="{{ object.image.url }}"
   >
 {% else %}
-  <img src="{% static 'img/default_center.jpg' %}" class="card-img-top" alt="...">
+  <img
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{% static 'img/default_center.jpg' %}"
+  >
 {% endif %}
 
-<div class="text-right" style="position: relative; float: right; top: -3rem; right: .5rem">
+<div class="text-right photo-edit-button">
   <a 
     href="#"
     class="btn btn-sm btn-outline-warning mb-4" 
     onclick="manageData('{% url 'center_update_image' object.id %}')"
   >
     <i class="fas fa-edit"></i> 
-    {% trans 'Change' %}
   </a>
 </div>

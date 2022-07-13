@@ -1,226 +1,236 @@
+import json
+
+from django.template.loader import render_to_string
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
-from django.http import QueryDict
+from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
+
 from rcadmin.common import clear_session
-from base.searchs import search_center
+from base.searchs import search_center, search_person
 from django.http.response import Http404
+from user.models import User
 from person.models import Person
 
-from rcadmin.common import get_template_and_pagination
+from rcadmin.common import get_pagination, get_template_and_pagination
 from .forms import (
     CenterForm,
     SelectNewCenterForm,
-    BasicCenterForm,
-    AddressCenterForm,
+    InfoCenterForm,
     OthersCenterForm,
     ImageCenterForm,
+    ResponsibleForm,
 )
-from .models import Center
+from .models import Center, Responsible
 
 
 @login_required
 @permission_required("center.view_center")
 def center_home(request):
-    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
-        request, "center/home.html", "center/elements/center_list.html"
-    )
+    clear_session(request, ["search"])
+    context = {"title": _("centers"), "nav": "home"}
+    return render(request, "center/home.html", context)
 
-    if request.GET.get("init"):
-        object_list, count = None, None
+
+def center_list(request):
+    page, _from, _to, LIMIT = get_pagination(request)
+
+    if request.GET.get("clear"):
         clear_session(request, ["search"])
-    else:
-        object_list, count = search_center(request, Center, _from, _to)
-        # add action links
-        for item in object_list:
-            item.click_link = reverse("center_detail", args=[item.pk])
 
-    if not request.htmx and object_list:
-        message = f"{count} records were found in the database"
-        messages.success(request, message)
+    object_list, count = search_center(request, Center, _from, _to)
+    for item in object_list:
+        item.click_link = reverse("center_detail", args=[item.pk])
 
+    template_name = "center/elements/center_list.html"
     context = {
         "LIMIT": LIMIT,
         "page": page,
         "counter": (page - 1) * LIMIT,
         "object_list": object_list,
         "count": count,
-        "init": True if request.GET.get("init") else False,
-        "title": _("center home"),
-        "nav": "home",
+        "clear_search": True if request.GET.get("clear") else False,
     }
-    return render(request, template_name, context)
+    return HttpResponse(
+        render_to_string(template_name, context, request),
+        headers={
+            "HX-Trigger": json.dumps(
+                {
+                    "showToast": _(
+                        f"{count} records were found in the database"
+                    ),
+                }
+            ),
+        },
+    )
 
 
 @login_required
 @permission_required("center.view_center")
 def center_detail(request, pk):
+    clear_session(request, ["search"])
     center = Center.objects.get(pk=pk)
-    users = center.person_set.filter(is_active=True).count()
-    goback = (
-        reverse("home") if request.GET.get("from") else reverse("center_home")
-    )
+    center.active_users = center.person_set.filter(is_active=True).count()
 
+    template_name = "center/detail.html"
     context = {
-        "object": center,
         "title": _("center detail"),
-        "users": users,
+        "object": center,
         "nav": "detail",
-        "goback": goback,
+        "goback": (
+            reverse("home")
+            if request.GET.get("from")
+            else reverse("center_home")
+        ),
     }
-    return render(request, "center/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("center.add_center")
 def center_create(request):
+    template_name = "center/forms/create_center.html"
     if request.method == "POST":
-        data = QueryDict(request.body).dict()
-        form = CenterForm(data, request.FILES)
+        form = CenterForm(request.POST, request.FILES)
+        if form.is_valid():
+            center = form.save()
+            return HttpResponse(
+                headers={
+                    "HX-redirect": reverse("center_detail", args=[center.pk]),
+                },
+            )
+    else:
+        # select only conference centers to field "conf_center"
+        CenterForm.base_fields["conf_center"] = forms.ModelChoiceField(
+            required=False, queryset=Center.objects.filter(center_type="CNF")
+        )
+        form = CenterForm(
+            request.POST or None, initial={"made_by": request.user}
+        )
+
+    context = {"title": _("Create center"), "form": form}
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.change_center")
+def center_update_info(request, pk):
+    template_name = "center/forms/update_info.html"
+    center = Center.objects.get(pk=pk)
+    center_users = User.objects.filter(person__center=center)
+
+    if request.user not in center_users and not request.user.is_superuser:
+        raise Http404
+
+    if request.method == "POST":
+        form = InfoCenterForm(request.POST, instance=center)
         if form.is_valid():
             form.save()
-
-            message = f"The Center '{data['name']}' has been created!"
-            messages.success(request, message)
-
-            center = Center.objects.get(name=data["name"])
-            return redirect(reverse("center_detail", args=[center.id]))
-        else:
-            message = "There are some errors in the form, please correct them."
-            messages.warning(request, message)
-
-    template_name = "center/forms/create_center.html"
-    context = {
-        "form": CenterForm(
-            request.POST or None, initial={"made_by": request.user}
-        ),
-        "callback_link": reverse("center_create"),
-        "title": _("Create center"),
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-@permission_required("center.change_center")
-def center_update_basic(request, pk):
-    persons = [psn.id for psn in Person.objects.filter(center=pk)]
-    if request.user.person.pk in persons or request.user.is_superuser:
-        center = Center.objects.get(pk=pk)
-
-        if request.method == "POST":
-            form = BasicCenterForm(request.POST, instance=center)
-            if form.is_valid():
-                form.save()
-                message = (
-                    f"The Center '{request.POST['name']}' has been updated!"
-                )
-                messages.success(request, message)
-            return redirect("center_detail", pk=pk)
-    else:
-        raise Http404
-
-    template_name = "center/forms/tab_basic.html"
-    context = {
-        "title": _("Update basic info"),
-        "form": BasicCenterForm(instance=center),
-        "callback_link": reverse("center_update_basic", args=[pk]),
-        "update": True,
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-@permission_required("center.change_center")
-def center_update_address(request, pk):
-    persons = [psn.id for psn in Person.objects.filter(center=pk)]
-    if request.user.person.pk in persons or request.user.is_superuser:
-        center = Center.objects.get(pk=pk)
-
-        if request.method == "POST":
-            form = AddressCenterForm(request.POST, instance=center)
-            if form.is_valid():
-                form.save()
-
-            template_name = "center/elements/tab_address.html"
-            return render(request, template_name, {"object": center})
-
-    else:
-        raise Http404
-
-    template_name = "center/forms/tab_address.html"
-    context = {
-        "title": _("Update address info"),
-        "form": AddressCenterForm(instance=center),
-        "callback_link": reverse("center_update_address", args=[pk]),
-        "target": "tabAddress",
-        "swap": "innerHTML",
-        "update": True,
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-@permission_required("center.change_center")
-def center_update_others(request, pk):
-    persons = [psn.id for psn in Person.objects.filter(center=pk)]
-    if request.user.person.pk in persons or request.user.is_superuser:
-        center = Center.objects.get(pk=pk)
-
-        if request.method == "POST":
-            form = OthersCenterForm(
-                request.POST, request.FILES, instance=center
+            template_name = "center/elements/tab_info.html"
+            context = {"object": center, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabInfo",
+                    "HX-Trigger": json.dumps(
+                        {
+                            "closeModal": True,
+                            "showToast": _(
+                                f"The '{center.name}' has been updated!"
+                            ),
+                        }
+                    ),
+                },
             )
-            if form.is_valid():
-                form.save()
-
-            template_name = "center/elements/tab_others.html"
-            return render(request, template_name, {"object": center})
-
     else:
-        raise Http404
+        # select only conference centers to field "conf_center"
+        InfoCenterForm.base_fields["conf_center"] = forms.ModelChoiceField(
+            required=False, queryset=Center.objects.filter(center_type="CNF")
+        )
+        form = InfoCenterForm(
+            instance=center, initial={"made_by": request.user}
+        )
 
-    template_name = "center/forms/tab_others.html"
-    context = {
-        "title": _("Update others info"),
-        "form": OthersCenterForm(instance=center),
-        "callback_link": reverse("center_update_others", args=[pk]),
-        "target": "tabOthers",
-        "swap": "innerHTML",
-        "update": True,
-    }
+    context = {"title": _("Update info"), "form": form}
     return render(request, template_name, context)
 
 
 @login_required
 @permission_required("center.change_center")
 def center_update_image(request, pk):
-    persons = [psn.id for psn in Person.objects.filter(center=pk)]
-    if request.user.person.pk in persons or request.user.is_superuser:
-        center = Center.objects.get(pk=pk)
+    template_name = "center/forms/update_image.html"
+    center = Center.objects.get(pk=pk)
+    center_users = User.objects.filter(person__center=center)
 
-        if request.method == "POST":
-            form = ImageCenterForm(
-                request.POST, request.FILES, instance=center
-            )
-            if form.is_valid():
-                form.save()
-
-            return redirect("center_detail", pk=pk)
-
-    else:
+    if request.user not in center_users and not request.user.is_superuser:
         raise Http404
 
-    template_name = "center/forms/tab_image.html"
-    context = {
-        "title": _("Update image info"),
-        "form": ImageCenterForm(instance=center),
-        "callback_link": reverse("center_update_image", args=[pk]),
-        "target": "tabImage",
-        "swap": "innerHTML",
-        "update": True,
-    }
+    if request.method == "POST":
+        form = ImageCenterForm(request.POST, request.FILES, instance=center)
+        if form.is_valid():
+            form.save()
+            template_name = "center/elements/tab_image.html"
+            context = {"object": center}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabImage",
+                    "HX-Trigger": json.dumps(
+                        {
+                            "closeModal": True,
+                            "showToast": _(
+                                f"The '{center.name}' has been updated!"
+                            ),
+                        }
+                    ),
+                },
+            )
+    else:
+        form = ImageCenterForm(instance=center)
+
+    context = {"title": _("Update image info"), "form": form}
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.change_center")
+def center_update_others(request, pk):
+    template_name = "center/forms/update_others.html"
+    center = Center.objects.get(pk=pk)
+    center_users = User.objects.filter(person__center=center)
+
+    if request.user not in center_users and not request.user.is_superuser:
+        raise Http404
+
+    if request.method == "POST":
+        form = OthersCenterForm(request.POST, request.FILES, instance=center)
+        if form.is_valid():
+            form.save()
+            template_name = "center/elements/tab_others.html"
+            context = {"object": center, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabOthers",
+                    "HX-Trigger": json.dumps(
+                        {
+                            "closeModal": True,
+                            "showToast": _(
+                                f"The '{center.name}' has been updated!"
+                            ),
+                        }
+                    ),
+                },
+            )
+    else:
+        form = OthersCenterForm(
+            instance=center, initial={"made_by": request.user}
+        )
+
+    context = {"title": _("Update others info"), "form": form}
     return render(request, template_name, context)
 
 
@@ -262,5 +272,95 @@ def center_reinsert(request, pk):
     context = {
         "object": center,
         "reinsert_link": reverse("center_reinsert", args=[pk]),
+    }
+    return render(request, template_name, context)
+
+
+#  responsibles
+@login_required
+@permission_required("center.add_center")
+def center_add_responsible(request, pk):
+    center = Center.objects.get(pk=pk)
+    center_users = User.objects.filter(person__center=center)
+    if request.user not in center_users and not request.user.is_superuser:
+        raise Http404
+
+    if request.GET.get("psn_pk"):
+        person = Person.objects.get(pk=request.GET["psn_pk"])
+
+        if request.method == "POST":
+            form = ResponsibleForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponse(
+                    headers={
+                        "HX-Redirect": reverse(
+                            "center_detail", args=[center.pk]
+                        ),
+                    },
+                )
+
+        form = ResponsibleForm(initial={"center": center, "user": person.user})
+        template_name = "center/forms/add_responsible.html"
+        context = {
+            "object": f"{center} ➜ {person}",
+            "form": form,
+            "confirm_link": f"{request.path}?psn_pk={request.GET['psn_pk']}",
+        }
+        return render(request, template_name, context)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "center/add_responsible.html",
+        "center/elements/person_list.html",
+    )
+
+    object_list, count = search_person(request, Person, _from, _to)
+    for item in object_list:
+        item.add_resp = f"{request.path}?psn_pk={item.pk}"
+
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
+    context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
+        "title": _("add responsible"),
+        "pk": pk,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("center.add_center")
+def center_del_responsible(request, pk):
+    responsible = Responsible.objects.get(pk=pk)
+    _user = responsible.user.person.name
+    if request.method == "POST":
+        responsible.delete()
+        template_name = "center/elements/tab_responsibles.html"
+        context = {"object": Center.objects.get(pk=responsible.center.pk)}
+        return HttpResponse(
+            render_to_string(template_name, context, request),
+            headers={
+                "HX-Retarget": "#tabResponsibles",
+                "HX-Trigger": json.dumps(
+                    {
+                        "closeModal": True,
+                        "showToast": _(f"The '{_user}' has been deleted!"),
+                    }
+                ),
+            },
+        )
+
+    template_name = "center/confirm/delete_hx.html"
+    context = {
+        "object": "{} ⛔️ {}".format(
+            responsible.user.person.name, responsible.center.name
+        ),
     }
     return render(request, template_name, context)

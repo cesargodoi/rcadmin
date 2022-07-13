@@ -7,16 +7,14 @@
 
   <article class="media content-section">
     <div class="media-body">
-
-      {% include "center/header.html" %}
-      
+      {% include "center/elements/header.html" %}
       <br>
       <div class="row">
         <div id="tabImage" class="col-md-3 text-center">
           {% include 'center/elements/tab_image.html' %}
         </div>
         <div class="col-md-9">
-          {% include "center/info.html" %}
+          {% include "center/elements/tabs.html" %}
         </div>
       </div>
     </div>
@@ -28,6 +26,10 @@
 
 {% block scripts %}
   <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+
     function manageData(url) {
       htmx.ajax('GET', url, '#formBody')
     }

@@ -1,16 +1,23 @@
 ;(function () {
-  // When the #modalForm has content => show the #modalForm
-  htmx.on("#modalForm", "htmx:afterSwap", (e) => {
-    $('#modalForm').modal('show');
-  });
+  // Response targeting #formBody => show the modal
+  htmx.on("#modalForm", "htmx:afterSwap", (event) => {
+    if (event.detail.target.id == "formBody") {
+      $('#modalForm').modal('show');
+    }
+  })
+  
+  // Empty response targeting #formBody => hide the modal
+  htmx.on("#modalForm", "htmx:beforeSwap", (event) => {
+    if (event.detail.target.id == "formBody" && !event.detail.xhr.response) {
+      $('#modalForm').modal('hide');
+    }
+  })
 
-  // When the #modalForm is sent => hide the #modalForm
-  htmx.on("#modalForm", "htmx:beforeSend", (e) => {
-    $('#modalForm').modal('hide');
-  });
+  // Close modal by event
+  htmx.on("closeModal", () => {$('#modalForm').modal('hide')})
 
-  // Remove formBody content after hiding
-  $("#modalForm").on("hidden.bs.modal", () => {
+  // Remove #formBody content after hiding
+  htmx.on("#modalForm", "hidden.bs.modal", () => {
     $("#formBody").empty();
   })
 })()

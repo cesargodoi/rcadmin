@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -7,13 +8,23 @@
 
   <article class="media content-section mb-1">
     <div class="media-body">
-      <form class="form-control-sm mt-1" method="GET">
-        {% csrf_token %}
+      <form 
+        class="form-control-sm mt-1" 
+        hx-get="{% url 'center_list' %}"
+        hx-target="#list"
+        hx-trigger="submit"
+      >
         {% include "base/searchs/center.html" %}
       </form>
       <br>
       {% include "base/elements/search_result.html" %}
-      {% include 'center/centers.html' %}
+      <div 
+        id="list" 
+        hx-get="{% url 'center_list' %}" 
+        hx-trigger="load, refreshList from:body"
+      >
+        {% trans 'Loading...' %}
+      </div>
     </div>
   </article>
 
@@ -23,6 +34,14 @@
 
 {% block scripts %}
   <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+    
+    function redirect(url) {
+      htmx.ajax('GET', url, '#content')
+    }
+
     function manageData(url) {
       htmx.ajax('GET', url, '#formBody')
     }

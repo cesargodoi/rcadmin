@@ -1,5 +1,10 @@
 {% load base_extras %}
 {% load i18n %}
+
+{% if updated %}
+  {% include "center/elements/modal_pix.html" %}
+{% endif %}
+
 <br>
 <table class="table table-hover table-sm">
   <tr>
@@ -10,16 +15,20 @@
     <th>{% trans 'pix key' %}</th>
     <td>
       {% if object.pix_key %}
-      {{ object.pix_key }} &nbsp;&nbsp;
-      <a href="#" data-toggle="modal" data-target="#showPix">
-        <i class="fas fa-eye"></i>
-      </a>
+        {{ object.pix_key }} &nbsp;&nbsp;
+        <a href="#" data-toggle="modal" data-target="#showPix">
+          <i class="fas fa-eye"></i>
+        </a>
       {% endif %}
     </td>
   </tr>
   <tr>
     <th>{% trans 'observations' %}</th>
-    <td>{{ object.observations }}</td>
+    <td>
+      <textarea class="form-control" rows="2" disabled>
+        {{ object.observations }}
+      </textarea>
+    </td>
   </tr>
 </table>
 {% if request.user|has_group:"office" and request.user.person.center_id == object.id or request.user.is_superuser %}

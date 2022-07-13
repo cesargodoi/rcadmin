@@ -89,10 +89,11 @@ def frequencies_add(request, pk):
         if not unknown:
             return redirect("event_detail", pk=pk)
 
+    template_name = "event/elements/frequencies-add.html"
     context = {
         "object": object,
         "form": FrequenciesAddForm(),
         "title": _("insert frequencies"),
         "unknown": unknown if len(unknown) > 0 else None,
     }
-    return render(request, "event/frequencies-add.html", context)
+    return render(request, template_name, context)
