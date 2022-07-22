@@ -1,0 +1,28 @@
+<address>
+  {% if object.address and object.number %}
+    {{ object.address }}, {{ object.number }}
+      {% if object.complement %}
+        &nbsp;&nbsp;
+        <small class="text-muted">
+          <em>{{ object.complement }}</em>
+        </small>
+      {% endif %}
+    <br>
+  {% endif %}
+  {% if object.city and object.state %}
+    {% if object.district %}
+      {{ object.district }} - 
+    {% endif %}
+    {% if object.city %}
+      {{ object.city }} - 
+    {% endif %}
+    {% if object.state %}
+      {{ object.state }}
+    {% endif %}
+    <br>
+  {% endif %}
+  {{ object.country }} 
+  {% if object.zip_code %}
+    - {{ object.zip_code }}
+  {% endif %}
+</address>

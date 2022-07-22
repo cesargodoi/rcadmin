@@ -5,13 +5,16 @@
   {% include "base/searchs/center.html" %}
 {% endif %}
 
+
+  {% include "base/elements/results.html" %}
+
+
 {% if object_list %}
 
-  {% include "base/elements/search_result.html" %}
   {% for obj in object_list %}
     {% if forloop.last and forloop.counter == LIMIT %}
       <div 
-        class="row border-top border-secondary pb-2 pt-2 is-link {% if not obj.is_active %}text-secondary{% endif %}"
+        class="row border-top border-secondary pb-2 pt-2 is-link {% if not obj.is_active %}text-danger{% endif %}"
         {% if obj.click_link %}
           {% if request.user.is_superuser or request.user|has_group:"office" %}
             onclick="location.href='{{ obj.click_link }}';"
@@ -24,7 +27,7 @@
       >
     {% else %}
       <div 
-        class="row border-top border-secondary pb-2 pt-2 is-link {% if not obj.is_active %}text-secondary{% endif %}"
+        class="row border-top border-secondary pb-2 pt-2 is-link {% if not obj.is_active %}text-danger{% endif %}"
         {% if obj.click_link %}
           {% if request.user.is_superuser or request.user|has_group:"office" %}
             onclick="location.href='{{ obj.click_link }}';"

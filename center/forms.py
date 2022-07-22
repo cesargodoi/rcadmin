@@ -21,11 +21,6 @@ class CenterForm(forms.ModelForm):
         widgets = {}
         widgets.update(HIDDEN_AUTH_FIELDS)
 
-        labels = {
-            "center_type": "Type",
-            "conf_center": "Conference Center",
-        }
-
 
 # partial forms - BASIC
 class InfoCenterForm(forms.ModelForm):
@@ -49,10 +44,6 @@ class InfoCenterForm(forms.ModelForm):
             "made_by",
         ]
         widgets = {"made_by": forms.HiddenInput()}
-        labels = {
-            "center_type": "Type",
-            "conf_center": "Conference Center",
-        }
 
 
 # partial forms - IMAGE
@@ -84,10 +75,6 @@ class SelectNewCenterForm(forms.ModelForm):
     class Meta:
         model = Center
         fields = ["conf_center"]
-
-        labels = {
-            "conf_center": "Select new center to pupils",
-        }
 
 
 class ResponsibleForm(forms.ModelForm):

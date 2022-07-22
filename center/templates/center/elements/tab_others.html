@@ -25,9 +25,9 @@
   <tr>
     <th>{% trans 'observations' %}</th>
     <td>
-      <textarea class="form-control" rows="2" disabled>
-        {{ object.observations }}
-      </textarea>
+      {% if object.observations %}
+        <textarea class="form-control" rows="2" disabled>{{ object.observations }}</textarea>
+      {% endif %}
     </td>
   </tr>
 </table>

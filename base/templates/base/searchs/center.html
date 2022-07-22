@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div id="searchTerms"  hx-swap-oob="true">
+<div id="searchTerms" hx-swap-oob="true">
   <div class="form-row align-items-center">
     <div class="col-sm-2 mb-2">
       <div class="input-group">
@@ -8,7 +8,7 @@
           id="ct_term"
           name="ct_term" 
           class="form-control" 
-          placeholder="center"
+          placeholder={% trans "center" %}
           value="{% if not clear_search %}{{ request.session.search.ct_term }}{% endif %}">
         <div class="input-group-append">
           <div class="input-group-text">

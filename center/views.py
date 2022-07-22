@@ -27,6 +27,14 @@ from .forms import (
 from .models import Center, Responsible
 
 
+modal_updated_triggers = json.dumps(
+    {
+        "closeModal": True,
+        "showToast": _("The Center has been updated!"),
+    }
+)
+
+
 @login_required
 @permission_required("center.view_center")
 def center_home(request):
@@ -38,7 +46,7 @@ def center_home(request):
 def center_list(request):
     page, _from, _to, LIMIT = get_pagination(request)
 
-    if request.GET.get("clear"):
+    if request.GET.get("clear") or not request.GET.get("term"):
         clear_session(request, ["search"])
 
     object_list, count = search_center(request, Center, _from, _to)
@@ -54,18 +62,7 @@ def center_list(request):
         "count": count,
         "clear_search": True if request.GET.get("clear") else False,
     }
-    return HttpResponse(
-        render_to_string(template_name, context, request),
-        headers={
-            "HX-Trigger": json.dumps(
-                {
-                    "showToast": _(
-                        f"{count} records were found in the database"
-                    ),
-                }
-            ),
-        },
-    )
+    return HttpResponse(render_to_string(template_name, context, request))
 
 
 @login_required
@@ -135,14 +132,7 @@ def center_update_info(request, pk):
                 render_to_string(template_name, context, request),
                 headers={
                     "HX-Retarget": "#tabInfo",
-                    "HX-Trigger": json.dumps(
-                        {
-                            "closeModal": True,
-                            "showToast": _(
-                                f"The '{center.name}' has been updated!"
-                            ),
-                        }
-                    ),
+                    "HX-Trigger": modal_updated_triggers,
                 },
             )
     else:
@@ -178,20 +168,13 @@ def center_update_image(request, pk):
                 render_to_string(template_name, context, request),
                 headers={
                     "HX-Retarget": "#tabImage",
-                    "HX-Trigger": json.dumps(
-                        {
-                            "closeModal": True,
-                            "showToast": _(
-                                f"The '{center.name}' has been updated!"
-                            ),
-                        }
-                    ),
+                    "HX-Trigger": modal_updated_triggers,
                 },
             )
     else:
         form = ImageCenterForm(instance=center)
 
-    context = {"title": _("Update image info"), "form": form}
+    context = {"title": _("Update image"), "form": form}
     return render(request, template_name, context)
 
 
@@ -215,14 +198,7 @@ def center_update_others(request, pk):
                 render_to_string(template_name, context, request),
                 headers={
                     "HX-Retarget": "#tabOthers",
-                    "HX-Trigger": json.dumps(
-                        {
-                            "closeModal": True,
-                            "showToast": _(
-                                f"The '{center.name}' has been updated!"
-                            ),
-                        }
-                    ),
+                    "HX-Trigger": modal_updated_triggers,
                 },
             )
     else:
@@ -239,21 +215,24 @@ def center_update_others(request, pk):
 def center_delete(request, pk):
     center = Center.objects.get(pk=pk)
     if request.method == "POST":
-        # new_center returns conf_center
         if request.POST.get("conf_center"):
             _center = Center.objects.get(pk=request.POST.get("conf_center"))
             persons = center.person_set.all()
             for person in persons:
                 person.center = _center
                 person.save()
-        center.is_active = False
-        center.save()
+
+        if center_sets(center):
+            center.is_active = False
+            center.save()
+        else:
+            center.delete()
+
         return redirect("center_home")
 
     template_name = "center/confirm/delete.html"
     context = {
         "object": center,
-        "del_link": reverse("center_delete", args=[pk]),
         "new_center": SelectNewCenterForm() if center.person_set.all() else "",
     }
     return render(request, template_name, context)
@@ -276,7 +255,7 @@ def center_reinsert(request, pk):
     return render(request, template_name, context)
 
 
-#  responsibles
+#  manage responsibles  #######################################################
 @login_required
 @permission_required("center.add_center")
 def center_add_responsible(request, pk):
@@ -292,6 +271,7 @@ def center_add_responsible(request, pk):
             form = ResponsibleForm(request.POST)
             if form.is_valid():
                 form.save()
+                # TODO - Fazer validação para inserir (o não) de permissão.
                 return HttpResponse(
                     headers={
                         "HX-Redirect": reverse(
@@ -342,6 +322,7 @@ def center_del_responsible(request, pk):
     _user = responsible.user.person.name
     if request.method == "POST":
         responsible.delete()
+        # TODO - Fazer validação para retirada (o não) de permissão.
         template_name = "center/elements/tab_responsibles.html"
         context = {"object": Center.objects.get(pk=responsible.center.pk)}
         return HttpResponse(
@@ -364,3 +345,19 @@ def center_del_responsible(request, pk):
         ),
     }
     return render(request, template_name, context)
+
+
+#  handlers
+def center_sets(center):
+    if (
+        center.center_set.all()
+        or center.responsible_set.all()
+        or center.lecture_set.all()
+        or center.seeker_set.all()
+        or center.person_set.all()
+        or center.event_set.all()
+        or center.order_set.all()
+        or center.workgroup_set.all()
+        or center.publicworkgroup_set.all()
+    ):
+        return True

@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import Http404
 from django.core.validators import RegexValidator
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 # hidden auth fields

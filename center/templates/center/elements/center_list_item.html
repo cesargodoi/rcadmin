@@ -8,7 +8,7 @@
   </small>
 </div>
 
-<div class="col-sm-7">
+<div class="col-sm-8">
   <small class="{% if not obj.is_active %}text-secondary{% endif %}">
     {% if obj.city and obj.state and obj.country %}
       <i class="fa-solid fa-location-dot"></i> 
@@ -28,12 +28,4 @@
       <i class="fas fa-envelope"></i> {{ obj.email }}
     {% endif %}
   </small>
-</div>
-
-<div class="col-sm-1 text-right">
-  {% if obj.is_active %} 
-    <i class="fas fa-toggle-on"></i>
-  {% else %} 
-    <i class="fas fa-toggle-off text-muted"></i>
-  {% endif %}
 </div>

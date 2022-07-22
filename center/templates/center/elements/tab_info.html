@@ -22,22 +22,7 @@
   <tr>
     <th width="20%">{% trans 'address' %}</th>
     <td>
-      <address>
-        {{ object.address }}, {{ object.number }}
-        {% if object.complement %}
-          &nbsp;&nbsp;
-          <small class="text-muted">
-            <em>{{ object.complement }}</em>
-          </small>
-        {% endif %}
-        <br>
-        {{ object.district }} -
-        {{ object.city }} -
-        {{ object.state }}
-        <br>
-        {{ object.country }} -
-        {{ object.zip_code }}
-      </address>
+      {% include "base/elements/address.html" %}
     </td>
   </tr>
 </table>

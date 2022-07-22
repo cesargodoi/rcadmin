@@ -302,7 +302,7 @@ def person_update_image(request, id):
 
     template_name = "person/forms/tab_image.html"
     context = {
-        "title": _("Update image info"),
+        "title": _("Update image"),
         "profile_form": ImageFormProfile(instance=person.user.profile),
         "callback_link": reverse("person_update_image", args=[id]),
         "update": True,

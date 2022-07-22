@@ -1,5 +1,6 @@
 import uuid
 
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import models
 from PIL import Image
@@ -25,18 +26,22 @@ def center_pix_pics(instance, filename):
 # Center
 class Center(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50, unique=True)
-    short_name = models.CharField(max_length=25, null=True, blank=True)
-    address = models.CharField(max_length=50, blank=True)
-    number = models.CharField(max_length=10, blank=True)
-    complement = models.CharField(max_length=50, blank=True)
-    district = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=50, blank=True)
-    state = models.CharField("state", max_length=2, blank=True)
-    country = models.CharField(max_length=2, choices=COUNTRIES, default="BR")
-    zip_code = models.CharField("zip code", max_length=15, blank=True)
-    phone_1 = models.CharField("phone", max_length=20, blank=True)
-    phone_2 = models.CharField("backup phone", max_length=20, blank=True)
+    name = models.CharField(_("name"), max_length=50, unique=True)
+    short_name = models.CharField(
+        _("short name"), max_length=25, null=True, blank=True
+    )
+    address = models.CharField(_("address"), max_length=50, blank=True)
+    number = models.CharField(_("number"), max_length=10, blank=True)
+    complement = models.CharField(_("complement"), max_length=50, blank=True)
+    district = models.CharField(_("district"), max_length=50, blank=True)
+    city = models.CharField(_("city"), max_length=50, blank=True)
+    state = models.CharField(_("state"), max_length=2, blank=True)
+    country = models.CharField(
+        _("country"), max_length=2, choices=COUNTRIES, default="BR"
+    )
+    zip_code = models.CharField(_("zip"), max_length=15, blank=True)
+    phone_1 = models.CharField(_("phone"), max_length=20, blank=True)
+    phone_2 = models.CharField(_("backup phone"), max_length=20, blank=True)
     email = models.CharField(max_length=60, blank=True)
     secretary = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -46,24 +51,39 @@ class Center(models.Model):
         blank=True,
     )
     image = models.ImageField(
-        default="default_center.jpg", upload_to=center_pics, blank=True
+        _("image"),
+        default="default_center.jpg",
+        upload_to=center_pics,
+        blank=True,
     )
     pix_image = models.ImageField(
-        default="default_center_pix.jpg", upload_to=center_pix_pics, blank=True
+        _("pix image"),
+        default="default_center_pix.jpg",
+        upload_to=center_pix_pics,
+        blank=True,
     )
     pix_key = models.CharField(
-        max_length=50, unique=True, null=True, blank=True
+        _("pix key"), max_length=50, unique=True, null=True, blank=True
     )
     center_type = models.CharField(
-        "type", max_length=3, choices=CENTER_TYPES, default="CNT"
+        _("type"), max_length=3, choices=CENTER_TYPES, default="CNT"
     )
     conf_center = models.ForeignKey(
-        "self", on_delete=models.PROTECT, null=True, blank=True
+        "self",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name=_("conference center"),
     )
     responsible_for = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="Responsible", blank=True
+        settings.AUTH_USER_MODEL,
+        through="Responsible",
+        blank=True,
+        verbose_name=_("responsible"),
     )
-    observations = models.CharField(max_length=200, null=True, blank=True)
+    observations = models.CharField(
+        _("observations"), max_length=200, null=True, blank=True
+    )
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
@@ -95,19 +115,25 @@ class Center(models.Model):
         return f"{self.short_name} ({self.country})"
 
     class Meta:
-        verbose_name = "center"
-        verbose_name_plural = "centers"
+        verbose_name = _("center")
+        verbose_name_plural = _("centers")
         ordering = ["name"]
 
 
 #  Responsible
 class Responsible(models.Model):
-    center = models.ForeignKey(Center, on_delete=models.PROTECT)
+    center = models.ForeignKey(
+        Center,
+        on_delete=models.PROTECT,
+        verbose_name=_("center"),
+    )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        verbose_name=_("user"),
     )
     rule = models.CharField(
-        max_length=3, choices=RESPOSABILITIES, default="BDG"
+        _("rule"), max_length=3, choices=RESPOSABILITIES, default="BDG"
     )
 
     def __str__(self):
@@ -116,5 +142,5 @@ class Responsible(models.Model):
         )
 
     class Meta:
-        verbose_name = "responsible"
-        verbose_name_plural = "responsibles"
+        verbose_name = _("responsible")
+        verbose_name_plural = _("responsibles")
