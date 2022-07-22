@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if object_list %}
+
+  {% include 'event/elements/event_list.html' %}
+
+{% else %}
+
+<div class="alert alert-secondary">
+  <h4 class="alert-heading">
+    {% if init %}
+      {% trans 'choose your search terms' %}
+    {% else %}
+      {% trans 'events not found' %}
+    {% endif %}
+  </h4> 
+</div> 
+
+{% endif %}

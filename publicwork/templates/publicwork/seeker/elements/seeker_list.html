@@ -1,0 +1,46 @@
+
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == LIMIT %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 is-link {% if obj.status == 'ITD' %}
+                                                                 text-info
+                                                               {% elif obj.status == 'STD' %}
+                                                                 text-success
+                                                               {% elif not obj.is_active or obj.status == 'RST' %}
+                                                                 text-danger
+                                                               {% elif obj.center != request.user.person.center %}
+                                                                 text-secondary
+                                                               {% endif %}"
+      {% if obj.to_detail %}
+        {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+          onclick="location.href='{{ obj.to_detail }}';"  
+        {% endif %}
+      {% endif %}
+      hx-get="{% url 'seeker_home' %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+    >
+  {% else %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 is-link {% if obj.status == 'ITD' %}
+                                                                 text-info
+                                                               {% elif obj.status == 'STD' %}
+                                                                 text-success
+                                                               {% elif not obj.is_active or obj.status == 'RST' %}
+                                                                 text-danger
+                                                               {% elif obj.center != request.user.person.center %}
+                                                                 text-secondary
+                                                               {% endif %}"
+      {% if obj.to_detail %}
+        {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+          onclick="location.href='{{ obj.to_detail }}';"  
+        {% endif %}
+      {% endif %}
+    >
+  {% endif %}
+
+    {% include "publicwork/seeker/elements/seeker_list_item.html" %}
+    
+  </div>
+{% endfor %}

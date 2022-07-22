@@ -1,0 +1,47 @@
+{% load base_extras %}
+{% load i18n %}
+<br>
+<table class="table table-hover table-sm">
+  <tr>
+    <th width="120px">{% trans 'gender' %}</th>
+    <td>{{ object.user.profile.get_gender_display }}</td>
+  </tr>
+  <tr>
+    <th>{% trans 'profession' %}</th>
+    <td>{{ object.user.profile.profession }}</td>
+  </tr>
+  <tr>
+    <th>{% trans 'marital status' %}</th>
+    <td>{{ object.user.profile.marital_status }}</td>
+  </tr>
+  <tr class="text-danger">
+    <th>{% trans 'sos contact' %}</th>
+    <td>
+      {{ object.user.profile.sos_contact }}
+    </td>
+  </tr>
+  <tr class="text-danger">
+    <th>{% trans 'sos phone' %}</th>
+    <td>
+      {{ object.user.profile.sos_phone }}
+    </td>
+  </tr>
+  {% if request.user.is_superuser or request.user|has_group:"office" %}
+  <tr>
+    <th>{% trans 'observations' %}</th>
+    <td>
+      <textarea class="form-control" rows="2" disabled>{{ object.observations }}</textarea>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<div class="text-right">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'person_update_others' object.id %}')"
+  >
+    <i class="fas fa-edit"></i> 
+    {% trans 'Edit' %}
+  </a>
+</div>

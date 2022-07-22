@@ -2,38 +2,20 @@
 
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for hist in object_list %}
-    <div class="row border-top border-secondary mt-2 pt-2"
-        onclick="location.href='{{ hist.click_link }}'"
-        style="cursor: pointer;">
-      <div class="col-sm-1 font-weight-bold">
-        {{ hist.date|date:'d/m/y' }}
-      </div>
-      <div class="col-sm-2">
-        <strong>{{ hist.get_occurrence_display }}</strong>
-      </div>
-      <div class="col-sm-8">
-        {% if hist.description %}
-        {{ hist.description }}
-        {% endif %}
-      </div> 
-      <div class="col-sm-1 text-right">
-        <a type="button" 
-          href="{% url 'delete_historic' object.pk hist.pk %}"
-          class="btn btn-light text-danger btn-sm">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Historic' %}</h4>
     </div>
-  {% endfor %}
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
 
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
+  <div id="historicList">
+    {% include "publicwork/seeker/elements/historic_list.html" %}
+  </div>
+  
+  <br>
 
 {% else %}
 

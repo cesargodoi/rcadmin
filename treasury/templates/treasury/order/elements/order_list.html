@@ -1,0 +1,25 @@
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == LIMIT %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 is-link"
+      data-toggle="modal" 
+      data-target="#showOrderModal"
+      onclick="showOrder('{% url 'order_detail' obj.id %}')"
+      hx-get="{% url 'orders' %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+    >
+  {% else %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 is-link"
+      data-toggle="modal" 
+      data-target="#showOrderModal"
+      onclick="showOrder('{% url 'order_detail' obj.id %}')"
+    >
+  {% endif %}
+
+  {% include "treasury/order/elements/order_list_item.html" %}
+
+  </div>
+{% endfor %}

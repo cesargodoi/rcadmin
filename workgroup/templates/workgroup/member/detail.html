@@ -1,27 +1,40 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
 
 {% include "workgroup/member/navbar.html" %}
 
-{% include "workgroup/member/header.html" %}
-
 <article class="media content-section">
   <div class="media-body">
 
+    {% include "workgroup/member/header.html" %}
+
+    <br>
     {% if tab == "info" %}
       <h4>{% trans 'Info' %}</h4>
       {% include "workgroup/member/info.html" %}
     {% elif tab == "frequencies" %}
-      <h4>{% trans 'Frequencies' %}</h4>
       {% include "workgroup/member/frequencies.html" %}
     {% elif tab == "historic" %}
-      <h4>{% trans 'Historic' %}</h4>
       {% include "workgroup/member/historic.html" %}
     {% endif %}
     
   </div>
 </article>
 
+{% include "base/elements/modal_form.html" %}
+
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

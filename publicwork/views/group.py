@@ -8,13 +8,13 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from rcadmin.common import (
-    paginator,
     belongs_center,
     clear_session,
     SEEKER_STATUS,
     LECTURE_TYPES,
     ASPECTS,
     STATUS,
+    get_template_and_pagination,
 )
 
 from center.models import Center
@@ -39,27 +39,34 @@ from ..models import (
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_home(request):
-    object_list = None
-    clear_session(request, ["pwg", "search", "frequencies"])
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/home.html",
+        "publicwork/groups/elements/group_list.html",
+    )
 
     if request.GET.get("init") or request.user.groups.filter(
         name="publicwork_jr"
     ):
-        clear_session(request, ["search"])
-        object_list = request.user.person.publicworkgroup_set.all()
-        for item in object_list:
-            item.actives = item.members.filter(is_active=True).count()
-            item.click_link = reverse("group_detail", args=[item.pk])
+        count = request.user.person.publicworkgroup_set.count() or None
+        object_list = request.user.person.publicworkgroup_set.all() or {}
+        clear_session(request, ["pwg", "search", "frequencies"])
     else:
-        queryset, page = search_pw_group(request, PublicworkGroup)
-        object_list = paginator(queryset, page=page)
-        # add action links
-        for item in object_list:
-            item.actives = item.members.filter(is_active=True).count()
-            item.click_link = reverse("group_detail", args=[item.pk])
+        object_list, count = search_pw_group(
+            request, PublicworkGroup, _from, _to
+        )
+
+    # add action links
+    for item in object_list:
+        item.actives = item.members.filter(is_active=True).count()
+        item.click_link = reverse("group_detail", args=[item.pk])
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_home"),
         "title": _("public work - groups"),
@@ -67,36 +74,50 @@ def group_home(request):
         "user_center": str(request.user.person.center.pk),
         "nav": "gp_home",
     }
-    return render(request, "publicwork/groups/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_detail(request, pk):
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/detail.html",
+        "publicwork/groups/elements/seeker_list.html",
+    )
+
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
-    object_list = pw_group.members.exclude(
+
+    _object_list = pw_group.members.exclude(
         status__in=("ITD", "RST", "STD")
     ).order_by("name")
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
+
     # add action links
     for item in object_list:
-        item.click_link = (
+        item.to_detail = (
             reverse("seeker_detail", args=[item.pk]) + f"?pwg={pk}"
         )
-        item.del_member_link = reverse(
-            "group_remove_member", args=[pk, item.pk]
-        )
+        item.del_member = reverse("group_remove_member", args=[pk, item.pk])
+        item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
-        "object": pw_group,
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "active_members": len(object_list),
         "title": _("group detail"),
         "nav": "info",
         "table_title": "Members",
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -106,25 +127,26 @@ def group_create(request):
         pw_group_form = GroupForm(request.POST)
         if pw_group_form.is_valid():
             pw_group_form.save()
+
             message = f"The Group '{request.POST['name']}' has been created!"
-
             messages.success(request, message)
-            return redirect(reverse("group_home") + "?init=on")
 
+        return redirect("group_home")
+
+    group_form = GroupForm(
+        initial={
+            "made_by": request.user,
+            "center": request.user.person.center,
+        }
+    )
+
+    template_name = "publicwork/groups/forms/group.html"
     context = {
-        "form": GroupForm(
-            initial={
-                "made_by": request.user,
-                "center": request.user.person.center,
-            }
-        ),
-        "form_name": "Group",
-        "form_path": "publicwork/forms/group.html",
-        "goback": reverse("group_home"),
-        "title": _("create goup"),
-        "to_create": True,
+        "form": group_form,
+        "callback": reverse("group_create"),
+        "title": _("Create group"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -147,80 +169,89 @@ def group_update(request, pk):
         initial={"made_by": request.user},
     )
 
+    template_name = "publicwork/groups/forms/group.html"
     context = {
         "form": pw_group_form,
-        "form_name": "Group",
-        "form_path": "publicwork/forms/group.html",
-        "goback": reverse("group_detail", args=[pk]),
-        "title": _("update group"),
-        "pk": pk,
+        "callback": reverse("group_update", args=[pk]),
+        "title": _("Update group"),
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.delete_publicworkgroup")
 def group_delete(request, pk):
     pw_group = PublicworkGroup.objects.get(pk=pk)
+
     if request.method == "POST":
         if pw_group.members.count() > 0 or pw_group.mentors.count() > 0:
             pw_group.is_active = False
             pw_group.save()
         else:
             pw_group.delete()
-        return redirect(reverse("group_home") + "?init=on")
+        return redirect("group_home")
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
         "object": pw_group,
-        "title": _("confirm to delete"),
+        "del_link": reverse("group_delete", args=[pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.add_publicworkgroup")
 def group_reinsert(request, pk):
     pw_group = PublicworkGroup.objects.get(pk=pk)
+
     if request.method == "POST":
         pw_group.is_active = True
         pw_group.save()
-        return redirect(reverse("group_home") + "?init=on")
+        return redirect("group_home")
 
+    template_name = "publicwork/confirm/reinsert.html"
     context = {
         "object": pw_group,
-        "title": _("confirm to reinsert"),
+        "reinsert_link": reverse("group_reinsert", args=[pk]),
     }
-    return render(
-        request, "publicwork/seeker/confirm_to_reinsert.html", context
-    )
+    return render(request, template_name, context)
 
 
 # seeker frequencies
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
 def group_frequencies(request, pk):
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/detail.html",
+        "publicwork/groups/elements/frequency_list.html",
+    )
+
     clear_session(request, ["search", "frequencies"])
     belongs_center(request, pk, PublicworkGroup)
-    page = request.GET["page"] if request.GET.get("page") else 1
 
     pw_group = PublicworkGroup.objects.get(pk=pk)
     active_members = pw_group.members.exclude(status__in=("ITD", "RST", "STD"))
-    frequencies = get_frequencies([mbr.id for mbr in active_members])
+    _object_list = get_frequencies([mbr.id for mbr in active_members])
+
+    count = len(_object_list)
+    object_list = _object_list[_from:_to]
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
+        "object_list": object_list,
+        "count": count,
         "object": pw_group,
         "title": _("group detail | frequencies"),
-        "object_list": paginator(
-            sorted(frequencies, key=lambda x: x["rank"], reverse=True),
-            20,
-            page=page,
-        ),
         "active_members": len(active_members),
         "nav": "frequencies",
         "now": datetime.now().date(),
     }
 
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 # handlers
@@ -283,8 +314,13 @@ def group_add_frequencies(request, pk):
                 Listener.objects.create(**new_freq)
         return redirect("group_detail", pk=pk)
 
-    queryset, page = search_lecture(request, Lecture)
-    object_list = paginator(queryset, page=page)
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/detail.html",
+        "publicwork/groups/elements/lecture_list.html",
+    )
+
+    object_list, count = search_lecture(request, Lecture, _from, _to)
     # add action links
     for item in object_list:
         item.add_freqs_link = (
@@ -292,22 +328,25 @@ def group_add_frequencies(request, pk):
         )
 
     context = {
-        "object": pw_group,
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "title": _("add frequencies"),
         "nav": "add_frequencies",
         "goback": reverse("group_detail", args=[pk]),
         "type_list": LECTURE_TYPES,
         "pk": pk,
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 # add member
 @login_required
 @permission_required("publicwork.change_publicworkgroup")
 def group_add_member(request, pk):
-    object_list = None
     belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
@@ -324,38 +363,61 @@ def group_add_member(request, pk):
                     date=date,
                     description=f"Entered in '{pw_group}' group.",
                 )
+
             seeker.status = "MBR"
             seeker.status_date = date
             seeker.save()
+
             messages.success(request, "The member has been inserted on group!")
             return redirect("group_detail", pk=pk)
 
+        template_name = "publicwork/confirm/insert.html"
         context = {
-            "member": seeker.name,
-            "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {} ({})".format(
+                seeker.name, pw_group.name, pw_group.center
+            ),
+            "confirm_link": "{}?seek_pk={}".format(
+                reverse("group_add_member", args=[pk]),
+                request.GET["seek_pk"],
+            ),
         }
-        return render(
-            request,
-            "publicwork/groups/confirm_add_member_or_mentor.html",
-            context,
-        )
+        return render(request, template_name, context)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/detail.html",
+        "publicwork/groups/elements/seeker_list_to_add.html",
+    )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page = search_seeker(request, Seeker)
-        object_list = paginator(queryset, page=page)
+        object_list, count = search_seeker(request, Seeker, _from, _to)
         # add action links
         for item in object_list:
-            item.add_member_link = reverse("group_add_member", args=[pk])
+            item.add_in_group = reverse("group_add_member", args=[pk])
+            item.local = f"{item.city} ({item.state}-{item.country})"
+
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
 
     context = {
-        "object": pw_group,
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_member", args=[pw_group.pk]),
-        "status_list": SEEKER_STATUS,
+        "status_list": [
+            stt
+            for stt in SEEKER_STATUS
+            if stt[0] not in ("OBS", "ITD", "STD", "RST")
+        ],
+        "only_actives": True,
         "title": _("group add member"),
         "nav": "add_member",
         "goback": reverse("group_detail", args=[pk]),
@@ -363,7 +425,7 @@ def group_add_member(request, pk):
         "user_center": str(request.user.person.center.pk),
         "pk": pk,
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -374,16 +436,17 @@ def group_remove_member(request, group_pk, member_pk):
 
     if request.method == "POST":
         pw_group.members.remove(member)
+
         return redirect("group_detail", pk=group_pk)
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
-        "member": member.name,
-        "group": pw_group,
-        "title": _("confirm to remove"),
+        "object": "{} ⛔️ {} ({})".format(
+            member.name, pw_group.name, pw_group.center
+        ),
+        "del_link": reverse("group_remove_member", args=[group_pk, member_pk]),
     }
-    return render(
-        request, "publicwork/groups/confirm_remove_member.html", context
-    )
+    return render(request, template_name, context)
 
 
 # add mentor
@@ -403,33 +466,52 @@ def group_add_mentor(request, pk):
             )
             return redirect("group_detail", pk=pk)
 
+        template_name = "publicwork/confirm/insert.html"
         context = {
-            "member": person.name,
-            "insert_to": f"{pw_group.name} {pw_group.center}",
-            "title": _("confirm to insert"),
+            "object": "{} ➜ {} ({})".format(
+                person.name, pw_group.name, pw_group.center
+            ),
+            "confirm_link": "{}?person_pk={}".format(
+                reverse("group_add_mentor", args=[pk]),
+                request.GET["person_pk"],
+            ),
         }
-        return render(
-            request,
-            "publicwork/groups/confirm_add_member_or_mentor.html",
-            context,
-        )
+        return render(request, template_name, context)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/groups/detail.html",
+        "publicwork/elements/person_list.html",
+    )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
-        object_list = None
     else:
-        queryset, page = search_person(request, Person)
-        object_list = paginator(queryset, page=page)
+        object_list, count = search_person(request, Person, _from, _to)
         # add action links
         for item in object_list:
             item.add_link = (
                 reverse("group_add_mentor", args=[pk])
                 + f"?person_pk={ item.pk }"
             )
+            item.local = "{} ({}-{})".format(
+                item.user.profile.city,
+                item.user.profile.state,
+                item.user.profile.country,
+            )
+
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
 
     context = {
-        "object": pw_group,
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
+        "object": pw_group,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("group_add_mentor", args=[pw_group.pk]),
         "aspect_list": ASPECTS,
@@ -440,7 +522,7 @@ def group_add_mentor(request, pk):
         "pk": pk,
         "flag": "group",
     }
-    return render(request, "publicwork/groups/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -453,14 +535,17 @@ def group_remove_mentor(request, group_pk, mentor_pk):
         pw_group.mentors.remove(mentor)
         return redirect("group_detail", pk=group_pk)
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
-        "member": mentor.name,
-        "group": pw_group,
-        "title": _("confirm to remove"),
+        "object": "{} ⛔️ {} ({})".format(
+            mentor.name, pw_group.name, pw_group.center
+        ),
+        "del_link": reverse("group_remove_mentor", args=[group_pk, mentor_pk]),
+        # "member": mentor.name,
+        # "group": pw_group,
+        # "title": _("confirm to remove"),
     }
-    return render(
-        request, "publicwork/groups/confirm_remove_member.html", context
-    )
+    return render(request, template_name, context)
 
 
 # handlers

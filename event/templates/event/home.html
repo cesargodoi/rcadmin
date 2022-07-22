@@ -1,21 +1,35 @@
 {% extends "base/base.html" %}
+{% load static %}
+
 {% block content %}
 
-{% include "event/navbar.html" %}
+  {% include "event/navbar.html" %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <form class="form-control-sm mt-1" method="GET">
-      {% csrf_token %}
-      {% include "base/searchs/event.html" %}
-    </form>
-  </div>
-</article>
+  <article class="media content-section mb-1">
+    <div class="media-body">
+      <form class="form-control-sm mt-1" method="GET">
+        {% csrf_token %}
+        {% include "base/searchs/event.html" %}
+      </form>
+      <br>
+      {% include "base/elements/search_result.html" %}
+      <div id="eventList">
+        {% include 'event/events.html' %}
+      </div>
+    </div>
+  </article>
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    {% include 'event/elements/events.html' %}
-  </div>
-</article>
+  {% include "base/elements/modal_form.html" %}
 
-{% endblock %}
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

@@ -33,38 +33,38 @@
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
 
-    {% if nav == "sk_home" %}
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'seeker_create' %}">
-          <i class="fas fa-plus"></i> 
-          {% trans 'Seeker' %}
-        </a>
-      </li>
-    {% endif %}
-  
+
     {% if tab == "info" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-          href="{% url 'seeker_update' object.id %}">
-          <i class="fas fa-edit"></i> 
-          {% trans 'Edit' %}
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+          onclick="manageData('{% url 'seeker_update' object.id %}')"
+        >
+          <i class="fas fa-edit"></i>
+          {% trans 'Edit' %}  
         </a>
       </li>
       {% if not request.session.pwg %}
         {% if object.is_active %}
           <li class="nav-item">
-            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-              href="{% url 'seeker_delete' object.id %}">
-              <i class="fas fa-trash-alt"></i> 
+            <a 
+              href="#"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+              onclick="manageData('{% url 'seeker_delete' object.id %}')"
+            >
+              <i class="fas fa-trash-alt"></i>
               {% trans 'Delete' %}
             </a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
-              href="{% url 'seeker_reinsert' object.pk %}">
-              <i class="fas fa-sign-in-alt"></i> 
+            <a 
+              href="#"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
+              onclick="manageData('{% url 'seeker_reinsert' object.id %}')"
+            >
+              <i class="fas fa-sign-in-alt"></i>
               {% trans 'Reinsert' %}
             </a>
           </li>
@@ -84,8 +84,11 @@
 
     {% if tab == "historic" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'create_historic' object.id %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'create_historic' object.id %}')"
+        >
           <i class="fas fa-plus"></i> 
           {% trans 'Historic' %}
         </a>

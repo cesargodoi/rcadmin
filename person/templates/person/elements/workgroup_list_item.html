@@ -1,0 +1,39 @@
+{% load i18n %}
+<div class="col-sm-5">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
+</div>
+
+<div class="col-sm-2 small align-middle">
+  <em>{{ obj.center }}</em>
+</div>
+
+<div class="col-sm-2 align-middle text-right">
+  <em>{{ obj.get_workgroup_type_display }}</em>
+</div>
+
+<div class="col-sm-2 text-right">
+  {% if obj.aspect != '--' %}
+    <strong>{{ obj.get_aspect_display }}</strong>
+  {% endif %}
+</div>
+
+<div class="col-sm-1 text-right">
+  {% if not nav == "home" %}
+    {% if obj.pk in pre_groups %}
+      <i class="fas fa-user-check mr-1"></i>
+    {% else %}
+      <button type="button" 
+        onclick="manageData('{{ obj.add_link }}?pk={{ obj.pk }}&pos={{ forloop.counter|add:counter }}')"
+        class="btn btn-light text-primary btn-sm">
+        <i class="fas fa-plus"></i>
+      </button>
+    {% endif %}
+  {% else %}
+    {% if obj.members.all|length > 0 %}
+      <strong>{{ obj.members.all|length }}</strong> 
+      <i class="fas fa-users"></i> 
+    {% endif %}
+  {% endif %}
+</div>

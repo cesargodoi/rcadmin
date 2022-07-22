@@ -14,7 +14,26 @@ urlpatterns = [
     path("", person.person_home, name="person_home"),
     path("<uuid:id>/detail/", person.person_detail, name="person_detail"),
     path("create/", person.person_create, name="person_create"),
-    path("<uuid:id>/update/", person.person_update, name="person_update"),
+    path(
+        "<uuid:id>/update_basic/",
+        person.person_update_basic,
+        name="person_update_basic",
+    ),
+    path(
+        "<uuid:id>/update_others/",
+        person.person_update_others,
+        name="person_update_others",
+    ),
+    path(
+        "<uuid:id>/update_address/",
+        person.person_update_address,
+        name="person_update_address",
+    ),
+    path(
+        "<uuid:id>/update_image/",
+        person.person_update_image,
+        name="person_update_image",
+    ),
     path("<uuid:id>/delete/", person.person_delete, name="person_delete"),
     path(
         "<uuid:id>/reinsert/", person.person_reinsert, name="person_reinsert"

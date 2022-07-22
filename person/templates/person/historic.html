@@ -2,41 +2,17 @@
 
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for obj in object_list %}
-    <div class="row border-top border-secondary pb-2 pt-2"
-        onclick="location.href='{% url 'historic_update' object.id obj.pk %}';"
-        style="cursor: pointer;">
-
-      <div class="col-sm-2">
-        <strong>{{ obj.date | date:"d/m/Y" }}</strong>
-      </div>
-
-      <div class="col-sm-2">
-        <strong>{{ obj.get_occurrence_display }}</strong>
-      </div>
-
-      <div class="col-sm-7 small align-middle">
-        {{ obj.description | truncatechars:50 }}
-      </div>
-
-      <div class="col-sm text-right">
-        <a type="button" 
-          class="btn btn-light text-danger btn-sm"
-          href="{% url 'historic_delete' object.id obj.pk %}">
-          <i class="fas fa-trash-alt"></i>
-        </a>
-      </div>
-      
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Historic' %}</h4>
     </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-    {% include "base/elements/paginator.html" %}
-  {% endif %}
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
+  <div id="historicList">
+    {% include "person/elements/historic_list.html" %}
+  </div>
 
 {% else %}
 

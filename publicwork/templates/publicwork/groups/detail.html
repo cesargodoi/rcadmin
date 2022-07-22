@@ -1,24 +1,27 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
 
 {% if nav == "info" or nav == "frequencies" %}
   {% include 'publicwork/groups/navbar.html' %}
-  {% include "publicwork/groups/header.html" %}
 {% endif %}
 
 {% if nav == "add_frequencies" or nav == "add_member" or nav == "add_mentor" %}
-{% include "publicwork/groups/actions.html" %}
+  {% include "publicwork/groups/actions.html" %}
 {% endif %}
 
-<article class="media content-section">
+<article class="media content-section mb-1">
   <div class="media-body">
-
+    
+    {% if nav == "info" or nav == "frequencies" %}
+      {% include "publicwork/groups/header.html" %}
+    {% endif %}
+    <br>
     {% if nav == "info" %}
       {% include 'publicwork/groups/seekers.html' %}
     {% elif nav == "frequencies" %}
-      <h4>{% trans 'Frequencies' %}</h4>
       {% include "publicwork/groups/frequencies.html" %}
     {% elif nav == "add_frequencies" %}
       {% if not request.session.frequencies.lecture %}
@@ -35,4 +38,17 @@
   </div>
 </article>
 
+  {% include "base/elements/modal_form.html" %}
+
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

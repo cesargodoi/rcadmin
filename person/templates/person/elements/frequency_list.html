@@ -1,0 +1,19 @@
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == LIMIT %}
+    <div 
+      hx-get="{% url 'frequency_ps_list' object.pk %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+      class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.person.is_active %}danger{% elif obj.person.center != request.user.person.center %}warning{% endif %}"
+    >
+  {% else %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.person.is_active %}danger{% elif obj.person.center != request.user.person.center %}warning{% endif %}"
+    >
+  {% endif %}
+
+  {% include "person/elements/frequency_list_item.html" %}
+
+  </div>
+{% endfor %}

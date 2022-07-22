@@ -3,9 +3,9 @@
 <h4>{% trans 'Select an event' %}</h4>
 
 <form class="form-control-sm border-top" method="GET">
-  {% csrf_token %}
   {% include "base/searchs/event.html" %}
 </form>
 <br>
 
-{% include "event/elements/events.html" %}
+{% include "base/elements/search_result.html" %}
+{% include "workgroup/mentoring/elements/event_list.html" %}

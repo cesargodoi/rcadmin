@@ -1,105 +1,25 @@
 {% load base_extras %}
 {% load i18n %}
 
-<h4>{% if table_title %}{{ table_title }}{% else %}{% trans 'Seekers' %}{% endif %}</h4>
-
-{% if object_list %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
+{% if table_title %}
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{{ table_title }}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
+  {% else %}
+    {% include "base/elements/search_result.html" %}
   {% endif %}
 
-  {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2 {% if obj.status == 'ITD' %}
-                                                          text-info
-                                                        {% elif obj.status == 'STD' %}
-                                                          text-success
-                                                        {% elif not obj.is_active %}
-                                                          text-danger
-                                                        {% elif obj.center != request.user.person.center %}
-                                                          text-secondary
-                                                        {% endif %}"
-    {% if obj.click_link %}
-      {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
-        onclick="location.href='{{ obj.click_link }}';"
-      {% endif %}
-    {% endif %}
-    style="cursor: pointer;">
-
-    <div class="col-sm-4">
-      <strong>{{ obj.short_name }}</strong>
-      &nbsp;&nbsp;
-      <small><em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em></small>
-      {% if not obj.is_active and obj.status != 'ITD' %}
-        &nbsp;&nbsp;
-        <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
-      {% endif %}
-    </div>
-
-    <div class="col-sm-1 small align-middle">
-      {{ obj.created_on|date:'d/m/y' }}
-    </div>
-
-    <div class="col-sm-2 small align-middle">
-      <i class="fas fa-phone"></i> 
-      {{ obj.phone }}
-    </div>
-
-    <div class="col-sm-3 small align-middle">
-      {% if request.user|has_group:"publicwork_jr" %}
-        <i class="fas fa-envelope"></i> 
-        {{ obj.email }}
-      {% else %}
-        {{ obj.center }}
-        {% if obj.center != request.user.person.center %}
-          &nbsp;&nbsp;
-          <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
-        {% endif %}
-      {% endif %}
-    </div>
-    
-    <div class="col-sm text-right">
-      <strong>{{ obj.get_status_display }}</strong> 
-    
-      {% if obj.add_link %}
-        {% if obj.pk in pre_listeners %}
-          &nbsp;&nbsp;<i class="fas fa-user-check mr-1"></i>
-        {% else %}
-          &nbsp;&nbsp;
-          <a type="button" 
-            href="{{ obj.add_link }}?seek_pk={{ obj.pk }}"
-            class="btn btn-light text-primary btn-sm">
-            <i class="fas fa-plus"></i> 
-          </a>
-        {% endif %}
-      {% elif obj.add_member_link %}
-        {% if obj.publicworkgroup_set.count %}
-          &nbsp;&nbsp;<i class="fas fa-user-check mr-1"></i>
-        {% else %}
-          &nbsp;&nbsp;
-          <a type="button" 
-            href="{{ obj.add_member_link }}?seek_pk={{ obj.pk }}"
-            class="btn btn-light text-primary btn-sm">
-            <i class="fas fa-plus"></i>
-          </a>
-        {% endif %}
-      {% elif obj.del_member_link %}
-        {% if not request.user|has_group:"publicwork_jr" %}
-          &nbsp;&nbsp;
-          <a type="button" 
-            href="{{ obj.del_member_link }}"
-            class="btn btn-light text-danger btn-sm">
-            <i class="fas fa-trash-alt"></i>
-          </a>
-        {% endif %}
-      {% endif %}
-    </div>
-    
-  </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
+{% if object_list %}
+  
+  {% if nav == "add_member" %}
+    {% include "publicwork/groups/elements/seeker_list_to_add.html" %}
+  {% else %}
+    {% include "publicwork/groups/elements/seeker_list.html" %}
   {% endif %}
 
 {% else %}
@@ -107,9 +27,9 @@
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      {% trans 'choose your search terms' %}
+        {% trans 'choose your search terms' %}
       {% else %}
-      {% trans 'seekers not found' %}
+        {% trans 'seekers not found' %}
       {% endif %}
     </h4> 
   </div>  

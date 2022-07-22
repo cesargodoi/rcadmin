@@ -1,0 +1,15 @@
+{% load base_extras %}
+{% load i18n %}
+<div class="col-sm-2">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.date|date:'d/m/y' }}</strong>
+</div>
+<div class="col-sm-2">
+  <strong>{{ obj.get_occurrence_display }}</strong>
+</div>
+<div class="col-sm-8">
+  {% if obj.description %}
+    {{ obj.description }}
+  {% endif %}
+</div> 

@@ -13,9 +13,9 @@ from person.models import Person
 from rcadmin.common import (
     ORDER_STATUS,
     PAYFORM_TYPES,
-    paginator,
     short_name,
     clear_session,
+    get_template_and_pagination,
 )
 from base.searchs import search_order
 
@@ -26,19 +26,27 @@ from ..models import BankFlags, Order, PayTypes
 @login_required
 @permission_required("treasury.view_order")
 def orders(request):
-    template_name = "treasury/order/home.html"
-    object_list = None
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "treasury/order/home.html",
+        "treasury/order/elements/order_list.html",
+    )
+
     if request.session.get("order"):
         clear_session(request, ["order"])
         # del request.session["order"]
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page = search_order(request, Order)
-        object_list = paginator(queryset, 25, page=page)
+        object_list, count = search_order(request, Order, _from, _to)
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "status_list": ORDER_STATUS,
         "title": _("Orders"),

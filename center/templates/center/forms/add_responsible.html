@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<form 
+  id="form"
+  hx-post="{{ confirm_link }}"
+>
+  {% csrf_token %}
+
+  <div class="modal-header bg-primary">
+    <h5 class="modal-title">
+      {% trans 'Add Responsible' %}
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <strong>{{ object }}</strong>
+    <hr>
+    {{ form | crispy }}
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      <button 
+        type="submit"
+        class="btn btn-primary"
+      >
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
+      </button>
+    </div>
+  </div>
+</form>
+
+<style type="text/css">
+  h5 {color: black;}
+</style>

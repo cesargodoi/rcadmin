@@ -1,8 +1,7 @@
 {% load base_extras %}
 {% load i18n %}
-<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
-  <a class="navbar-brand mr-0 mr-md-2" 
-     href="#" aria-label="Bootstrap">
+<header id="submenu" class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand mr-0 mr-md-2" href="#" aria-label="Bootstrap">
     {% if nav == 'home' %}{% trans 'Centers' %}{% else %}{% trans 'Center' %}{% endif %}
   </a>
 
@@ -15,47 +14,39 @@
   <ul class="navbar-nav ml-md-auto">
     {% if nav == "home" and request.user.is_superuser %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-           href="{% url 'center_create' %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'center_create' %}')"
+        >
           <i class="fas fa-plus"></i>
-          {% trans 'Center' %} 
+          {% trans 'Center' %}  
         </a>
       </li>
     {% endif %}
 
     {% if nav == "detail" %}
-      {% if request.user|has_group:"office" and request.user.person.center_id == object.id %}
-        <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-            href="{% url 'center_update' object.id %}">
-            <i class="fas fa-edit"></i> 
-            {% trans 'Edit' %}
-          </a>
-        </li>
-      {% endif %}
-
       {% if request.user.is_superuser %}
-        <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-            href="{% url 'center_update' object.id %}">
-            <i class="fas fa-edit"></i> 
-            {% trans 'Edit' %}
-          </a>
-        </li>
         {% if object.is_active %}
           <li class="nav-item">
-            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-              href="{% url 'center_delete' object.id %}">
-              <i class="fas fa-trash-alt"></i> 
-              {% trans 'Delete' %}
+            <a 
+              href="#"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+              onclick="manageData('{% url 'center_delete' object.id %}')"
+            >
+              <i class="fas fa-trash-alt"></i>
+              {% trans 'Delete' %}  
             </a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
-              href="{% url 'center_reinsert' object.id %}">
-              <i class="fas fa-sign-in-alt"></i> 
-              {% trans 'Reinsert' %}
+            <a 
+              href="#"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
+              onclick="manageData('{% url 'center_reinsert' object.id %}')"
+            >
+              <i class="fas fa-sign-in-alt"></i>
+              {% trans 'Reinsert' %}  
             </a>
           </li>
         {% endif %}

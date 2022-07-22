@@ -1,0 +1,86 @@
+{% load base_extras %}
+{% load i18n %}
+<div 
+  class="col-sm-3 is-link "
+  {% if obj.to_detail %}
+    {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+      onclick="location.href='{{ obj.to_detail }}';"  
+    {% endif %}
+  {% endif %}
+>
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong data-toggle="tooltip" data-placement="top" title="{{ obj.name }}">
+    {{ obj.name | truncatechars:25 }}
+  </strong>
+</div>
+
+<div 
+  class="col-sm-7 small is-link "
+  {% if obj.to_detail %}
+    {% if obj.center == request.user.person.center and obj.status != 'ITD' or request.user.is_superuser %}
+      onclick="location.href='{{ obj.to_detail }}';"  
+    {% endif %}
+  {% endif %}
+>
+  <em>
+    &nbsp;&nbsp;&nbsp;
+    <i class="fa-solid fa-location-dot"></i> {{ obj.local }} | {{ obj.center }}
+  </em>
+  {% if obj.phone %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-phone"></i> 
+    {{ obj.phone }}
+  {% endif %}
+  {% if obj.email %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-envelope"></i> 
+    {{ obj.email }}
+  {% endif %}
+  {% if obj.center != request.user.person.center %}
+    &nbsp;&nbsp;&nbsp;
+    <span class="badge badge-pill badge-secondary">{% trans 'only view' %}</span>
+  {% endif %}
+</div>
+
+<div class="col-sm-2 small text-right">
+  <strong>{{ obj.get_status_display }}</strong> 
+  {% if obj.add_link %}
+    {% if obj.pk in pre_listeners %}
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-user-check mr-1"></i>
+    {% else %}
+      <a 
+        href="#"
+        class="btn btn-light text-primary btn-sm" 
+        onclick="manageData('{{ obj.add_link }}?seek_pk={{ obj.pk }}')"
+      >
+        <i class="fas fa-plus"></i> 
+      </a>
+    {% endif %}
+  {% elif obj.add_in_group %}
+    {% if obj.publicworkgroup_set.count %}
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-user-check mr-1"></i>
+    {% else %}
+      <a 
+        href="#"
+        class="btn btn-light text-primary btn-sm" 
+        onclick="manageData('{{ obj.add_in_group }}?seek_pk={{ obj.pk }}')"
+      >
+        <i class="fas fa-plus"></i> 
+      </a>
+    {% endif %}
+  {% elif obj.del_member %}
+    {% if not request.user|has_group:"publicwork_jr" %}
+      <a 
+        href="#"
+        class="btn btn-light text-danger btn-sm" 
+        onclick="manageData('{{ obj.del_member }}')"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    {% endif %}
+  {% endif %}
+</div>
+

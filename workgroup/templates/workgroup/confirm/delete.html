@@ -1,0 +1,54 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div class="modal-header bg-danger">
+  <h4 class="modal-title text-light">
+    {% trans 'Atention' %}!
+  </h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <p>{% trans 'Are you shure you want to remove' %}: <br>
+  <strong>{{ object }}</strong> 
+</div>
+
+<div class="modal-footer">
+  {% if not target %}
+    <form method="POST" action="{{ del_link }}">
+      {% csrf_token %}
+  {% endif %}
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      {% if target %}
+        <button 
+          type="button"
+          class="btn btn-danger"
+          hx-delete="{{ del_link }}" 
+          hx-target="{{ target }}" 
+          hx-swap="innerHTML"
+        >
+          <i class="fas fa-edit"></i>
+          {% trans 'Confirm' %}
+        </button>
+      {% else %}
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-check"></i>
+          {% trans 'Confirm' %}
+        </button>
+      {% endif %}
+    </div>
+  {% if not target %}
+    </form>
+  {% endif %}
+</div>

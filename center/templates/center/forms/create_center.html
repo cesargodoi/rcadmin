@@ -1,0 +1,71 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<form hx-post="{{ request.path }}">
+  {% csrf_token %}
+
+  <div class="modal-header bg-primary">
+    <h4 class="modal-title text-light">
+      {{ title }}
+    </h4>
+    <button 
+      type="button" 
+      class="close text-light" 
+      data-dismiss="modal" 
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    {{ form.name | as_crispy_field }}
+
+    <div class="row">
+      <div class="col-md-4">
+        {{ form.center_type | as_crispy_field }}
+      </div>
+      <div class="col-md-8">
+        {{ form.conf_center | as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        {{ form.city | as_crispy_field }}
+      </div>
+      <div class="col-md-2">
+        {{ form.state | as_crispy_field }}
+      </div>
+      <div class="col-md-4">
+        {{ form.country | as_crispy_field }}
+      </div>
+    </div>
+
+    {{ form.email | as_crispy_field }}
+    {{ form.is_active | as_crispy_field }}
+    {{ form.made_by | as_crispy_field }}
+  </div>
+
+  <div class="modal-footer">
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      <button 
+        type="submit"
+        class="btn btn-primary"
+      >
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
+      </button>
+    </div>
+  </div>
+</form>

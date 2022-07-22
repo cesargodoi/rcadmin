@@ -97,10 +97,12 @@ class Seeker(models.Model):
         self.state = str(self.state).upper()
         self.phone = phone_format(self.phone)
         super(Seeker, self).save(*args, **kwargs)
-        img = Image.open(self.image.path)
-        if img.height > 300 or img.width > 300:
-            img.thumbnail((300, 300))
-            img.save(self.image.path)
+        if self.image:
+            img = Image.open(self.image.path)
+            if img.filename.split("/")[-1] != "default_profile.jpg":
+                if img.height > 300 or img.width > 300:
+                    img.thumbnail((300, 300))
+                    img.save(self.image.path)
 
     def __str__(self):
         return "{} - {}".format(self.name, self.center)

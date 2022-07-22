@@ -1,0 +1,11 @@
+{% load base_extras %}
+{% load i18n %}
+
+<!-- actions -->
+<div class="text-right mb-2 mt-2">
+  <a class="btn btn-light text-info" 
+    href="{% url 'center_detail' pk %}">
+    <i class="fas fa-chevron-left"></i> 
+    {% trans 'Back' %}
+  </a>
+</div>

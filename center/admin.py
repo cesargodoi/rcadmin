@@ -8,13 +8,12 @@ admin.site.register(Responsible)
 @admin.register(Center)
 class CenterAdmin(admin.ModelAdmin):
     list_filter = ["country", "state", "center_type"]
-    search_fields = ["name", "secretary"]
+    search_fields = ["name"]
     list_display = [
         "name",
         "phone_1",
         "phone_2",
         "email",
-        "secretary",
     ]
     readonly_fields = ("created_on", "modified_on", "made_by")
     fieldsets = [
@@ -24,7 +23,7 @@ class CenterAdmin(admin.ModelAdmin):
         ),
         (
             "Contact Informations",
-            {"fields": ["phone_1", "phone_2", "email", "secretary"]},
+            {"fields": ["phone_1", "phone_2", "email"]},
         ),
         (
             "Address Informations",

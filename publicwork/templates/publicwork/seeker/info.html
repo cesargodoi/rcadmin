@@ -1,10 +1,19 @@
+{% load static %}
 {% load i18n %}
 
 <div class="row border-top border-secondary pt-3">
   <div class="col-md-3 text-center">
-    <img 
-      class="img-thumbnail rounded mx-auto d-block mb-4" 
-      src="{{ object.image.url }}">
+    {% if object.image %}
+      <img 
+        class="rounded-circle photo-cover mx-auto d-block mb-2" 
+        src="{{ object.image.url }}"
+      >
+    {% else %}
+      <img
+        class="rounded-circle photo-cover mx-auto d-block mb-2" 
+        src="{% static 'img/default_profile.jpg' %}"
+      >
+    {% endif %}
   </div>
   
   <div class="col-md-9">

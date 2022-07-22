@@ -1,0 +1,45 @@
+{% load base_extras %}
+{% load i18n %}
+<div class="col-sm-6">
+  <small class="text-muted align-top">{{ pos }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.event.date|date:'d/m/y' }}</strong>
+  &nbsp;&nbsp;&nbsp;
+  <strong>{{ obj.event.activity.name }}</strong>
+  &nbsp;&nbsp;&nbsp;
+  <small>
+    {{ obj.event.center }} 
+    &nbsp;&nbsp;
+    <em>({{ obj.event.activity.get_activity_type_display }})</em>
+  </small>
+</div>
+<div class="col-sm-4 small">
+  {% if obj.observations %}
+    {{ obj.observations }}
+  {% endif%}
+</div>
+<div class="col-sm-2 text-right">
+  {% if obj.ranking > 0 %}
+    {{ obj.ranking }}
+    <i class="fas fa-star"></i>
+  {% endif %}
+  &nbsp;&nbsp;
+  {% if obj.update_link %}
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
+      class="btn btn-light text-warning btn-sm"
+    >
+      <i class="fas fa-edit"></i>
+    </button>
+  {% endif %}
+  {% if obj.del_link %}
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
+      class="btn btn-light text-danger btn-sm"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  {% endif %}
+</div>

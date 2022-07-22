@@ -1,0 +1,31 @@
+{% load i18n %}
+<div class="col-sm-4">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
+  <small class="float-right">
+    <em>{{ obj.get_center_type_display }}</em>
+  </small>
+</div>
+
+<div class="col-sm-8">
+  <small class="{% if not obj.is_active %}text-secondary{% endif %}">
+    {% if obj.city and obj.state and obj.country %}
+      <i class="fa-solid fa-location-dot"></i> 
+      <em>{{ obj.city }} ({{ obj.state }}-{{ obj.country }})</em>
+    {% endif %}
+
+    {% if obj.phone_1 %}
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-phone"></i> {{ obj.phone_1 }}
+    {% elif obj.phone_2 %}
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-phone"></i> {{ obj.phone_2 }}
+    {% endif %}
+
+    {% if obj.email %}
+      &nbsp;&nbsp;&nbsp;
+      <i class="fas fa-envelope"></i> {{ obj.email }}
+    {% endif %}
+  </small>
+</div>

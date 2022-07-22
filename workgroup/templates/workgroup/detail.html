@@ -1,15 +1,31 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
 {% include "workgroup/navbar.html" %}
 
-{% include "workgroup/header.html" %}
-
 <article class="media content-section">
   <div class="media-body">
+    <div id="workgroupHeader"> 
+      {% include "workgroup/header.html" %}
+    </div>
+    <br>
     {% include 'workgroup/member/members.html' %}
   </div>
 </article>
 
-{% endblock %}
+{% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

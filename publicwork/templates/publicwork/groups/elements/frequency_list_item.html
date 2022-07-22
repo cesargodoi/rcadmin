@@ -1,0 +1,38 @@
+{% load i18n %}
+<div class="col-sm-4">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
+  {% if obj.center != request.user.person.center %}
+    &nbsp;&nbsp;
+    <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
+  {% endif %}
+</div>
+
+<div class="col-sm-2 align-middle">
+  {% if not obj.is_active %}
+    <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
+  {% endif %}
+</div>
+
+<div class="col-sm-2 align-middle">
+  <strong>{{ obj.status }}</strong>
+</div>
+
+<div class="col-sm-2 align-middle">
+  <small>
+    <em>{% trans 'since' %} {{ obj.date|date:'d/m/y' }}</em>
+  </small>
+</div>
+
+<div class="col-sm-2 text-right">
+  {% if obj.rank %}
+    <strong>{{ obj.rank }}</strong> 
+    <i class="fas fa-star ml-1"></i>
+  {% endif %}
+  {% if obj.freq %}
+    &nbsp;&nbsp;
+    <strong>{{ obj.freq }}</strong> 
+    <i class="fas fa-calendar-check ml-1"></i>
+  {% endif %}
+</div>

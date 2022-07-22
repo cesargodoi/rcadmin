@@ -1,22 +1,40 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
 {% include "center/navbar.html" %}
 
-{% include "center/header.html" %}
-
-<article class="media content-section">
-  <div class="media-body">
-    <div class="row">
-      <div class="col-md-3 text-center">
-        <img class="img-thumbnail rounded mx-auto d-block mb-4" src="{{ object.image.url }}">
-      </div>
-      <div class="col-md-9">
-        {% include "center/info.html" %}
+  <article class="media content-section">
+    <div class="media-body">
+      {% include "center/elements/header.html" %}
+      <br>
+      <div class="row">
+        <div id="tabImage" class="col-md-3 text-center">
+          {% include 'center/elements/tab_image.html' %}
+        </div>
+        <div class="col-md-9">
+          {% include "center/elements/tabs.html" %}
+        </div>
       </div>
     </div>
-  </div>
-</article>
+  </article>
+
+  {% include "base/elements/modal_form.html" %}
 
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

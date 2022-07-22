@@ -1,5 +1,4 @@
 {% load i18n %}
-
 <div class="form-row align-items-center">
   <div class="col-sm-2 mb-2">
     <div class="input-group">
@@ -62,7 +61,9 @@
     </select>
   </div>
   <div class="col-sm mb-2">
-    {% include 'base/elements/checkbox_all.html' %}
+    {% if not only_actives %}
+      {% include 'base/elements/checkbox_all.html' %}
+    {% endif %}
     <button class="btn btn btn-success" type="submit">
       <i class="fas fa-search"></i>
       {% trans 'Search' %}

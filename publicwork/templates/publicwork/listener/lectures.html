@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% if object_list %}
+
+  {% include "base/elements/search_result.html" %}
+  {% include "publicwork/listener/elements/lecture_list.html" %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+      {% trans 'choose your search terms' %}
+      {% else %}
+      {% trans 'lectures not found' %}
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

@@ -1,0 +1,40 @@
+{% load base_extras %}
+{% load i18n %}
+
+{% if updated %}
+  {% include "center/elements/header.html" %}
+{% endif %}
+
+<br>
+<table class="table table-hover table-sm">
+  <tr>
+    <th width="20%">{% trans 'phone' %}</th>
+    <td>{{ object.phone_1 }}</td>
+  </tr>
+  <tr>
+    <th>{% trans 'backup phone' %}</th>
+    <td>{{ object.phone_2 }}</td>
+  </tr>
+  <tr>
+    <th>{% trans 'email' %}</th>
+    <td>{{ object.email }}</td>
+  </tr>
+  <tr>
+    <th width="20%">{% trans 'address' %}</th>
+    <td>
+      {% include "base/elements/address.html" %}
+    </td>
+  </tr>
+</table>
+{% if request.user|has_group:"office" and request.user.person.center_id == object.id or request.user.is_superuser %}
+  <div class="text-right">
+    <button 
+      type="button"
+      class="btn btn-sm btn-outline-warning mb-4" 
+      onclick="manageData('{% url 'center_update_info' object.id %}')"
+    >
+      <i class="fas fa-edit"></i> 
+      {% trans 'Edit' %}
+  </button>
+  </div>
+{% endif %}

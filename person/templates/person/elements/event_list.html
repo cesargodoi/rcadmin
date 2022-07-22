@@ -1,0 +1,36 @@
+{% load i18n %}
+{% if object_list %}  
+
+  {% for obj in object_list %}
+    {% if forloop.last and forloop.counter == 10 %}
+      <div 
+        hx-get="{% url 'frequency_ps_insert' person_id %}?page={{ page|add:1 }}" 
+        hx-trigger="revealed" 
+        hx-swap="afterend"
+        hx-target="this"
+        class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+      >
+    {% else %}
+      <div 
+        class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+      >
+    {% endif %}
+
+    {% include "person/elements/event_list_item.html" %}
+
+    </div>
+  {% endfor %}
+
+{% else %}
+
+  <div class="alert alert-secondary">
+    <h4 class="alert-heading">
+      {% if init %}
+        {% trans 'choose your search terms' %}
+      {% else %}
+        {% trans 'events not found' %}
+      {% endif %}
+    </h4> 
+  </div> 
+
+{% endif %}

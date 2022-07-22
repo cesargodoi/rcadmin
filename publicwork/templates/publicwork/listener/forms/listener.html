@@ -1,0 +1,69 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<form method="POST" action="{{ callback }}">
+
+  {% csrf_token %}
+
+  <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
+    <h4 class="modal-title {% if update %}text-dark{% else %}text-light{% endif %}">
+      {{ title }}
+    </h4>
+    <button 
+      type="button" 
+      class="close {% if update %}text-dark{% else %}text-light{% endif %}" 
+      data-dismiss="modal" 
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <table class="table table-sm">
+      <tr>
+        <th class="small" width="20%">{% trans 'lecture' %}</th>
+        <th>
+          {{ object.lecture.theme }} 
+          &nbsp;&nbsp; 
+          <small class="font-italic">
+            {{ object.lecture.get_type_display }}
+          </small>
+        </th>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'date' %}</th>
+        <td><strong>{{ object.lecture.date | date:"d/m/y" }}</strong></td>
+      </tr>
+      <tr>
+        <th class="small" width="20%">{% trans 'local' %}</th>
+        <td>{{ object.lecture.center }}</td>
+      </tr>
+    </table>
+    <hr>
+    {{ form | crispy }}
+
+  </div>
+
+  <div class="modal-footer">
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      <button 
+        type="submit"
+        class="btn {% if update %}btn-warning{% else %}btn-primary{% endif %}"
+      >
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
+      </button>
+    </div>
+  </div>
+</form>

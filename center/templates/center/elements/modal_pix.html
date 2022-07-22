@@ -1,0 +1,31 @@
+{% load i18n %}
+<div  
+  id="showPix" 
+  class="modal fade"
+  tabindex="-1" 
+  aria-labelledby="showPixLabel" 
+  aria-hidden="true"
+  hx-swap-oob="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title text-light" id="showPixLabel">{% trans 'Center PIX' %}</h5>
+        <button type="button" 
+          class="close text-light" 
+          data-dismiss="modal" 
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="img-thumbnail rounded mx-auto d-block mb-4" src="{{ object.pix_image.url }}">
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+          class="btn btn-secondary" 
+          data-dismiss="modal">{% trans 'Close' %}</button>
+      </div>
+    </div>
+  </div>
+</div>

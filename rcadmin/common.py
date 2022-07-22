@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import Http404
 from django.core.validators import RegexValidator
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 # hidden auth fields
@@ -126,7 +126,7 @@ SEEKER_STATUS = (
     ("STD", _("stand by")),
     ("RST", _("restriction")),
 )
-RESPOSABILITIES = (("BDG", _("Badge")),)
+RESPOSABILITIES = (("BDG", _("Badge")), ("SCR", _("Secretary")))
 BR_REGIONS = {
     "SP": ["SP"],
     "RJ": ["RJ", "ES"],
@@ -317,6 +317,27 @@ def get_filename(instance, field=None):
     ext = instance.image.name.split(".")[-1]
     name = "-".join(_name.split())
     return f"{name}.{ext}"
+
+
+def get_template_and_pagination(request, tmplt, tmplt_htmx, limit=10):
+    # select template and page of pagination
+    if request.htmx:
+        template_name = tmplt_htmx
+        page = int(request.GET.get("page", 1))
+    else:
+        template_name = tmplt
+        page = 1
+    # get limitby
+    _from, _to = limit * (page - 1), limit * page
+
+    return (limit, template_name, _from, _to, page)
+
+
+def get_pagination(request, limit=10):
+    page = int(request.GET.get("page", 1)) if request.htmx else 1
+    _from = limit * (page - 1)
+    _to = limit * page
+    return (page, _from, _to, limit)
 
 
 #  sanitize csv ###############################################################

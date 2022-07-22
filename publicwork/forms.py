@@ -28,7 +28,7 @@ class SeekerForm(forms.ModelForm):
         model = Seeker
         fields = "__all__"
         widgets = {
-            "observations": forms.Textarea(attrs={"rows": 3}),
+            "observations": forms.Textarea(attrs={"rows": 2}),
             "birth": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
@@ -58,6 +58,7 @@ class ListenerForm(forms.ModelForm):
         model = Listener
         fields = ["ranking", "observations"]
         widgets = {
+            "observations": forms.Textarea(attrs={"rows": 2}),
             "ranking": forms.widgets.NumberInput(attrs={"min": 0, "max": 2}),
         }
 
@@ -67,7 +68,7 @@ class HistoricForm(forms.ModelForm):
         model = HistoricOfSeeker
         exclude = ["listeners"]
         widgets = {
-            "descriptions": forms.Textarea(attrs={"rows": 2}),
+            "description": forms.Textarea(attrs={"rows": 2}),
             "date": forms.widgets.DateInput(
                 format="%Y-%m-%d", attrs={"type": "date"}
             ),
@@ -81,6 +82,6 @@ class GroupForm(forms.ModelForm):
         model = PublicworkGroup
         exclude = ["mentors", "members"]
         widgets = {
-            "descriptions": forms.Textarea(attrs={"rows": 2}),
+            "description": forms.Textarea(attrs={"rows": 2}),
         }
         widgets.update(HIDDEN_AUTH_FIELDS)

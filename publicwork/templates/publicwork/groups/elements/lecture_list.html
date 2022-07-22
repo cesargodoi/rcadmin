@@ -1,0 +1,20 @@
+{% load i18n %}
+{% for obj in object_list %}
+  {% if forloop.last and forloop.counter == LIMIT %}
+    <div 
+      hx-get="{% url 'group_add_frequencies' pk %}?page={{ page|add:1 }}" 
+      hx-trigger="revealed" 
+      hx-swap="afterend"
+      hx-target="this"
+      class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active or obj.status == 'RST' %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+    >
+  {% else %}
+    <div 
+      class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active or obj.status == 'RST' %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
+    >
+  {% endif %}
+
+    {% include "publicwork/lecture/elements/lecture_list_item.html" %}
+    
+  </div>
+{% endfor %}

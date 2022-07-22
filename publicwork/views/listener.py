@@ -4,10 +4,10 @@ from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
 from rcadmin.common import (
-    paginator,
     clear_session,
     SEEKER_STATUS,
     LECTURE_TYPES,
+    get_template_and_pagination,
 )
 from django.urls import reverse
 
@@ -21,7 +21,6 @@ from ..models import Lecture, Seeker, Listener
 @login_required
 @permission_required("publicwork.add_listener")
 def add_listener(request, lect_pk):
-    object_list = None
     lecture = Lecture.objects.get(pk=lect_pk)
 
     if request.GET.get("seek_pk"):
@@ -40,39 +39,55 @@ def add_listener(request, lect_pk):
             )
             return redirect("lecture_detail", pk=lect_pk)
 
+        template_name = "publicwork/listener/confirm/insert.html"
         context = {
             "seeker": seeker,
+            "lecture": lecture,
             "form": ListenerForm,
-            "insert_to": f"{lecture.theme} {lecture.center}",
-            "title": _("confirm to insert"),
+            "title": _("Confirm to insert"),
+            "callback": reverse("add_listener", args=[lect_pk])
+            + f"?seek_pk={request.GET['seek_pk']}",
         }
-        return render(
-            request,
-            "publicwork/listener/confirm.html",
-            context,
-        )
+        return render(request, template_name, context)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/listener/add.html",
+        "publicwork/listener/elements/seeker_list.html",
+    )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page = search_seeker(request, Seeker)
-        object_list = paginator(queryset, page=page)
+        queryset, count = search_seeker(request, Seeker, _from, _to)
+        object_list = queryset[_from:_to]
         # add action links
         for item in object_list:
             item.add_link = reverse("add_listener", args=[lect_pk])
+            item.local = f"{item.city} ({item.state}-{item.country})"
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("add_listener", args=[lecture.pk]),
-        "status_list": SEEKER_STATUS,
+        "status_list": [
+            stt
+            for stt in SEEKER_STATUS
+            if stt[0] not in ("OBS", "ITD", "STD", "RST")
+        ],
+        "only_actives": True,
         "pre_listeners": [seek.pk for seek in lecture.listeners.all()],
         "title": _("add listener"),
         "object": lecture,
         "centers": [[str(cnt.pk), str(cnt)] for cnt in Center.objects.all()],
         "user_center": str(request.user.person.center.pk),
     }
-    return render(request, "publicwork/listener/add.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -88,13 +103,15 @@ def update_listener(request, lect_pk, lstn_pk):
 
         return redirect("lecture_detail", pk=lect_pk)
 
+    template_name = "publicwork/listener/forms/listener.html"
     context = {
         "form": ListenerForm(instance=listener),
-        "title": _("update listener"),
-        "listener": listener,
-        "object": listener.lecture,
+        "object": listener,
+        "callback": reverse("update_listener", args=[lect_pk, lstn_pk]),
+        "title": _("Update listener"),
+        "update": True,
     }
-    return render(request, "publicwork/listener/update.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -106,18 +123,22 @@ def remove_listener(request, lect_pk, lstn_pk):
         listener.delete()
         return redirect("lecture_detail", pk=lect_pk)
 
+    template_name = "publicwork/confirm/delete.html"
     context = {
-        "object": listener,
-        "title": _("confirm to delete"),
+        "object": "{} ⛔️ {} ({})".format(
+            listener.seeker.name,
+            listener.lecture.theme,
+            listener.lecture.center,
+        ),
+        "del_link": reverse("remove_listener", args=[lect_pk, lstn_pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 # from seeker side  ###########################################################
 @login_required
 @permission_required("publicwork.add_listener")
 def add_frequency(request, pk):
-    object_list = None
     seeker = Seeker.objects.get(pk=pk)
 
     if request.GET.get("lect_pk"):
@@ -136,30 +157,39 @@ def add_frequency(request, pk):
             )
             return redirect("seeker_frequencies", pk=pk)
 
+        template_name = "publicwork/listener/confirm/insert.html"
         context = {
             "seeker": seeker,
+            "lecture": lecture,
             "form": ListenerForm,
-            "insert_to": f"{lecture.theme} - {lecture.center}",
-            "title": _("confirm to insert"),
+            "title": _("Confirm to insert"),
+            "callback": reverse("add_frequency", args=[pk])
+            + f"?lect_pk={request.GET['lect_pk']}",
         }
-        return render(
-            request,
-            "publicwork/listener/confirm.html",
-            context,
-        )
+        return render(request, template_name, context)
+
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request,
+        "publicwork/seeker/add_or_change.html",
+        "publicwork/listener/elements/lecture_list.html",
+    )
 
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page = search_lecture(request, Lecture)
-        object_list = paginator(queryset, page=page)
+        object_list, count = search_lecture(request, Lecture, _from, _to)
         # add action links
         for item in object_list:
             item.add_link = reverse("add_frequency", args=[pk])
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object": seeker,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "goback_link": reverse("seeker_home"),
         "title": _("add frequency"),
@@ -169,13 +199,12 @@ def add_frequency(request, pk):
         "add": True,
         "goback": reverse("seeker_frequencies", args=[pk]),
     }
-    return render(request, "publicwork/seeker/add_or_change.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("publicwork.change_listener")
 def update_frequency(request, seek_pk, freq_pk):
-    seeker = Seeker.objects.get(pk=seek_pk)
     listener = Listener.objects.get(pk=freq_pk)
     if request.method == "POST":
         listener.ranking = (
@@ -183,18 +212,30 @@ def update_frequency(request, seek_pk, freq_pk):
         )
         listener.observations = request.POST["observations"]
         listener.save()
-        messages.success(request, _("The Listener has been updated!"))
-        return redirect("seeker_frequencies", pk=seek_pk)
 
+        listener.update_link = reverse(
+            "update_frequency", args=[seek_pk, freq_pk]
+        )
+        listener.delete_link = reverse(
+            "remove_frequency", args=[seek_pk, freq_pk]
+        )
+
+        template_name = "publicwork/seeker/elements/hx/frequency_updated.html"
+        context = {"obj": listener, "pos": request.GET.get("pos")}
+        return render(request, template_name, context)
+
+    template_name = "publicwork/seeker/forms/frequency.html"
     context = {
-        "object": seeker,
-        "listener": listener,
+        "object": listener,
         "form": ListenerForm(instance=listener),
-        "title": _("update frequency | seeker side"),
-        "seeker_side": True,
-        "goback": reverse("seeker_frequencies", args=[seek_pk]),
+        "title": _("Update frequency"),
+        "callback_link": reverse("update_frequency", args=[seek_pk, freq_pk]),
+        "target": f"FRQ{freq_pk}",
+        "swap": "innerHTML",
+        "pos": request.GET.get("pos"),
+        "update": True,
     }
-    return render(request, "publicwork/listener/update.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -206,8 +247,13 @@ def remove_frequency(request, seek_pk, freq_pk):
         listener.delete()
         return redirect("seeker_frequencies", pk=seek_pk)
 
+    template_name = "publicwork/seeker/confirm/delete.html"
     context = {
-        "object": listener,
-        "title": _("confirm to delete"),
+        "object": "{} ⛔️ {} ({})".format(
+            listener.seeker.name,
+            listener.lecture.theme,
+            listener.lecture.center,
+        ),
+        "callback": reverse("remove_frequency", args=[seek_pk, freq_pk]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)

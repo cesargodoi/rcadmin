@@ -11,18 +11,14 @@
       {% csrf_token %}
       {% include "base/searchs/orders.html" %}
     </form>
-  </div>
-</article>
-
-<article class="media content-section mb-1">
-  <div class="media-body">
+    <br>
     {% include 'treasury/order/orders.html' %}
   </div>
 </article>
 
-<div id="showOrderModal" class="modal" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div id="modalBody" class="modal-content text-dark">
+<div id="showOrderModal" class="modal fade" data-backdrop="static" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div id="modalBody" class="modal-content text-dark" hx-target="this">
       <!-- modal body -->
     </div>
   </div>
@@ -32,8 +28,10 @@
 
 {% block scripts %}
 <script>
-  $('#showOrderModal').on('hidden.bs.modal', function (event) {
-    htmx.ajax('GET', "{% url 'clear_session' %}", {target:'#modalBody', swap:'outerHTML'})
-  })
+  function showOrder(url) {
+    htmx.ajax('GET', url, '#modalBody')
+  }
+  // Remove dialog content after hiding
+  $("#showOrderModal").on("hidden.bs.modal", () => {$("#modalBody").empty()})
 </script>
 {% endblock scripts %}

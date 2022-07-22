@@ -1,0 +1,24 @@
+{% load static %}
+{% load i18n %}
+
+{% if object.image %}
+  <img 
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{{ object.image.url }}"
+  >
+{% else %}
+  <img
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{% static 'img/default_center.jpg' %}"
+  >
+{% endif %}
+
+<div class="text-right photo-edit-button">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'center_update_image' object.id %}')"
+  >
+    <i class="fas fa-edit"></i> 
+  </a>
+</div>

@@ -1,0 +1,34 @@
+{% load i18n %}
+<div class="col-sm-5">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.name }}</strong>
+  &nbsp;&nbsp;
+  <small class="text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% else %}muted{% endif %}">
+    {{ obj.center }}
+  </small>
+  {% if obj.center != request.user.person.center %}
+    &nbsp;&nbsp;&nbsp;
+    <span class="badge badge-pill badge-{% if not obj.is_active %}danger{% else %}warning{% endif %}">
+      {% trans 'only view' %}
+    </span>
+  {% endif %}
+  {% if not obj.is_active %}
+    &nbsp;&nbsp;&nbsp;
+    <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
+  {% endif %}
+</div>
+
+<div class="col-sm-5 small align-middle">
+  {% for mentor in obj.mentors.all %}
+    <i class="fas fa-user-graduate mr-1"></i>
+    {{ mentor.short_name }} &nbsp;&nbsp;
+  {% endfor %}
+</div>
+
+<div class="col-sm text-right">
+  {% if obj.actives %}
+    <strong>{{ obj.actives }}</strong> 
+    <i class="fas fa-users"></i>
+  {% endif %}
+</div>

@@ -1,0 +1,68 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% if update %}
+  <form 
+    id="form"
+    hx-post="{{ callback_link }}?pos={{pos}}"
+    hx-target="#{{ target }}"
+    hx-swap="{{ swap }}"
+  >
+{% else %}
+  <form method="POST" action="{{ callback_link }}">
+{% endif %}
+
+  {% csrf_token %}
+
+  <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
+    <h4 class="modal-title {% if update %}text-dark{% else %}text-light{% endif %}">
+      {{ title }}
+    </h4>
+    <button 
+      type="button" 
+      class="close {% if update %}text-dark{% else %}text-light{% endif %}" 
+      data-dismiss="modal" 
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-md-6">
+        {{ form.occurrence | as_crispy_field }}
+      </div>
+      <div class="col-md-6">
+        {{ form.date | as_crispy_field }}
+      </div>
+    </div>
+
+    {{ form.description | as_crispy_field }}
+    {{ form.seeker | as_crispy_field }}
+
+  </div>
+
+  <div class="modal-footer">
+    <div class="text-right">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        aria-label="Close"
+      >
+        <i class="fas fa-xmark"></i>
+        {% trans 'Cancel' %}
+      </button>
+      <button 
+        type="submit"
+        class="btn {% if update %}btn-warning{% else %}btn-primary{% endif %}"
+      >
+        <i class="fas fa-check"></i>
+        {% trans 'Confirm' %}
+      </button>
+    </div>
+  </div>
+</form>

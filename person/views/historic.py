@@ -1,12 +1,15 @@
 from datetime import datetime
 
+from django.http import QueryDict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from rcadmin.common import paginator
 
+from rcadmin.common import get_template_and_pagination
 from ..forms import HistoricForm
 from ..models import Historic, Person
 
@@ -14,21 +17,41 @@ from ..models import Historic, Person
 @login_required
 @permission_required("person.view_historic")
 def person_historic(request, person_id):
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "person/detail.html", "person/elements/historic_list.html"
+    )
+
     queryset = Historic.objects.filter(person=person_id).order_by("-date")
     person = (
         queryset[0].person if queryset else Person.objects.get(id=person_id)
     )
 
-    object_list = paginator(queryset, page=request.GET.get("page"))
+    count = len(queryset)
+    object_list = queryset[_from:_to]
+
+    # add action links
+    for item in object_list:
+        item.update_link = reverse(
+            "historic_update", args=[person_id, item.pk]
+        )
+        item.del_link = reverse("historic_delete", args=[person_id, item.pk])
+
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
 
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "title": _("historic list"),
         "object": person,  # to header element
         "nav": "detail",
         "tab": "historic",
     }
-    return render(request, "person/detail.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -45,7 +68,9 @@ def historic_create(request, person_id):
             messages.success(request, "The Historic has been created!")
         return redirect("person_historic", person_id=person_id)
 
+    template_name = "person/forms/historic.html"
     context = {
+        "title": _("Create historic"),
         "form": HistoricForm(
             initial={
                 "person": person,
@@ -53,19 +78,20 @@ def historic_create(request, person_id):
                 "date": timezone.now(),
             }
         ),
-        "title": _("create historic"),
-        "to_create": True,
+        "callback_link": reverse("historic_create", args=[person_id]),
         "person_id": person_id,  # to header element
     }
-    return render(request, "person/forms/historic.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
 @permission_required("person.change_historic")
 def historic_update(request, person_id, pk):
     historic = Historic.objects.get(pk=pk)
+
     if request.method == "POST":
-        form = HistoricForm(request.POST, instance=historic)
+        data = QueryDict(request.body).dict()
+        form = HistoricForm(data, instance=historic)
         if form.is_valid():
             form.save()
             adjust_person_side(
@@ -73,31 +99,49 @@ def historic_update(request, person_id, pk):
                 request.POST["occurrence"],
                 request.POST["date"],
             )
-            messages.success(request, "The Historic has been updated!")
-        return redirect("person_historic", person_id=person_id)
 
+            historic.update_link = reverse(
+                "historic_update", args=[person_id, pk]
+            )
+            historic.del_link = reverse(
+                "historic_delete", args=[person_id, pk]
+            )
+
+            template_name = "person/elements/hx/historic_updated.html"
+            context = {"obj": historic, "pos": request.GET.get("pos")}
+            return render(request, template_name, context)
+
+    template_name = "person/forms/historic.html"
     context = {
+        "title": _("Update Historic"),
         "form": HistoricForm(instance=historic),
-        "title": _("update historic"),
-        "person_id": person_id,  # to header element
+        "callback_link": reverse("historic_update", args=[person_id, pk]),
+        "target": f"HST{pk}",
+        "swap": "innerHTML",
+        "pos": request.GET.get("pos"),
+        "update": True,
     }
-    return render(request, "person/forms/historic.html", context)
+    return render(request, template_name, context)
 
 
+@require_http_methods(["GET", "DELETE"])
 @login_required
 @permission_required("person.delete_historic")
 def historic_delete(request, person_id, pk):
     historic = Historic.objects.get(pk=pk)
-    if request.method == "POST":
+
+    if request.method == "DELETE":
         adjust_status_or_aspect(historic)
         historic.delete()
         return redirect("person_historic", person_id=person_id)
 
+    template_name = "person/confirm/delete.html"
     context = {
         "object": historic,
-        "title": _("confirm to delete"),
+        "del_link": reverse("historic_delete", args=[person_id, pk]),
+        "target": "#historicList",
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 # handlers

@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div id="header" hx-swap-oob="true">
+  <div class="article-metadata">
+    <div class="row">
+      <div class="col-10">
+        {{ object.get_center_type_display }}
+      </div>
+      <div class="col text-right">
+        {% if object.active_users %}
+        <span class="badge badge-pill badge-primary">{{ object.active_users }} {% trans 'pupils' %}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <h3>
+    {{ object.name }}
+    {% if object.center_type != 'CNF' and object.conf_center %}
+    &nbsp;&nbsp;
+    <small class="text-muted">
+      {% trans 'conference center'%}: {{ object.conf_center.name }}
+      ({{ object.conf_center.get_country_display }})
+    </small>
+    {% endif %}
+    {% if not object.is_active %}
+    &nbsp;&nbsp;
+    <span class="badge badge-pill badge-danger"> {% trans 'inactive' %} </span>
+    {% endif %}
+  </h3>
+</div>

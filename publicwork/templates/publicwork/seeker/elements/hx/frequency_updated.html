@@ -1,0 +1,40 @@
+{% load i18n %}
+<div class="col-sm-5 font-weight-bold">
+  <small class="text-muted align-top">{{ pos }}</small>
+  &nbsp;&nbsp;
+  {{ obj.lecture.date|date:'d/m/y' }}
+  &nbsp;&nbsp;&nbsp;
+  {{ obj.lecture.theme }}
+</div>
+
+<div class="col-sm-2 small">
+  {{ obj.lecture.center }}
+  &nbsp;&nbsp;
+  <em>({{ obj.lecture.get_type_display }})</em>
+</div>
+
+<div class="col-sm-3 small">
+  {{ obj.observations }}
+</div>
+
+<div class="col-sm-2 text-right">
+  {% if obj.ranking > 0 %}
+    {{ obj.ranking }}
+    <i class="fas fa-star"></i>
+  {% endif %}
+  &nbsp;&nbsp;
+  <a 
+    href="#"
+    class="btn btn-light text-warning btn-sm" 
+    onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
+  >
+    <i class="fas fa-edit"></i> 
+  </a>
+  <a 
+    href="#"
+    class="btn btn-light text-danger btn-sm" 
+    onclick="manageData('{{ obj.delete_link }}')"
+  >
+    <i class="fas fa-trash-alt"></i> 
+  </a>
+</div>  

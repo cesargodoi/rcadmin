@@ -4,11 +4,13 @@
 
 {% include "workgroup/mentoring/navbar.html" %}
 
-{% include "workgroup/mentoring/header.html" %}
-
 <article class="media content-section">
   <div class="media-body">
 
+  {% include "workgroup/mentoring/header.html" %}
+
+  <br>
+  
   {% if tab == "members" %}
     {% include "workgroup/mentoring/members.html" %}
   {% elif tab == "frequencies" %}
@@ -19,3 +21,13 @@
 </article>
 
 {% endblock content %}
+
+{% block scripts %}
+
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
+
+{% endblock scripts %}

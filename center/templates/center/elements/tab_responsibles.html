@@ -1,0 +1,42 @@
+{% load base_extras %}
+{% load i18n %}
+<br>
+{% for resp in object.responsible_set.all %}
+  <div class="row border-top border-secondary pb-2 pt-2 {% if resp.user.person.center.pk != resp.center.pk %}text-secondary{% endif %}">
+    <div class="col-sm-7">
+      <small class="text-muted align-top">{{ forloop.counter }}</small>
+      &nbsp;&nbsp;
+      <strong data-toggle="tooltip" data-placement="top" title="{{ resp.user.person.name }}">
+        {{ resp.user.person.name | truncatechars:25 }}
+      </strong>
+      &nbsp;&nbsp;
+      <small><em>{{ resp.user.person.center }}</em></small>
+    </div>
+    <div class="col-sm-2 small">
+      {{ resp.user.person.get_aspect_display }}
+    </div>
+    <div class="col-sm-2">
+      {{ resp.get_rule_display }}
+    </div>
+    <div class="col-sm-1 text-right">
+      <button 
+        type="button" 
+        onclick="manageData('{% url 'center_del_responsible' resp.pk %}')"
+        class="btn btn-light text-danger btn-sm"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+  </div>
+{% endfor %}
+{% if request.user|has_group:"office" and request.user.person.center_id == object.id or request.user.is_superuser %}
+  <div class="text-right">
+    <a 
+      href="{% url 'center_add_responsible' object.id %}"
+      class="btn btn-sm btn-outline-primary mb-4 mt-2" 
+    >
+      <i class="fas fa-plus"></i> 
+      {% trans 'Add' %}
+    </a>
+  </div>
+{% endif %}

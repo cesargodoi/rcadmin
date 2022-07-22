@@ -1,48 +1,16 @@
 {% load i18n %}
 
-<h4>{% trans 'Members' %}</h4>
-
 {% if object_list %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2"
-      {% if obj.click_link %}
-        {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
-          onclick="location.href='{{ obj.click_link }}';"
-        {% endif %}
-      {% endif %}
-      style="cursor: pointer;">
-
-    <div class="col-sm-5">
-      <strong>{{ obj.person.short_name }}</strong>
-        &nbsp;&nbsp;
-        <small>
-          <em>{{ obj.person.user.profile.city }} ({{ obj.person.user.profile.state }}-{{ obj.person.user.profile.country }})</em>
-        </small>
+  
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Members' %}</h4>
     </div>
-
-    <div class="col-sm-2 small align-middle">
-      {{ obj.person.get_aspect_display }}
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
     </div>
-
-    <div class="col-sm-2 small align-middle">
-      {{ obj.person.user.profile.phone_1 }}
-    </div>
-
-    <div class="col-sm-3 small align-middle">
-      {{ obj.person.user.email }}
-    </div>
-
   </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
+  {% include "workgroup/mentoring/elements/person_list.html" %}
 
 {% else %}
 

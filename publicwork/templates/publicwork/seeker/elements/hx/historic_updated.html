@@ -1,0 +1,33 @@
+{% load i18n %}
+<div class="col-sm-2">
+  <small class="text-muted align-top">{{ pos }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.date|date:'d/m/y' }}</strong>
+</div>
+
+<div class="col-sm-2">
+  <strong>{{ obj.get_occurrence_display }}</strong>
+</div>
+
+<div class="col-sm-6 small">
+  {% if obj.description %}
+    {{ obj.description }}
+  {% endif %}
+</div>
+
+<div class="col-sm-2 text-right">
+  <a 
+    href="#"
+    class="btn btn-light text-warning btn-sm" 
+    onclick="manageData('{{ obj.update_link }}?pos={{ pos }}')"
+  >
+    <i class="fas fa-edit"></i> 
+  </a>
+  <a 
+    href="#"
+    class="btn btn-light text-danger btn-sm" 
+    onclick="manageData('{{ obj.delete_link }}')"
+  >
+    <i class="fas fa-trash-alt"></i> 
+  </a>
+</div>  

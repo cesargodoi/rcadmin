@@ -16,10 +16,13 @@
   <ul class="navbar-nav ml-md-auto">
     {% if nav == "home" %}
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-           href="{% url 'event_create' %}">
-          <i class="fas fa-plus"></i>
-          {% trans 'Event' %} 
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'event_create' %}')"
+        >
+          <i class="fas fa-plus"></i> 
+          {% trans 'Event' %}
         </a>
       </li>
     {% endif %}
@@ -33,16 +36,22 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-           href="{% url 'event_update' object.id %}">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+          onclick="manageData('{% url 'event_update' object.id %}')"
+        >
           <i class="fas fa-edit"></i> 
           {% trans 'Edit' %}
         </a>
       </li>
       {% if not object_list %}
         <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-            href="{% url 'event_delete' object.id %}">
+          <a 
+            href="#"  
+            onclick="manageData('{% url 'event_delete' object.id %}')"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+          >
             <i class="fas fa-trash-alt"></i> 
             {% trans 'Delete' %}
           </a>

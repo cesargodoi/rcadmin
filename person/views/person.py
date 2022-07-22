@@ -1,7 +1,6 @@
 from datetime import date
 
 from django.contrib import messages
-from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.http.response import Http404
@@ -10,41 +9,60 @@ from django.utils import timezone
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-
 from rcadmin.common import (
     ASPECTS,
     STATUS,
-    paginator,
     clear_session,
-    short_name,
+    get_template_and_pagination,
 )
 from user.models import User
 from base.searchs import search_person
 
-from ..forms import PersonForm, ProfileForm, UserForm
+from ..forms import (
+    PersonForm,
+    ProfileForm,
+    UserForm,
+    BasicFormPerson,
+    BasicFormProfile,
+    OthersFormPerson,
+    OthersFormProfile,
+    AddressFormProfile,
+    ImageFormProfile,
+)
 from ..models import Historic, Person
 
 
 @login_required
 @permission_required("person.view_person")
 def person_home(request):
-    object_list = None
+    LIMIT, template_name, _from, _to, page = get_template_and_pagination(
+        request, "person/home.html", "person/elements/person_list.html"
+    )
+
     if request.GET.get("init"):
+        object_list, count = None, None
         clear_session(request, ["search"])
     else:
-        queryset, page = search_person(request, Person)
-        object_list = paginator(queryset, page=page)
+        object_list, count = search_person(request, Person, _from, _to)
         # add action links
         for item in object_list:
             item.click_link = reverse("person_detail", args=[item.id])
             item.local = "{} ({}-{})".format(
-                short_name(item.user.profile.city),
+                item.user.profile.city,
                 item.user.profile.state,
                 item.user.profile.country,
             )
 
+    if not request.htmx and object_list:
+        message = f"{count} records were found in the database"
+        messages.success(request, message)
+
     context = {
+        "LIMIT": LIMIT,
+        "page": page,
+        "counter": (page - 1) * LIMIT,
         "object_list": object_list,
+        "count": count,
         "init": True if request.GET.get("init") else False,
         "aspect_list": ASPECTS,
         "status_list": STATUS,
@@ -52,7 +70,7 @@ def person_home(request):
         "nav": "home",
         "flag": "person",
     }
-    return render(request, "person/home.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -73,7 +91,7 @@ def person_detail(request, id):
         "title": _("person detail"),
         "age": age,
         "nav": "detail",
-        "tab": "info",
+        "tab": request.GET.get("tab") or "info",
         "date": timezone.now().date(),
     }
     return render(request, "person/detail.html", context)
@@ -85,30 +103,24 @@ def person_create(request):
     if request.method == "POST":
         try:
             # creating a new user
-            email = request.POST["email"]
-            password = BaseUserManager().make_random_password()
-            new_user = User.objects.create_user(
-                email=email,
-                password=password,
-            )
+            new_user = User.objects.create_user(email=request.POST["email"])
             # add user in "user" group
-            user_group = Group.objects.get(name="user")
-            new_user.groups.add(user_group)
+            new_user.groups.add(Group.objects.get(name="user"))
             # updating the user.profile
-            profile_form = ProfileForm(
-                request.POST, request.FILES, instance=new_user.profile
-            )
+            profile_form = ProfileForm(request.POST, instance=new_user.profile)
             if profile_form.is_valid():
                 profile_form.save()
             # updating the user.person
             person_form = PersonForm(request.POST, instance=new_user.person)
             if person_form.is_valid():
                 person_form.save()
-            # add password in observations
-            new_user.person.observations += f"\nfirst password: {password}"
             # the center is the same as the center of the logged in user
             new_user.person.center = request.user.person.center
             new_user.person.save()
+            # adjust social_name in profile
+            new_user.profile.social_name = new_user.person.short_name
+            new_user.profile.save()
+
             message = f"The Person '{request.POST['name']}' has been created!"
             messages.success(request, message)
             return redirect("person_detail", id=new_user.person.pk)
@@ -122,22 +134,21 @@ def person_create(request):
         request.POST or None, initial={"made_by": request.user}
     )
 
+    template_name = "person/forms/create_person.html"
     context = {
         "user_form": user_form,
-        "profile_form": profile_form,
         "person_form": person_form,
-        "form_name": "Person",
-        "form_path": "person/forms/person.html",
-        "goback": reverse("person_home"),
-        "title": _("create person"),
-        "to_create": True,
+        "profile_form": profile_form,
+        "callback_link": reverse("person_create"),
+        "title": _("Create person"),
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
 
 
+#  partial updates
 @login_required
 @permission_required("person.change_person")
-def person_update(request, id):
+def person_update_basic(request, id):
     center_persons = [
         person.id
         for person in Person.objects.filter(
@@ -148,6 +159,7 @@ def person_update(request, id):
         raise Http404
 
     person = Person.objects.get(id=id)
+
     if request.method == "POST":
         # updating the user
         user_form = UserForm(request.POST, instance=person.user)
@@ -155,38 +167,147 @@ def person_update(request, id):
             user_form.save()
 
         # updating the user.profile
-        profile_form = ProfileForm(
-            request.POST, request.FILES, instance=person.user.profile
+        profile_form = BasicFormProfile(
+            request.POST, instance=person.user.profile
         )
         if profile_form.is_valid():
             profile_form.save()
 
         # updating the user.person
-        person_form = PersonForm(request.POST, instance=person)
+        person_form = BasicFormPerson(request.POST, instance=person)
         if person_form.is_valid():
             person_form.save()
-            message = f"The Person '{request.POST['name']}' has been updated!"
-            messages.success(request, message)
 
-        return redirect("person_detail", id=id)
+        return redirect("person_detail", id)
 
-    user_form = UserForm(instance=person.user)
-    profile_form = ProfileForm(instance=person.user.profile)
-    person_form = PersonForm(
-        instance=person, initial={"made_by": request.user}
-    )
-
+    template_name = "person/forms/tab_basic.html"
     context = {
-        "user_form": user_form,
-        "profile_form": profile_form,
-        "person_form": person_form,
-        "form_name": "Person",
-        "form_path": "person/forms/person.html",
-        "goback": reverse("person_detail", args=[id]),
-        "title": _("update person"),
-        "id": id,
+        "title": _("Update basic info"),
+        "user_form": UserForm(instance=person.user),
+        "profile_form": BasicFormProfile(instance=person.user.profile),
+        "person_form": BasicFormPerson(
+            instance=person, initial={"made_by": request.user}
+        ),
+        "callback_link": reverse("person_update_basic", args=[id]),
+        "update": True,
     }
-    return render(request, "base/form.html", context)
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("person.change_person")
+def person_update_others(request, id):
+    center_persons = [
+        person.id
+        for person in Person.objects.filter(
+            center=request.user.person.center.pk
+        )
+    ]
+    if id not in center_persons and not request.user.is_superuser:
+        raise Http404
+
+    person = Person.objects.get(id=id)
+
+    if request.method == "POST":
+        # updating the user.profile
+        profile_form = OthersFormProfile(
+            request.POST, instance=person.user.profile
+        )
+        if profile_form.is_valid():
+            profile_form.save()
+
+        # updating the user.person
+        person_form = OthersFormPerson(request.POST, instance=person)
+        if person_form.is_valid():
+            person_form.save()
+
+        template_name = "person/elements/tab_others.html"
+        return render(request, template_name, {"object": person})
+
+    template_name = "person/forms/tab_others.html"
+    context = {
+        "title": _("Update others info"),
+        "profile_form": OthersFormProfile(instance=person.user.profile),
+        "person_form": OthersFormPerson(
+            instance=person, initial={"made_by": request.user}
+        ),
+        "callback_link": reverse("person_update_others", args=[id]),
+        "target": "tabOthers",
+        "swap": "innerHTML",
+        "update": True,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("person.change_person")
+def person_update_address(request, id):
+    center_persons = [
+        person.id
+        for person in Person.objects.filter(
+            center=request.user.person.center.pk
+        )
+    ]
+    if id not in center_persons and not request.user.is_superuser:
+        raise Http404
+
+    person = Person.objects.get(id=id)
+
+    if request.method == "POST":
+        # updating the user.profile
+        profile_form = AddressFormProfile(
+            request.POST, instance=person.user.profile
+        )
+        if profile_form.is_valid():
+            profile_form.save()
+
+        template_name = "person/elements/tab_address.html"
+        return render(request, template_name, {"object": person})
+
+    template_name = "person/forms/tab_address.html"
+    context = {
+        "title": _("Update address info"),
+        "profile_form": AddressFormProfile(instance=person.user.profile),
+        "callback_link": reverse("person_update_address", args=[id]),
+        "target": "tabAddress",
+        "swap": "innerHTML",
+        "update": True,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("person.change_person")
+def person_update_image(request, id):
+    center_persons = [
+        person.id
+        for person in Person.objects.filter(
+            center=request.user.person.center.pk
+        )
+    ]
+    if id not in center_persons and not request.user.is_superuser:
+        raise Http404
+
+    person = Person.objects.get(id=id)
+
+    if request.method == "POST":
+        # updating the user.profile
+        profile_form = ImageFormProfile(
+            request.POST, request.FILES, instance=person.user.profile
+        )
+        if profile_form.is_valid():
+            profile_form.save()
+
+        return redirect("person_detail", id)
+
+    template_name = "person/forms/tab_image.html"
+    context = {
+        "title": _("Update image"),
+        "profile_form": ImageFormProfile(instance=person.user.profile),
+        "callback_link": reverse("person_update_image", args=[id]),
+        "update": True,
+    }
+    return render(request, template_name, context)
 
 
 @login_required
@@ -203,13 +324,14 @@ def person_delete(request, id):
             add_historic(person, "REM", request.user)
         else:
             person.user.delete()
-        return redirect(reverse("person_home") + "?init=on")
+        return redirect("person_home")
 
+    template_name = "person/confirm/delete.html"
     context = {
         "object": person,
-        "title": _("confirm to delete"),
+        "del_link": reverse("person_delete", args=[id]),
     }
-    return render(request, "base/confirm_delete.html", context)
+    return render(request, template_name, context)
 
 
 @login_required
@@ -223,15 +345,14 @@ def person_reinsert(request, id):
         person.status = "ACT"
         person.save()
         add_historic(person, "ACT", request.user)
-        return redirect(reverse("person_home") + "?init=on")
+        return redirect("person_detail", id=id)
 
+    template_name = "person/confirm/reinsert.html"
     context = {
         "object": person,
-        "title": _("confirm to reinsert"),
+        "reinsert_link": reverse("person_reinsert", args=[id]),
     }
-    return render(
-        request, "person/elements/confirm_to_reinsert_person.html", context
-    )
+    return render(request, template_name, context)
 
 
 # auxiliar functions

@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+{% include "center/elements/actions.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h4>{% trans 'Insert Responsible' %}</h4>
+    <form class="form-control-sm border-top" method="GET">
+      {% include "base/searchs/person.html" %}
+    </form>
+    <br>
+
+    {% if object_list %}
+  
+      {% include "base/elements/search_result.html" %}
+      {% include 'center/elements/person_list.html' %}
+
+    {% else %}
+
+      <div class="alert alert-secondary">
+        <h4 class="alert-heading">
+          {% if init %}
+            {% trans 'choose your search terms' %}
+          {% else %}
+            {% trans 'person not found' %}
+          {% endif %}
+        </h4> 
+      </div>  
+
+    {% endif %}
+    
+  </div>
+</article>
+
+  {% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

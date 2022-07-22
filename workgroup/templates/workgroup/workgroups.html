@@ -1,73 +1,18 @@
 {% load i18n %}
 
-<h4>{% trans 'Workgroups' %}</h4>
-
 {% if object_list %}
 
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
-
-  {% for obj in object_list %}
-  <div class="row border-top border-secondary pb-2 pt-2 text-{% if not obj.is_active %}danger{% elif obj.center != request.user.person.center %}warning{% endif %}"
-    {% if obj.click_link %}
-      {% if obj.center == request.user.person.center or request.user.is_superuser %}
-        onclick="location.href='{{ obj.click_link }}';"
-        style="cursor: pointer;"
-      {% endif %}
-    {% endif %}>
-
-    <div class="col-sm-5">
-      <strong>{{ obj.name }}</strong>
-    </div>
-
-    <div class="col-sm-2 small align-middle">
-      <em>{{ obj.center }}</em>
-    </div>
-
-    <div class="col-sm-2 align-middle text-right">
-      <em>{{ obj.get_workgroup_type_display }}</em>
-    </div>
-
-    <div class="col-sm text-right">
-      {% if obj.aspect != '--' %}
-      <strong>{{ obj.get_aspect_display }}</strong>
-      {% endif %}
-      {% if not nav == "home" %}
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        {% if obj.pk in pre_groups %}
-          <i class="fas fa-user-check mr-1"></i>
-        {% else %}
-        <a type="button" 
-          href="{{ obj.add_link }}?pk={{ obj.pk }}"
-          class="btn btn-light text-primary btn-sm">
-          <i class="fas fa-plus"></i>
-        </a>
-        {% endif %}
-      {% else %}
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        {% if obj.members.all|length > 0 %}
-          <strong>{{ obj.members.all|length }}</strong> 
-          <i class="fas fa-users"></i> 
-        {% endif %}
-      {% endif %}
-    </div>
-
-  </div>
-  {% endfor %}
-
-  {% if object_list.has_other_pages %}
-  {% include "base/elements/paginator.html" %}
-  {% endif %}
+  {% include "base/elements/search_result.html" %}
+  {% include "workgroup/elements/workgroup_list.html" %}
 
 {% else %}
 
   <div class="alert alert-secondary">
     <h4 class="alert-heading">
       {% if init %}
-      {% trans 'choose your search terms' %}
+        {% trans 'choose your search terms' %}
       {% else %}
-      {% trans 'groups not found' %}
+        {% trans 'groups not found' %}
       {% endif %}
     </h4> 
   </div> 

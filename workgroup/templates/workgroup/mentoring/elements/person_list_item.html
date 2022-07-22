@@ -1,0 +1,29 @@
+{% load i18n %}
+<div class="col-sm-4 ">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong data-toggle="tooltip" data-placement="top" title="{{ obj.person.name }}">
+    {{ obj.person.name | truncatechars:25 }}
+  </strong>
+  <small class="float-right">
+    <em>{{ obj.person.get_aspect_display }}</em>
+  </small>
+</div>
+
+<div class="col-sm-8 small">
+  <i class="fa-solid fa-location-dot"></i> <em>{{ obj.local }}</em> 
+  {% if obj.person.user.profile.phone_1 %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-phone"></i> 
+    {{ obj.person.user.profile.phone_1 }}
+  {% elif obj.user.profile.phone_2 %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-phone"></i> 
+    {{ obj.person.user.profile.phone_2 }}
+  {% endif %}
+  {% if obj.person.user.email %}
+    &nbsp;&nbsp;&nbsp;
+    <i class="fas fa-envelope"></i> 
+    {{ obj.person.user.email }}
+  {% endif %}
+</div>

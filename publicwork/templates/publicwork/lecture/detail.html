@@ -1,17 +1,35 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
 {% include 'publicwork/lecture/navbar.html' %}
 
-{% include 'publicwork/lecture/header.html' %}
-
 <article class="media content-section">
   <div class="media-body">
-
+    <div id="header">
+      {% include 'publicwork/lecture/header.html' %}
+    </div>
+    <br>
     {% include 'publicwork/listener/listeners.html' %}
-
   </div>
 </article>
 
+  {% include "base/elements/modal_form.html" %}
+
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    }); 
+
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

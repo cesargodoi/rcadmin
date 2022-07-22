@@ -1,0 +1,64 @@
+{% load i18n %}
+<div class="col-sm-6">
+  <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
+  &nbsp;&nbsp;
+  <strong>{{ obj.seeker.name }}</strong>
+  &nbsp;&nbsp;
+  <small 
+    class="{% if obj.seeker.status == 'ITD' %}
+             text-info
+           {% elif not obj.seeker.is_active %}
+             text-danger
+           {% elif obj.seeker.center != request.user.person.center %}
+             text-warning
+           {% else %}
+             text-muted
+           {% endif %}"
+  >
+    <em>{{ obj.seeker.center }}</em>
+    &nbsp;&nbsp;&nbsp;
+    {% if obj.seeker.status == 'ITD' %}
+      <small class="badge-pill badge-info">{% trans 'installed' %}</small>
+    {% elif not obj.seeker.is_active %}
+      <small class="badge-pill badge-danger">{% trans 'inactive' %}</small>
+    {% endif %}
+  </small>
+</div>
+
+<div class="col-sm-1 align-middle">
+  {% if obj.ranking > 0 %}
+    {{ obj.ranking }}
+    <i class="fas fa-star"></i>
+  {% endif %}
+</div>
+
+<div class="col-sm-3 align-middle">
+  <small>{{ obj.observations }}</small>
+</div>
+
+<div class="col-sm text-right">
+  {% if obj.click_link %}
+    {% if obj.seeker.status != 'ITD'%}
+      {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        <a 
+          href="#"
+          class="btn btn-light text-warning btn-sm" 
+          onclick="manageData('{{ obj.click_link }}')"
+        >
+          <i class="fas fa-edit"></i>
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if obj.seeker.status != 'ITD' %}
+    {% if obj.del_link %}
+      <a 
+        href="#"
+        class="btn btn-light text-danger btn-sm" 
+        onclick="manageData('{{ obj.del_link }}')"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    {% endif %}
+  {% endif %}
+</div>

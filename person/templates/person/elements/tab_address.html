@@ -1,0 +1,20 @@
+{% load i18n %}
+<br>
+<table class="table table-hover table-sm">
+  <tr>
+    <th width="120px">{% trans 'address' %}</th>
+    <td>
+      {% include "base/elements/address.html" with object=object.user.profile %}                  
+    </td>
+  </tr>
+</table>
+<div class="text-right">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'person_update_address' object.id %}')"
+  >
+    <i class="fas fa-edit"></i> 
+    {% trans 'Edit' %}
+  </a>
+</div>

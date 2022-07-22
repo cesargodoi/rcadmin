@@ -3,7 +3,7 @@
 
 {% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"treasury" %}
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'center_home' %}?init=on">{% trans 'Centers' %}</a>
+    <a class="nav-link" href="{% url 'center_home' %}">{% trans 'Centers' %}</a>
   </li>
 {% endif %}
 {% if request.user.is_superuser or request.user|has_group:"office" %}

@@ -1,49 +1,48 @@
 {% load i18n %}
-
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-10">
-          {{ object.date|date:'d/m/y'}}
-          {% if object.activity.multi_date %}
-          <small class="text-muted">
-            &nbsp;&nbsp; <strong>{% trans 'to' %}</strong> {{ object.end_date|date:'d/m/Y'}}
-            &nbsp;&nbsp; <strong>{% trans 'deadline' %}</strong> {{ object.deadline|date:'d/m/Y H:i'}}
-          </small>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-10">
+      <strong>
+        {{ object.date|date:'d/m/y'}}
+        {% if object.activity.multi_date %}
+          {% if object.end_date %}
+            &nbsp;{% trans 'to' %} &nbsp;{{ object.end_date|date:'d/m/y'}}
           {% endif %}
-        </div>
-        <div class="col text-right">
-          {% if not object.is_active %}
-            <span class="badge badge-pill badge-danger">
-              {% trans 'inactive' %}
-            </span>
-            &nbsp;&nbsp;
+          {% if object.deadline %}
+            &nbsp;{% trans 'deadline' %} &nbsp;{{ object.deadline|date:'d/m/Y H:i'}}
           {% endif %}
-          <strong>
-            {{ object.get_status_display }}
-          </strong>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-10">
-        <h4>
-          {{ object.activity.name }}
-          <small class="text-muted ">
-            &nbsp;&nbsp; {{ object.center }}
-          </small>
-        </h4>
-      </div>
-      <div class="col text-right">
-        {% if object.frequencies.count > 0 %}
-          <strong>{{ object.frequencies.count }}</strong> 
-          <i class="fas fa-users"></i>  
         {% endif %}
-      </div>
+      </strong>
     </div>
-    {% if object.description %}
-      <p><small class="text-muted">{{ object.description }}</small></p>
+    <div class="col text-right">
+      {% if not object.is_active %}
+        <span class="badge badge-pill badge-danger">
+          {% trans 'inactive' %}
+        </span>
+        &nbsp;&nbsp;
+      {% endif %}
+      <strong>
+        {{ object.get_status_display }}
+      </strong>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-10">
+    <h4>
+      {{ object.activity.name }}
+      <small class="text-muted">
+        &nbsp;&nbsp; {{ object.center }}
+      </small>
+    </h4>
+  </div>
+  <div class="col text-right">
+    {% if object.frequencies.count > 0 %}
+      <strong>{{ object.frequencies.count }}</strong> 
+      <i class="fas fa-users"></i>  
     {% endif %}
   </div>
-</article>
+</div>
+{% if object.description %}
+  <p><small class="text-muted">{{ object.description }}</small></p>
+{% endif %}

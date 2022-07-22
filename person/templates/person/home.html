@@ -1,21 +1,36 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
 
-{% include "person/navbar.html" %}
+  {% include "person/navbar.html" %}
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <form class="form-control-sm mt-1" method="GET">
-      {% include "base/searchs/person.html" %}
-    </form>
-  </div>
-</article>
+    <article class="media content-section mb-1">
+      <div class="media-body">
+        <form class="form-control-sm mt-1" method="GET">
+          {% include "base/searchs/person.html" %}
+        </form>
+        <br>
+        {% include 'person/persons.html' %}
+      </div>
+    </article>
+    <br>
 
-<article class="media content-section mb-1">
-  <div class="media-body">
-    {% include 'person/persons.html' %}
-  </div>
-</article>
+  {% include "base/elements/modal_form.html" %}
 
-{% endblock %}
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    }); 
+
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

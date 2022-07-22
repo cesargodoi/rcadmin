@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
-{% load crispy_forms_tags %}
+{% load static %}
 {% load i18n %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -17,11 +17,24 @@
   <div class="media-body">
     <h4>{% trans 'Insert Membership' %}</h4>
     <form class="form-control-sm border-top" method="GET">
-      {% csrf_token %}
       {% include "base/searchs/workgroup.html" %}
     </form>
     <br>
-    {% include 'workgroup/workgroups.html' %}
+    {% include 'person/workgroups.html' %}
   </div>
 </article>
-{% endblock %}
+
+{% include "base/elements/modal_form.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

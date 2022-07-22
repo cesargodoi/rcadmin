@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% if object_list %}
+  <div class="row">
+    <div class="col-sm-8">
+      <h4>{% trans 'Frequencies' %}</h4>
+    </div>
+    <div class="col-sm-4 small text-right">
+      <p class="mt-2"><strong>{{ count }}</strong> {% trans 'records in the database' %}</p>
+    </div>
+  </div>
+  <div id="frequencyList">
+    {% include "event/elements/frequency_list.html" %}
+  </div>
+
+{% else %}
+
+  <div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">{% trans 'no frequencies found' %}</h4>
+  </div>
+
+{% endif %}

@@ -1,44 +1,39 @@
-<article class="media content-section mb-1">
-  <div class="media-body">
-    <div class="article-metadata">
-      <div class="row">
-        <div class="col-10">
-          {{ object.center }}
-        </div>
-        <div class="col text-right">
-          <strong>{{ object.get_workgroup_type_display }}</strong>
-        </div>
-      </div>
+<div class="article-metadata">
+  <div class="row">
+    <div class="col-10">
+      {{ object.center }}
     </div>
-    <div class="row">
-      <div class="col-10">
-        <h4>
-          {{ object.name }} &nbsp;&nbsp;
-          <small class="text-muted">{{ object.get_aspect_display }}</small>
-        </h4>
-      </div>
-      <div class="col text-right">
-        {% if object_list|length > 0 %}
-          <strong>{{ object_list|length }}</strong> 
-          <i class="fas fa-users"></i>  
-        {% endif %}
-      </div>
+    <div class="col text-right">
+      <strong>{{ object.get_workgroup_type_display }}</strong>
     </div>
-
-    {% if object.description %}
-    <p><small class="text-muted">{{ object.description }}</small></p>
-    {% endif %}
-
-    {% if mentors %}
-      <div class="row">
-        {% for mentor in mentors %}
-          <div class="col-md-3">
-            <i class="fas fa-user-graduate mr-1"></i> 
-            {{ mentor }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
   </div>
-</article>
+</div>
+<div class="row">
+  <div class="col-10">
+    <h4>
+      {{ object.name }} &nbsp;&nbsp;
+      <small class="text-muted">{{ object.get_aspect_display }}</small>
+    </h4>
+  </div>
+  <div class="col text-right">
+    {% if count %}
+      <strong>{{ count }}</strong> 
+      <i class="fas fa-users"></i>  
+    {% endif %}
+  </div>
+</div>
+
+{% if object.description %}
+<p><small class="text-muted">{{ object.description }}</small></p>
+{% endif %}
+
+{% if mentors %}
+  <div class="row">
+    {% for mentor in mentors %}
+      <div class="col-md-3">
+        <i class="fas fa-user-graduate mr-1"></i> 
+        {{ mentor }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

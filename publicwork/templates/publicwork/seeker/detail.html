@@ -1,28 +1,43 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
 
-{% if tab == "info" or tab == "frequencies" or tab == "historic" %}
-  {% include 'publicwork/seeker/navbar.html' %}
-  {% include "publicwork/seeker/header.html" %}
-{% endif %}
+  {% if tab == "info" or tab == "frequencies" or tab == "historic" %}
+    {% include 'publicwork/seeker/navbar.html' %}
+  {% endif %}
 
-<article class="media content-section">
-  <div class="media-body">
+  <article class="media content-section">
+    <div class="media-body">
 
-    {% if tab == "info" %}
-      <h4>{% trans 'Info' %}</h4>
-      {% include "publicwork/seeker/info.html" %}
-    {% elif tab == "frequencies" %}
-      <h4>{% trans 'Frequencies' %}</h4>
-      {% include "publicwork/seeker/frequencies.html" %}
-    {% elif tab == "historic" %}
-      <h4>{% trans 'Historic' %}</h4>
-      {% include "publicwork/seeker/historic.html" %}
-    {% endif %}
-    
-  </div>
-</article>
+      {% if tab == "info" or tab == "frequencies" or tab == "historic" %}
+        {% include "publicwork/seeker/header.html" %}
+      {% endif %}
+      <br>
+      {% if tab == "info" %}
+        <h4>{% trans 'Info' %}</h4>
+        {% include "publicwork/seeker/info.html" %}
+      {% elif tab == "frequencies" %}
+        {% include "publicwork/seeker/frequencies.html" %}
+      {% elif tab == "historic" %}
+        {% include "publicwork/seeker/historic.html" %}
+      {% endif %}
+      
+    </div>
+  </article>
+
+  {% include "base/elements/modal_form.html" %}
 
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

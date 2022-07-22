@@ -1,10 +1,9 @@
 {% load i18n %}
 
-<h4>{% trans 'Add Member' %}</h4>
+<h4>{% trans 'Insert Member' %}</h4>
 <form class="form-control-sm border-top" method="GET">
-  {% csrf_token %}
   {% include "base/searchs/seeker.html" %}
 </form>
 <br>
 
-{% include 'publicwork/seeker/seekers.html' %}
+{% include 'publicwork/groups/seekers.html' %}
