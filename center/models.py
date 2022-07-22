@@ -43,13 +43,6 @@ class Center(models.Model):
     phone_1 = models.CharField(_("phone"), max_length=20, blank=True)
     phone_2 = models.CharField(_("backup phone"), max_length=20, blank=True)
     email = models.CharField(max_length=60, blank=True)
-    secretary = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT,
-        related_name="secretary",
-        null=True,
-        blank=True,
-    )
     image = models.ImageField(
         _("image"),
         default="default_center.jpg",

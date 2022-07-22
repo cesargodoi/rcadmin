@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-18 04:24-0300\n"
-"PO-Revision-Date: 2022-07-18 04:53-0306\n"
+"PO-Revision-Date: 2022-07-22 10:24-0306\n"
 "Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -961,7 +961,7 @@ msgstr "eventos não encontrados"
 #: workgroup/templates/workgroup/mentoring/frequencies.html:11
 #: workgroup/templates/workgroup/mentoring/members.html:10
 msgid "records in the database"
-msgstr ""
+msgstr "registros foram encontrados no banco de dados"
 
 #: event/templates/event/frequencies.html:19
 #: publicwork/templates/publicwork/groups/frequencies.html:18
