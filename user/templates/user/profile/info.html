@@ -2,83 +2,10 @@
 {% load i18n %}
 
 <div class="row border-top border-secondary pt-3">
-  <div class="col-md-3 text-center">
-    {% if object.profile.image %}
-      <img 
-        class="rounded-circle photo-cover mx-auto d-block mb-2" 
-        src="{{ object.profile.image.url }}"
-      >
-    {% else %}
-      <img
-        class="rounded-circle photo-cover mx-auto d-block mb-2" 
-        src="{% static 'img/default_profile.jpg' %}"
-      >
-    {% endif %}
+  <div id="tabImage" class="col-md-3 text-center">
+    {% include 'user/profile/elements/tab_image.html' %}
   </div>
-  <div class="col-md-9">
-    <div class="row border-bottom border-secondary mt-2 pb-2">
-      <div class="col-sm-3"><strong>{% trans 'gender' %}</strong></div>
-      <div class="col-sm-9">{{ object.profile.get_gender_display }}</div>
-    </div>
-    <div class="row border-bottom border-secondary mt-2 pb-2">
-      <div class="col-sm-3"><strong>{% trans 'phone' %}</strong></div>
-      <div class="col-sm-9">{{ object.profile.phone }}</div>
-    </div>
-    <div class="row border-bottom border-secondary mt-2 pb-2">
-      <div class="col-sm-3"><strong>{% trans 'email' %}</strong></div>
-      <div class="col-sm-9">{{ object.email }}</div>
-    </div>
-    <div class="row border-bottom border-secondary mt-2 pb-2 text-warning">
-      <div class="col-sm-3"><strong>{% trans 'sos contact' %}</strong></div>
-      <div class="col-sm-9">
-        {{ object.profile.sos_phone }}&nbsp;&nbsp;&nbsp;
-        ({{ object.profile.sos_contact }})
-      </div>
-    </div>
-    <div class="row mt-2 pb-2">
-      <div class="col-sm-3"><strong>{% trans 'address' %}</strong></div>
-      <div class="col-sm-9">
-        {% if object.person.aspect == 'A1' %}
-          {% if object.profile.city %}
-            {{ object.profile.city }} 
-          {% endif %}
-          {% if object.profile.state %}
-            - {{ object.profile.state }} 
-          {% endif %}
-          {% if object.profile.country %}
-            ({{ object.profile.get_country_display }})
-          {% endif %}
-        {% else %}
-          <address>
-            {% if object.profile.address %}
-              {{ object.profile.address }}
-            {% endif %}
-            {% if object.profile.number %}
-              , {{ object.profile.number }}
-            {% endif %}
-            {% if object.profile.complement %}
-              &nbsp;&nbsp;<small><em>{{ object.profile.complement }}</em></small>
-            {% endif %}
-            <br>
-            {% if object.profile.district %}
-              {{ object.profile.district }} 
-            {% endif %}
-            {% if object.profile.city %}
-              - {{ object.profile.city }} 
-            {% endif %}
-            {% if object.profile.state %}
-              - {{ object.profile.state }} 
-            {% endif %}
-            <br>
-            {% if object.profile.country %}
-              {{ object.profile.get_country_display }} 
-            {% endif %}
-            {% if object.profile.zip_code %}
-              - {{ object.profile.zip_code }}
-            {% endif %}
-          </address>
-        {% endif %}
-      </div>
-    </div>
+  <div id="tabProfile" class="col-md-9">
+    {% include 'user/profile/elements/tab_profile.html' %}
   </div>
 </div>

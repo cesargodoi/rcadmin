@@ -10,11 +10,11 @@ class UserForm(forms.ModelForm):
         fields = ["email"]
 
 
-class ProfileForm(forms.ModelForm):
+class ProfileFormUpdate(forms.ModelForm):
     class Meta:
         model = Profile
         fields = "__all__"
-        exclude = ["user"]
+        exclude = ["user", "image"]
         widgets = {
             "image": forms.FileInput(
                 attrs={"accept": "video/*;capture=camera"}
@@ -47,3 +47,9 @@ class MyFormOfPaymentForm(forms.ModelForm):
         model = FormOfPayment
         fields = "__all__"
         exclude = ["payform_type", "complement"]
+
+
+class ImageFormUpdate(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["image"]

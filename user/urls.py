@@ -63,7 +63,10 @@ urlpatterns = [
 # profile
 urlpatterns += [
     path("profile/detail/", user_views.profile_detail, name="profile_detail"),
-    path("profile/update/", user_views.profile_update, name="profile_update"),
+    path(
+        "profile/updt_profile/", user_views.updt_profile, name="updt_profile"
+    ),
+    path("profile/updt_image/", user_views.updt_image, name="updt_image"),
     path(
         "profile/historic/",
         user_views.user_historic,

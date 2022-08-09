@@ -1,0 +1,81 @@
+{% load i18n %}
+
+{% if updated %}
+  {% include "user/profile/elements/header.html" %}
+{% endif %}
+
+<br>
+<div class="row pt-2 pb-2">
+  <div class="col-sm-3"><strong>{% trans 'gender' %}</strong></div>
+  <div class="col-sm-9">{{ object.profile.get_gender_display }}</div>
+</div>
+<div class="row border-top border-secondary pt-2 pb-2">
+  <div class="col-sm-3"><strong>{% trans 'phone' %}</strong></div>
+  <div class="col-sm-9">{{ object.profile.phone }}</div>
+</div>
+<div class="row border-top border-secondary pt-2 pb-2">
+  <div class="col-sm-3"><strong>{% trans 'email' %}</strong></div>
+  <div class="col-sm-9">{{ object.email }}</div>
+</div>
+<div class="row border-top border-secondary pt-2 pb-2 text-warning">
+  <div class="col-sm-3"><strong>{% trans 'sos contact' %}</strong></div>
+  <div class="col-sm-9">
+    {{ object.profile.sos_phone }}&nbsp;&nbsp;&nbsp;
+    ({{ object.profile.sos_contact }})
+  </div>
+</div>
+<div class="row border-top border-secondary pt-2 pb-2">
+  <div class="col-sm-3"><strong>{% trans 'address' %}</strong></div>
+  <div class="col-sm-9">
+    {% if object.person.aspect == 'A1' %}
+      {% if object.profile.city %}
+        {{ object.profile.city }} 
+      {% endif %}
+      {% if object.profile.state %}
+        - {{ object.profile.state }} 
+      {% endif %}
+      {% if object.profile.country %}
+        ({{ object.profile.get_country_display }})
+      {% endif %}
+    {% else %}
+      <address>
+        {% if object.profile.address %}
+          {{ object.profile.address }}
+        {% endif %}
+        {% if object.profile.number %}
+          , {{ object.profile.number }}
+        {% endif %}
+        {% if object.profile.complement %}
+          &nbsp;&nbsp;<small><em>{{ object.profile.complement }}</em></small>
+        {% endif %}
+        <br>
+        {% if object.profile.district %}
+          {{ object.profile.district }} 
+        {% endif %}
+        {% if object.profile.city %}
+          - {{ object.profile.city }} 
+        {% endif %}
+        {% if object.profile.state %}
+          - {{ object.profile.state }} 
+        {% endif %}
+        <br>
+        {% if object.profile.country %}
+          {{ object.profile.get_country_display }} 
+        {% endif %}
+        {% if object.profile.zip_code %}
+          - {{ object.profile.zip_code }}
+        {% endif %}
+      </address>
+    {% endif %}
+  </div>
+</div>
+<div class="text-right">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'updt_profile' %}')"
+  >
+    <i class="fas fa-edit"></i> 
+    {% trans 'Edit' %}
+  </a>
+</div>

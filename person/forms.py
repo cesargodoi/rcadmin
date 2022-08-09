@@ -72,7 +72,6 @@ class PupilFormUpdate(forms.ModelForm):
         }
 
 
-# partial forms - IMAGE
 class ImageFormUpdate(forms.ModelForm):
     class Meta:
         model = Profile

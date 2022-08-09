@@ -244,11 +244,11 @@ def update_image(request, id):
 
     if request.method == "POST":
         # updating the user.profile
-        profile_form = ImageFormUpdate(
+        image_form = ImageFormUpdate(
             request.POST, request.FILES, instance=person.user.profile
         )
-        if profile_form.is_valid():
-            profile_form.save()
+        if image_form.is_valid():
+            image_form.save()
 
             template_name = "person/elements/tab_image.html"
             context = {"object": person, "updated": True}
@@ -259,13 +259,13 @@ def update_image(request, id):
                     "HX-Trigger": modal_updated_triggers,
                 },
             )
-
-        return redirect("person_detail", id)
+    else:
+        image_form = ImageFormUpdate(instance=person.user.profile)
 
     template_name = "person/forms/update_image.html"
     context = {
         "title": _("Update image"),
-        "profile_form": ImageFormUpdate(instance=person.user.profile),
+        "image_form": image_form,
         "update": True,
     }
     return render(request, template_name, context)

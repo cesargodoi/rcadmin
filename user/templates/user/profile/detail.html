@@ -1,25 +1,40 @@
 {% extends "base/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 
 {% include "user/profile/navbar.html" %}
 
-{% include "user/profile/header.html" %}
+  <article class="media content-section">
+    <div class="media-body">
 
-<article class="media content-section">
-  <div class="media-body">
-    {% if tab == "detail" %}
-      <h4>{% trans "Profile" %}</h4>
-      {% include "user/profile/info.html" %}
-    {% elif tab == "frequencies" %}
-      {% include "user/profile/frequencies.html" %}
-    {% elif tab == "historic" %}
-      {% include "user/profile/historic.html" %}
-    {% elif tab == "payments" %}
-      {% include "user/profile/payments.html" %}
-    {% endif %}
-  </div>
-</article>
+      {% include "user/profile/elements/header.html" %}
+      <br>
+      {% if tab == "detail" %}
+        <h4>{% trans "Info" %}</h4>
+        {% include "user/profile/info.html" %}
+      {% elif tab == "frequencies" %}
+        {% include "user/profile/frequencies.html" %}
+      {% elif tab == "historic" %}
+        {% include "user/profile/historic.html" %}
+      {% elif tab == "payments" %}
+        {% include "user/profile/payments.html" %}
+      {% endif %}
+    </div>
+  </article>
+
+{% include "base/elements/modal_form.html" %}
 
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    function manageData(url) {
+      htmx.ajax('GET', url, '#formBody')
+    }
+  </script>
+
+  <script src="{% static 'js/modal_form.js' %}" defer></script>
+
+{% endblock scripts %}

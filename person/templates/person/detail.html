@@ -6,25 +6,25 @@
 
 {% include "person/navbar.html" %}
 
-<article class="media content-section">
-  <div class="media-body">
+  <article class="media content-section">
+    <div class="media-body">
 
-    {% include "person/elements/header.html" %}
+      {% include "person/elements/header.html" %}
 
-    <br>
-    {% if tab == "info" %}
-      <h4>{% trans 'Info' %}</h4>
-      {% include "person/info.html" %}
-    {% elif tab == "historic" %}
-      {% include "person/historic.html" %}
-    {% elif tab == "frequencies" %}
-      {% include "person/frequencies.html" %}
-    {% elif tab == "membership" %}
-      {% include "person/membership.html" %}
-    {% endif %}
-    
-  </div>
-</article>
+      <br>
+      {% if tab == "info" %}
+        <h4>{% trans 'Info' %}</h4>
+        {% include "person/info.html" %}
+      {% elif tab == "historic" %}
+        {% include "person/historic.html" %}
+      {% elif tab == "frequencies" %}
+        {% include "person/frequencies.html" %}
+      {% elif tab == "membership" %}
+        {% include "person/membership.html" %}
+      {% endif %}
+      
+    </div>
+  </article>
 
 {% include "base/elements/modal_form.html" %}
 

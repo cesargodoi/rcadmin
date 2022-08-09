@@ -37,13 +37,6 @@
     {% if tab == "detail" %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-            href="{% url 'profile_update' %}">
-          <i class="fas fa-edit"></i> 
-          {% trans "Edit" %}
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
           href="{% url 'password_change' %}">
           <i class="fas fa-key"></i> 
           {% trans "Change" %}
