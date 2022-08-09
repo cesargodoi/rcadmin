@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 
@@ -24,105 +25,46 @@
     <form method="POST" enctype="multipart/form-data" id="form">
       {% csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottom mb-4">
+        <legend class="border-bottom">
           {% if to_create %} {% trans 'Create' %} {% else %} {% trans 'Update' %} {% endif %} {% trans 'Profile' %}
         </legend>
-        <ul class="nav nav-pills" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" 
-              id="basic-tab" 
-              data-toggle="tab" 
-              href="#basic" 
-              role="tab" 
-              aria-controls="basic"
-              aria-selected="true">
-              {% trans 'Basic' %}
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" 
-              id="address-tab" 
-              data-toggle="tab" 
-              href="#address" 
-              role="tab" 
-              aria-controls="address"
-              aria-selected="false">
-              {% trans 'Address' %}
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" 
-              id="other-tab" 
-              data-toggle="tab" 
-              href="#other" 
-              role="tab" 
-              aria-controls="other"
-              aria-selected="false">
-              {% trans 'Others' %}
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" 
-            id="basic" 
-            role="tabpanel" 
-            aria-labelledby="basic-tab">
-            <br>
-            {{ profile_form.social_name | as_crispy_field }}
-            {{ user_form.email | as_crispy_field }}
-            {{ profile_form.phone_1 | as_crispy_field }}
-            {{ profile_form.phone_2 | as_crispy_field }}
-            {{ profile_form.image | as_crispy_field }}
+        
+        <div class="row">
+          <div class="col-sm-8">{{ profile_form.social_name | as_crispy_field }}</div>
+          <div class="col-sm-4">{{ profile_form.gender | as_crispy_field }}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">{{ profile_form.phone | as_crispy_field }}</div>
+          <div class="col-sm-6">{{ user_form.email | as_crispy_field }}</div>
+        </div>
+      </fieldset>
+      <fieldset class="form-group pt-4 border-top border-secondary">
+        {% if object.person.aspect == 'A1' %}
+          <div class="row">
+            <div class="col-md-6">{{ profile_form.city | as_crispy_field }}</div>
+            <div class="col-md-2">{{ profile_form.state | as_crispy_field }}</div>
+            <div class="col-md-4">{{ profile_form.country | as_crispy_field }}</div>
           </div>
-          <div class="tab-pane fade" 
-            id="address" 
-            role="tabpanel" 
-            aria-labelledby="address-tab">
-            <br>
-            {{ profile_form.address | as_crispy_field }}
-            <div class="row">
-              <div class="col-md-4">
-                {{ profile_form.number | as_crispy_field }}
-              </div>
-              <div class="col-md-8">
-                {{ profile_form.complement | as_crispy_field }}
-              </div>
-            </div>
-            {{ profile_form.district | as_crispy_field }}
-            <div class="row">
-              <div class="col-md-8">
-                {{ profile_form.city | as_crispy_field }}
-              </div>
-              <div class="col-md-4">
-                {{ profile_form.state | as_crispy_field }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {{ profile_form.country | as_crispy_field }}
-              </div>
-              <div class="col-md-6">
-                {{ profile_form.zip_code | as_crispy_field }}
-              </div>
-            </div>
+        {% else %}
+          <div class="row">
+            <div class="col-md-4">{{ profile_form.address | as_crispy_field }}</div>
+            <div class="col-md-2">{{ profile_form.number | as_crispy_field }}</div>
+            <div class="col-md-3">{{ profile_form.complement | as_crispy_field }}</div>
+            <div class="col-md-3">{{ profile_form.district | as_crispy_field }}</div>
           </div>
-          <div class="tab-pane fade" 
-            id="other" 
-            role="tabpanel" 
-            aria-labelledby="other-tab">
-            <br>
-            {{ profile_form.profession | as_crispy_field }}
-            <div class="row">
-              <div class="col-md-4">
-                {{ profile_form.gender | as_crispy_field }}
-              </div>
-              <div class="col-md-8">
-                {{ profile_form.marital_status | as_crispy_field }}
-              </div>
-            </div>
-            {{ profile_form.sos_contact | as_crispy_field }}
-            {{ profile_form.sos_phone | as_crispy_field }}
+          <div class="row">
+            <div class="col-md-4">{{ profile_form.city | as_crispy_field }}</div>
+            <div class="col-md-2">{{ profile_form.state | as_crispy_field }}</div>
+            <div class="col-md-3">{{ profile_form.country | as_crispy_field }}</div>
+            <div class="col-md-3">{{ profile_form.zip_code | as_crispy_field }}</div>
           </div>
+        {% endif %}
+      </fieldset>
+      <fieldset class="form-group pt-4 border-top border-secondary">
+        <div class="row">
+          <div class="col-sm-4">{{ profile_form.sos_contact | as_crispy_field }}</div>
+          <div class="col-sm-3">{{ profile_form.sos_phone | as_crispy_field }}</div>
+          <div class="col-sm-5">{{ profile_form.image | as_crispy_field }}</div>
         </div>
       </fieldset>
     </form>
@@ -130,11 +72,6 @@
 </article>
 {% endblock content %}
 
-
-
-
 {% block scripts %}
-
-{% load static %}
 <script type="text/javascript" src="{% static 'js/profileValidation.js' %}"></script>
 {% endblock %}

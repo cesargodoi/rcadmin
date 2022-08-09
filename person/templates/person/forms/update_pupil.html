@@ -2,12 +2,7 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form 
-  hx-post="{{ callback_link }}"
-  hx-target="#{{ target }}"
-  hx-swap="{{ swap }}"
->
-
+<form hx-post="{{ request.path }}">
   {% csrf_token %}
 
   <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
@@ -25,43 +20,7 @@
   </div>
 
   <div class="modal-body">
-
-    <div class="row">
-      <div class="col-md-8">
-        {{ profile_form.address | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ profile_form.number | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ profile_form.complement | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ profile_form.district | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8">
-        {{ profile_form.city | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ profile_form.state | as_crispy_field }}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{ profile_form.country | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ profile_form.zip_code | as_crispy_field }}
-      </div>
-    </div>
-
+    {% include 'person/forms/pupil_fields.html' %}
   </div>
 
   <div class="modal-footer">
@@ -89,5 +48,3 @@
     </div>
   </div>
 </form>
-
-<script src="{% static 'js/address.js' %}" defer></script>

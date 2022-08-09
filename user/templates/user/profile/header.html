@@ -6,12 +6,14 @@
       <div class="row">
         <div class="col-9">
           {{ object.person.center }}
+            
           {% if object.person.aspect != "--" %}
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <em>
-              {{ object.person.get_aspect_display }} <strong>{% trans 'in' %}</strong>
+            {{ object.person.get_aspect_display }} 
+            <small class="text-secondary">
+              &nbsp;&nbsp;{% trans 'in' %}&nbsp;&nbsp;
               {{ object.person.aspect_date|date:"d/m/Y" }}
-            </em>
+            </small>
           {% endif %}
           {% if object.person.center != request.user.person.center %}
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -19,7 +21,9 @@
           {% endif %}
         </div>
         <div class="col text-right">
-          <span class="badge badge-pill badge-secondary">{{ object.person.reg }}</span>
+          {% if object.person.reg %}
+            <strong>{{ object.person.reg }}</strong>
+          {% endif %}
         </div>
       </div>
     </div>

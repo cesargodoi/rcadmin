@@ -27,6 +27,7 @@ GRC = _("Golden Rosycross")
 GENDER_TYPES = (
     ("M", _("male")),
     ("F", _("female")),
+    ("-", _("do not inform")),
 )
 CENTER_TYPES = (
     ("CNT", _("center")),

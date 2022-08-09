@@ -238,21 +238,17 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = ["social_name"]
     list_display = [
         "social_name",
-        "phone_1",
+        "phone",
         "user",
     ]
     fieldsets = [
         (
             None,
-            {"fields": ["social_name", "user", "image"]},
-        ),
-        (
-            "Personal Informations",
-            {"fields": ["gender", "profession", "marital_status"]},
+            {"fields": ["social_name", "user", "image", "gender"]},
         ),
         (
             "Contact Informations",
-            {"fields": ["phone_1", "phone_2", "sos_contact", "sos_phone"]},
+            {"fields": ["phone", "sos_contact", "sos_phone"]},
         ),
         (
             "Address Informations",

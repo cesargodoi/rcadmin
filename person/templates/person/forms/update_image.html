@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form method="POST" action="{{ callback_link }}" enctype="multipart/form-data">
+<form hx-post="{{ request.path }}" hx-encoding="multipart/form-data">
   {% csrf_token %}
 
   <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
