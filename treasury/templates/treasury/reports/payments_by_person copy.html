@@ -1,0 +1,68 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% include "treasury/navbar.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <div class="row">
+      <div class="col-sm-8">
+        <h2>{% trans 'Payments by person' %}</h2>
+      </div>
+      <div class="floating-right">
+        <form class="form-control-sm" method="GET" onsubmit="return isFormOk()">
+          {% csrf_token %}
+          {% include "treasury/elements/search_person.html" %}
+        </form>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% if object %}
+
+{% include "treasury/elements/person_card.html" %}
+
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <h5>{% trans 'Payments' %}</h5>
+    {% if object_list.has_other_pages %}
+      {% include "base/paginator.html" %}
+    {% endif %}
+
+    {% for pay in object_list %}
+      {% include "user/profile/payment.html" %}
+    {% endfor %}
+  </div>
+</article>
+
+{% else %}
+<div class="alert alert-secondary" role="alert">
+  <h4 class="alert-heading">{% trans 'select a person' %}</h4>
+</div>
+{% endif %}
+
+{% endblock content %}
+
+{% block jquery %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(function () {
+    $("#person").autocomplete({
+      source: "{% url 'reports_search_person' %}",
+      minLength: 3,
+    });
+  });
+  function isFormOk() {
+    var person = document.getElementById("person").value
+    return person.length < 8 ? false : true
+  }
+</script>
+{% endblock %}

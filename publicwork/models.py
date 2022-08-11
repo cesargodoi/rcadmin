@@ -1,5 +1,6 @@
 import uuid
 
+from django.utils.translation import gettext_lazy as _
 from PIL import Image
 from django.conf import settings
 from django.utils import timezone
@@ -24,18 +25,27 @@ def seeker_pics(instance, filename):
 # Temporary Registration of Seeker
 class TempRegOfSeeker(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=80)
-    birth = models.DateField()
-    gender = models.CharField(max_length=1, choices=GENDER_TYPES, default="M")
-    image = models.ImageField(
-        default="default_profile.jpg", upload_to=seeker_pics, blank=True
+    name = models.CharField(_("name"), max_length=80)
+    birth = models.DateField(_("birth"))
+    gender = models.CharField(
+        _("gender"), max_length=1, choices=GENDER_TYPES, default="M"
     )
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=2)
-    country = models.CharField(max_length=2, choices=COUNTRIES, default="BR")
-    phone = models.CharField(max_length=20)
+    image = models.ImageField(
+        _("image"),
+        default="default_profile.jpg",
+        upload_to=seeker_pics,
+        blank=True,
+    )
+    city = models.CharField(_("city"), max_length=50)
+    state = models.CharField(_("state"), max_length=2)
+    country = models.CharField(
+        _("country"), max_length=2, choices=COUNTRIES, default="BR"
+    )
+    phone = models.CharField(_("phone"), max_length=20)
     email = models.EmailField()
-    solicited_on = models.DateTimeField(default=timezone.now)
+    solicited_on = models.DateTimeField(
+        _("solicited on"), default=timezone.now
+    )
 
     def save(self, *args, **kwargs):
         self.state = str(self.state).upper()
@@ -52,8 +62,8 @@ class TempRegOfSeeker(models.Model):
         )
 
     class Meta:
-        verbose_name = "temporary registration of seeker"
-        verbose_name_plural = "temporary registration of seekers"
+        verbose_name = _("temporary registration of seeker")
+        verbose_name_plural = _("temporary registration of seekers")
 
 
 # Seeker
@@ -63,24 +73,34 @@ class Seeker(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
+        verbose_name=_("center"),
     )
-    name = models.CharField(max_length=80)
+    name = models.CharField(_("name"), max_length=80)
     name_sa = models.CharField(max_length=80, editable=False)
-    short_name = models.CharField(max_length=40, null=True, blank=True)
-    birth = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_TYPES, default="M")
-    image = models.ImageField(
-        default="default_profile.jpg", upload_to=seeker_pics, blank=True
+    short_name = models.CharField(
+        _("short name"), max_length=40, null=True, blank=True
     )
-    city = models.CharField(max_length=50, blank=True)
-    state = models.CharField("state", max_length=2, blank=True)
-    country = models.CharField(max_length=2, choices=COUNTRIES, default="BR")
-    phone = models.CharField("phone", max_length=20, blank=True)
+    birth = models.DateField(_("birth"), null=True, blank=True)
+    gender = models.CharField(
+        _("gender"), max_length=1, choices=GENDER_TYPES, default="M"
+    )
+    image = models.ImageField(
+        _("image"),
+        default="default_profile.jpg",
+        upload_to=seeker_pics,
+        blank=True,
+    )
+    city = models.CharField(_("city"), max_length=50, blank=True)
+    state = models.CharField(_("state"), max_length=2, blank=True)
+    country = models.CharField(
+        _("country"), max_length=2, choices=COUNTRIES, default="BR"
+    )
+    phone = models.CharField(_("phone"), max_length=20, blank=True)
     email = models.EmailField()
     status = models.CharField(max_length=3, choices=SEEKER_STATUS, blank=True)
-    status_date = models.DateField(null=True, blank=True)
-    observations = models.TextField(blank=True)
-    is_active = models.BooleanField(default=True)
+    status_date = models.DateField(_("status date"), null=True, blank=True)
+    observations = models.TextField(_("observations"), blank=True)
+    is_active = models.BooleanField(_("active"), default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -108,18 +128,22 @@ class Seeker(models.Model):
         return "{} - {}".format(self.name, self.center)
 
     class Meta:
-        verbose_name = "seeker"
-        verbose_name_plural = "seekers"
+        verbose_name = _("seeker")
+        verbose_name_plural = _("seekers")
 
 
 # Historic of seeker
 class HistoricOfSeeker(models.Model):
-    seeker = models.ForeignKey(Seeker, on_delete=models.PROTECT)
-    occurrence = models.CharField(
-        max_length=3, choices=SEEKER_STATUS, default="MBR"
+    seeker = models.ForeignKey(
+        Seeker, on_delete=models.PROTECT, verbose_name=_("seeker")
     )
-    date = models.DateField(null=True, blank=True)
-    description = models.CharField(max_length=100, null=True, blank=True)
+    occurrence = models.CharField(
+        _("occurrence"), max_length=3, choices=SEEKER_STATUS, default="MBR"
+    )
+    date = models.DateField(_("date"), null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=100, null=True, blank=True
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -134,8 +158,8 @@ class HistoricOfSeeker(models.Model):
         return f"[{self.date}] {self.seeker.name} - {self.occurrence}"
 
     class Meta:
-        verbose_name = "historic"
-        verbose_name_plural = "historics"
+        verbose_name = _("historic")
+        verbose_name_plural = _("historics")
 
 
 # Lecture
@@ -145,13 +169,20 @@ class Lecture(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
+        verbose_name=_("center"),
     )
-    type = models.CharField(max_length=3, choices=LECTURE_TYPES, default="CTT")
-    theme = models.CharField(max_length=100)
-    date = models.DateField(null=True, blank=True)
-    description = models.CharField(max_length=200, null=True, blank=True)
-    listeners = models.ManyToManyField(Seeker, through="Listener", blank=True)
-    is_active = models.BooleanField(default=True)
+    type = models.CharField(
+        _("type"), max_length=3, choices=LECTURE_TYPES, default="CTT"
+    )
+    theme = models.CharField(_("theme"), max_length=100)
+    date = models.DateField(_("date"), null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=200, null=True, blank=True
+    )
+    listeners = models.ManyToManyField(
+        Seeker, through="Listener", blank=True, verbose_name=_("listeners")
+    )
+    is_active = models.BooleanField(_("active"), default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -166,34 +197,48 @@ class Lecture(models.Model):
         return f"{self.theme} [{self.type}] - {self.center} ({self.date})"
 
     class Meta:
-        verbose_name = "lecture"
-        verbose_name_plural = "lectures"
+        verbose_name = _("lecture")
+        verbose_name_plural = _("lectures")
         ordering = ["date"]
 
 
 #  Listener
 class Listener(models.Model):
-    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT)
-    seeker = models.ForeignKey(Seeker, on_delete=models.PROTECT)
-    ranking = models.IntegerField(default=0)
-    observations = models.CharField(max_length=100, null=True, blank=True)
+    lecture = models.ForeignKey(
+        Lecture, on_delete=models.PROTECT, verbose_name=_("lecture")
+    )
+    seeker = models.ForeignKey(
+        Seeker, on_delete=models.PROTECT, verbose_name=_("seeker")
+    )
+    ranking = models.IntegerField(_("ranking"), default=0)
+    observations = models.CharField(
+        _("observations"), max_length=100, null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.lecture} - {self.seeker} [{self.ranking}]"
 
     class Meta:
-        verbose_name = "listener"
-        verbose_name_plural = "listeners"
+        verbose_name = _("listener")
+        verbose_name_plural = _("listeners")
 
 
 #  PublicworkGroup
 class PublicworkGroup(models.Model):
-    name = models.CharField(max_length=50)
-    center = models.ForeignKey("center.Center", on_delete=models.PROTECT)
-    description = models.CharField(max_length=200, null=True, blank=True)
-    mentors = models.ManyToManyField("person.Person", blank=True)
-    members = models.ManyToManyField(Seeker, blank=True)
-    is_active = models.BooleanField(default=True)
+    name = models.CharField(_("name"), max_length=50)
+    center = models.ForeignKey(
+        "center.Center", on_delete=models.PROTECT, verbose_name=_("center")
+    )
+    description = models.CharField(
+        _("description"), max_length=200, null=True, blank=True
+    )
+    mentors = models.ManyToManyField(
+        "person.Person", blank=True, verbose_name=_("mentors")
+    )
+    members = models.ManyToManyField(
+        Seeker, blank=True, verbose_name=_("members")
+    )
+    is_active = models.BooleanField(_("active"), default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -207,5 +252,5 @@ class PublicworkGroup(models.Model):
         return f"{self.name} - {self.center}"
 
     class Meta:
-        verbose_name = "publicwork group"
-        verbose_name_plural = "publicwork groups"
+        verbose_name = _("publicwork group")
+        verbose_name_plural = _("publicwork groups")

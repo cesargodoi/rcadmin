@@ -84,7 +84,9 @@ def profile_pics(instance, filename):
 
 # Profile
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, verbose_name=_("user")
+    )
     social_name = models.CharField(_("social name"), max_length=80)
     gender = models.CharField(
         _("gender"), max_length=1, choices=GENDER_TYPES, default="M"

@@ -2,64 +2,52 @@
 
 <div class="row border-top border-secondary pt-3">
   <div class="col-md-3 text-center">
-    <img 
-      class="img-thumbnail rounded mx-auto d-block mb-4" 
-      src="{{ object.user.profile.image.url }}">
+    {% include 'person/elements/tab_image_only_view.html' %}
   </div>
   
   <div class="col-md-9">
-    <article class="media content-section">
-      <div class="media-body">
-        <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-          <br>
-          <table class="table table-hover table-sm">
-            {% if object.aspect %}
-            <tr>
-              <th>{% trans 'aspect' %}</th>
-              <td>
-                {{ object.get_aspect_display }}
-                &nbsp;&nbsp; <small class="text-mute">since</small> &nbsp;&nbsp;
-                {{ object.aspect_date | date:"d/m/Y" }}
-              </td>
-            </tr>
-            {% endif %}
-            {% if object.birth %}
-            <tr>
-              <th width="120rem">{% trans 'birth' %}</th>
-              <td>
-                {{ object.birth|date:"d/m/Y" }}
-                &nbsp;&nbsp; <small class="text-mute">age</small> &nbsp;&nbsp;
-                {{ age }} {% trans 'years' %}
-              </td>
-            </tr>
-            {% endif %}
-            {% if object.user.profile.gender %}
-            <tr>
-              <th>{% trans 'gender' %}</th>
-              <td>{{ object.user.profile.get_gender_display }}</td>
-            </tr>
-            {% endif %}
-            {% if object.user.profile.phone_1 %}
-            <tr>
-              <th>{% trans 'phone' %}</th>
-              <td>{{ object.user.profile.phone_1 }}</td>
-            </tr>
-            {% endif %}
-            {% if object.user.profile.phone_2 %}
-            <tr>
-              <th>{% trans 'phone alt' %}</th>
-              <td>{{ object.user.profile.phone_2 }}</td>
-            </tr>
-            {% endif %}
-            {% if object.user.email %}
-            <tr>
-              <th>{% trans 'email' %}</th>
-              <td>{{ object.user.email }}</td>
-            </tr>
-            {% endif %}
-          </table>
-        </div>
-      </div>
-    </article>
+    <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+      <br>
+      <table class="table table-hover table-sm">
+        {% if object.aspect %}
+        <tr>
+          <th>{% trans 'aspect' %}</th>
+          <td>
+            {{ object.get_aspect_display }}
+            &nbsp;&nbsp; <small class="text-mute">since</small> &nbsp;&nbsp;
+            {{ object.aspect_date | date:"d/m/Y" }}
+          </td>
+        </tr>
+        {% endif %}
+        {% if object.birth %}
+        <tr>
+          <th width="120rem">{% trans 'birth' %}</th>
+          <td>
+            {{ object.birth|date:"d/m/Y" }}
+            &nbsp;&nbsp; <small class="text-mute">age</small> &nbsp;&nbsp;
+            {{ age }} {% trans 'years' %}
+          </td>
+        </tr>
+        {% endif %}
+        {% if object.user.profile.gender %}
+        <tr>
+          <th>{% trans 'gender' %}</th>
+          <td>{{ object.user.profile.get_gender_display }}</td>
+        </tr>
+        {% endif %}
+        {% if object.user.profile.phone %}
+        <tr>
+          <th>{% trans 'phone' %}</th>
+          <td>{{ object.user.profile.phone }}</td>
+        </tr>
+        {% endif %}
+        {% if object.user.email %}
+        <tr>
+          <th>{% trans 'email' %}</th>
+          <td>{{ object.user.email }}</td>
+        </tr>
+        {% endif %}
+      </table>
+    </div>   
   </div>
 </div>

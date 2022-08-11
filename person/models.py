@@ -71,8 +71,8 @@ class Person(models.Model):
         return "{} - {}".format(self.name, self.center)
 
     class Meta:
-        verbose_name = "person"
-        verbose_name_plural = "persons"
+        verbose_name = _("person")
+        verbose_name_plural = _("persons")
 
     def get_absolute_url(self):
         return reverse("person_detail", kwargs={"id": self.id})
@@ -80,12 +80,16 @@ class Person(models.Model):
 
 # Historic
 class Historic(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)
-    occurrence = models.CharField(
-        max_length=3, choices=OCCURRENCES, default="ACT"
+    person = models.ForeignKey(
+        Person, on_delete=models.PROTECT, verbose_name=_("person")
     )
-    date = models.DateField(null=True, blank=True)
-    description = models.CharField(max_length=200, null=True, blank=True)
+    occurrence = models.CharField(
+        _("occurrence"), max_length=3, choices=OCCURRENCES, default="ACT"
+    )
+    date = models.DateField(_("date"), null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=200, null=True, blank=True
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -100,5 +104,5 @@ class Historic(models.Model):
         return f"[{self.date}] {self.person.name} - {self.occurrence}"
 
     class Meta:
-        verbose_name = "historic"
-        verbose_name_plural = "historics"
+        verbose_name = _("historic")
+        verbose_name_plural = _("historics")

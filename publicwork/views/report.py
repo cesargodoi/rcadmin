@@ -62,7 +62,6 @@ def frequencies_per_period(request):
             report_data.drop(
                 ["seek_pk", "seek_status_date"], axis="columns", inplace=True
             )
-
             # filter report_data
             search = request.session["search"]
             search["status"] = (
@@ -72,7 +71,6 @@ def frequencies_per_period(request):
             if search["status"]:
                 filter = report_data["seek_status"] == search["status"]
                 report_data = report_data[filter]
-
             # reset and adjust index
             report_data.reset_index(drop=True, inplace=True)
             report_data.index += 1

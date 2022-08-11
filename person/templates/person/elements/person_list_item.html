@@ -12,14 +12,10 @@
 
 <div class="col-sm-7 small">    
   <i class="fa-solid fa-location-dot"></i> <em>{{ obj.local }}</em> 
-  {% if obj.user.profile.phone_1 %}
+  {% if obj.user.profile.phone %}
     &nbsp;&nbsp;&nbsp;
     <i class="fas fa-phone"></i> 
-    {{ obj.user.profile.phone_1 }}
-  {% elif obj.user.profile.phone_2 %}
-    &nbsp;&nbsp;&nbsp;
-    <i class="fas fa-phone"></i> 
-    {{ obj.user.profile.phone_2 }}
+    {{ obj.user.profile.phone }}
   {% endif %}
   {% if obj.user.email %}
     &nbsp;&nbsp;&nbsp;

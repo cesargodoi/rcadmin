@@ -9,7 +9,7 @@
 <table class="table table-hover table-sm">
   <tr>
     <th width="20%">{% trans 'short name' %}</th>
-    <td>{{ object.short_name }}</td>
+    <td>{% if object.short_name %}{{ object.short_name }}{% endif %}</td>
   </tr>
   <tr>
     <th>{% trans 'pix key' %}</th>

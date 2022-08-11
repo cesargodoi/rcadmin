@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-09 09:34-0300\n"
-"PO-Revision-Date: 2022-08-09 09:35-0306\n"
+"POT-Creation-Date: 2022-08-11 06:15-0300\n"
+"PO-Revision-Date: 2022-08-11 06:15-0306\n"
 "Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -77,7 +77,6 @@ msgstr "Ação não permitida!"
 #: publicwork/templates/publicwork/reports/navbar.html:33
 #: treasury/templates/treasury/elements/treasury_navbar.html:53
 #: user/templates/user/auth/password_change_done.html:13
-#: user/templates/user/forms/form.html:19
 #: user/templates/user/profile/confirm_del.html:20
 msgid "Go back"
 msgstr "Voltar"
@@ -97,7 +96,7 @@ msgstr "Tem certeza que deseja apagar"
 #: center/templates/center/forms/add_responsible.html:40
 #: center/templates/center/forms/create_center.html:67
 #: center/templates/center/forms/update_image.html:42
-#: center/templates/center/forms/update_info.html:96
+#: center/templates/center/forms/update_info.html:94
 #: center/templates/center/forms/update_others.html:43
 #: event/templates/event/confirm/delete.html:47
 #: event/templates/event/forms/event.html:71
@@ -129,6 +128,8 @@ msgstr "Tem certeza que deseja apagar"
 #: publicwork/templates/publicwork/seeker/forms/historic.html:64
 #: publicwork/templates/publicwork/seeker/forms/seeker.html:91
 #: treasury/templates/treasury/elements/confirm_delete.html:25
+#: user/templates/user/forms/updt_image.html:44
+#: user/templates/user/forms/updt_profile.html:42
 #: user/templates/user/profile/confirm_del.html:16
 #: workgroup/templates/workgroup/confirm/delete.html:42
 #: workgroup/templates/workgroup/confirm/delete.html:47
@@ -171,7 +172,7 @@ msgstr "Confirmar"
 #: treasury/templates/treasury/order/create.html:12
 #: treasury/templates/treasury/payment/navbar.html:28
 #: treasury/templates/treasury/paytype/navbar.html:28
-#: user/templates/user/auth/password_change_form.html:18
+#: user/templates/user/auth/password_change_form.html:17
 #: user/templates/user/profile/elements/add_payment.html:18
 #: user/templates/user/profile/new_order.html:13
 #: user/templates/user/profile/scan_qrcode_event.html:10
@@ -283,8 +284,7 @@ msgid "Loading..."
 msgstr "Carregando..."
 
 #: base/templates/base/elements/navbar.html:33
-#: person/templates/person/info.html:12 user/templates/user/forms/form.html:29
-#: user/templates/user/profile/detail.html:13
+#: person/templates/person/info.html:12
 #: user/templates/user/profile/navbar-ant.html:4
 #: user/templates/user/profile/navbar.html:7
 msgid "Profile"
@@ -310,7 +310,6 @@ msgstr "registros foram encontrados no banco de dados"
 
 #: base/templates/base/form.html:12
 #: person/templates/person/forms/historic-ant.html:12
-#: user/templates/user/forms/form.html:13
 #: workgroup/templates/workgroup/member/update_frequency.html:13
 msgid "Save"
 msgstr "Salvar"
@@ -320,7 +319,6 @@ msgstr "Salvar"
 #: person/templates/person/forms/membership.html:23
 #: person/templates/person/forms/update_pupil.html:45
 #: treasury/templates/treasury/order/create.html:20
-#: user/templates/user/forms/form.html:29
 msgid "Create"
 msgstr "Criar"
 
@@ -332,7 +330,6 @@ msgstr "Criar"
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
 #: treasury/templates/treasury/order/create.html:22
 #: treasury/templates/treasury/order/detail.html:110
-#: user/templates/user/forms/form.html:29
 msgid "Update"
 msgstr "Atualizar"
 
@@ -351,7 +348,9 @@ msgid "Select a .csv file to import."
 msgstr "selecionar arquivo (.csv) para importar"
 
 #: base/templates/base/searchs/center.html:11 center/models.py:111
-#: center/models.py:121 person/models.py:27 rcadmin/common.py:33
+#: center/models.py:121 event/models.py:42 person/models.py:27
+#: publicwork/models.py:76 publicwork/models.py:172 publicwork/models.py:230
+#: rcadmin/common.py:33 treasury/models.py:172 workgroup/models.py:13
 msgid "center"
 msgstr "núcleo"
 
@@ -392,7 +391,9 @@ msgstr "todos os tipos"
 
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:39 center/models.py:62
-#: person/models.py:38 person/templates/person/elements/tab_pupil.html:13
+#: event/models.py:19 person/models.py:38
+#: person/templates/person/elements/tab_pupil.html:13 publicwork/models.py:175
+#: treasury/models.py:18 treasury/models.py:122 workgroup/models.py:16
 msgid "type"
 msgstr "tipo"
 
@@ -412,7 +413,7 @@ msgstr "Frequências por período"
 #: base/templates/base/searchs/seeker.html:53
 #: base/templates/base/searchs/seeker.html:58
 #: person/templates/person/elements/tab_pupil.html:43
-#: publicwork/templates/publicwork/seeker/info.html:27
+#: publicwork/templates/publicwork/seeker/info.html:24
 #: treasury/templates/treasury/order/detail.html:30
 msgid "status"
 msgstr "status"
@@ -459,19 +460,21 @@ msgstr "Status por núcleo"
 msgid "all status"
 msgstr "todos status"
 
-#: base/templates/base/searchs/person.html:9
-#: treasury/templates/treasury/order/detail.html:22
+#: base/templates/base/searchs/person.html:9 event/models.py:97
+#: person/models.py:74 person/models.py:84 treasury/models.py:43
+#: treasury/models.py:175 treasury/templates/treasury/order/detail.html:22
+#: workgroup/models.py:49
 #: workgroup/templates/workgroup/forms/membership_update.html:24
 msgid "person"
 msgstr "aluno"
 
 #: base/templates/base/searchs/person.html:14
-msgid "Clear"
-msgstr ""
+msgid "Clean"
+msgstr "Limpar"
 
-#: base/templates/base/searchs/person.html:25 person/models.py:41
-#: person/templates/person/elements/tab_pupil.html:31 rcadmin/common.py:76
-#: workgroup/templates/workgroup/member/info.html:18
+#: base/templates/base/searchs/person.html:25 event/models.py:100
+#: person/models.py:41 person/templates/person/elements/tab_pupil.html:31
+#: rcadmin/common.py:76 workgroup/templates/workgroup/member/info.html:14
 msgid "aspect"
 msgstr "discipulado"
 
@@ -483,55 +486,61 @@ msgstr "importar pessoas"
 msgid "import fields to persons"
 msgstr "importar campos para pessoas"
 
-#: center/models.py:29 person/models.py:30
+#: center/models.py:29 event/models.py:17 person/models.py:30
+#: publicwork/models.py:28 publicwork/models.py:78 publicwork/models.py:228
+#: treasury/models.py:16 treasury/models.py:84 workgroup/models.py:11
 #: workgroup/templates/workgroup/forms/member_frequency.html:35
 msgid "name"
 msgstr "nome"
 
 #: center/models.py:31 center/templates/center/elements/tab_others.html:11
-#: person/models.py:33
+#: person/models.py:33 publicwork/models.py:81
 msgid "short name"
 msgstr "nome curto"
 
 #: center/models.py:33 center/templates/center/elements/tab_info.html:23
-#: person/templates/person/elements/tab_profile.html:28 user/models.py:95
-#: user/templates/user/profile/info.html:39
+#: person/templates/person/elements/tab_profile.html:28 user/models.py:97
+#: user/templates/user/profile/elements/tab_profile.html:28
 msgid "address"
 msgstr "endereço"
 
-#: center/models.py:34 user/models.py:96
+#: center/models.py:34 user/models.py:98
 msgid "number"
 msgstr "número"
 
-#: center/models.py:35 user/models.py:97
+#: center/models.py:35 treasury/models.py:135 user/models.py:99
 msgid "complement"
 msgstr "complemento"
 
-#: center/models.py:36 user/models.py:98
+#: center/models.py:36 user/models.py:100
 msgid "district"
 msgstr "bairro"
 
-#: center/models.py:37 user/models.py:99
+#: center/models.py:37 publicwork/models.py:39 publicwork/models.py:93
+#: user/models.py:101
 msgid "city"
 msgstr "cidade"
 
-#: center/models.py:38 user/models.py:100
+#: center/models.py:38 publicwork/models.py:40 publicwork/models.py:94
+#: user/models.py:102
 msgid "state"
 msgstr "estado"
 
-#: center/models.py:40 user/models.py:102
+#: center/models.py:40 publicwork/models.py:42 publicwork/models.py:96
+#: user/models.py:104
 msgid "country"
 msgstr "país"
 
-#: center/models.py:42 user/models.py:104
+#: center/models.py:42 user/models.py:106
 msgid "zip"
 msgstr "cep"
 
 #: center/models.py:43 center/templates/center/elements/tab_info.html:11
 #: person/templates/person/elements/tab_profile.html:13
-#: publicwork/templates/publicwork/seeker/info.html:47 user/models.py:105
-#: user/templates/user/profile/info.html:24
-#: workgroup/templates/workgroup/member/info.html:44
+#: publicwork/models.py:44 publicwork/models.py:98
+#: publicwork/templates/publicwork/seeker/info.html:44 user/models.py:107
+#: user/templates/user/profile/elements/tab_profile.html:13
+#: workgroup/templates/workgroup/member/info.html:40
 msgid "phone"
 msgstr "telefone"
 
@@ -539,7 +548,8 @@ msgstr "telefone"
 msgid "backup phone"
 msgstr "telefone 2"
 
-#: center/models.py:47 user/models.py:93
+#: center/models.py:47 publicwork/models.py:34 publicwork/models.py:88
+#: treasury/models.py:139 user/models.py:95
 msgid "image"
 msgstr "imagem"
 
@@ -561,8 +571,10 @@ msgid "responsible"
 msgstr "responsável"
 
 #: center/models.py:78 center/templates/center/elements/tab_others.html:26
-#: person/models.py:45 person/templates/person/elements/tab_pupil.html:54
-#: publicwork/templates/publicwork/seeker/info.html:61
+#: event/models.py:104 person/models.py:45
+#: person/templates/person/elements/tab_pupil.html:54 publicwork/models.py:102
+#: publicwork/models.py:215
+#: publicwork/templates/publicwork/seeker/info.html:58 treasury/models.py:55
 msgid "observations"
 msgstr "observações"
 
@@ -570,7 +582,7 @@ msgstr "observações"
 msgid "centers"
 msgstr "núcleos"
 
-#: center/models.py:126 user/models.py:76
+#: center/models.py:126 user/models.py:76 user/models.py:88
 msgid "user"
 msgstr "usuário"
 
@@ -661,7 +673,7 @@ msgstr "Você tem certeza que deseja remover"
 #: center/templates/center/forms/add_responsible.html:33
 #: center/templates/center/forms/create_center.html:60
 #: center/templates/center/forms/update_image.html:35
-#: center/templates/center/forms/update_info.html:89
+#: center/templates/center/forms/update_info.html:87
 #: center/templates/center/forms/update_others.html:35
 #: event/templates/event/confirm/delete.html:39
 #: event/templates/event/forms/event.html:64
@@ -686,6 +698,8 @@ msgstr "Você tem certeza que deseja remover"
 #: publicwork/templates/publicwork/seeker/forms/historic.html:57
 #: publicwork/templates/publicwork/seeker/forms/seeker.html:84
 #: treasury/templates/treasury/order/create.html:47
+#: user/templates/user/forms/updt_image.html:37
+#: user/templates/user/forms/updt_profile.html:35
 #: user/templates/user/profile/elements/controllers_div.html:28
 #: workgroup/templates/workgroup/confirm/delete.html:31
 #: workgroup/templates/workgroup/confirm/insert.html:29
@@ -730,22 +744,22 @@ msgstr "Núcleo PIX"
 
 #: center/templates/center/elements/tab_info.html:19
 #: person/templates/person/elements/tab_profile.html:17
-#: publicwork/templates/publicwork/seeker/info.html:51
-#: user/templates/user/profile/info.html:28
-#: workgroup/templates/workgroup/member/info.html:56
+#: publicwork/templates/publicwork/seeker/info.html:48
+#: user/templates/user/profile/elements/tab_profile.html:17
+#: workgroup/templates/workgroup/member/info.html:46
 msgid "email"
 msgstr "email"
 
 #: center/templates/center/elements/tab_info.html:37
 #: center/templates/center/elements/tab_others.html:42
 #: event/templates/event/navbar.html:45
-#: person/templates/person/elements/tab_profile.html:79
+#: person/templates/person/elements/tab_profile.html:40
 #: person/templates/person/elements/tab_pupil.html:66
 #: publicwork/templates/publicwork/groups/navbar.html:63
 #: publicwork/templates/publicwork/lecture/navbar.html:32
 #: publicwork/templates/publicwork/seeker/navbar.html:45
 #: treasury/templates/treasury/order/detail.html:116
-#: user/templates/user/profile/navbar.html:42
+#: user/templates/user/profile/elements/tab_profile.html:79
 #: workgroup/templates/workgroup/navbar.html:45
 msgid "Edit"
 msgstr "Editar"
@@ -773,6 +787,7 @@ msgstr "Adicionar"
 #: person/templates/person/navbar.html:34
 #: publicwork/templates/publicwork/seeker/detail.html:19
 #: publicwork/templates/publicwork/seeker/navbar.html:15
+#: user/templates/user/profile/detail.html:15
 #: user/templates/user/profile/navbar-ant.html:13
 #: workgroup/templates/workgroup/member/detail.html:16
 #: workgroup/templates/workgroup/member/navbar.html:15
@@ -789,7 +804,7 @@ msgstr "Responsáveis"
 
 #: center/templates/center/forms/add_responsible.html:12
 msgid "Add Responsible"
-msgstr ""
+msgstr "Adicionar Responsável"
 
 #: center/templates/center/navbar.html:5
 #: center/templates/center/navbar.html:23
@@ -827,7 +842,7 @@ msgstr "Criar núcleo"
 msgid "Update info"
 msgstr "Atualizar informações"
 
-#: center/views.py:177 person/views/person.py:267
+#: center/views.py:177 person/views/person.py:267 user/views.py:110
 msgid "Update image"
 msgstr "Atualizar imagem"
 
@@ -858,6 +873,75 @@ msgid_plural "%d events were successfully marked as 'actives'."
 msgstr[0] "%d evento foi marcado com sucesso como 'ativo'."
 msgstr[1] "%d eventos foram marcados com sucesso como 'ativos'."
 
+#: event/models.py:21
+msgid "multi date"
+msgstr "multi-data"
+
+#: event/models.py:22 person/templates/person/elements/tab_pupil.html:46
+#: publicwork/models.py:103 publicwork/models.py:185 publicwork/models.py:241
+#: rcadmin/common.py:49 treasury/models.py:20 treasury/models.py:85
+#: user/models.py:62
+msgid "active"
+msgstr "ativo"
+
+#: event/models.py:28 event/models.py:36
+msgid "activity"
+msgstr "atividade"
+
+#: event/models.py:29
+msgid "activities"
+msgstr "atividades"
+
+#: event/models.py:39
+msgid "qr code"
+msgstr "código QR"
+
+#: event/models.py:45 person/models.py:43 person/models.py:89
+#: publicwork/models.py:143 publicwork/models.py:178
+#: publicwork/templates/publicwork/listener/confirm/insert.html:45
+#: publicwork/templates/publicwork/listener/forms/listener.html:36
+#: publicwork/templates/publicwork/seeker/forms/frequency.html:45
+#: treasury/templates/treasury/order/detail.html:26
+#: workgroup/templates/workgroup/forms/member_frequency.html:50
+msgid "date"
+msgstr "data"
+
+#: event/models.py:47
+msgid "end"
+msgstr "final"
+
+#: event/models.py:48
+msgid "dead line"
+msgstr "prazo final"
+
+#: event/models.py:53 person/models.py:91 publicwork/models.py:145
+#: publicwork/models.py:180 publicwork/models.py:233 treasury/models.py:186
+#: treasury/templates/treasury/order/detail.html:71 workgroup/models.py:19
+msgid "description"
+msgstr "descrição"
+
+#: event/models.py:56 event/models.py:114
+#: user/templates/user/profile/frequencies.html:22
+msgid "frequencies"
+msgstr "frequências"
+
+#: event/models.py:86 event/models.py:94 treasury/models.py:50
+#: workgroup/templates/workgroup/forms/member_frequency.html:40
+msgid "event"
+msgstr "evento"
+
+#: event/models.py:87
+msgid "events"
+msgstr "eventos"
+
+#: event/models.py:102 publicwork/models.py:213
+msgid "ranking"
+msgstr "pontos"
+
+#: event/models.py:113
+msgid "frequency"
+msgstr "frequência"
+
 #: event/templates/event/activity/activities.html:27
 msgid "activities not found"
 msgstr "atividades não encontradas"
@@ -885,7 +969,7 @@ msgstr "é multi-data"
 #: workgroup/templates/workgroup/mentoring/navbar.html:22
 #: workgroup/templates/workgroup/mentoring/navbar.html:36
 msgid "Frequencies"
-msgstr "Frequencias"
+msgstr "Frequências"
 
 #: event/templates/event/detail.html:36
 msgid "QR - Code"
@@ -917,11 +1001,11 @@ msgstr "Exemplo"
 
 #: event/templates/event/elements/frequencies-add.html:40
 msgid "Unknown records"
-msgstr ""
+msgstr "Registros desconhecidos"
 
 #: event/templates/event/elements/frequencies-add.html:48
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorar"
 
 #: event/templates/event/events.html:14
 #: person/templates/person/elements/event_list.html:31
@@ -984,7 +1068,7 @@ msgid "The Activity has been deleted!"
 msgstr "A atividade foi excluída!"
 
 #: event/views/activity.py:83 treasury/views/bankflag.py:87
-#: treasury/views/form_of_payment.py:83 treasury/views/order.py:484
+#: treasury/views/form_of_payment.py:83 treasury/views/order.py:493
 #: treasury/views/payments.py:83 treasury/views/paytypes.py:87
 msgid "confirm to delete"
 msgstr "confirme para deletar"
@@ -1047,19 +1131,27 @@ msgid "id card"
 msgstr "documento"
 
 #: person/models.py:36 person/templates/person/elements/tab_pupil.html:17
-#: publicwork/templates/publicwork/seeker/info.html:35
-#: workgroup/templates/workgroup/member/info.html:28
+#: publicwork/models.py:29 publicwork/models.py:83
+#: publicwork/templates/publicwork/seeker/info.html:32
+#: workgroup/templates/workgroup/member/info.html:24
 msgid "birth"
 msgstr "nascimento"
 
-#: person/models.py:43
-#: publicwork/templates/publicwork/listener/confirm/insert.html:45
-#: publicwork/templates/publicwork/listener/forms/listener.html:36
-#: publicwork/templates/publicwork/seeker/forms/frequency.html:45
-#: treasury/templates/treasury/order/detail.html:26
-#: workgroup/templates/workgroup/forms/member_frequency.html:50
-msgid "date"
-msgstr "data"
+#: person/models.py:75
+msgid "persons"
+msgstr "alunos"
+
+#: person/models.py:87 publicwork/models.py:141
+msgid "occurrence"
+msgstr "ocorrência"
+
+#: person/models.py:107 publicwork/models.py:161
+msgid "historic"
+msgstr "histórico"
+
+#: person/models.py:108 publicwork/models.py:162
+msgid "historics"
+msgstr "históricos"
 
 #: person/templates/person/confirm/insert.html:14
 #: publicwork/templates/publicwork/confirm/insert.html:14
@@ -1091,7 +1183,7 @@ msgstr "Selecionar"
 #: person/templates/person/elements/tab_pupil.html:36
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
 #: treasury/templates/treasury/elements/person_card.html:10
-#: user/templates/user/profile/header.html:14
+#: user/templates/user/profile/elements/header.html:13
 #: workgroup/templates/workgroup/elements/confirm_add_frequency.html:10
 #: workgroup/templates/workgroup/elements/confirm_to_insert_membership.html:10
 msgid "in"
@@ -1106,28 +1198,23 @@ msgstr "em"
 msgid "only view"
 msgstr "apenas ver"
 
-#: person/templates/person/elements/tab_profile.html:9
-#: publicwork/templates/publicwork/seeker/info.html:43 user/models.py:90
-#: user/templates/user/profile/info.html:20
-#: workgroup/templates/workgroup/member/info.html:38
+#: person/templates/person/elements/tab_profile.html:9 publicwork/models.py:31
+#: publicwork/models.py:85 publicwork/templates/publicwork/seeker/info.html:40
+#: user/models.py:92 user/templates/user/profile/elements/tab_profile.html:9
+#: workgroup/templates/workgroup/member/info.html:34
 msgid "gender"
 msgstr "gênero"
 
 #: person/templates/person/elements/tab_profile.html:21
-#: user/templates/user/profile/info.html:32
+#: user/templates/user/profile/elements/tab_profile.html:21
 msgid "sos contact"
 msgstr "emergência"
 
 #: person/templates/person/elements/tab_pupil.html:22
-#: publicwork/templates/publicwork/seeker/info.html:39
-#: workgroup/templates/workgroup/member/info.html:32
+#: publicwork/templates/publicwork/seeker/info.html:36
+#: workgroup/templates/workgroup/member/info.html:28
 msgid "years"
 msgstr "anos"
-
-#: person/templates/person/elements/tab_pupil.html:46 rcadmin/common.py:49
-#: user/models.py:62
-msgid "active"
-msgstr "ativo"
 
 #: person/templates/person/forms/historic-ant.html:24
 #: person/templates/person/historic.html:7
@@ -1158,9 +1245,8 @@ msgid "Update Membership"
 msgstr "Atualizar Membro"
 
 #: person/templates/person/forms/pupil_fields.html:20
-msgid ""
-"To update 'aspect', 'aspect date' and 'status', use the 'Historic' tab."
-msgstr ""
+msgid "To update 'aspect' and 'status', use the 'Historic' tab."
+msgstr "Para atualizar 'aspecto' e 'status', use a aba 'Histórico'."
 
 #: person/templates/person/forms/update_pupil.html:43
 msgid "update"
@@ -1252,10 +1338,8 @@ msgid "insert membership"
 msgstr "inserir membro"
 
 #: person/views/person.py:39
-#, fuzzy
-#| msgid "The Payment has been updated!"
 msgid "The Person has been updated!"
-msgstr "O pagamento foi atualizado!"
+msgstr "O Aluno foi atualizado"
 
 #: person/views/person.py:78
 msgid "person home"
@@ -1270,16 +1354,12 @@ msgid "Create person"
 msgstr "Criar aluno"
 
 #: person/views/person.py:190
-#, fuzzy
-#| msgid "update profile"
 msgid "Update profile"
-msgstr "atualizar perfil"
+msgstr "Atualizar perfil"
 
 #: person/views/person.py:233
-#, fuzzy
-#| msgid "Update group"
 msgid "Update pupil"
-msgstr "Atualizar grupo"
+msgstr "Atualizar aluno"
 
 #: person/views/tools.py:24
 msgid "import from seekers"
@@ -1288,6 +1368,71 @@ msgstr "importar de buscadores"
 #: person/views/tools.py:75
 msgid "confirm to import"
 msgstr "confirme para importar"
+
+#: publicwork/models.py:47
+msgid "solicited on"
+msgstr "solicitado em"
+
+#: publicwork/models.py:65
+msgid "temporary registration of seeker"
+msgstr "registro temporário de buscador"
+
+#: publicwork/models.py:66
+msgid "temporary registration of seekers"
+msgstr "registro temporário de buscadores"
+
+#: publicwork/models.py:101
+msgid "status date"
+msgstr "data do status"
+
+#: publicwork/models.py:131 publicwork/models.py:138 publicwork/models.py:211
+#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:13
+#: publicwork/templates/publicwork/listener/confirm/insert.html:25
+msgid "seeker"
+msgstr "buscador"
+
+#: publicwork/models.py:132
+msgid "seekers"
+msgstr "buscadores"
+
+#: publicwork/models.py:177
+msgid "theme"
+msgstr "tema"
+
+#: publicwork/models.py:183 publicwork/models.py:223
+msgid "listeners"
+msgstr "ouvintes"
+
+#: publicwork/models.py:200 publicwork/models.py:208
+#: publicwork/templates/publicwork/listener/confirm/insert.html:35
+#: publicwork/templates/publicwork/listener/forms/listener.html:26
+#: publicwork/templates/publicwork/seeker/forms/frequency.html:35
+msgid "lecture"
+msgstr "Palestra"
+
+#: publicwork/models.py:201
+msgid "lectures"
+msgstr "palestras"
+
+#: publicwork/models.py:222
+msgid "listener"
+msgstr "ouvinte"
+
+#: publicwork/models.py:236
+msgid "mentors"
+msgstr "mentores"
+
+#: publicwork/models.py:239 workgroup/models.py:23
+msgid "members"
+msgstr "membros"
+
+#: publicwork/models.py:255
+msgid "publicwork group"
+msgstr "grupo do trabalho público"
+
+#: publicwork/models.py:256
+msgid "publicwork groups"
+msgstr "grupos do trabalho público"
 
 #: publicwork/templates/publicwork/groups/actions.html:11
 #: publicwork/templates/publicwork/insert_yourself/form.html:69
@@ -1307,7 +1452,7 @@ msgid "Are you shure you want to remove:"
 msgstr "Você tem certeza que deseja remover:"
 
 #: publicwork/templates/publicwork/groups/elements/frequency_list_item.html:24
-#: publicwork/templates/publicwork/seeker/info.html:30
+#: publicwork/templates/publicwork/seeker/info.html:27
 #: workgroup/templates/workgroup/member/elements/hx/member_updated.html:13
 #: workgroup/templates/workgroup/member/elements/member_list_item.html:13
 msgid "since"
@@ -1315,7 +1460,7 @@ msgstr "desde"
 
 #: publicwork/templates/publicwork/groups/header.html:9
 #: publicwork/templates/publicwork/seeker/header.html:8
-#: user/templates/user/profile/header.html:20
+#: user/templates/user/profile/elements/header.html:19
 msgid "another center - only view"
 msgstr "outro centro - somente visualização"
 
@@ -1579,11 +1724,6 @@ msgstr "já está cadastrado para um"
 msgid "student"
 msgstr "aluno"
 
-#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:13
-#: publicwork/templates/publicwork/listener/confirm/insert.html:25
-msgid "seeker"
-msgstr "buscador"
-
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:19
 msgid "You can login to the system"
 msgstr "Você, pode fazer o seu login no sistema"
@@ -1651,18 +1791,12 @@ msgstr "Ouvintes"
 msgid "Add listener"
 msgstr "Adicionar ouvinte"
 
-#: publicwork/templates/publicwork/listener/confirm/insert.html:35
-#: publicwork/templates/publicwork/listener/forms/listener.html:26
-#: publicwork/templates/publicwork/seeker/forms/frequency.html:35
-msgid "lecture"
-msgstr "Palestra"
-
 #: publicwork/templates/publicwork/listener/confirm/insert.html:49
 #: publicwork/templates/publicwork/listener/forms/listener.html:40
 #: publicwork/templates/publicwork/seeker/forms/frequency.html:49
 #: workgroup/templates/workgroup/forms/member_frequency.html:54
 msgid "local"
-msgstr ""
+msgstr "local"
 
 #: publicwork/templates/publicwork/listener/elements/listener_list_item.html:21
 #: rcadmin/common.py:126
@@ -1704,11 +1838,11 @@ msgstr "definir os termos de relatório"
 msgid "no historics found"
 msgstr "nenhum histórico encontrado"
 
-#: publicwork/templates/publicwork/seeker/info.html:38
+#: publicwork/templates/publicwork/seeker/info.html:35
 msgid "age"
 msgstr "idade"
 
-#: publicwork/templates/publicwork/seeker/info.html:56
+#: publicwork/templates/publicwork/seeker/info.html:53
 msgid "group"
 msgstr "grupo"
 
@@ -1809,15 +1943,15 @@ msgstr "adicionar frequência"
 msgid "Public work"
 msgstr "Trabalho Público"
 
-#: publicwork/views/report.py:90 publicwork/views/report.py:111
+#: publicwork/views/report.py:88 publicwork/views/report.py:109
 msgid "frequencies per period"
 msgstr "frequências por período"
 
-#: publicwork/views/report.py:146 publicwork/views/report.py:166
+#: publicwork/views/report.py:144 publicwork/views/report.py:164
 msgid "lectures per period"
 msgstr "palestras por período"
 
-#: publicwork/views/report.py:205 publicwork/views/report.py:217
+#: publicwork/views/report.py:203 publicwork/views/report.py:215
 msgid "status per center"
 msgstr "status por núcleo"
 
@@ -1966,12 +2100,12 @@ msgid "admin"
 msgstr "admin"
 
 #: rcadmin/common.py:81
-msgid "open"
+msgid "opened"
 msgstr "aberto"
 
 #: rcadmin/common.py:82
-msgid "close"
-msgstr "fechar"
+msgid "closed"
+msgstr "fechado"
 
 #: rcadmin/common.py:85
 msgid "service"
@@ -2085,6 +2219,73 @@ msgstr ""
 "O número de telefone deve ser inserido no formato: '+1234567890'. São "
 "permitidos até 15 dígitos."
 
+#: treasury/models.py:26 treasury/models.py:36
+msgid "pay type"
+msgstr "tipo de pagamento"
+
+#: treasury/models.py:27
+msgid "pay types"
+msgstr "tipos de pagamento"
+
+#: treasury/models.py:52
+msgid "reference month"
+msgstr "mês de referência"
+
+#: treasury/models.py:53 treasury/models.py:137
+msgid "value"
+msgstr "valor"
+
+#: treasury/models.py:78
+#: treasury/templates/treasury/elements/payments_summary.html:17
+#: treasury/templates/treasury/elements/payments_summary.html:35
+msgid "payment"
+msgstr "pagamento"
+
+#: treasury/models.py:79 treasury/models.py:177
+#: user/templates/user/profile/payments.html:15
+msgid "payments"
+msgstr "contribuições"
+
+#: treasury/models.py:91
+msgid "bank and flag"
+msgstr "banco e cartão"
+
+#: treasury/models.py:92
+msgid "banks and flags"
+msgstr "bancos e cartões"
+
+#: treasury/models.py:129
+msgid "bank flag"
+msgstr "banco/cartão"
+
+#: treasury/models.py:132
+msgid "control number"
+msgstr "número de controle"
+
+#: treasury/models.py:158
+msgid "form of payment"
+msgstr "forma de pagamento"
+
+#: treasury/models.py:159 treasury/models.py:179
+msgid "form of payments"
+msgstr "formas de pagamento"
+
+#: treasury/models.py:181
+msgid "amount"
+msgstr "quantia"
+
+#: treasury/models.py:188
+msgid "self payed"
+msgstr "auto pago"
+
+#: treasury/models.py:205
+msgid "order"
+msgstr "ordem de pagamento"
+
+#: treasury/models.py:206
+msgid "orders"
+msgstr "ordens de pagamento"
+
 #: treasury/templates/treasury/bankflag/bankflags.html:56
 #: treasury/templates/treasury/form_of_payment/forms_of_payments.html:67
 #: treasury/templates/treasury/order/orders.html:16
@@ -2137,11 +2338,6 @@ msgstr "Resumo"
 msgid "last 30 days"
 msgstr "ultimos 30 dias"
 
-#: treasury/templates/treasury/elements/payments_summary.html:17
-#: treasury/templates/treasury/elements/payments_summary.html:35
-msgid "payment"
-msgstr "pagamento"
-
 #: treasury/templates/treasury/elements/payments_summary.html:31
 msgid "Payment made by pupil"
 msgstr "Contribuição registrada pelo aluno"
@@ -2165,7 +2361,7 @@ msgstr "Contribuições"
 #: treasury/templates/treasury/home.html:27
 #: treasury/templates/treasury/navbar.html:29
 #: treasury/templates/treasury/navbar.html:40
-#: user/templates/user/profile/navbar.html:69
+#: user/templates/user/profile/navbar.html:62
 msgid "New order"
 msgstr "Nova contribuição"
 
@@ -2218,10 +2414,6 @@ msgstr "feito pelo aluno"
 msgid "Forms of Payment"
 msgstr "Formas de Pagamento"
 
-#: treasury/templates/treasury/order/detail.html:71
-msgid "description"
-msgstr "descrição"
-
 #: treasury/templates/treasury/order/detail.html:81
 msgid "Voucher"
 msgstr "Comprovante"
@@ -2267,7 +2459,7 @@ msgstr "Adicionar contribuição"
 
 #: treasury/templates/treasury/order/elements/search_results.html:16
 msgid "No search results"
-msgstr ""
+msgstr "Nenhum resultado de pesquisa"
 
 #: treasury/templates/treasury/payment/payments.html:82
 #: user/templates/user/profile/payments.html:25
@@ -2345,19 +2537,19 @@ msgstr "Atualizar forma de pagamento"
 msgid "The Form of Payment has been deleted!"
 msgstr "A forma de pagamento foi excluída!"
 
-#: treasury/views/order.py:89 treasury/views/order.py:201
+#: treasury/views/order.py:97 treasury/views/order.py:209
 msgid "Create Order"
 msgstr "Registrar Contribuição"
 
-#: treasury/views/order.py:284
+#: treasury/views/order.py:292
 msgid "Add Form of Payment"
 msgstr "Adicionar Forma de Pagamento"
 
-#: treasury/views/order.py:442
+#: treasury/views/order.py:453
 msgid "View Order"
 msgstr "Ver Contribuição"
 
-#: treasury/views/order.py:456
+#: treasury/views/order.py:465
 msgid "Edit Order"
 msgstr "Editar Contribuição"
 
@@ -2459,25 +2651,23 @@ msgstr "data em que entrou"
 msgid "users"
 msgstr "usuários"
 
-#: user/models.py:88
-#, fuzzy
-#| msgid "short name"
+#: user/models.py:90
 msgid "social name"
-msgstr "nome curto"
+msgstr "nome social"
 
-#: user/models.py:107
+#: user/models.py:109
 msgid "emergency contact"
-msgstr ""
+msgstr "contato de emergência"
 
-#: user/models.py:110
+#: user/models.py:112
 msgid "emergency phone"
-msgstr ""
+msgstr "telefone de emergência"
 
-#: user/models.py:134
+#: user/models.py:136
 msgid "profile"
 msgstr "perfil"
 
-#: user/models.py:135
+#: user/models.py:137
 msgid "profiles"
 msgstr "perfis"
 
@@ -2531,26 +2721,26 @@ msgstr "Sucesso!"
 msgid "Your password was changed."
 msgstr "Sua senha foi modificada."
 
-#: user/templates/user/auth/password_change_form.html:12
+#: user/templates/user/auth/password_change_form.html:11
 #: user/templates/user/auth/password_reset_confirm.html:25
 msgid "Change my password"
 msgstr "Mudar minha senha"
 
-#: user/templates/user/auth/password_change_form.html:24
+#: user/templates/user/auth/password_change_form.html:23
 msgid "Change password"
 msgstr "Mudar senha"
 
-#: user/templates/user/auth/password_change_form.html:31
+#: user/templates/user/auth/password_change_form.html:30
 msgid "Please correct the error below."
 msgstr "Corrija o erro abaixo."
 
-#: user/templates/user/auth/password_change_form.html:33
+#: user/templates/user/auth/password_change_form.html:32
 msgid "Please correct the errors below."
 msgstr "Por favor corrija os erros abaixo."
 
-#: user/templates/user/auth/password_change_form.html:38
+#: user/templates/user/auth/password_change_form.html:37
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new"
+"Please enter your old password, for security's sake, and then enter your new"
 " password twice so we can verify you typed it in correctly."
 msgstr ""
 "Por favor, digite sua senha antiga, por questões de segurança, e depois "
@@ -2599,7 +2789,7 @@ msgid "Please go to the following page and choose a new password:"
 msgstr "Vá para a seguinte página e escolha uma nova senha:"
 
 #: user/templates/user/auth/password_reset_email.html:14
-msgid "Your username, in case you’ve forgotten:"
+msgid "Your username, in case you've forgotten:"
 msgstr "Seu nome de usuário, caso tenha esquecido:"
 
 #: user/templates/user/auth/password_reset_email.html:16
@@ -2608,7 +2798,7 @@ msgstr "Obrigado por usar nosso site!"
 
 #: user/templates/user/auth/password_reset_email.html:18
 #, python-format
-msgid "The %(site_name)s team"
+msgid "The %(site_name)s team."
 msgstr "A equipe do %(site_name)s"
 
 #: user/templates/user/auth/password_reset_form.html:9
@@ -2638,7 +2828,7 @@ msgstr "chave-PIX"
 #: user/templates/user/profile/elements/how_to_pay.html:41
 #: user/templates/user/profile/elements/how_to_pay.html:48
 msgid "step"
-msgstr ""
+msgstr "passo"
 
 #: user/templates/user/profile/elements/how_to_pay.html:19
 msgid "Transfer, deposit or PIX at your bank."
@@ -2650,7 +2840,7 @@ msgstr "Para PIX, use a imagem ou a chave pix acima."
 
 #: user/templates/user/profile/elements/how_to_pay.html:25
 msgid "Enter payments by clicking: "
-msgstr ""
+msgstr "Insira os pagamentos clicando:"
 
 #: user/templates/user/profile/elements/how_to_pay.html:27
 msgid "and filling out the form."
@@ -2658,15 +2848,15 @@ msgstr "e preenchendo o formulário."
 
 #: user/templates/user/profile/elements/how_to_pay.html:28
 msgid "Repeat this process for each payment."
-msgstr ""
+msgstr "Repita este processo para cada pagamento."
 
 #: user/templates/user/profile/elements/how_to_pay.html:33
 msgid "Fill in the payment method fields."
-msgstr ""
+msgstr "Preencha os campos da forma de pagamento."
 
 #: user/templates/user/profile/elements/how_to_pay.html:34
 msgid "Do not forget to inform the bank "
-msgstr ""
+msgstr "Não se esqueça de informar o banco"
 
 #: user/templates/user/profile/elements/how_to_pay.html:35
 msgid "Bank flag"
@@ -2678,7 +2868,7 @@ msgstr "e o número de identificação da transação"
 
 #: user/templates/user/profile/elements/how_to_pay.html:37
 msgid "Ctrl number"
-msgstr "número de Controle"
+msgstr "número de controle"
 
 #: user/templates/user/profile/elements/how_to_pay.html:42
 msgid ""
@@ -2694,15 +2884,16 @@ msgstr "Comprovante"
 
 #: user/templates/user/profile/elements/how_to_pay.html:44
 msgid "(only in .jpg format for now)"
-msgstr ""
+msgstr "(somente no formato .jpg por enquanto)"
 
 #: user/templates/user/profile/elements/how_to_pay.html:49
 msgid "When all payment method fields are filled in, the button: "
 msgstr ""
+"Quando todos os campos da forma de pagamento estiverem preenchidos, o botão:"
 
 #: user/templates/user/profile/elements/how_to_pay.html:51
 msgid " will be enabled. Click on it to submit your payment."
-msgstr ""
+msgstr "será habilitado. Clique nele para enviar seu pagamento."
 
 #: user/templates/user/profile/elements/payform_div copy.html:6
 #: user/templates/user/profile/elements/payform_div.html:4
@@ -2714,10 +2905,6 @@ msgstr "Forma de Pagamento"
 #: user/templates/user/profile/payments.html:15
 msgid "Here showing your last"
 msgstr "Aqui mostrando o seu último"
-
-#: user/templates/user/profile/frequencies.html:22
-msgid "frequencies"
-msgstr "frequencias"
 
 #: user/templates/user/profile/frequencies.html:23
 #: user/templates/user/profile/historic.html:23
@@ -2739,11 +2926,11 @@ msgstr "ocorrências"
 msgid "no historic found"
 msgstr "nenhum histórico encontrado"
 
-#: user/templates/user/profile/navbar.html:49
+#: user/templates/user/profile/navbar.html:42
 msgid "Change"
 msgstr "Alterar"
 
-#: user/templates/user/profile/navbar.html:59
+#: user/templates/user/profile/navbar.html:52
 msgid "Scan QR-CODE"
 msgstr "Ler QR-CODE"
 
@@ -2752,41 +2939,58 @@ msgid "New Order"
 msgstr "Nova contribuição"
 
 #: user/templates/user/profile/payment.html:25
-msgid "made by myself"
-msgstr "feito por mim"
+#| msgid "self payed"
+msgid "self paid"
+msgstr "auto pago"
 
 #: user/templates/user/profile/payments.html:3
 msgid "Latest payments"
 msgstr "Últimas contribuições"
 
-#: user/templates/user/profile/payments.html:15
-msgid "payments"
-msgstr "contribuições"
-
 #: user/templates/user/profile/scan_qrcode_event.html:21
 msgid "Scan the Event QR-CODE"
 msgstr "Ler o QR-CODE do evento"
 
-#: user/views.py:43
-msgid "My Profile has been updated!"
-msgstr "Meu perfil foi atualizado!"
+#: user/views.py:30
+msgid "The Profile has been updated!"
+msgstr "O Perfil foi atualizado!"
 
-#: user/views.py:51
+#: user/views.py:78
 msgid "update profile"
 msgstr "atualizar perfil"
 
-#: user/views.py:94
+#: user/views.py:153
 #, python-format
 msgid "You are registered for the event: %s"
 msgstr "Você está inscrito para o evento: %s"
 
-#: user/views.py:186
+#: user/views.py:242
 msgid "Create my order"
 msgstr "Criar minha contribuição"
 
-#: user/views.py:275
+#: user/views.py:331
 msgid "Create my order - add payment"
 msgstr "Criar minha contribuição - adicionar pagamento"
+
+#: workgroup/models.py:39 workgroup/models.py:46
+msgid "workgroup"
+msgstr "grupos"
+
+#: workgroup/models.py:40 workgroup/views/workgroup.py:50
+msgid "workgroups"
+msgstr "grupos"
+
+#: workgroup/models.py:52
+msgid "role"
+msgstr "função"
+
+#: workgroup/models.py:60
+msgid "membership"
+msgstr "filiação"
+
+#: workgroup/models.py:61
+msgid "memberships"
+msgstr "filiações"
 
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:13
 msgid "This working group has"
@@ -2803,14 +3007,6 @@ msgstr "e"
 #: workgroup/templates/workgroup/elements/confirm_to_delete_workgroup.html:23
 msgid "other(s)"
 msgstr "outro(s)"
-
-#: workgroup/templates/workgroup/forms/member_frequency.html:40
-msgid "event"
-msgstr "evento"
-
-#: workgroup/templates/workgroup/member/info.html:50
-msgid "phone alt"
-msgstr "telefone 2"
 
 #: workgroup/templates/workgroup/member/members.html:22
 #: workgroup/templates/workgroup/mentoring/frequencies.html:23
@@ -2869,10 +3065,6 @@ msgstr "confirme para atualizar"
 msgid "workgroup add members"
 msgstr "grupo de trabalho adicionar membros"
 
-#: workgroup/views/workgroup.py:50
-msgid "workgroups"
-msgstr "grupos"
-
 #: workgroup/views/workgroup.py:125
 msgid "Create workgroup"
 msgstr "Criar grupo de trabalho"
@@ -2880,6 +3072,12 @@ msgstr "Criar grupo de trabalho"
 #: workgroup/views/workgroup.py:156
 msgid "Update workgroup"
 msgstr "Atualizar grupo de trabalho"
+
+#~ msgid "made by myself"
+#~ msgstr "feito por mim"
+
+#~ msgid "phone alt"
+#~ msgstr "telefone 2"
 
 #, fuzzy
 #~ msgid "register"
@@ -3011,23 +3209,8 @@ msgstr "Atualizar grupo de trabalho"
 #~ msgid "Do you confirm the registration procedure?"
 #~ msgstr "Você confirma o procedimento de registro?"
 
-#~ msgid "payment type"
-#~ msgstr "tipo de pagamento"
-
-#~ msgid "bank or flag"
-#~ msgstr "Banco ou Cartão"
-
 #~ msgid "ctrl"
 #~ msgstr "ctrl"
-
-#~ msgid "value"
-#~ msgstr "valor"
-
-#~ msgid "order"
-#~ msgstr "contribuição"
-
-#~ msgid "Add form of payment"
-#~ msgstr "Adicionar forma de pagamento"
 
 #~ msgid "missing"
 #~ msgstr "ausente"
