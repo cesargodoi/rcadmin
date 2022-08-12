@@ -27,6 +27,7 @@ GRC = _("Golden Rosycross")
 GENDER_TYPES = (
     ("M", _("male")),
     ("F", _("female")),
+    ("-", _("do not inform")),
 )
 CENTER_TYPES = (
     ("CNT", _("center")),
@@ -77,8 +78,8 @@ WORKGROUP_TYPES = (
     ("ADM", _("admin")),
 )
 EVENT_STATUS = (
-    ("OPN", _("open")),
-    ("CLS", _("close")),
+    ("OPN", _("opened")),
+    ("CLS", _("closed")),
 )
 ACTIVITY_TYPES = (
     ("SRV", _("service")),

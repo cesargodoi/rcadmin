@@ -15,6 +15,11 @@
 
   // Close modal by event
   htmx.on("closeModal", () => {$('#modalForm').modal('hide')})
+  
+  // Close modal (old style)
+  htmx.on("#modalForm", "htmx:beforeSend", (e) => {
+    $('#modalForm').modal('hide');
+  });
 
   // Remove #formBody content after hiding
   htmx.on("#modalForm", "hidden.bs.modal", () => {

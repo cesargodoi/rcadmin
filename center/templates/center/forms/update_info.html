@@ -42,34 +42,32 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-9">
         {{ form.address | as_crispy_field }}
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         {{ form.number | as_crispy_field }}
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         {{ form.complement | as_crispy_field }}
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         {{ form.district | as_crispy_field }}
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-4">
         {{ form.city | as_crispy_field }}
       </div>
-      <div class="col-md-4">
-        {{ form.state | as_crispy_field }}
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-3">
+        {{ form.state | as_crispy_field }}
+      </div>
+      <div class="col-md-5">
         {{ form.country | as_crispy_field }}
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         {{ form.zip_code | as_crispy_field }}
       </div>
     </div>

@@ -84,36 +84,40 @@ def profile_pics(instance, filename):
 
 # Profile
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    social_name = models.CharField(max_length=80)
-    gender = models.CharField(max_length=1, choices=GENDER_TYPES, default="M")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, verbose_name=_("user")
+    )
+    social_name = models.CharField(_("social name"), max_length=80)
+    gender = models.CharField(
+        _("gender"), max_length=1, choices=GENDER_TYPES, default="M"
+    )
     image = models.ImageField(
-        default="default_profile.jpg", upload_to=profile_pics
+        _("image"), default="default_profile.jpg", upload_to=profile_pics
     )
-    profession = models.CharField(max_length=40, blank=True)
-    marital_status = models.CharField(max_length=40, blank=True)
-    address = models.CharField(max_length=50, blank=True)
-    number = models.CharField(max_length=10, blank=True)
-    complement = models.CharField(max_length=50, blank=True)
-    district = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=50, blank=True)
-    state = models.CharField("state", max_length=2, blank=True)
-    country = models.CharField(max_length=2, choices=COUNTRIES, default="BR")
-    zip_code = models.CharField("zip", max_length=15, blank=True)
-    phone_1 = models.CharField("phone", max_length=20, blank=True)
-    phone_2 = models.CharField("backup phone", max_length=20, blank=True)
+    address = models.CharField(_("address"), max_length=50, blank=True)
+    number = models.CharField(_("number"), max_length=10, blank=True)
+    complement = models.CharField(_("complement"), max_length=50, blank=True)
+    district = models.CharField(_("district"), max_length=50, blank=True)
+    city = models.CharField(_("city"), max_length=50, blank=True)
+    state = models.CharField(_("state"), max_length=2, blank=True)
+    country = models.CharField(
+        _("country"), max_length=2, choices=COUNTRIES, default="BR"
+    )
+    zip_code = models.CharField(_("zip"), max_length=15, blank=True)
+    phone = models.CharField(_("phone"), max_length=20, blank=True)
     sos_contact = models.CharField(
-        "emergency contact", max_length=50, blank=True
+        _("emergency contact"), max_length=50, blank=True
     )
-    sos_phone = models.CharField("emergency phone", max_length=20, blank=True)
+    sos_phone = models.CharField(
+        _("emergency phone"), max_length=20, blank=True
+    )
 
     def save(self, *args, **kwargs):
         if not self.social_name:
             self.social_name = (
                 f"<<{self.user.email.split('@')[0]}>> REQUIRES ADJUSTMENTS"
             )
-        self.phone_1 = phone_format(self.phone_1)
-        self.phone_2 = phone_format(self.phone_2)
+        self.phone = phone_format(self.phone)
         self.sos_phone = phone_format(self.sos_phone)
         self.state = str(self.state).upper()
         super(Profile, self).save(*args, **kwargs)

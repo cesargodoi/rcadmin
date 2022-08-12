@@ -1,5 +1,6 @@
 import uuid
 
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -23,20 +24,25 @@ class Person(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
+        verbose_name=_("center"),
     )
-    reg = models.CharField(max_length=10, null=True, blank=True)
-    name = models.CharField(max_length=100)
+    reg = models.CharField(_("reg"), max_length=10, null=True, blank=True)
+    name = models.CharField(_("name"), max_length=100)
     name_sa = models.CharField(max_length=100, editable=False)
-    short_name = models.CharField(max_length=80, null=True, blank=True)
-    id_card = models.CharField("id card", max_length=30, blank=True)
-    birth = models.DateField(null=True, blank=True)
-    person_type = models.CharField(
-        "type", max_length=3, choices=PERSON_TYPES, default="PUP"
+    short_name = models.CharField(
+        _("short name"), max_length=80, null=True, blank=True, editable=False
     )
-    aspect = models.CharField(max_length=2, choices=ASPECTS, default="--")
-    aspect_date = models.DateField(null=True, blank=True)
+    id_card = models.CharField(_("id card"), max_length=30, blank=True)
+    birth = models.DateField(_("birth"), null=True, blank=True)
+    person_type = models.CharField(
+        _("type"), max_length=3, choices=PERSON_TYPES, default="PUP"
+    )
+    aspect = models.CharField(
+        _("aspect"), max_length=2, choices=ASPECTS, default="--"
+    )
+    aspect_date = models.DateField(_("date"), null=True, blank=True)
     status = models.CharField(max_length=3, choices=STATUS, default="ACT")
-    observations = models.TextField(blank=True)
+    observations = models.TextField(_("observations"), blank=True)
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
@@ -65,8 +71,8 @@ class Person(models.Model):
         return "{} - {}".format(self.name, self.center)
 
     class Meta:
-        verbose_name = "person"
-        verbose_name_plural = "persons"
+        verbose_name = _("person")
+        verbose_name_plural = _("persons")
 
     def get_absolute_url(self):
         return reverse("person_detail", kwargs={"id": self.id})
@@ -74,12 +80,16 @@ class Person(models.Model):
 
 # Historic
 class Historic(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)
-    occurrence = models.CharField(
-        max_length=3, choices=OCCURRENCES, default="ACT"
+    person = models.ForeignKey(
+        Person, on_delete=models.PROTECT, verbose_name=_("person")
     )
-    date = models.DateField(null=True, blank=True)
-    description = models.CharField(max_length=200, null=True, blank=True)
+    occurrence = models.CharField(
+        _("occurrence"), max_length=3, choices=OCCURRENCES, default="ACT"
+    )
+    date = models.DateField(_("date"), null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=200, null=True, blank=True
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
     made_by = models.ForeignKey(
@@ -94,5 +104,5 @@ class Historic(models.Model):
         return f"[{self.date}] {self.person.name} - {self.occurrence}"
 
     class Meta:
-        verbose_name = "historic"
-        verbose_name_plural = "historics"
+        verbose_name = _("historic")
+        verbose_name_plural = _("historics")

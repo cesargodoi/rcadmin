@@ -17,54 +17,48 @@
   </div>
   
   <div class="col-md-9">
-    <article class="media content-section">
-      <div class="media-body">
-        
-          <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-            <br>
-            <table class="table table-hover table-sm">
-              <tr>
-                <th>{% trans 'status' %}</th>
-                <td>
-                  {{ object.get_status_display }}
-                  &nbsp;&nbsp; <small class="text-mute">{% trans 'since' %}</small> &nbsp;&nbsp;
-                  {{ object.status_date | date:"d/m/Y" }}
-                </td>
-              </tr>
-              <tr>
-                <th width="120rem">{% trans 'birth' %}</th>
-                <td>
-                  {{ object.birth|date:"d/m/Y" }}
-                  &nbsp;&nbsp; <small class="text-mute">{% trans 'age' %}</small> &nbsp;&nbsp;
-                  {{ age }} {% trans 'years' %}
-                </td>
-              </tr>
-              <tr>
-                <th>{% trans 'gender' %}</th>
-                <td>{{ object.get_gender_display }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'phone' %}</th>
-                <td>{{ object.phone }}</td>
-              </tr>
-              <tr>
-                <th>{% trans 'email' %}</th>
-                <td>{{ object.email }}</td>
-              </tr>
-              {% if object.publicworkgroup_set %}
-              <tr>
-                <th>{% trans 'group' %}</th>
-                <td>{{ object.publicworkgroup_set.first }}</td>
-              </tr>
-              {% endif %}
-              <tr>
-                <th width="120rem">{% trans 'observations' %}</th>
-                <td>{{ object.observations }}</td>
-              </tr>
-            </table>
-          </div>
-        
-      </div>
-    </article>
+    <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+      <br>
+      <table class="table table-hover table-sm">
+        <tr>
+          <th>{% trans 'status' %}</th>
+          <td>
+            {{ object.get_status_display }}
+            &nbsp;&nbsp; <small class="text-mute">{% trans 'since' %}</small> &nbsp;&nbsp;
+            {{ object.status_date | date:"d/m/Y" }}
+          </td>
+        </tr>
+        <tr>
+          <th width="120rem">{% trans 'birth' %}</th>
+          <td>
+            {{ object.birth|date:"d/m/Y" }}
+            &nbsp;&nbsp; <small class="text-mute">{% trans 'age' %}</small> &nbsp;&nbsp;
+            {{ age }} {% trans 'years' %}
+          </td>
+        </tr>
+        <tr>
+          <th>{% trans 'gender' %}</th>
+          <td>{{ object.get_gender_display }}</td>
+        </tr>
+        <tr>
+          <th>{% trans 'phone' %}</th>
+          <td>{{ object.phone }}</td>
+        </tr>
+        <tr>
+          <th>{% trans 'email' %}</th>
+          <td>{{ object.email }}</td>
+        </tr>
+        {% if object.publicworkgroup_set %}
+        <tr>
+          <th>{% trans 'group' %}</th>
+          <td>{{ object.publicworkgroup_set.first }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <th width="120rem">{% trans 'observations' %}</th>
+          <td>{{ object.observations }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

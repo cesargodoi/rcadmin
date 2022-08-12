@@ -1,10 +1,13 @@
 import datetime
+import json
 
+from django.template.loader import render_to_string
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -13,7 +16,20 @@ from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
 from rcadmin.common import PROFILE_PAYFORM_TYPES
 
-from .forms import MyFormOfPaymentForm, MyPaymentForm, ProfileForm, UserForm
+from .forms import (
+    UserForm,
+    ProfileFormUpdate,
+    ImageFormUpdate,
+    MyPaymentForm,
+    MyFormOfPaymentForm,
+)
+
+modal_updated_triggers = json.dumps(
+    {
+        "closeModal": True,
+        "showToast": _("The Profile has been updated!"),
+    }
+)
 
 
 @login_required
@@ -29,29 +45,72 @@ def profile_detail(request):
 
 @login_required
 @permission_required("user.change_profile")
-def profile_update(request):
-    template_name = "user/forms/form.html"
+def updt_profile(request):
+    template_name = "user/forms/updt_profile.html"
     if request.method == "POST":
+        # updating the user
         user_form = UserForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
-        profile_form = ProfileForm(
-            request.POST, request.FILES, instance=request.user.profile
+        # updating the user.profile
+        profile_form = ProfileFormUpdate(
+            request.POST, instance=request.user.profile
         )
         if profile_form.is_valid():
             profile_form.save()
-            message = _("My Profile has been updated!")
-            messages.success(request, message)
 
-        return redirect(reverse("profile_detail"))
+            template_name = "user/profile/elements/tab_profile.html"
+            context = {"object": request.user, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabProfile",
+                    "HX-Trigger": modal_updated_triggers,
+                },
+            )
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileFormUpdate(instance=request.user.profile)
 
     context = {
-        "user_form": UserForm(instance=request.user),
-        "profile_form": ProfileForm(instance=request.user.profile),
+        "user_form": user_form,
+        "profile_form": profile_form,
         "title": _("update profile"),
         "object": request.user,
+        "update": True,
     }
+    return render(request, template_name, context)
 
+
+@login_required
+@permission_required("user.change_profile")
+def updt_image(request):
+    if request.method == "POST":
+        # updating the user.profile
+        image_form = ImageFormUpdate(
+            request.POST, request.FILES, instance=request.user.profile
+        )
+        if image_form.is_valid():
+            image_form.save()
+
+            template_name = "user/profile/elements/tab_image.html"
+            context = {"object": request.user, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabImage",
+                    "HX-Trigger": modal_updated_triggers,
+                },
+            )
+    else:
+        image_form = ImageFormUpdate(instance=request.user.profile)
+
+    template_name = "user/forms/updt_image.html"
+    context = {
+        "title": _("Update image"),
+        "image_form": image_form,
+        "update": True,
+    }
     return render(request, template_name, context)
 
 
@@ -114,9 +173,6 @@ def user_payments(request):
         "object": request.user,
         "tab": "payments",
     }
-    # import ipdb
-
-    # ipdb.set_trace()
     return render(request, template_name, context)
 
 

@@ -8,7 +8,6 @@
 <article class="media content-section mb-1">
   <div class="media-body">
     <form class="form-control-sm mt-1" method="GET">
-      {% csrf_token %}
       {% include "base/searchs/orders.html" %}
     </form>
     <br>
@@ -19,7 +18,7 @@
 <div id="showOrderModal" class="modal fade" data-backdrop="static" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div id="modalBody" class="modal-content text-dark" hx-target="this">
-      <!-- modal body -->
+      <!-- here goes the content -->
     </div>
   </div>
 </div>

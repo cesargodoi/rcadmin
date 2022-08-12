@@ -56,7 +56,7 @@
     <h5>{% trans 'Forms of Payment' %}</h5>
 
     {% for object in request.session.order.payforms %}
-    {% include "treasury/order/elements/payform.html" %}
+      {% include "treasury/order/elements/payform.html" %}
     {% endfor %}
 
     <div class="row mt-2 mb-0 pt-2 border-top font-weight-bold">

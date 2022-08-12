@@ -1,0 +1,14 @@
+{% load static %}
+{% load i18n %}
+
+{% if object.user.profile.image %}
+  <img 
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{{ object.user.profile.image.url }}"
+  >
+{% else %}
+  <img
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{% static 'img/default_profile.jpg' %}"
+  >
+{% endif %}

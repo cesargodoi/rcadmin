@@ -1,7 +1,9 @@
 import uuid
+import qrcode
+
 from io import BytesIO
 
-import qrcode
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.core.files import File
 from django.db import models
@@ -12,36 +14,46 @@ from person.models import Person
 
 #  Activity
 class Activity(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(_("name"), max_length=50)
     activity_type = models.CharField(
-        "type", max_length=3, choices=ACTIVITY_TYPES, default="SRV"
+        _("type"), max_length=3, choices=ACTIVITY_TYPES, default="SRV"
     )
-    multi_date = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    multi_date = models.BooleanField(_("multi date"), default=False)
+    is_active = models.BooleanField(_("active"), default=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "activity"
-        verbose_name_plural = "activities"
+        verbose_name = _("activity")
+        verbose_name_plural = _("activities")
 
 
 #  Event
 class Event(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    activity = models.ForeignKey(Activity, on_delete=models.PROTECT)
-    qr_code = models.ImageField(upload_to="event_qr_codes", blank=True)
-    center = models.ForeignKey("center.Center", on_delete=models.PROTECT)
-    date = models.DateField()
-    end_date = models.DateField("end", null=True, blank=True)
-    deadline = models.DateTimeField(null=True, blank=True)
+    activity = models.ForeignKey(
+        Activity, on_delete=models.PROTECT, verbose_name=_("activity")
+    )
+    qr_code = models.ImageField(
+        _("qr code"), upload_to="event_qr_codes", blank=True
+    )
+    center = models.ForeignKey(
+        "center.Center", on_delete=models.PROTECT, verbose_name=_("center")
+    )
+    date = models.DateField(
+        _("date"),
+    )
+    end_date = models.DateField(_("end"), null=True, blank=True)
+    deadline = models.DateTimeField(_("dead line"), null=True, blank=True)
     status = models.CharField(
         max_length=3, choices=EVENT_STATUS, default="OPN"
     )
-    description = models.CharField(max_length=200, null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=200, null=True, blank=True
+    )
     frequencies = models.ManyToManyField(
-        Person, through="Frequency", blank=True
+        Person, through="Frequency", blank=True, verbose_name=_("frequencies")
     )
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -71,18 +83,26 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "event"
-        verbose_name_plural = "events"
+        verbose_name = _("event")
+        verbose_name_plural = _("events")
         ordering = ["date"]
 
 
 #  Frequency
 class Frequency(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.PROTECT)
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)
-    aspect = models.CharField(max_length=2, choices=ASPECTS, default="--")
-    ranking = models.IntegerField(default=0)
-    observations = models.CharField(max_length=100, null=True, blank=True)
+    event = models.ForeignKey(
+        Event, on_delete=models.PROTECT, verbose_name=_("event")
+    )
+    person = models.ForeignKey(
+        Person, on_delete=models.PROTECT, verbose_name=_("person")
+    )
+    aspect = models.CharField(
+        _("aspect"), max_length=2, choices=ASPECTS, default="--"
+    )
+    ranking = models.IntegerField(_("ranking"), default=0)
+    observations = models.CharField(
+        _("observations"), max_length=100, null=True, blank=True
+    )
 
     def __str__(self):
         return "event: {} person: {} asp: {} rank: {}".format(
@@ -90,5 +110,5 @@ class Frequency(models.Model):
         )
 
     class Meta:
-        verbose_name = "frequency"
-        verbose_name_plural = "frequencies"
+        verbose_name = _("frequency")
+        verbose_name_plural = _("frequencies")

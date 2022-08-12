@@ -60,21 +60,29 @@ def to_clear_session(request):
     return HttpResponse("")
 
 
+def init_session(request):
+    request.session["order"] = {
+        "person": {},
+        "payments": [],
+        "payforms": [],
+        "total_payments": 0.0,
+        "total_payforms": 0.0,
+        "missing": 0.0,
+        "status": {"cod": "PND"},
+        "description": "",
+        "self_payed": False,
+    }
+
+
 @login_required
 @permission_required("treasury.add_order")
 def order_create(request):
-    if not request.session.get("order"):
-        request.session["order"] = {
-            "person": {},
-            "payments": [],
-            "payforms": [],
-            "total_payments": 0.0,
-            "total_payforms": 0.0,
-            "missing": 0.0,
-            "status": {"cod": "PND"},
-            "description": "",
-            "self_payed": False,
-        }
+    if request.session.get("order"):
+        if "saved" in request.session["order"].keys():
+            clear_session(request, ["order"])
+            init_session(request)
+    else:
+        init_session(request)
 
     if request.GET.get("person"):
         person = Person.objects.get(name=request.GET.get("person"))
@@ -367,28 +375,12 @@ def order_register(request):
 def order_detail(request, id):
     template_name = "treasury/order/detail.html"
     order = Order.objects.get(id=id)
-    _status = [o for o in ORDER_STATUS if o[0] == order.status]
-    request.session["order"] = {
-        "id": str(order.id),
-        "created_on": order.created_on.strftime("%d/%m/%y"),
-        "person": {},
-        "payments": [],
-        "payforms": [],
-        "total_payments": 0.0,
-        "total_payforms": 0.0,
-        "missing": 0.0,
-        "status": {"descr": _status[0][1], "cod": _status[0][0]},
-        "description": order.description,
-        "self_payed": order.self_payed,
-    }
 
     # get person
-    request.session["order"]["person"] = {
-        "name": order.person.name,
-        "id": str(order.person.id),
-    }
+    dict_person = {"name": order.person.name, "id": str(order.person.id)}
 
     # get payments
+    payments, total_payments = [], 0.0
     for n, pay in enumerate(order.payments.all()):
         _event = {}
         if pay.event:
@@ -401,10 +393,10 @@ def order_detail(request, id):
                 "id": str(pay.event.id),
             }
         payment = {
-            "id": n + 1,
+            "id": str(n + 1),
             "paytype": {
                 "name": pay.paytype.name,
-                "id": pay.paytype.id,
+                "id": str(pay.paytype.id),
             },
             "person": {
                 "name": short_name(pay.person.name),
@@ -415,18 +407,19 @@ def order_detail(request, id):
                 "ref": pay.ref_month.strftime("%Y-%m-%d"),
             },
             "event": _event,
-            "value": float(pay.value),
+            "value": str(float(pay.value)),
             "obs": pay.obs,
         }
-        request.session["order"]["payments"].append(payment)
-        request.session["order"]["total_payments"] += float(pay.value)
+        payments.append(payment)
+        total_payments += float(pay.value)
 
     # get payforms
+    payforms, total_payforms = [], 0.0
     for n, pf in enumerate(order.form_of_payments.all()):
-        pft = [_pft for _pft in PAYFORM_TYPES if _pft[0] == pf.payform_type]
+        pft = [_pft for _pft in PAYFORM_TYPES if _pft[0] == pf.payform_type][0]
         payform = {
             "id": n + 1,
-            "payform_type": pft[0],
+            "payform_type": [pft[0], str(pft[1])],
             "bank_flag": {"name": pf.bank_flag.name, "id": pf.bank_flag.id}
             if pf.bank_flag
             else None,
@@ -435,15 +428,31 @@ def order_detail(request, id):
             "value": float(pf.value),
             "voucher_img": pf.voucher_img.url if pf.voucher_img else None,
         }
-        request.session["order"]["payforms"].append(payform)
-        request.session["order"]["total_payforms"] += float(pf.value)
+        payforms.append(payform)
+        total_payforms += float(pf.value)
+
+    # get status
+    _status = [o for o in ORDER_STATUS if o[0] == order.status][0]
+
+    request.session["order"] = {
+        "id": str(order.id),
+        "created_on": order.created_on.strftime("%d/%m/%y"),
+        "person": dict_person,
+        "payments": payments,
+        "payforms": payforms,
+        "total_payments": total_payments,
+        "total_payforms": total_payforms,
+        "missing": total_payments - total_payforms,
+        "status": {"descr": str(_status[1]), "cod": _status[0]},
+        "description": order.description,
+        "self_payed": order.self_payed,
+        "saved": True,
+    }
 
     context = {
         "title": _("View Order"),
         "detail": True,
-        "form_update_status": FormUpdateStatus(
-            initial={"status": _status[0][0]}
-        ),
+        "form_update_status": FormUpdateStatus(initial={"status": _status[0]}),
         "goback": reverse("orders"),
     }
     return render(request, template_name, context)

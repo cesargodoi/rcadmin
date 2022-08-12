@@ -160,6 +160,52 @@ def payments_by_person(request):
     return render(request, template_name, context)
 
 
+# @login_required
+# @permission_required("treasury.view_order")
+# def payments_by_person(request):
+#     template_name = "treasury/reports/payments_by_person.html"
+#     if not request.session.get("order"):
+#         request.session["order"] = {
+#             "person": {},
+#             "payments": [],
+#             "payforms": [],
+#             "total_payments": 0.0,
+#             "total_payforms": 0.0,
+#             "missing": 0.0,
+#             "status": None,
+#             "description": "",
+#             "self_payed": False,
+#         }
+
+#     person = None
+#     object_list = []
+
+#     if request.GET.get("person"):
+#         person = Person.objects.get(name=request.GET.get("person"))
+#         request.session["order"]["person"] = {
+#             "name": person.name,
+#             "id": str(person.id),
+#         }
+#         request.session.modified = True
+#         payments = person.payment_set.all().order_by("-created_on")
+#         object_list = paginator(payments, page=request.GET.get("page"))
+#     elif request.session["order"]["person"]:
+#         person = Person.objects.get(
+#             id=request.session["order"]["person"]["id"]
+#         )
+#         payments = person.payment_set.all().order_by("-created_on")
+
+#         object_list = paginator(payments, page=request.GET.get("page"))
+
+#     context = {
+#         "title": _("Payment by person"),
+#         "object": person,
+#         "object_list": object_list,
+#         "nav": "reports",
+#     }
+#     return render(request, template_name, context)
+
+
 # helpers
 # get person by jQuery
 def reports_search_person(request):

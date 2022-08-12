@@ -10,7 +10,7 @@
 </div>
 
 <div class="col-sm-6 small align-middle">
-  {{ obj.description | truncatechars:50 }}
+  {% if obj.description %}{{ obj.description | truncatechars:50 }}{% endif %}
 </div>
 
 <div class="col-sm text-right">

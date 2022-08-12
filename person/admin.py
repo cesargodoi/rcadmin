@@ -63,7 +63,6 @@ class PersonAdmin(admin.ModelAdmin):
             {
                 "fields": [
                     "name",
-                    "short_name",
                     "id_card",
                     "birth",
                 ]

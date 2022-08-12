@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+
+{% if object.profile.image %}
+  <img 
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{{ object.profile.image.url }}"
+  >
+{% else %}
+  <img
+    class="rounded-circle photo-cover mx-auto d-block mb-2" 
+    src="{% static 'img/default_profile.jpg' %}"
+  >
+{% endif %}
+<div class="text-right photo-edit-button">
+  <a 
+    href="#"
+    class="btn btn-sm btn-outline-warning mb-4" 
+    onclick="manageData('{% url 'updt_image' %}')"
+  >
+    <i class="fas fa-edit"></i> 
+  </a>
+</div>

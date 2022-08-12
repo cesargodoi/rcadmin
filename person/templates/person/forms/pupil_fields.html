@@ -1,0 +1,22 @@
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+
+<div class="row">
+  <div class="col-md-7">{{ form.name | as_crispy_field }}</div>
+  <div class="col-md-5">{{ form.person_type | as_crispy_field }}</div>
+</div>
+<div class="row">
+  <div class="col-md-8">{{ form.center | as_crispy_field }}</div>
+  <div class="col-md-4">{{ form.reg | as_crispy_field }}</div>
+</div>
+<div class="row">
+  <div class="col-md-6">{{ form.id_card | as_crispy_field }}</div>
+  <div class="col-md-6">{{ form.birth | as_crispy_field }}</div>
+</div>
+{{ form.observations | as_crispy_field }}
+<div class="alert alert-warning">
+  {% trans "To update 'aspect' and 'status', use the 'Historic' tab." %}
+</div>
+

@@ -1,8 +1,12 @@
+import json
+
 from datetime import date
 
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
+from django.http import HttpResponse
 from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -22,14 +26,19 @@ from ..forms import (
     PersonForm,
     ProfileForm,
     UserForm,
-    BasicFormPerson,
-    BasicFormProfile,
-    OthersFormPerson,
-    OthersFormProfile,
-    AddressFormProfile,
-    ImageFormProfile,
+    ProfileFormUpdate,
+    PupilFormUpdate,
+    ImageFormUpdate,
 )
 from ..models import Historic, Person
+
+
+modal_updated_triggers = json.dumps(
+    {
+        "closeModal": True,
+        "showToast": _("The Person has been updated!"),
+    }
+)
 
 
 @login_required
@@ -76,20 +85,15 @@ def person_home(request):
 @login_required
 @permission_required("person.view_person")
 def person_detail(request, id):
-    persons = [
-        psn.id
-        for psn in Person.objects.filter(center=request.user.person.center.id)
-    ]
-    if id in persons or request.user.is_superuser:
-        person = Person.objects.get(id=id)
-        age = (date.today() - person.birth).days // 365
-    else:
+    if not belongs_center(request, id):
         raise Http404
+
+    person = Person.objects.get(id=id)
 
     context = {
         "object": person,
         "title": _("person detail"),
-        "age": age,
+        "age": (date.today() - person.birth).days // 365,
         "nav": "detail",
         "tab": request.GET.get("tab") or "info",
         "date": timezone.now().date(),
@@ -148,14 +152,8 @@ def person_create(request):
 #  partial updates
 @login_required
 @permission_required("person.change_person")
-def person_update_basic(request, id):
-    center_persons = [
-        person.id
-        for person in Person.objects.filter(
-            center=request.user.person.center.pk
-        )
-    ]
-    if id not in center_persons and not request.user.is_superuser:
+def update_profile(request, id):
+    if not belongs_center(request, id):
         raise Http404
 
     person = Person.objects.get(id=id)
@@ -167,144 +165,107 @@ def person_update_basic(request, id):
             user_form.save()
 
         # updating the user.profile
-        profile_form = BasicFormProfile(
+        profile_form = ProfileFormUpdate(
             request.POST, instance=person.user.profile
         )
         if profile_form.is_valid():
             profile_form.save()
 
+            template_name = "person/elements/tab_profile.html"
+            context = {"object": person, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabProfile",
+                    "HX-Trigger": modal_updated_triggers,
+                },
+            )
+
+    else:
+        user_form = UserForm(instance=person.user)
+        profile_form = ProfileFormUpdate(instance=person.user.profile)
+
+    template_name = "person/forms/update_profile.html"
+    context = {
+        "title": _("Update profile"),
+        "user_form": user_form,
+        "profile_form": profile_form,
+        "object": person.user,
+        "update": True,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("person.change_person")
+def update_pupil(request, id):
+    if not belongs_center(request, id):
+        raise Http404
+
+    person = Person.objects.get(id=id)
+
+    if request.method == "POST":
         # updating the user.person
-        person_form = BasicFormPerson(request.POST, instance=person)
-        if person_form.is_valid():
-            person_form.save()
+        form = PupilFormUpdate(request.POST, instance=person)
+        if form.is_valid():
+            form.save()
 
-        return redirect("person_detail", id)
+            template_name = "person/elements/tab_pupil.html"
+            context = {
+                "object": person,
+                "age": (date.today() - person.birth).days // 365,
+                "updated": True,
+            }
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabPupil",
+                    "HX-Trigger": modal_updated_triggers,
+                },
+            )
 
-    template_name = "person/forms/tab_basic.html"
-    context = {
-        "title": _("Update basic info"),
-        "user_form": UserForm(instance=person.user),
-        "profile_form": BasicFormProfile(instance=person.user.profile),
-        "person_form": BasicFormPerson(
+    else:
+        form = PupilFormUpdate(
             instance=person, initial={"made_by": request.user}
-        ),
-        "callback_link": reverse("person_update_basic", args=[id]),
-        "update": True,
-    }
+        )
+
+    template_name = "person/forms/update_pupil.html"
+    context = {"title": _("Update pupil"), "form": form, "update": True}
     return render(request, template_name, context)
 
 
 @login_required
 @permission_required("person.change_person")
-def person_update_others(request, id):
-    center_persons = [
-        person.id
-        for person in Person.objects.filter(
-            center=request.user.person.center.pk
-        )
-    ]
-    if id not in center_persons and not request.user.is_superuser:
+def update_image(request, id):
+    if not belongs_center(request, id):
         raise Http404
 
     person = Person.objects.get(id=id)
 
     if request.method == "POST":
         # updating the user.profile
-        profile_form = OthersFormProfile(
-            request.POST, instance=person.user.profile
-        )
-        if profile_form.is_valid():
-            profile_form.save()
-
-        # updating the user.person
-        person_form = OthersFormPerson(request.POST, instance=person)
-        if person_form.is_valid():
-            person_form.save()
-
-        template_name = "person/elements/tab_others.html"
-        return render(request, template_name, {"object": person})
-
-    template_name = "person/forms/tab_others.html"
-    context = {
-        "title": _("Update others info"),
-        "profile_form": OthersFormProfile(instance=person.user.profile),
-        "person_form": OthersFormPerson(
-            instance=person, initial={"made_by": request.user}
-        ),
-        "callback_link": reverse("person_update_others", args=[id]),
-        "target": "tabOthers",
-        "swap": "innerHTML",
-        "update": True,
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-@permission_required("person.change_person")
-def person_update_address(request, id):
-    center_persons = [
-        person.id
-        for person in Person.objects.filter(
-            center=request.user.person.center.pk
-        )
-    ]
-    if id not in center_persons and not request.user.is_superuser:
-        raise Http404
-
-    person = Person.objects.get(id=id)
-
-    if request.method == "POST":
-        # updating the user.profile
-        profile_form = AddressFormProfile(
-            request.POST, instance=person.user.profile
-        )
-        if profile_form.is_valid():
-            profile_form.save()
-
-        template_name = "person/elements/tab_address.html"
-        return render(request, template_name, {"object": person})
-
-    template_name = "person/forms/tab_address.html"
-    context = {
-        "title": _("Update address info"),
-        "profile_form": AddressFormProfile(instance=person.user.profile),
-        "callback_link": reverse("person_update_address", args=[id]),
-        "target": "tabAddress",
-        "swap": "innerHTML",
-        "update": True,
-    }
-    return render(request, template_name, context)
-
-
-@login_required
-@permission_required("person.change_person")
-def person_update_image(request, id):
-    center_persons = [
-        person.id
-        for person in Person.objects.filter(
-            center=request.user.person.center.pk
-        )
-    ]
-    if id not in center_persons and not request.user.is_superuser:
-        raise Http404
-
-    person = Person.objects.get(id=id)
-
-    if request.method == "POST":
-        # updating the user.profile
-        profile_form = ImageFormProfile(
+        image_form = ImageFormUpdate(
             request.POST, request.FILES, instance=person.user.profile
         )
-        if profile_form.is_valid():
-            profile_form.save()
+        if image_form.is_valid():
+            image_form.save()
 
-        return redirect("person_detail", id)
+            template_name = "person/elements/tab_image.html"
+            context = {"object": person, "updated": True}
+            return HttpResponse(
+                render_to_string(template_name, context, request),
+                headers={
+                    "HX-Retarget": "#tabImage",
+                    "HX-Trigger": modal_updated_triggers,
+                },
+            )
+    else:
+        image_form = ImageFormUpdate(instance=person.user.profile)
 
-    template_name = "person/forms/tab_image.html"
+    template_name = "person/forms/update_image.html"
     context = {
         "title": _("Update image"),
-        "profile_form": ImageFormProfile(instance=person.user.profile),
-        "callback_link": reverse("person_update_image", args=[id]),
+        "image_form": image_form,
         "update": True,
     }
     return render(request, template_name, context)
@@ -356,6 +317,18 @@ def person_reinsert(request, id):
 
 
 # auxiliar functions
+def belongs_center(request, id):
+    center_persons = [
+        person.id
+        for person in Person.objects.filter(
+            center=request.user.person.center.pk
+        )
+    ]
+    if id not in center_persons and not request.user.is_superuser:
+        return False
+    return True
+
+
 def add_historic(person, occurrence, made_by):
     historic = dict(
         person=person,

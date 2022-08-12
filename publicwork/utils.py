@@ -17,7 +17,7 @@ def get_lectures_dict(request, obj):
             pk=obj.pk,
             date=obj.date,
             theme=obj.theme,
-            type=LECT_TYPES[obj.type],
+            type=str(LECT_TYPES[obj.type]),
             listeners=obj.listener_set.count(),
             center=str(obj.center),
             center_city=obj.center.city,
@@ -56,7 +56,7 @@ def get_frequencies_dict(request, obj):
                             freq.seeker.country,
                         ),
                         seek_center=str(freq.seeker.center),
-                        seek_status=SEEK_STATUS[freq.seeker.status],
+                        seek_status=str(SEEK_STATUS[freq.seeker.status]),
                         seek_status_date=freq.seeker.status_date,
                         seek_is_active=freq.seeker.is_active,
                     )
@@ -79,7 +79,7 @@ def get_seekers_dict(request, obj):
                 country=obj.country,
                 local="{} ({}-{})".format(obj.city, obj.state, obj.country),
                 center=str(obj.center),
-                status=SEEK_STATUS[obj.status],
+                status=str(SEEK_STATUS[obj.status]),
                 status_date=obj.status_date,
             )
         _dict.append(row)

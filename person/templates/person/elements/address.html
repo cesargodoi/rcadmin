@@ -1,0 +1,40 @@
+{% if object.aspect == 'A1' %}
+  {% if object.user.profile.city %}
+    {{ object.user.profile.city }} 
+  {% endif %}
+  {% if object.user.profile.state %}
+    - {{ object.user.profile.state }} 
+  {% endif %}
+  {% if object.user.profile.country %}
+    ({{ object.user.profile.get_country_display }})
+  {% endif %}
+{% else %}
+  <address>
+    {% if object.user.profile.address %}
+      {{ object.user.profile.address }}
+    {% endif %}
+    {% if object.user.profile.number %}
+      , {{ object.user.profile.number }}
+    {% endif %}
+    {% if object.user.profile.complement %}
+      &nbsp;&nbsp;<small><em>{{ object.user.profile.complement }}</em></small>
+    {% endif %}
+    <br>
+    {% if object.user.profile.district %}
+      {{ object.user.profile.district }} 
+    {% endif %}
+    {% if object.user.profile.city %}
+      - {{ object.user.profile.city }} 
+    {% endif %}
+    {% if object.user.profile.state %}
+      - {{ object.user.profile.state }} 
+    {% endif %}
+    <br>
+    {% if object.user.profile.country %}
+      {{ object.user.profile.get_country_display }} 
+    {% endif %}
+    {% if object.user.profile.zip_code %}
+      - {{ object.user.profile.zip_code }}
+    {% endif %}
+  </address>
+{% endif %}

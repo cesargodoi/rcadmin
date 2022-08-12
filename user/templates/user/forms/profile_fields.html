@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<fieldset class="form-group">
+  <div class="row">
+    <div class="col-sm-8">{{ profile_form.social_name | as_crispy_field }}</div>
+    <div class="col-sm-4">{{ profile_form.gender | as_crispy_field }}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">{{ profile_form.phone | as_crispy_field }}</div>
+    <div class="col-sm-7">{{ user_form.email | as_crispy_field }}</div>
+  </div>
+</fieldset>
+<fieldset class="form-group pt-4 border-top border-secondary">
+  {% if object.person.aspect == 'A1' %}
+    <div class="row">
+      <div class="col-md-6">{{ profile_form.city | as_crispy_field }}</div>
+      <div class="col-md-2">{{ profile_form.state | as_crispy_field }}</div>
+      <div class="col-md-4">{{ profile_form.country | as_crispy_field }}</div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col-md-9">{{ profile_form.address | as_crispy_field }}</div>
+      <div class="col-md-3">{{ profile_form.number | as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">{{ profile_form.complement | as_crispy_field }}</div>
+      <div class="col-md-4">{{ profile_form.district | as_crispy_field }}</div>
+      <div class="col-md-4">{{ profile_form.city | as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">{{ profile_form.state | as_crispy_field }}</div>
+      <div class="col-md-5">{{ profile_form.country | as_crispy_field }}</div>
+      <div class="col-md-4">{{ profile_form.zip_code | as_crispy_field }}</div>
+    </div>
+  {% endif %}
+</fieldset>
+<fieldset class="form-group pt-4 border-top border-secondary">
+  <div class="row">
+    <div class="col-sm-7">{{ profile_form.sos_contact | as_crispy_field }}</div>
+    <div class="col-sm-5">{{ profile_form.sos_phone | as_crispy_field }}</div>
+  </div>
+</fieldset>

@@ -15,25 +15,12 @@ urlpatterns = [
     path("<uuid:id>/detail/", person.person_detail, name="person_detail"),
     path("create/", person.person_create, name="person_create"),
     path(
-        "<uuid:id>/update_basic/",
-        person.person_update_basic,
-        name="person_update_basic",
+        "<uuid:id>/update_profile/",
+        person.update_profile,
+        name="update_profile",
     ),
-    path(
-        "<uuid:id>/update_others/",
-        person.person_update_others,
-        name="person_update_others",
-    ),
-    path(
-        "<uuid:id>/update_address/",
-        person.person_update_address,
-        name="person_update_address",
-    ),
-    path(
-        "<uuid:id>/update_image/",
-        person.person_update_image,
-        name="person_update_image",
-    ),
+    path("<uuid:id>/update_pupil/", person.update_pupil, name="update_pupil"),
+    path("<uuid:id>/update_image/", person.update_image, name="update_image"),
     path("<uuid:id>/delete/", person.person_delete, name="person_delete"),
     path(
         "<uuid:id>/reinsert/", person.person_reinsert, name="person_reinsert"

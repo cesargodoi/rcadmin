@@ -1,0 +1,11 @@
+{% load i18n %}
+{% include "treasury/reports/elements/person_card.html" %}
+
+<h5>{% trans 'Payments' %}</h5>
+{% if object_list.has_other_pages %}
+  {% include "base/paginator.html" %}
+{% endif %}
+
+<div id="payments">
+  {% include "treasury/reports/elements/payment_list.html" %}
+</div>

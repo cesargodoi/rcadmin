@@ -7,34 +7,25 @@
         
     <ul class="nav nav-pills" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#tabBasic" role="tab" aria-controls="basic"
+        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#tabProfile" role="tab" aria-controls="profile"
           aria-selected="true">
-          {% trans 'Basic' %}
+          {% trans 'Profile' %}
         </a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" id="other-tab" data-toggle="tab" href="#tabOthers" role="tab" aria-controls="other"
-          aria-selected="false">
-          {% trans 'Others' %}
-        </a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="address-tab" data-toggle="tab" href="#tabAddress" role="tab" aria-controls="address"
-          aria-selected="false">
-          {% trans 'Address' %}
+        <a class="nav-link" id="pupil-tab" data-toggle="tab" href="#tabPupil" role="tab" aria-controls="pupil"
+          aria-selected="true">
+          {% trans 'Pupil' %}
         </a>
       </li>
     </ul>
 
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="tabBasic" role="tabpanel" aria-labelledby="basic-tab">
-        {% include 'person/elements/tab_basic.html' %}
+      <div class="tab-pane fade show active" id="tabProfile" role="tabpanel" aria-labelledby="profile-tab">
+        {% include 'person/elements/tab_profile.html' %}
       </div>
-      <div class="tab-pane fade" id="tabOthers" role="tabpanel" aria-labelledby="other-tab">
-        {% include 'person/elements/tab_others.html' %}
-      </div>
-      <div class="tab-pane fade" id="tabAddress" role="tabpanel" aria-labelledby="address-tab">
-        {% include 'person/elements/tab_address.html' %}
+      <div class="tab-pane fade show" id="tabPupil" role="tabpanel" aria-labelledby="pupil-tab">
+        {% include 'person/elements/tab_pupil.html' %}
       </div>
     </div>
 

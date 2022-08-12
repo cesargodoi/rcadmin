@@ -1,54 +1,48 @@
 {% load i18n %}
 <div class="row border-top border-secondary pt-2 pb-2">
 
-  <div class="col-md-2">
+  <div class="col-md-1">
     {{ pay.created_on | date:"d/m/y" }}
   </div>
 
-  <div class="col-md-3">
-    {{ pay.paytype }}
+  <div class="col-md-7">
+    <strong>{{ pay.paytype }}</strong>
+    <small class="font-italic text-secondary">
+      {% if pay.ref_month %}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {{ pay.ref_month|date:"M/y" }}
+      {% endif %}
+      {% if pay.event %}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {{ pay.event.center }}
+      {% endif %}
+    </small>
   </div>
 
-  <div class="col-md-3">
-    {% if pay.ref_month %}
-      {{ pay.ref_month|date:"M/y" }}
-    {% endif %}
-    {% if pay.event %}
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      {{ pay.event.center }}
-    {% endif %}
+  <div class="col-md-1 text-right">
+    <small>
+      {% if pay.order_set.all.0.self_payed %}
+        <span class="badge badge-pill badge-secondary">
+          {% trans 'self paid' %}
+        </span>
+      {% endif %}
+    </small>
   </div>
 
-  <div class="col-md-2 text-right">
-    {% if pay.order_set.all.0.self_payed %}
-      <span class="badge badge-pill badge-secondary">
-        {% trans 'made by myself' %}
-      </span>
-    {% endif %}
-  </div>
-
-  <div class="col-md-2 text-right">
-    <span 
-      class="font-italic {% if pay.order_set.all.0.status == 'PND' %}
-                           text-info
-                         {% elif pay.order_set.all.0.status == 'CCL' %}
-                           text-danger
-                         {% else %}
-                           text-success
-                         {% endif %}"
-    >
+  <div 
+    class="col-md-3 text-right {% if pay.order_set.all.0.status == 'PND' %}
+                                 text-info
+                               {% elif pay.order_set.all.0.status == 'CCL' %}
+                                 text-danger
+                               {% else %}
+                                 text-success
+                               {% endif %}"
+  >
+    <span class="font-italic">
       <small>{{ pay.order_set.all.0.get_status_display }}</small>
     </span>
     &nbsp;
-    <span 
-      class="col-md-1 text-right {% if pay.order_set.all.0.status == 'PND' %}
-                                   text-info
-                                 {% elif pay.order_set.all.0.status == 'CCL' %}
-                                   text-danger
-                                 {% else %}
-                                   text-success
-                                 {% endif %}"
-    >
+    <span class="col-md-1 text-right">
       <strong>{{ pay.value }}</strong>
     </span>
   </div>

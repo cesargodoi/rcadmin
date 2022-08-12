@@ -2,8 +2,7 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form method="POST" action="{{ callback_link }}">
-
+<form hx-post="{{ request.path }}" hx-encoding="multipart/form-data">
   {% csrf_token %}
 
   <div class="modal-header {% if update %}bg-warning{% else %}bg-primary{% endif %}">
@@ -21,39 +20,9 @@
   </div>
 
   <div class="modal-body">
-    {{ person_form.name | as_crispy_field }}
-    {{ profile_form.social_name | as_crispy_field }}
 
-    <div class="row">
-      <div class="col-md-8">
-        {{ person_form.center | as_crispy_field }}
-      </div>
-      <div class="col-md-4">
-        {{ person_form.reg | as_crispy_field }}
-      </div>
-    </div>
+    {{ image_form | crispy }}
 
-    <div class="row">
-      <div class="col-md-6">
-        {{ person_form.birth | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ person_form.person_type | as_crispy_field }}
-      </div>
-    </div>
-
-    {{ person_form.id_card | as_crispy_field }}
-    
-    <div class="row">
-      <div class="col-md-6">
-        {{ profile_form.phone_1 | as_crispy_field }}
-      </div>
-      <div class="col-md-6">
-        {{ profile_form.phone_2 | as_crispy_field }}
-      </div>
-    </div>
-
-    {{ user_form.email | as_crispy_field }}
   </div>
 
   <div class="modal-footer">
