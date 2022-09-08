@@ -1,0 +1,24 @@
+{% load i18n %} 
+
+{% autoescape off %}
+<h1>{% trans 'Congratulations' %} {{ name }}!</h1>
+
+<p>{% trans 'You are receiving this email because you have signed up to join the Golden Rosicrucian Spiritual School "Welcome" group.' %}</p>
+
+<p>{% trans 'Please click on the link below to confirm your registration.' %}</p>
+
+<h2 style="color:#3366cc"><a href="{{ link }}">{% trans 'confirmation link' %}</a> <i>[*]</i></h2>
+
+<p>{% trans 'If you have not made this request, please disregard this email.' %}</p>
+
+<p>{% trans 'Best regards' %}.</p>
+<h4>{% trans 'team rc@dmin' %}</h4>
+<div style="color:#3366cc">
+  <i>[*]</i>
+</div>
+<div style="color:#3366cc">
+  <i> {% trans 'if you can not click on the link, copy a url below and paste in your browser:' %} <br>
+    {{ link }}</i>
+</div>
+<br>
+{% endautoescape %}

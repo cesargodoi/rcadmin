@@ -3,6 +3,7 @@
   color: rgb(62, 62, 62);
   text-indent: 1rem;
 }
+
 .modal h3 {
   font-size: 1.1rem;
   color: rgb(62, 62, 62);
@@ -10,6 +11,7 @@
   text-align: left;
   margin-top: 20px;
 }
+
 .modal h5 {
   font-size: 1rem;
   color: rgb(62, 62, 62);
@@ -17,14 +19,17 @@
   text-align: left;
   margin-top: 8px;
 }
+
 .modal ul,
 .modal ol {
   font-size: 0.8rem;
   color: rgb(62, 62, 62);
 }
+
 .title-list {
   text-decoration: underline;
 }
+
 .contact-box {
   color: rgb(62, 62, 62);
   margin-left: 2rem;
@@ -35,6 +40,6 @@
 }
 
 .modal-body {
-  height: 30vh;
+  height: 50vh;
   overflow-y: auto;
 }

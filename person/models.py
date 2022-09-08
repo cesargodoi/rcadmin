@@ -1,18 +1,80 @@
 import uuid
 
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from django.conf import settings
 from django.db import models
+from jsonfield import JSONField
 from django.urls import reverse
 from rcadmin.common import (
     ASPECTS,
     OCCURRENCES,
     PERSON_TYPES,
+    GENDER_TYPES,
     STATUS,
+    COUNTRIES,
     short_name,
     us_inter_char,
+    phone_format,
 )
 from user.models import User
+
+
+# Invitation
+class Invitation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    center = models.ForeignKey(
+        "center.Center",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name=_("center"),
+    )
+    name = models.CharField(_("name"), max_length=80)
+    birth = models.DateField(_("birth"), null=True, blank=True)
+    gender = models.CharField(
+        _("gender"), max_length=1, choices=GENDER_TYPES, null=True, blank=True
+    )
+    id_card = models.CharField(
+        _("id card"), max_length=30, null=True, blank=True
+    )
+    address = models.CharField(_("address"), max_length=50, blank=True)
+    number = models.CharField(_("number"), max_length=10, blank=True)
+    complement = models.CharField(_("complement"), max_length=50, blank=True)
+    district = models.CharField(_("district"), max_length=50, blank=True)
+    city = models.CharField(_("city"), max_length=50, null=True, blank=True)
+    state = models.CharField(_("state"), max_length=2, null=True, blank=True)
+    country = models.CharField(
+        _("country"), max_length=2, choices=COUNTRIES, default="BR"
+    )
+    zip_code = models.CharField(_("zip"), max_length=15, blank=True)
+    phone = models.CharField(_("phone"), max_length=20, null=True, blank=True)
+    email = models.EmailField()
+    sos_contact = models.CharField(
+        _("emergency contact"), max_length=50, null=True, blank=True
+    )
+    sos_phone = models.CharField(
+        _("emergency phone"), max_length=20, null=True, blank=True
+    )
+    historic = JSONField(null=True, blank=True)
+    migration = models.BooleanField(default=False)
+    invited_on = models.DateTimeField(_("invited on"), default=timezone.now)
+    imported = models.BooleanField(default=False)
+    imported_on = models.DateTimeField(_("imported on"), null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.state:
+            self.state = str(self.state).upper()
+        if self.phone:
+            self.phone = phone_format(self.phone)
+        super(Invitation, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return "{} - {}".format(self.name, self.center)
+
+    class Meta:
+        verbose_name = _("temporary registration of person")
+        verbose_name_plural = _("temporary registration of pupil")
 
 
 # Person
@@ -72,7 +134,7 @@ class Person(models.Model):
 
     class Meta:
         verbose_name = _("person")
-        verbose_name_plural = _("persons")
+        verbose_name_plural = _("people")
 
     def get_absolute_url(self):
         return reverse("person_detail", kwargs={"id": self.id})

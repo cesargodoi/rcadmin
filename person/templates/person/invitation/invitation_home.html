@@ -1,0 +1,22 @@
+{% load i18n %}
+<article class="media content-section mb-1">
+  <div class="media-body">
+    <form 
+      class="form-control-sm mt-1" 
+      hx-get="{% url 'invite_list' %}"
+      hx-target="#list"
+      hx-trigger="submit"
+    >
+      {% include "base/searchs/invite_person.html" %}
+    </form>
+    <br>
+    {% include "base/elements/results.html" %}
+    <div 
+      id="list" 
+      hx-get="{% url 'invite_list' %}" 
+      hx-trigger="load, refreshList from:body"
+    >
+      {% trans 'Loading...' %}
+    </div>
+  </div>
+</article>

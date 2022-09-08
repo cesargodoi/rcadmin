@@ -1,0 +1,36 @@
+{% load base_extras %}
+{% load i18n %}
+
+{% include "base/elements/results.html" %}
+
+{% if object_list %}
+
+  {% for obj in object_list %}
+    {% if forloop.last and forloop.counter == LIMIT %}
+      <div 
+        class="row border-top border-secondary pb-2 pt-2 {% if obj.imported %}text-warning{% endif %}"
+        hx-get="{% url 'invite_list' %}?page={{ page|add:1 }}" 
+        hx-trigger="revealed" 
+        hx-swap="afterend"
+        hx-target="this"
+      >
+    {% else %}
+      <div 
+        class="row border-top border-secondary pb-2 pt-2 {% if obj.imported %}text-warning{% endif %}"
+      >
+    {% endif %}
+
+    {% include "person/invitation/elements/invite_list_item.html" %}
+
+    </div>
+  {% endfor %}
+
+{% else %}
+  {% if page == 1 %}
+    <div class="alert alert-secondary">
+      <h4 class="alert-heading">
+        {% trans 'invitations not found' %}
+      </h4> 
+    </div> 
+  {% endif %}
+{% endif %}

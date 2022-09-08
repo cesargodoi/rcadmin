@@ -562,6 +562,17 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "jsonfield"
+version = "3.1.0"
+description = "A reusable Django field that allows you to store validated JSON in your model."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "jsonschema"
 version = "4.4.0"
 description = "An implementation of JSON Schema validation for Python"
@@ -1407,7 +1418,7 @@ notebook = ">=4.4.1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ce5335b8ad629e71894e37eedee2673e8d0f99dd886ff2ea04e8616d4f090986"
+content-hash = "01fa40cc2fdb40f0abc903d6c0a7316535655cf993baa0b0f3c876c59b66adc6"
 
 [metadata.files]
 appnope = []
@@ -1454,6 +1465,7 @@ ipywidgets = []
 isort = []
 jedi = []
 jinja2 = []
+jsonfield = []
 jsonschema = []
 jupyter = []
 jupyter-client = []

@@ -9,6 +9,14 @@
 
   <div class="navbar-nav-scroll">
     <ul class="navbar-nav bd-navbar-nav flex-row">
+      <li class="nav-item">
+        <a 
+          class="nav-link {% if nav == 'invitations' %}active{% endif %}" 
+          href="{% url 'invitations' %}"
+        >
+          {% trans 'Invitations' %}
+        </a>
+      </li>
 
       {% if nav == 'home' %}
         <li class="nav-item dropdown">
@@ -60,6 +68,19 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
+    {% if nav == "invitations" %}
+      <li class="nav-item">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'invite_person' %}')"
+        >
+          <i class="fas fa-plus"></i>
+          {% trans 'Invite person' %}
+        </a>
+      </li>
+    {% endif %}
+
     {% if nav == "home" and request.user.is_superuser %}
       <li class="nav-item">
         <a 
@@ -68,7 +89,7 @@
           onclick="manageData('{% url 'person_create' %}')"
         >
           <i class="fas fa-plus"></i>
-          {% trans 'Person' %}  
+          {% trans 'Person' %}
         </a>
       </li>
     {% endif %}

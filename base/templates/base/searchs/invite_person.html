@@ -1,0 +1,33 @@
+{% load i18n %}
+
+<div id="searchTerms" hx-swap-oob="true">
+  <div class="form-row align-items-center">
+    <div class="col-sm-2 mb-2">
+      <div class="input-group">
+        <input 
+          id="ps_term"
+          name="ps_term" 
+          class="form-control" 
+          placeholder={% trans "name" %}
+          value="{% if not clear_search %}{{ request.session.search.ps_term }}{% endif %}">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <a 
+              hx-get="{% url 'invitations' %}?clear=on" 
+              class="text-secondary"
+            >
+              <i class="fas fa-backspace"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm mb-2">
+      {% include 'base/elements/checkbox_all.html' %}
+      <button class="btn btn btn-success" type="submit">
+        <i class="fas fa-search"></i>
+        {% trans 'Search' %}
+      </button>
+    </div>
+  </div>
+</div>

@@ -135,7 +135,13 @@ BR_REGIONS = {
 
 
 def sanitize_name(name):
-    return " ".join([w.lower().capitalize() for w in name.split()])
+    words = []
+    for word in [w.lower() for w in name.split()]:
+        if len(word) > 3:
+            words.append(word.capitalize())
+        else:
+            words.append(word)
+    return " ".join(words)
 
 
 def us_inter_char(txt, codif="utf-8"):
