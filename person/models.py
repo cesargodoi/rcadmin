@@ -49,7 +49,7 @@ class Invitation(models.Model):
     )
     zip_code = models.CharField(_("zip"), max_length=15, blank=True)
     phone = models.CharField(_("phone"), max_length=20, null=True, blank=True)
-    email = models.EmailField()
+    email = models.EmailField(_("email address"), unique=True)
     sos_contact = models.CharField(
         _("emergency contact"), max_length=50, null=True, blank=True
     )
@@ -57,6 +57,7 @@ class Invitation(models.Model):
         _("emergency phone"), max_length=20, null=True, blank=True
     )
     historic = JSONField(null=True, blank=True)
+    observations = models.TextField(_("observations"), blank=True)
     migration = models.BooleanField(default=False)
     invited_on = models.DateTimeField(_("invited on"), default=timezone.now)
     imported = models.BooleanField(default=False)

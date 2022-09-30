@@ -8,12 +8,7 @@ urlpatterns = [
         base.change_color_scheme,
         name="change_color_scheme",
     ),
-    path("import-persons/", tools.import_persons, name="import_persons"),
+    path("import-people/", tools.import_people, name="import_people"),
     path("download-csv/<str:file>", tools.download_csv, name="download_csv"),
-    path(
-        "import-fields-to-persons/",
-        tools.import_fields_to_persons,
-        name="import_fields_to_persons",
-    ),
     path("clear-session/", base.clear_session, name="clear_session"),
 ]

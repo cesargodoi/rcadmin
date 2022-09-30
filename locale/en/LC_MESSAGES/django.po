@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-11 06:15-0300\n"
+"POT-Creation-Date: 2022-09-16 06:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: base/forms.py:10 base/templates/base/import_people.html:50
+#: center/templates/center/navbar.html:5 center/templates/center/navbar.html:23
+msgid "Center"
+msgstr ""
 
 #: base/templates/base/404.html:18
 msgid "Oops!"
@@ -68,8 +73,8 @@ msgstr ""
 
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_fields_to_persons.html:43
-#: base/templates/base/import_persons.html:43
 #: person/templates/person/elements/confirm_to_import.html:23
+#: person/templates/person/invitation/forms/data_registration.html:146
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:23
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:23
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
@@ -111,6 +116,9 @@ msgstr ""
 #: person/templates/person/forms/membership_update.html:40
 #: person/templates/person/forms/update_image.html:44
 #: person/templates/person/forms/update_profile.html:42
+#: person/templates/person/invitation/confirm/delete.html:34
+#: person/templates/person/invitation/confirm/resend_invitation.html:36
+#: person/templates/person/invitation/forms/invite_pupil.html:49
 #: publicwork/templates/publicwork/confirm/delete.html:42
 #: publicwork/templates/publicwork/confirm/delete.html:47
 #: publicwork/templates/publicwork/confirm/insert.html:36
@@ -143,6 +151,7 @@ msgid "Confirm"
 msgstr ""
 
 #: base/templates/base/confirm_delete.html:22 base/templates/base/form.html:17
+#: base/templates/base/import_people.html:38
 #: center/templates/center/elements/actions.html:9
 #: center/templates/center/navbar.html:64
 #: event/templates/event/activity/navbar.html:29
@@ -154,7 +163,7 @@ msgstr ""
 #: person/templates/person/forms/membership.html:17
 #: person/templates/person/frequency_insert.html:12
 #: person/templates/person/membership_ps_insert.html:12
-#: person/templates/person/navbar.html:156
+#: person/templates/person/navbar.html:177
 #: publicwork/templates/publicwork/groups/actions.html:23
 #: publicwork/templates/publicwork/groups/navbar.html:106
 #: publicwork/templates/publicwork/lecture/navbar.html:53
@@ -186,6 +195,26 @@ msgstr ""
 #: workgroup/templates/workgroup/mentoring/navbar.html:49
 #: workgroup/templates/workgroup/navbar.html:68
 msgid "Back"
+msgstr ""
+
+#: base/templates/base/data_policy/modal.html:11
+msgid "Privacy Policy"
+msgstr ""
+
+#: base/templates/base/data_policy/modal.html:22
+msgid "I agree"
+msgstr ""
+
+#: base/templates/base/data_policy/modal.html:25
+#: base/templates/base/import_people.html:141
+#: base/templates/base/import_people.html:164
+#: base/templates/base/searchs/modal_frequencies.html:64
+#: base/templates/base/searchs/modal_import_fields_to_persons.html:33
+#: base/templates/base/searchs/modal_import_people.html:21
+#: base/templates/base/searchs/modal_lectures.html:64
+#: base/templates/base/searchs/modal_status.html:34
+#: center/templates/center/elements/modal_pix.html:27
+msgid "Close"
 msgstr ""
 
 #: base/templates/base/elements/checkbox_all.html:12
@@ -247,7 +276,8 @@ msgstr ""
 #: treasury/templates/treasury/order/elements/payments_div.html:6
 #: treasury/templates/treasury/payment/navbar.html:6
 #: treasury/templates/treasury/payment/payments.html:4
-#: treasury/templates/treasury/reports/payments_by_person.html:30
+#: treasury/templates/treasury/reports/elements/show_person.html:4
+#: treasury/templates/treasury/reports/payments_by_person copy.html:30
 #: treasury/views/payments.py:21
 #: user/templates/user/profile/elements/payments_div.html:6
 #: user/templates/user/profile/navbar-ant.html:22
@@ -270,15 +300,13 @@ msgid "Banks or Flags"
 msgstr ""
 
 #: base/templates/base/elements/menu_admin.html:13
-msgid "Import persons"
-msgstr ""
-
-#: base/templates/base/elements/menu_admin.html:14
-msgid "Import fields to persons"
+#: base/templates/base/import_people.html:14
+msgid "Import people"
 msgstr ""
 
 #: base/templates/base/elements/modal_form.html:5
 #: center/templates/center/home.html:26
+#: person/templates/person/invitation/invitation_home.html:19
 msgid "Loading..."
 msgstr ""
 
@@ -337,24 +365,74 @@ msgid "Welcome to"
 msgstr ""
 
 #: base/templates/base/import_fields_to_persons.html:37
-#: base/templates/base/import_persons.html:37
+#: base/templates/base/import_people.html:31
 msgid "New import"
 msgstr ""
 
 #: base/templates/base/import_fields_to_persons.html:85
-#: base/templates/base/import_persons.html:105
+#: base/templates/base/import_people.html:113
 msgid "Select a .csv file to import."
 msgstr ""
 
+#: base/templates/base/import_people.html:51
+msgid "File"
+msgstr ""
+
+#: base/templates/base/import_people.html:52
+msgid "Imported"
+msgstr ""
+
+#: base/templates/base/import_people.html:60
+#: person/templates/person/elements/header.html:11
+#: person/templates/person/elements/tab_pupil.html:36
+#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
+#: treasury/templates/treasury/reports/elements/person_card.html:7
+#: user/templates/user/profile/elements/header.html:13
+#: workgroup/templates/workgroup/elements/confirm_add_frequency.html:10
+#: workgroup/templates/workgroup/elements/confirm_to_insert_membership.html:10
+msgid "in"
+msgstr ""
+
+#: base/templates/base/import_people.html:64
+msgid "Entries"
+msgstr ""
+
+#: base/templates/base/import_people.html:68
+msgid "Importeds"
+msgstr ""
+
+#: base/templates/base/import_people.html:72
+msgid "Duplicate email"
+msgstr ""
+
+#: base/templates/base/import_people.html:81
+msgid "Without email"
+msgstr ""
+
+#: base/templates/base/import_people.html:90
+msgid "Used email"
+msgstr ""
+
+#: base/templates/base/import_people.html:101
+#: base/templates/base/import_people.html:124
+msgid "Details"
+msgstr ""
+
+#: base/templates/base/import_people.html:153
+msgid "Error"
+msgstr ""
+
 #: base/templates/base/searchs/center.html:11 center/models.py:111
-#: center/models.py:121 event/models.py:42 person/models.py:27
-#: publicwork/models.py:76 publicwork/models.py:172 publicwork/models.py:230
-#: rcadmin/common.py:33 treasury/models.py:172 workgroup/models.py:13
+#: center/models.py:121 event/models.py:42 person/models.py:31
+#: person/models.py:90 publicwork/models.py:76 publicwork/models.py:172
+#: publicwork/models.py:230 rcadmin/common.py:31 treasury/models.py:172
+#: workgroup/models.py:13
 msgid "center"
 msgstr ""
 
 #: base/templates/base/searchs/center.html:29
 #: base/templates/base/searchs/event.html:46
+#: base/templates/base/searchs/invite_person.html:29
 #: base/templates/base/searchs/lecture.html:46
 #: base/templates/base/searchs/orders.html:62
 #: base/templates/base/searchs/person.html:44
@@ -390,10 +468,18 @@ msgstr ""
 
 #: base/templates/base/searchs/event.html:37
 #: base/templates/base/searchs/modal_lectures.html:39 center/models.py:62
-#: event/models.py:19 person/models.py:38
+#: event/models.py:19 person/models.py:101
 #: person/templates/person/elements/tab_pupil.html:13 publicwork/models.py:175
 #: treasury/models.py:18 treasury/models.py:122 workgroup/models.py:16
 msgid "type"
+msgstr ""
+
+#: base/templates/base/searchs/invite_person.html:11 center/models.py:29
+#: event/models.py:17 person/models.py:33 person/models.py:93
+#: publicwork/models.py:28 publicwork/models.py:78 publicwork/models.py:228
+#: treasury/models.py:16 treasury/models.py:84 workgroup/models.py:11
+#: workgroup/templates/workgroup/forms/member_frequency.html:35
+msgid "name"
 msgstr ""
 
 #: base/templates/base/searchs/lecture.html:32
@@ -417,16 +503,6 @@ msgstr ""
 msgid "status"
 msgstr ""
 
-#: base/templates/base/searchs/modal_frequencies.html:64
-#: base/templates/base/searchs/modal_import_fields_to_persons.html:33
-#: base/templates/base/searchs/modal_import_persons.html:21
-#: base/templates/base/searchs/modal_lectures.html:64
-#: base/templates/base/searchs/modal_status.html:34
-#: center/templates/center/elements/modal_pix.html:27
-#: publicwork/templates/publicwork/insert_yourself/modal_data_policy.html:29
-msgid "Close"
-msgstr ""
-
 #: base/templates/base/searchs/modal_frequencies.html:65
 #: base/templates/base/searchs/modal_lectures.html:65
 #: base/templates/base/searchs/modal_status.html:35
@@ -434,12 +510,12 @@ msgid "Generate"
 msgstr ""
 
 #: base/templates/base/searchs/modal_import_fields_to_persons.html:11
-#: base/templates/base/searchs/modal_import_persons.html:11
+#: base/templates/base/searchs/modal_import_people.html:11
 msgid "Select a .csv file to import"
 msgstr ""
 
 #: base/templates/base/searchs/modal_import_fields_to_persons.html:34
-#: base/templates/base/searchs/modal_import_persons.html:22
+#: base/templates/base/searchs/modal_import_people.html:22
 msgid "Import"
 msgstr ""
 
@@ -460,7 +536,7 @@ msgid "all status"
 msgstr ""
 
 #: base/templates/base/searchs/person.html:9 event/models.py:97
-#: person/models.py:74 person/models.py:84 treasury/models.py:43
+#: person/models.py:137 person/models.py:147 treasury/models.py:43
 #: treasury/models.py:175 treasury/templates/treasury/order/detail.html:22
 #: workgroup/models.py:49
 #: workgroup/templates/workgroup/forms/membership_update.html:24
@@ -472,72 +548,63 @@ msgid "Clean"
 msgstr ""
 
 #: base/templates/base/searchs/person.html:25 event/models.py:100
-#: person/models.py:41 person/templates/person/elements/tab_pupil.html:31
-#: rcadmin/common.py:76 workgroup/templates/workgroup/member/info.html:14
+#: person/models.py:104 person/templates/person/elements/tab_pupil.html:31
+#: rcadmin/common.py:74 workgroup/templates/workgroup/member/info.html:14
 msgid "aspect"
 msgstr ""
 
-#: base/views/tools.py:26
-msgid "import persons"
-msgstr ""
-
-#: base/views/tools.py:97
-msgid "import fields to persons"
-msgstr ""
-
-#: center/models.py:29 event/models.py:17 person/models.py:30
-#: publicwork/models.py:28 publicwork/models.py:78 publicwork/models.py:228
-#: treasury/models.py:16 treasury/models.py:84 workgroup/models.py:11
-#: workgroup/templates/workgroup/forms/member_frequency.html:35
-msgid "name"
+#: base/views/tools.py:25
+msgid "import people"
 msgstr ""
 
 #: center/models.py:31 center/templates/center/elements/tab_others.html:11
-#: person/models.py:33 publicwork/models.py:81
+#: person/models.py:96 publicwork/models.py:81
 msgid "short name"
 msgstr ""
 
 #: center/models.py:33 center/templates/center/elements/tab_info.html:23
-#: person/templates/person/elements/tab_profile.html:28 user/models.py:97
-#: user/templates/user/profile/elements/tab_profile.html:28
+#: person/models.py:41 person/templates/person/elements/tab_profile.html:28
+#: user/models.py:97 user/templates/user/profile/elements/tab_profile.html:28
 msgid "address"
 msgstr ""
 
-#: center/models.py:34 user/models.py:98
+#: center/models.py:34 person/models.py:42 user/models.py:98
 msgid "number"
 msgstr ""
 
-#: center/models.py:35 treasury/models.py:135 user/models.py:99
+#: center/models.py:35 person/models.py:43 treasury/models.py:135
+#: user/models.py:99
 msgid "complement"
 msgstr ""
 
-#: center/models.py:36 user/models.py:100
+#: center/models.py:36 person/models.py:44 user/models.py:100
 msgid "district"
 msgstr ""
 
-#: center/models.py:37 publicwork/models.py:39 publicwork/models.py:93
-#: user/models.py:101
+#: center/models.py:37 person/models.py:45 publicwork/models.py:39
+#: publicwork/models.py:93 user/models.py:101
 msgid "city"
 msgstr ""
 
-#: center/models.py:38 publicwork/models.py:40 publicwork/models.py:94
-#: user/models.py:102
+#: center/models.py:38 person/models.py:46 publicwork/models.py:40
+#: publicwork/models.py:94 user/models.py:102
 msgid "state"
 msgstr ""
 
-#: center/models.py:40 publicwork/models.py:42 publicwork/models.py:96
-#: user/models.py:104
+#: center/models.py:40 person/models.py:48 publicwork/models.py:42
+#: publicwork/models.py:96 user/models.py:104
 msgid "country"
 msgstr ""
 
-#: center/models.py:42 user/models.py:106
+#: center/models.py:42 person/models.py:50 user/models.py:106
 msgid "zip"
 msgstr ""
 
 #: center/models.py:43 center/templates/center/elements/tab_info.html:11
-#: person/templates/person/elements/tab_profile.html:13 publicwork/models.py:44
-#: publicwork/models.py:98 publicwork/templates/publicwork/seeker/info.html:44
-#: user/models.py:107 user/templates/user/profile/elements/tab_profile.html:13
+#: person/models.py:51 person/templates/person/elements/tab_profile.html:13
+#: publicwork/models.py:44 publicwork/models.py:98
+#: publicwork/templates/publicwork/seeker/info.html:44 user/models.py:107
+#: user/templates/user/profile/elements/tab_profile.html:13
 #: workgroup/templates/workgroup/member/info.html:40
 msgid "phone"
 msgstr ""
@@ -560,7 +627,7 @@ msgid "pix key"
 msgstr ""
 
 #: center/models.py:69 center/templates/center/elements/header.html:21
-#: rcadmin/common.py:34
+#: rcadmin/common.py:32
 msgid "conference center"
 msgstr ""
 
@@ -569,7 +636,7 @@ msgid "responsible"
 msgstr ""
 
 #: center/models.py:78 center/templates/center/elements/tab_others.html:26
-#: event/models.py:104 person/models.py:45
+#: event/models.py:104 person/models.py:60 person/models.py:108
 #: person/templates/person/elements/tab_pupil.html:54 publicwork/models.py:102
 #: publicwork/models.py:215 publicwork/templates/publicwork/seeker/info.html:58
 #: treasury/models.py:55
@@ -637,6 +704,8 @@ msgstr ""
 #: person/templates/person/elements/confirm_to_delete_freq.html:8
 #: person/templates/person/elements/confirm_to_import.html:8
 #: person/templates/person/elements/confirm_to_reinsert_person.html:8
+#: person/templates/person/invitation/confirm/delete.html:9
+#: person/templates/person/invitation/confirm/resend_invitation.html:7
 #: publicwork/templates/publicwork/confirm/delete.html:6
 #: publicwork/templates/publicwork/confirm/insert.html:7
 #: publicwork/templates/publicwork/confirm/reinsert.html:7
@@ -659,6 +728,7 @@ msgstr ""
 #: event/templates/event/confirm/delete.html:15
 #: person/templates/person/confirm/delete.html:14
 #: person/templates/person/elements/confirm_to_delete_freq.html:9
+#: person/templates/person/invitation/confirm/delete.html:17
 #: publicwork/templates/publicwork/confirm/delete.html:14
 #: publicwork/templates/publicwork/seeker/confirm/delete.html:14
 #: workgroup/templates/workgroup/confirm/delete.html:14
@@ -684,6 +754,9 @@ msgstr ""
 #: person/templates/person/forms/update_image.html:37
 #: person/templates/person/forms/update_profile.html:35
 #: person/templates/person/forms/update_pupil.html:35
+#: person/templates/person/invitation/confirm/delete.html:30
+#: person/templates/person/invitation/confirm/resend_invitation.html:29
+#: person/templates/person/invitation/forms/invite_pupil.html:42
 #: publicwork/templates/publicwork/confirm/delete.html:31
 #: publicwork/templates/publicwork/confirm/insert.html:29
 #: publicwork/templates/publicwork/confirm/reinsert.html:29
@@ -782,7 +855,7 @@ msgstr ""
 
 #: center/templates/center/elements/tabs.html:11
 #: person/templates/person/detail.html:16
-#: person/templates/person/navbar.html:34
+#: person/templates/person/navbar.html:42
 #: publicwork/templates/publicwork/seeker/detail.html:19
 #: publicwork/templates/publicwork/seeker/navbar.html:15
 #: user/templates/user/profile/detail.html:15
@@ -804,12 +877,8 @@ msgstr ""
 msgid "Add Responsible"
 msgstr ""
 
-#: center/templates/center/navbar.html:5 center/templates/center/navbar.html:23
-msgid "Center"
-msgstr ""
-
 #: center/templates/center/navbar.html:38 event/templates/event/navbar.html:56
-#: person/templates/person/navbar.html:94
+#: person/templates/person/navbar.html:115
 #: publicwork/templates/publicwork/lecture/navbar.html:43
 #: publicwork/templates/publicwork/seeker/navbar.html:57
 #: treasury/templates/treasury/order/detail.html:122
@@ -817,7 +886,7 @@ msgid "Delete"
 msgstr ""
 
 #: center/templates/center/navbar.html:49
-#: person/templates/person/navbar.html:105
+#: person/templates/person/navbar.html:126
 #: publicwork/templates/publicwork/groups/navbar.html:85
 #: publicwork/templates/publicwork/seeker/navbar.html:68
 msgid "Reinsert"
@@ -876,7 +945,7 @@ msgstr ""
 
 #: event/models.py:22 person/templates/person/elements/tab_pupil.html:46
 #: publicwork/models.py:103 publicwork/models.py:185 publicwork/models.py:241
-#: rcadmin/common.py:49 treasury/models.py:20 treasury/models.py:85
+#: rcadmin/common.py:47 treasury/models.py:20 treasury/models.py:85
 #: user/models.py:62
 msgid "active"
 msgstr ""
@@ -893,7 +962,7 @@ msgstr ""
 msgid "qr code"
 msgstr ""
 
-#: event/models.py:45 person/models.py:43 person/models.py:89
+#: event/models.py:45 person/models.py:106 person/models.py:152
 #: publicwork/models.py:143 publicwork/models.py:178
 #: publicwork/templates/publicwork/listener/confirm/insert.html:45
 #: publicwork/templates/publicwork/listener/forms/listener.html:36
@@ -911,7 +980,7 @@ msgstr ""
 msgid "dead line"
 msgstr ""
 
-#: event/models.py:53 person/models.py:91 publicwork/models.py:145
+#: event/models.py:53 person/models.py:154 publicwork/models.py:145
 #: publicwork/models.py:180 publicwork/models.py:233 treasury/models.py:186
 #: treasury/templates/treasury/order/detail.html:71 workgroup/models.py:19
 msgid "description"
@@ -951,7 +1020,7 @@ msgstr ""
 #: event/templates/event/frequencies.html:6
 #: event/templates/event/navbar.html:35
 #: person/templates/person/frequencies.html:7
-#: person/templates/person/navbar.html:46
+#: person/templates/person/navbar.html:54
 #: publicwork/templates/publicwork/groups/frequencies.html:7
 #: publicwork/templates/publicwork/groups/navbar.html:21
 #: publicwork/templates/publicwork/groups/navbar.html:97
@@ -1101,48 +1170,87 @@ msgstr ""
 msgid "insert frequencies"
 msgstr ""
 
-#: person/admin.py:15
+#: person/admin.py:30
 #, python-format
 msgid "%d person was successfully marked as 'inactive'."
 msgid_plural "%d persons were successfully marked as 'inactives'."
 msgstr[0] ""
 msgstr[1] ""
 
-#: person/admin.py:28
+#: person/admin.py:43
 #, python-format
 msgid "%d person was successfully marked as 'active'."
 msgid_plural "%d persons were successfully marked as 'actives'."
 msgstr[0] ""
 msgstr[1] ""
 
-#: person/models.py:29 person/templates/person/elements/tab_pupil.html:9
-msgid "reg"
-msgstr ""
-
-#: person/models.py:35 person/templates/person/elements/tab_pupil.html:27
-msgid "id card"
-msgstr ""
-
-#: person/models.py:36 person/templates/person/elements/tab_pupil.html:17
-#: publicwork/models.py:29 publicwork/models.py:83
-#: publicwork/templates/publicwork/seeker/info.html:32
+#: person/models.py:34 person/models.py:99
+#: person/templates/person/elements/tab_pupil.html:17 publicwork/models.py:29
+#: publicwork/models.py:83 publicwork/templates/publicwork/seeker/info.html:32
 #: workgroup/templates/workgroup/member/info.html:24
 msgid "birth"
 msgstr ""
 
-#: person/models.py:75
-msgid "persons"
+#: person/models.py:36 person/templates/person/elements/tab_profile.html:9
+#: publicwork/models.py:31 publicwork/models.py:85
+#: publicwork/templates/publicwork/seeker/info.html:40 user/models.py:92
+#: user/templates/user/profile/elements/tab_profile.html:9
+#: workgroup/templates/workgroup/member/info.html:34
+msgid "gender"
 msgstr ""
 
-#: person/models.py:87 publicwork/models.py:141
+#: person/models.py:39 person/models.py:98
+#: person/templates/person/elements/tab_pupil.html:27
+msgid "id card"
+msgstr ""
+
+#: person/models.py:52 user/models.py:49
+msgid "email address"
+msgstr ""
+
+#: person/models.py:54 user/models.py:109
+msgid "emergency contact"
+msgstr ""
+
+#: person/models.py:57 user/models.py:112
+msgid "emergency phone"
+msgstr ""
+
+#: person/models.py:62
+#: person/templates/person/invitation/elements/invite_list_item.html:20
+msgid "invited on"
+msgstr ""
+
+#: person/models.py:64
+#: person/templates/person/invitation/elements/invite_list_item.html:18
+msgid "imported on"
+msgstr ""
+
+#: person/models.py:77
+msgid "temporary registration of person"
+msgstr ""
+
+#: person/models.py:78
+msgid "temporary registration of pupil"
+msgstr ""
+
+#: person/models.py:92 person/templates/person/elements/tab_pupil.html:9
+msgid "reg"
+msgstr ""
+
+#: person/models.py:138
+msgid "people"
+msgstr ""
+
+#: person/models.py:150 publicwork/models.py:141
 msgid "occurrence"
 msgstr ""
 
-#: person/models.py:107 publicwork/models.py:161
+#: person/models.py:170 publicwork/models.py:161
 msgid "historic"
 msgstr ""
 
-#: person/models.py:108 publicwork/models.py:162
+#: person/models.py:171 publicwork/models.py:162
 msgid "historics"
 msgstr ""
 
@@ -1172,16 +1280,6 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: person/templates/person/elements/header.html:11
-#: person/templates/person/elements/tab_pupil.html:36
-#: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
-#: treasury/templates/treasury/elements/person_card.html:10
-#: user/templates/user/profile/elements/header.html:13
-#: workgroup/templates/workgroup/elements/confirm_add_frequency.html:10
-#: workgroup/templates/workgroup/elements/confirm_to_insert_membership.html:10
-msgid "in"
-msgstr ""
-
 #: person/templates/person/elements/header.html:17
 #: publicwork/templates/publicwork/groups/elements/frequency_list_item.html:8
 #: publicwork/templates/publicwork/groups/elements/group_list_item.html:13
@@ -1189,13 +1287,6 @@ msgstr ""
 #: publicwork/templates/publicwork/lecture/header.html:10
 #: publicwork/templates/publicwork/seeker/elements/seeker_list_item.html:42
 msgid "only view"
-msgstr ""
-
-#: person/templates/person/elements/tab_profile.html:9 publicwork/models.py:31
-#: publicwork/models.py:85 publicwork/templates/publicwork/seeker/info.html:40
-#: user/models.py:92 user/templates/user/profile/elements/tab_profile.html:9
-#: workgroup/templates/workgroup/member/info.html:34
-msgid "gender"
 msgstr ""
 
 #: person/templates/person/elements/tab_profile.html:21
@@ -1211,8 +1302,8 @@ msgstr ""
 
 #: person/templates/person/forms/historic-ant.html:24
 #: person/templates/person/historic.html:7
-#: person/templates/person/navbar.html:40
-#: person/templates/person/navbar.html:120
+#: person/templates/person/navbar.html:48
+#: person/templates/person/navbar.html:141
 #: publicwork/templates/publicwork/seeker/create_historic.html:9
 #: publicwork/templates/publicwork/seeker/historic.html:7
 #: publicwork/templates/publicwork/seeker/navbar.html:27
@@ -1227,8 +1318,8 @@ msgstr ""
 
 #: person/templates/person/forms/membership.html:23
 #: person/templates/person/membership.html:7
-#: person/templates/person/navbar.html:52
-#: person/templates/person/navbar.html:140
+#: person/templates/person/navbar.html:60
+#: person/templates/person/navbar.html:161
 msgid "Membership"
 msgstr ""
 
@@ -1266,6 +1357,118 @@ msgstr ""
 msgid "no seekers found"
 msgstr ""
 
+#: person/templates/person/invitation/confirm/resend_invitation.html:14
+msgid "Are you shure you want to resend invitation to"
+msgstr ""
+
+#: person/templates/person/invitation/congratulations.html:7
+#: person/templates/person/invitation/emails/confirm_invitation.html:4
+#: person/templates/person/invitation/emails/to_congratulate.html:4
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:4
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:4
+msgid "Congratulations"
+msgstr ""
+
+#: person/templates/person/invitation/elements/invite_list.html:32
+msgid "invitations not found"
+msgstr ""
+
+#: person/templates/person/invitation/elements/invite_list_item.html:31
+msgid "migration"
+msgstr ""
+
+#: person/templates/person/invitation/elements/invite_list_item.html:46
+msgid "Invite Again"
+msgstr ""
+
+#: person/templates/person/invitation/elements/invite_list_item.html:57
+msgid "Remove"
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:6
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:6
+msgid ""
+"You are receiving this email because you have signed up to join the Golden "
+"Rosicrucian Spiritual School \"Welcome\" group."
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:8
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:8
+msgid "Please click on the link below to confirm your registration."
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:10
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:10
+msgid "confirmation link"
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:12
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:12
+msgid "If you have not made this request, please disregard this email."
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:14
+#: publicwork/templates/publicwork/insert_yourself/congratulations.html:10
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:14
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:10
+#: publicwork/templates/publicwork/insert_yourself/expired_token.html:11
+msgid "Best regards"
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:15
+#: publicwork/templates/publicwork/insert_yourself/congratulations.html:11
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:15
+#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:11
+#: publicwork/templates/publicwork/insert_yourself/expired_token.html:12
+msgid "team rc@dmin"
+msgstr ""
+
+#: person/templates/person/invitation/emails/confirm_invitation.html:20
+#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:20
+msgid ""
+"if you can not click on the link, copy a url below and paste in your browser:"
+msgstr ""
+
+#: person/templates/person/invitation/form_feedback.html:29
+#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:33
+msgid "Invalid reCAPTCHA, please try again."
+msgstr ""
+
+#: person/templates/person/invitation/form_feedback.html:34
+#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:51
+#: publicwork/templates/publicwork/insert_yourself/pos_email_feedback.html:10
+msgid "This page can be closed"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:89
+msgid "Password"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:110
+msgid "Repeat the password"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:128
+#: publicwork/templates/publicwork/insert_yourself/form.html:56
+msgid "I have read and accepted the terms of"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:131
+#: publicwork/templates/publicwork/insert_yourself/form.html:59
+msgid "data use policy"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:132
+#: publicwork/templates/publicwork/insert_yourself/form.html:60
+msgid "of Golden Rosicrucian."
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:143
+#: publicwork/templates/publicwork/groups/actions.html:11
+#: publicwork/templates/publicwork/insert_yourself/form.html:69
+msgid "Register"
+msgstr ""
+
 #: person/templates/person/membership.html:24
 msgid "membership not found"
 msgstr ""
@@ -1275,24 +1478,32 @@ msgstr ""
 msgid "Insert Membership"
 msgstr ""
 
-#: person/templates/person/navbar.html:7 person/templates/person/navbar.html:71
+#: person/templates/person/navbar.html:7 person/templates/person/navbar.html:92
 #: treasury/templates/treasury/order/elements/person_div.html:6
 msgid "Person"
 msgstr ""
 
-#: person/templates/person/navbar.html:21
+#: person/templates/person/navbar.html:17
+msgid "Invitations"
+msgstr ""
+
+#: person/templates/person/navbar.html:29
 msgid "Tools"
 msgstr ""
 
-#: person/templates/person/navbar.html:24
+#: person/templates/person/navbar.html:32
 msgid "Import from Seekers"
 msgstr ""
 
-#: person/templates/person/navbar.html:83 rcadmin/common.py:130
+#: person/templates/person/navbar.html:79
+msgid "Invite person"
+msgstr ""
+
+#: person/templates/person/navbar.html:104 rcadmin/common.py:128
 msgid "Badge"
 msgstr ""
 
-#: person/templates/person/navbar.html:130
+#: person/templates/person/navbar.html:151
 #: publicwork/templates/publicwork/seeker/navbar.html:80
 #: workgroup/templates/workgroup/member/navbar.html:40
 msgid "Frequency"
@@ -1319,6 +1530,30 @@ msgstr ""
 
 #: person/views/historic.py:116
 msgid "Update Historic"
+msgstr ""
+
+#: person/views/invitation.py:32
+msgid "The Invitation has been sent!"
+msgstr ""
+
+#: person/views/invitation.py:39
+msgid "invitations"
+msgstr ""
+
+#: person/views/invitation.py:90
+msgid "Invite new pupil"
+msgstr ""
+
+#: person/views/invitation.py:132
+msgid "pupil registration"
+msgstr ""
+
+#: person/views/invitation.py:231
+msgid "create pupil"
+msgstr ""
+
+#: person/views/invitation.py:240
+msgid "congratulations"
 msgstr ""
 
 #: person/views/membership_ps.py:52
@@ -1424,11 +1659,6 @@ msgstr ""
 
 #: publicwork/models.py:256
 msgid "publicwork groups"
-msgstr ""
-
-#: publicwork/templates/publicwork/groups/actions.html:11
-#: publicwork/templates/publicwork/insert_yourself/form.html:69
-msgid "Register"
 msgstr ""
 
 #: publicwork/templates/publicwork/groups/add_member.html:3
@@ -1553,48 +1783,6 @@ msgstr ""
 msgid "If this does not occur within 7 days, please contact us via email: "
 msgstr ""
 
-#: publicwork/templates/publicwork/insert_yourself/congratulations.html:10
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:14
-#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:10
-#: publicwork/templates/publicwork/insert_yourself/expired_token.html:11
-msgid "Best regards"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/congratulations.html:11
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:15
-#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:11
-#: publicwork/templates/publicwork/insert_yourself/expired_token.html:12
-msgid "team rc@dmin"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:4
-#: publicwork/templates/publicwork/insert_yourself/emails/to_congratulate.html:4
-msgid "Congratulations"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:6
-msgid ""
-"You are receiving this email because you have signed up to join the Golden "
-"Rosicrucian Spiritual School \"Welcome\" group."
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:8
-msgid "Please click on the link below to confirm your registration."
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:10
-msgid "confirmation link"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:12
-msgid "If you have not made this request, please disregard this email."
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/emails/to_confirm.html:20
-msgid ""
-"if you can not click on the link, copy a url below and paste in your browser:"
-msgstr ""
-
 #: publicwork/templates/publicwork/insert_yourself/expired_token.html:4
 msgid "Token expired"
 msgstr ""
@@ -1660,18 +1848,6 @@ msgstr ""
 msgid "Please fill in the form below:"
 msgstr ""
 
-#: publicwork/templates/publicwork/insert_yourself/form.html:56
-msgid "I have read and accepted the terms of"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/form.html:59
-msgid "data use policy"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/form.html:60
-msgid "of Golden Rosicrucian."
-msgstr ""
-
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:9
 msgid "E-mail already registered"
 msgstr ""
@@ -1708,10 +1884,6 @@ msgstr ""
 msgid "reporting the problem."
 msgstr ""
 
-#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:33
-msgid "Invalid reCAPTCHA, please try again."
-msgstr ""
-
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:37
 msgid "Email has been sent!"
 msgstr ""
@@ -1731,19 +1903,6 @@ msgstr ""
 msgid "If they haven't arrived in a few minutes, check your spam folder."
 msgstr ""
 
-#: publicwork/templates/publicwork/insert_yourself/form_feedback.html:51
-#: publicwork/templates/publicwork/insert_yourself/pos_email_feedback.html:10
-msgid "This page can be closed"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/modal_data_policy.html:15
-msgid "Privacy Policy"
-msgstr ""
-
-#: publicwork/templates/publicwork/insert_yourself/modal_data_policy.html:26
-msgid "I agree"
-msgstr ""
-
 #: publicwork/templates/publicwork/lecture/navbar.html:20
 #: publicwork/templates/publicwork/listener/listeners.html:7
 msgid "Listeners"
@@ -1761,7 +1920,7 @@ msgid "local"
 msgstr ""
 
 #: publicwork/templates/publicwork/listener/elements/listener_list_item.html:21
-#: rcadmin/common.py:126
+#: rcadmin/common.py:124
 msgid "installed"
 msgstr ""
 
@@ -1941,151 +2100,151 @@ msgstr ""
 msgid "seeker detail | historic"
 msgstr ""
 
-#: rcadmin/common.py:24
+#: rcadmin/common.py:22
 msgid "Golden Rosycross"
 msgstr ""
 
-#: rcadmin/common.py:28
+#: rcadmin/common.py:26
 msgid "male"
 msgstr ""
 
-#: rcadmin/common.py:29
+#: rcadmin/common.py:27
 msgid "female"
 msgstr ""
 
-#: rcadmin/common.py:30
+#: rcadmin/common.py:28
 msgid "do not inform"
 msgstr ""
 
-#: rcadmin/common.py:35
+#: rcadmin/common.py:33
 msgid "contact room"
 msgstr ""
 
-#: rcadmin/common.py:39
+#: rcadmin/common.py:37
 msgid "1st. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:40
+#: rcadmin/common.py:38
 msgid "2nd. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:41
+#: rcadmin/common.py:39
 msgid "3rd. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:42
+#: rcadmin/common.py:40
 msgid "4th. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:43
+#: rcadmin/common.py:41
 msgid "Grail"
 msgstr ""
 
-#: rcadmin/common.py:44
+#: rcadmin/common.py:42
 msgid "5th. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:45
+#: rcadmin/common.py:43
 msgid "6th. Aspect"
 msgstr ""
 
-#: rcadmin/common.py:50
+#: rcadmin/common.py:48
 msgid "licensed"
 msgstr ""
 
-#: rcadmin/common.py:51
+#: rcadmin/common.py:49
 msgid "dead"
 msgstr ""
 
-#: rcadmin/common.py:52
+#: rcadmin/common.py:50
 msgid "disconnected"
 msgstr ""
 
-#: rcadmin/common.py:53
+#: rcadmin/common.py:51
 msgid "removed"
 msgstr ""
 
-#: rcadmin/common.py:56
+#: rcadmin/common.py:54
 msgid "transfered"
 msgstr ""
 
-#: rcadmin/common.py:57
+#: rcadmin/common.py:55
 msgid "regressed"
 msgstr ""
 
-#: rcadmin/common.py:58 rcadmin/common.py:88
+#: rcadmin/common.py:56 rcadmin/common.py:86
 msgid "other"
 msgstr ""
 
-#: rcadmin/common.py:59
+#: rcadmin/common.py:57
 msgid "preparatório"
 msgstr ""
 
-#: rcadmin/common.py:60
+#: rcadmin/common.py:58
 msgid "probatório"
 msgstr ""
 
-#: rcadmin/common.py:61
+#: rcadmin/common.py:59
 msgid "professo"
 msgstr ""
 
-#: rcadmin/common.py:66
+#: rcadmin/common.py:64
 msgid "pupil"
 msgstr ""
 
-#: rcadmin/common.py:67
+#: rcadmin/common.py:65
 msgid "web pupil"
 msgstr ""
 
-#: rcadmin/common.py:68
+#: rcadmin/common.py:66
 msgid "gest"
 msgstr ""
 
-#: rcadmin/common.py:71
+#: rcadmin/common.py:69
 msgid "mentor"
 msgstr ""
 
-#: rcadmin/common.py:72 rcadmin/common.py:118
+#: rcadmin/common.py:70 rcadmin/common.py:116
 msgid "contact"
 msgstr ""
 
-#: rcadmin/common.py:73 rcadmin/common.py:124
+#: rcadmin/common.py:71 rcadmin/common.py:122
 msgid "member"
 msgstr ""
 
-#: rcadmin/common.py:77
+#: rcadmin/common.py:75
 msgid "maintenance"
 msgstr ""
 
-#: rcadmin/common.py:78
+#: rcadmin/common.py:76
 msgid "admin"
 msgstr ""
 
-#: rcadmin/common.py:81
+#: rcadmin/common.py:79
 msgid "opened"
 msgstr ""
 
-#: rcadmin/common.py:82
+#: rcadmin/common.py:80
 msgid "closed"
 msgstr ""
 
-#: rcadmin/common.py:85
+#: rcadmin/common.py:83
 msgid "service"
 msgstr ""
 
-#: rcadmin/common.py:86
+#: rcadmin/common.py:84
 msgid "conference"
 msgstr ""
 
-#: rcadmin/common.py:87 rcadmin/common.py:119
+#: rcadmin/common.py:85 rcadmin/common.py:117
 msgid "meeting"
 msgstr ""
 
-#: rcadmin/common.py:91
+#: rcadmin/common.py:89
 msgid "canceled"
 msgstr ""
 
-#: rcadmin/common.py:92
+#: rcadmin/common.py:90
 #: treasury/templates/treasury/elements/cash_balance.html:26
 #: treasury/templates/treasury/elements/payform_by_type.html:19
 #: treasury/templates/treasury/elements/payment_by_paytype.html:19
@@ -2093,87 +2252,87 @@ msgstr ""
 msgid "pending"
 msgstr ""
 
-#: rcadmin/common.py:93
+#: rcadmin/common.py:91
 msgid "concluded"
 msgstr ""
 
-#: rcadmin/common.py:96
+#: rcadmin/common.py:94
 msgid "monthly"
 msgstr ""
 
-#: rcadmin/common.py:97
+#: rcadmin/common.py:95
 msgid "by event"
 msgstr ""
 
-#: rcadmin/common.py:98
+#: rcadmin/common.py:96
 msgid "campaign"
 msgstr ""
 
-#: rcadmin/common.py:101 rcadmin/common.py:112
+#: rcadmin/common.py:99 rcadmin/common.py:110
 msgid "pix"
 msgstr ""
 
-#: rcadmin/common.py:102
+#: rcadmin/common.py:100
 msgid "cash"
 msgstr ""
 
-#: rcadmin/common.py:103
+#: rcadmin/common.py:101
 msgid "check"
 msgstr ""
 
-#: rcadmin/common.py:104
+#: rcadmin/common.py:102
 msgid "pre check"
 msgstr ""
 
-#: rcadmin/common.py:105
+#: rcadmin/common.py:103
 msgid "debit"
 msgstr ""
 
-#: rcadmin/common.py:106
+#: rcadmin/common.py:104
 msgid "credit"
 msgstr ""
 
-#: rcadmin/common.py:107 rcadmin/common.py:113
+#: rcadmin/common.py:105 rcadmin/common.py:111
 msgid "deposit"
 msgstr ""
 
-#: rcadmin/common.py:108 rcadmin/common.py:114
+#: rcadmin/common.py:106 rcadmin/common.py:112
 msgid "transfer"
 msgstr ""
 
-#: rcadmin/common.py:109
+#: rcadmin/common.py:107
 msgid "bank slip"
 msgstr ""
 
-#: rcadmin/common.py:116
+#: rcadmin/common.py:114
 msgid "Brazil"
 msgstr ""
 
-#: rcadmin/common.py:122
+#: rcadmin/common.py:120
 msgid "observation"
 msgstr ""
 
-#: rcadmin/common.py:123
+#: rcadmin/common.py:121
 msgid "new"
 msgstr ""
 
-#: rcadmin/common.py:125
+#: rcadmin/common.py:123
 msgid "installing"
 msgstr ""
 
-#: rcadmin/common.py:127
+#: rcadmin/common.py:125
 msgid "stand by"
 msgstr ""
 
-#: rcadmin/common.py:128
+#: rcadmin/common.py:126
 msgid "restriction"
 msgstr ""
 
-#: rcadmin/common.py:130
+#: rcadmin/common.py:128
 msgid "Secretary"
 msgstr ""
 
-#: rcadmin/common.py:223
+#: rcadmin/common.py:227
 msgid ""
 "Phone number must be entered in the format: '+1234567890'.             Up to "
 "15 digits allowed."
@@ -2347,7 +2506,8 @@ msgid "Period payments"
 msgstr ""
 
 #: treasury/templates/treasury/home.html:52
-#: treasury/templates/treasury/reports/payments_by_person.html:12
+#: treasury/templates/treasury/reports/payments_by_person copy.html:12
+#: treasury/templates/treasury/reports/payments_by_person.html:10
 msgid "Payments by person"
 msgstr ""
 
@@ -2445,7 +2605,8 @@ msgstr ""
 msgid "Payment by person"
 msgstr ""
 
-#: treasury/templates/treasury/reports/payments_by_person.html:43
+#: treasury/templates/treasury/reports/payments_by_person copy.html:43
+#: treasury/templates/treasury/reports/payments_by_person.html:25
 msgid "select a person"
 msgstr ""
 
@@ -2565,22 +2726,18 @@ msgstr ""
 msgid "treasury"
 msgstr ""
 
-#: user/admin.py:152
+#: user/admin.py:153
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: user/admin.py:166
+#: user/admin.py:167
 msgid "Password changed successfully."
 msgstr ""
 
-#: user/admin.py:187
+#: user/admin.py:188
 #, python-format
 msgid "Change password: %s"
-msgstr ""
-
-#: user/models.py:49
-msgid "email address"
 msgstr ""
 
 #: user/models.py:52
@@ -2611,14 +2768,6 @@ msgstr ""
 
 #: user/models.py:90
 msgid "social name"
-msgstr ""
-
-#: user/models.py:109
-msgid "emergency contact"
-msgstr ""
-
-#: user/models.py:112
-msgid "emergency phone"
 msgstr ""
 
 #: user/models.py:136
@@ -2885,7 +3034,7 @@ msgstr ""
 msgid "New Order"
 msgstr ""
 
-#: user/templates/user/profile/payment.html:25
+#: user/templates/user/profile/payment.html:26
 msgid "self paid"
 msgstr ""
 

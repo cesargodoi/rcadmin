@@ -314,6 +314,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "factory-boy"
 version = "3.2.1"
 description = "A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby."
@@ -856,6 +864,17 @@ description = "NumPy is the fundamental package for array computing with Python.
 category = "main"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "openpyxl"
+version = "3.0.10"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "packaging"
@@ -1418,7 +1437,7 @@ notebook = ">=4.4.1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "01fa40cc2fdb40f0abc903d6c0a7316535655cf993baa0b0f3c876c59b66adc6"
+content-hash = "0ddf5a6fa7c243ab2ac3fd833cee2a44cac835b17198c598de70692409faf9fb"
 
 [metadata.files]
 appnope = []
@@ -1448,6 +1467,7 @@ django-htmx = []
 django-rosetta = []
 dynaconf = []
 entrypoints = []
+et-xmlfile = []
 factory-boy = []
 faker = []
 fastjsonschema = []
@@ -1486,6 +1506,7 @@ nbformat = []
 nest-asyncio = []
 notebook = []
 numpy = []
+openpyxl = []
 packaging = []
 pandas = []
 pandocfilters = []

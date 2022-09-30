@@ -4,11 +4,11 @@
 {% load crispy_forms_tags %}
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-dark">
       <form class="form-control-sm border-top" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-header">
-          <h5 class="modal-title text-secondary" id="modalLabel">{% trans 'Select a .csv file to import' %}</h5>
+          <h5 class="modal-title text-dark" id="modalLabel">{% trans 'Select a .csv file to import' %}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
