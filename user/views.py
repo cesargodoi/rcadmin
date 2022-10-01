@@ -14,7 +14,7 @@ from django.utils.translation import gettext as _
 from event.models import Event
 from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
-from rcadmin.common import PROFILE_PAYFORM_TYPES
+from rcadmin.common import PROFILE_PAYFORM_TYPES, check_center_module
 
 from .forms import (
     UserForm,
@@ -162,6 +162,9 @@ def scan_qrcode_event(request):
 
 @login_required
 def user_payments(request):
+    if not check_center_module(request, "treasury"):
+        return render(request, "base/module_not_avaiable.html")
+
     template_name = "user/profile/detail.html"
     if request.session.get("my_order"):
         del request.session["my_order"]
@@ -178,6 +181,9 @@ def user_payments(request):
 
 @login_required
 def user_new_order(request):
+    if not check_center_module(request, "treasury"):
+        return render(request, "base/module_not_avaiable.html")
+
     template_name = "user/profile/new_order.html"
     if not request.session.get("my_order"):
         request.session["my_order"] = {

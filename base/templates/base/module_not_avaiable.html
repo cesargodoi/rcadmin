@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
+  <!-- actions -->
+  <ul class="navbar-nav ml-md-auto">
+    <li class="nav-item">
+      <a 
+        class="nav-link px-1 mx-1 py-3 my-n2 text-info" 
+        href="#"
+        onclick="history.back()"
+      >
+        <i class="fas fa-chevron-left"></i> 
+        {% trans 'Back' %}
+      </a>
+    </li>
+  </ul>
+
+</header>
+
+<article class="media content-section">
+  <div class="media-body">
+    <h1>{% trans 'Module not avaiable' %}</h1>
+  </div>
+</article>
+
+{% endblock content %}

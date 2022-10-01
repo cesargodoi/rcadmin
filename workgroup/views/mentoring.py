@@ -11,6 +11,7 @@ from rcadmin.common import (
     ACTIVITY_TYPES,
     clear_session,
     get_template_and_pagination,
+    check_center_module,
 )
 from base.searchs import search_event
 
@@ -23,6 +24,9 @@ from ..models import Workgroup, Membership
 @login_required
 @permission_required("workgroup.view_workgroup")
 def mentoring_home(request):
+    if not check_center_module(request, "mentoring"):
+        return render(request, "base/module_not_avaiable.html")
+
     object_list = Membership.objects.filter(
         person=request.user.person, role_type="MTR"
     )

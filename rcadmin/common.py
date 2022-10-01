@@ -343,3 +343,19 @@ def get_pagination(request, limit=10):
     _from = limit * (page - 1)
     _to = limit * page
     return (page, _from, _to, limit)
+
+
+def check_center_module(request, module):
+    if module == "mentoring":
+        if not request.user.person.center.mentoring:
+            return False
+    elif module == "treasury":
+        if not request.user.person.center.treasury:
+            return False
+    elif module == "publicwork":
+        if not request.user.person.center.publicwork:
+            return False
+    elif module == "accommodation":
+        if not request.user.person.center.accommodation:
+            return False
+    return True

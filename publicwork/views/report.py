@@ -11,12 +11,15 @@ from ..utils import (
     get_lectures_dict,
     get_seekers_dict,
 )
-from rcadmin.common import SEEKER_STATUS, LECTURE_TYPES
+from rcadmin.common import SEEKER_STATUS, LECTURE_TYPES, check_center_module
 
 
 @login_required
 @permission_required("publicwork.view_lecture")
 def publicwork_home(request):
+    if not check_center_module(request, "publicwork"):
+        return render(request, "base/module_not_avaiable.html")
+
     if request.session.get("search"):
         del request.session["search"]
     context = {
