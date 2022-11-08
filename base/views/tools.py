@@ -58,6 +58,9 @@ def import_people(request):
             file=file,
             path=f"{os.path.dirname(settings.BASE_DIR)}/imports",
         )
+        # import ipdb
+
+        # ipdb.set_trace()
 
         # checking if the dataframe is ok
         if sf.df is False:

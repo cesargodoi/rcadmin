@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-16 06:23-0300\n"
+"POT-Creation-Date: 2022-10-20 15:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgstr ""
 #: base/templates/base/action_not_allowed.html:11
 #: base/templates/base/import_fields_to_persons.html:43
 #: person/templates/person/elements/confirm_to_import.html:23
-#: person/templates/person/invitation/forms/data_registration.html:146
+#: person/templates/person/invitation/forms/data_registration.html:148
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:23
 #: publicwork/templates/publicwork/groups/confirm_remove_member.html:23
 #: publicwork/templates/publicwork/insert_yourself/form.html:70
@@ -152,6 +152,7 @@ msgstr ""
 
 #: base/templates/base/confirm_delete.html:22 base/templates/base/form.html:17
 #: base/templates/base/import_people.html:38
+#: base/templates/base/module_not_avaiable.html:16
 #: center/templates/center/elements/actions.html:9
 #: center/templates/center/navbar.html:64
 #: event/templates/event/activity/navbar.html:29
@@ -206,8 +207,8 @@ msgid "I agree"
 msgstr ""
 
 #: base/templates/base/data_policy/modal.html:25
-#: base/templates/base/import_people.html:141
-#: base/templates/base/import_people.html:164
+#: base/templates/base/import_people.html:148
+#: base/templates/base/import_people.html:171
 #: base/templates/base/searchs/modal_frequencies.html:64
 #: base/templates/base/searchs/modal_import_fields_to_persons.html:33
 #: base/templates/base/searchs/modal_import_people.html:21
@@ -245,17 +246,17 @@ msgstr ""
 msgid "Workgroups"
 msgstr ""
 
-#: base/templates/base/elements/menu.html:23 base/templates/base/home.html:94
+#: base/templates/base/elements/menu.html:24 base/templates/base/home.html:95
 #: workgroup/templates/workgroup/mentoring/navbar.html:7
 msgid "Mentoring"
 msgstr ""
 
-#: base/templates/base/elements/menu.html:29 base/templates/base/home.html:106
+#: base/templates/base/elements/menu.html:32 base/templates/base/home.html:109
 #: publicwork/templates/publicwork/navbar.html:7
 msgid "Public Work"
 msgstr ""
 
-#: base/templates/base/elements/menu.html:35 base/templates/base/home.html:118
+#: base/templates/base/elements/menu.html:40 base/templates/base/home.html:123
 #: treasury/templates/treasury/elements/treasury_navbar.html:5
 #: treasury/templates/treasury/navbar.html:6
 msgid "Treasury"
@@ -281,7 +282,7 @@ msgstr ""
 #: treasury/views/payments.py:21
 #: user/templates/user/profile/elements/payments_div.html:6
 #: user/templates/user/profile/navbar-ant.html:22
-#: user/templates/user/profile/navbar.html:28
+#: user/templates/user/profile/navbar.html:29
 msgid "Payments"
 msgstr ""
 
@@ -370,7 +371,7 @@ msgid "New import"
 msgstr ""
 
 #: base/templates/base/import_fields_to_persons.html:85
-#: base/templates/base/import_people.html:113
+#: base/templates/base/import_people.html:120
 msgid "Select a .csv file to import."
 msgstr ""
 
@@ -382,7 +383,7 @@ msgstr ""
 msgid "Imported"
 msgstr ""
 
-#: base/templates/base/import_people.html:60
+#: base/templates/base/import_people.html:61
 #: person/templates/person/elements/header.html:11
 #: person/templates/person/elements/tab_pupil.html:36
 #: publicwork/templates/publicwork/groups/confirm_add_member_or_mentor.html:10
@@ -393,37 +394,41 @@ msgstr ""
 msgid "in"
 msgstr ""
 
-#: base/templates/base/import_people.html:64
+#: base/templates/base/import_people.html:66
 msgid "Entries"
 msgstr ""
 
-#: base/templates/base/import_people.html:68
+#: base/templates/base/import_people.html:70
 msgid "Importeds"
 msgstr ""
 
-#: base/templates/base/import_people.html:72
+#: base/templates/base/import_people.html:79
 msgid "Duplicate email"
 msgstr ""
 
-#: base/templates/base/import_people.html:81
+#: base/templates/base/import_people.html:88
 msgid "Without email"
 msgstr ""
 
-#: base/templates/base/import_people.html:90
+#: base/templates/base/import_people.html:97
 msgid "Used email"
 msgstr ""
 
-#: base/templates/base/import_people.html:101
-#: base/templates/base/import_people.html:124
+#: base/templates/base/import_people.html:108
+#: base/templates/base/import_people.html:131
 msgid "Details"
 msgstr ""
 
-#: base/templates/base/import_people.html:153
+#: base/templates/base/import_people.html:160
 msgid "Error"
 msgstr ""
 
-#: base/templates/base/searchs/center.html:11 center/models.py:111
-#: center/models.py:121 event/models.py:42 person/models.py:31
+#: base/templates/base/module_not_avaiable.html:25
+msgid "Module not avaiable"
+msgstr ""
+
+#: base/templates/base/searchs/center.html:11 center/models.py:117
+#: center/models.py:127 event/models.py:42 person/models.py:31
 #: person/models.py:90 publicwork/models.py:76 publicwork/models.py:172
 #: publicwork/models.py:230 rcadmin/common.py:31 treasury/models.py:172
 #: workgroup/models.py:13
@@ -631,7 +636,7 @@ msgstr ""
 msgid "conference center"
 msgstr ""
 
-#: center/models.py:75 center/models.py:138
+#: center/models.py:75 center/models.py:144
 msgid "responsible"
 msgstr ""
 
@@ -643,19 +648,19 @@ msgstr ""
 msgid "observations"
 msgstr ""
 
-#: center/models.py:112 center/views.py:42
+#: center/models.py:118 center/views.py:42
 msgid "centers"
 msgstr ""
 
-#: center/models.py:126 user/models.py:76 user/models.py:88
+#: center/models.py:132 user/models.py:76 user/models.py:88
 msgid "user"
 msgstr ""
 
-#: center/models.py:129
+#: center/models.py:135
 msgid "rule"
 msgstr ""
 
-#: center/models.py:139
+#: center/models.py:145
 msgid "responsibles"
 msgstr ""
 
@@ -1166,7 +1171,7 @@ msgid ""
 msgstr ""
 
 #: event/views/frequencies.py:96 person/views/frequency_ps.py:108
-#: workgroup/views/mentoring.py:301
+#: workgroup/views/mentoring.py:305
 msgid "insert frequencies"
 msgstr ""
 
@@ -1449,21 +1454,19 @@ msgid "Repeat the password"
 msgstr ""
 
 #: person/templates/person/invitation/forms/data_registration.html:128
-#: publicwork/templates/publicwork/insert_yourself/form.html:56
-msgid "I have read and accepted the terms of"
-msgstr ""
-
-#: person/templates/person/invitation/forms/data_registration.html:131
-#: publicwork/templates/publicwork/insert_yourself/form.html:59
-msgid "data use policy"
+msgid "I have read and agree to become a pupil and I am aware of the "
 msgstr ""
 
 #: person/templates/person/invitation/forms/data_registration.html:132
+msgid "Data Policy"
+msgstr ""
+
+#: person/templates/person/invitation/forms/data_registration.html:134
 #: publicwork/templates/publicwork/insert_yourself/form.html:60
 msgid "of Golden Rosicrucian."
 msgstr ""
 
-#: person/templates/person/invitation/forms/data_registration.html:143
+#: person/templates/person/invitation/forms/data_registration.html:145
 #: publicwork/templates/publicwork/groups/actions.html:11
 #: publicwork/templates/publicwork/insert_yourself/form.html:69
 msgid "Register"
@@ -1848,6 +1851,14 @@ msgstr ""
 msgid "Please fill in the form below:"
 msgstr ""
 
+#: publicwork/templates/publicwork/insert_yourself/form.html:56
+msgid "I have read and accepted the terms of"
+msgstr ""
+
+#: publicwork/templates/publicwork/insert_yourself/form.html:59
+msgid "data use policy"
+msgstr ""
+
 #: publicwork/templates/publicwork/insert_yourself/form_feedback.html:9
 msgid "E-mail already registered"
 msgstr ""
@@ -2040,7 +2051,7 @@ msgid "The seeker has been inserted on lecture!"
 msgstr ""
 
 #: publicwork/views/listener.py:47 publicwork/views/listener.py:165
-#: workgroup/views/mentoring.py:274
+#: workgroup/views/mentoring.py:278
 msgid "Confirm to insert"
 msgstr ""
 
@@ -2060,19 +2071,19 @@ msgstr ""
 msgid "add frequency"
 msgstr ""
 
-#: publicwork/views/report.py:23
+#: publicwork/views/report.py:26
 msgid "Public work"
 msgstr ""
 
-#: publicwork/views/report.py:88 publicwork/views/report.py:109
+#: publicwork/views/report.py:91 publicwork/views/report.py:112
 msgid "frequencies per period"
 msgstr ""
 
-#: publicwork/views/report.py:144 publicwork/views/report.py:164
+#: publicwork/views/report.py:147 publicwork/views/report.py:167
 msgid "lectures per period"
 msgstr ""
 
-#: publicwork/views/report.py:203 publicwork/views/report.py:215
+#: publicwork/views/report.py:206 publicwork/views/report.py:218
 msgid "status per center"
 msgstr ""
 
@@ -2480,7 +2491,7 @@ msgstr ""
 #: treasury/templates/treasury/home.html:27
 #: treasury/templates/treasury/navbar.html:29
 #: treasury/templates/treasury/navbar.html:40
-#: user/templates/user/profile/navbar.html:62
+#: user/templates/user/profile/navbar.html:64
 msgid "New order"
 msgstr ""
 
@@ -3022,11 +3033,11 @@ msgstr ""
 msgid "no historic found"
 msgstr ""
 
-#: user/templates/user/profile/navbar.html:42
+#: user/templates/user/profile/navbar.html:44
 msgid "Change"
 msgstr ""
 
-#: user/templates/user/profile/navbar.html:52
+#: user/templates/user/profile/navbar.html:54
 msgid "Scan QR-CODE"
 msgstr ""
 
@@ -3059,11 +3070,11 @@ msgstr ""
 msgid "You are registered for the event: %s"
 msgstr ""
 
-#: user/views.py:242
+#: user/views.py:248
 msgid "Create my order"
 msgstr ""
 
-#: user/views.py:331
+#: user/views.py:337
 msgid "Create my order - add payment"
 msgstr ""
 
@@ -3131,32 +3142,32 @@ msgstr ""
 msgid "create membership"
 msgstr ""
 
-#: workgroup/views/mentoring.py:45
+#: workgroup/views/mentoring.py:49
 msgid "mentoring"
 msgstr ""
 
-#: workgroup/views/mentoring.py:93 workgroup/views/mentoring.py:141
+#: workgroup/views/mentoring.py:97 workgroup/views/mentoring.py:145
 #: workgroup/views/workgroup.py:85
 msgid "workgroup detail"
 msgstr ""
 
-#: workgroup/views/mentoring.py:156
+#: workgroup/views/mentoring.py:160
 msgid "member detail"
 msgstr ""
 
-#: workgroup/views/mentoring.py:196
+#: workgroup/views/mentoring.py:200
 msgid "member detail | frequencies"
 msgstr ""
 
-#: workgroup/views/mentoring.py:227
+#: workgroup/views/mentoring.py:231
 msgid "member detail | historic"
 msgstr ""
 
-#: workgroup/views/mentoring.py:349
+#: workgroup/views/mentoring.py:353
 msgid "Confirm to update"
 msgstr ""
 
-#: workgroup/views/mentoring.py:451
+#: workgroup/views/mentoring.py:455
 msgid "workgroup add members"
 msgstr ""
 

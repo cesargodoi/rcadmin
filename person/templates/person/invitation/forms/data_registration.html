@@ -125,11 +125,13 @@
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="accept" name="accept">
             <label class="form-check-label" for="accept">
-              {% trans 'I have read and accepted the terms of' %} 
+              {% trans 'I have read and agree to become a pupil and I am aware of the ' %} 
               <a data-toggle="modal" 
                 data-target="#modal"
-                href="#"> {% trans 'data use policy' %} </a>
-                {% trans 'of Golden Rosicrucian.' %}
+                href="#"> 
+                {% trans 'Data Policy' %} 
+              </a>
+              {% trans 'of Golden Rosicrucian.' %}
             </label>
           </div>
           <!-- reCAPTCHA input -->
@@ -157,14 +159,15 @@
   <script type="text/javascript" src="{% static 'js/registration.js' %}"></script>
 
   <script>
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
-
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();   
     }); 
 
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+
+    // comment recaptcha in development to use popover
     global grecaptcha
     grecaptcha.ready(function() {
       grecaptcha.execute('{{recaptcha_site_key}}', {action: "/contact/"}).then(function(token) {

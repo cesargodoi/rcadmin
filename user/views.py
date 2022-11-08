@@ -18,6 +18,7 @@ from rcadmin.common import PROFILE_PAYFORM_TYPES, check_center_module
 
 from .forms import (
     UserForm,
+    UserFormReadonly,
     ProfileFormUpdate,
     ImageFormUpdate,
     MyPaymentForm,
@@ -49,7 +50,7 @@ def updt_profile(request):
     template_name = "user/forms/updt_profile.html"
     if request.method == "POST":
         # updating the user
-        user_form = UserForm(request.POST, instance=request.user)
+        user_form = UserFormReadonly(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
         # updating the user.profile
@@ -69,7 +70,7 @@ def updt_profile(request):
                 },
             )
     else:
-        user_form = UserForm(instance=request.user)
+        user_form = UserFormReadonly(instance=request.user)
         profile_form = ProfileFormUpdate(instance=request.user.profile)
 
     context = {

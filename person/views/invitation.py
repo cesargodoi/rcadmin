@@ -93,6 +93,7 @@ def invite(request):
 
 
 def remove_invite(request, pk):
+    print("---- remove_invite ----")
     invite = Invitation.objects.get(pk=pk)
     if request.method == "POST":
         invite.delete()
