@@ -1,5 +1,5 @@
+{% load base_extras %}
 {% load i18n %}
-
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
     href="{% url 'treasury_home' %}">
@@ -9,30 +9,22 @@
   <!-- menu items -->
   <div class="navbar-nav-scroll">
     <ul class="navbar-nav bd-navbar-nav flex-row">
-      <li class="nav-item">
-        <a class="nav-link {% if nav == 'order' %}active{% endif %}" 
-          href="{% url 'orders' %}?init=on">
-          {% trans 'Orders' %}
-        </a>
-      </li>
+      {% if not request.user|has_group:"presidium" %}
+        <li class="nav-item">
+          <a class="nav-link {% if nav == 'order' %}active{% endif %}" 
+            href="{% url 'orders' %}?init=on">
+            {% trans 'Orders' %}
+          </a>
+        </li>
+      {% endif %}
       {% include 'treasury/reports/menu.html' %} 
     </ul>
   </div>
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-    {% if nav == "order" %}
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'order_create' %}">
-          <i class="fas fa-plus"></i> 
-          {% trans 'New order' %}
-        </a>
-      </li>
-    {% endif %}
-
-    {% if nav == "reports" %}
-      {% if object %}
+    {% if not request.user|has_group:"presidium" %}
+      {% if nav == "order" %}
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
             href="{% url 'order_create' %}">
@@ -40,6 +32,18 @@
             {% trans 'New order' %}
           </a>
         </li>
+      {% endif %}
+
+      {% if nav == "reports" %}
+        {% if object %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+              href="{% url 'order_create' %}">
+              <i class="fas fa-plus"></i> 
+              {% trans 'New order' %}
+            </a>
+          </li>
+        {% endif %}
       {% endif %}
     {% endif %}
     
