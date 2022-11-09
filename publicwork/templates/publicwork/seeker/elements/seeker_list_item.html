@@ -45,41 +45,43 @@
 
 <div class="col-sm-2 small text-right">
   <strong>{{ obj.get_status_display }}</strong> 
-  {% if obj.add_link %}
-    {% if obj.pk in pre_listeners %}
-      &nbsp;&nbsp;&nbsp;
-      <i class="fas fa-user-check mr-1"></i>
-    {% else %}
-      <a 
-        href="#"
-        class="btn btn-light text-primary btn-sm" 
-        onclick="manageData('{{ obj.add_link }}?seek_pk={{ obj.pk }}')"
-      >
-        <i class="fas fa-plus"></i> 
-      </a>
-    {% endif %}
-  {% elif obj.add_in_group %}
-    {% if obj.publicworkgroup_set.count %}
-      &nbsp;&nbsp;&nbsp;
-      <i class="fas fa-user-check mr-1"></i>
-    {% else %}
-      <a 
-        href="#"
-        class="btn btn-light text-primary btn-sm" 
-        onclick="manageData('{{ obj.add_in_group }}?seek_pk={{ obj.pk }}')"
-      >
-        <i class="fas fa-plus"></i> 
-      </a>
-    {% endif %}
-  {% elif obj.del_member %}
-    {% if not request.user|has_group:"publicwork_jr" %}
-      <a 
-        href="#"
-        class="btn btn-light text-danger btn-sm" 
-        onclick="manageData('{{ obj.del_member }}')"
-      >
-        <i class="fas fa-trash-alt"></i>
-      </a>
+  {% if not request.user|has_group:"presidium" %}
+    {% if obj.add_link %}
+      {% if obj.pk in pre_listeners %}
+        &nbsp;&nbsp;&nbsp;
+        <i class="fas fa-user-check mr-1"></i>
+      {% else %}
+        <a 
+          href="#"
+          class="btn btn-light text-primary btn-sm" 
+          onclick="manageData('{{ obj.add_link }}?seek_pk={{ obj.pk }}')"
+        >
+          <i class="fas fa-plus"></i> 
+        </a>
+      {% endif %}
+    {% elif obj.add_in_group %}
+      {% if obj.publicworkgroup_set.count %}
+        &nbsp;&nbsp;&nbsp;
+        <i class="fas fa-user-check mr-1"></i>
+      {% else %}
+        <a 
+          href="#"
+          class="btn btn-light text-primary btn-sm" 
+          onclick="manageData('{{ obj.add_in_group }}?seek_pk={{ obj.pk }}')"
+        >
+          <i class="fas fa-plus"></i> 
+        </a>
+      {% endif %}
+    {% elif obj.del_member %}
+      {% if not request.user|has_group:"publicwork_jr" or not request.user|has_group:"presidium" %}
+        <a 
+          href="#"
+          class="btn btn-light text-danger btn-sm" 
+          onclick="manageData('{{ obj.del_member }}')"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      {% endif %}
     {% endif %}
   {% endif %}
 </div>

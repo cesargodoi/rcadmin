@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load i18n %}
 <div class="col-sm-5 font-weight-bold">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
@@ -23,18 +24,20 @@
     <i class="fas fa-star"></i>
   {% endif %}
   &nbsp;&nbsp;
-  <a 
-    href="#"
-    class="btn btn-light text-warning btn-sm" 
-    onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
-  >
-    <i class="fas fa-edit"></i> 
-  </a>
-  <a 
-    href="#"
-    class="btn btn-light text-danger btn-sm" 
-    onclick="manageData('{{ obj.delete_link }}')"
-  >
-    <i class="fas fa-trash-alt"></i> 
-  </a>
+  {% if not request.user|has_group:"presidium" %}
+    <a 
+      href="#"
+      class="btn btn-light text-warning btn-sm" 
+      onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+    >
+      <i class="fas fa-edit"></i> 
+    </a>
+    <a 
+      href="#"
+      class="btn btn-light text-danger btn-sm" 
+      onclick="manageData('{{ obj.delete_link }}')"
+    >
+      <i class="fas fa-trash-alt"></i> 
+    </a>
+  {% endif %}
 </div>  

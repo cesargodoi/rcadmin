@@ -58,7 +58,11 @@ def group_home(request):
 
     # add action links
     for item in object_list:
-        item.actives = item.members.filter(is_active=True).count()
+        item.actives = (
+            item.members.filter(is_active=True)
+            .exclude(status__in=["ITD", "STD", "RST"])
+            .count()
+        )
         item.click_link = reverse("group_detail", args=[item.pk])
 
     context = {

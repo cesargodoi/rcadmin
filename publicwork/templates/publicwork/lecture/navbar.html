@@ -12,37 +12,38 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-
-    <li class="nav-item">
-      <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-        href="{% url 'add_listener' object.pk %}?init=on">
-        <i class="fas fa-plus"></i></i> 
-        {% trans 'Listeners' %}
-      </a>
-    </li>
-
-    {% if object.center == request.user.person.center or request.user.is_superuser %}
+    {% if not request.user|has_group:"presidium" %}
       <li class="nav-item">
-        <a 
-          href="#"
-          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-          onclick="manageData('{% url 'lecture_update' object.pk %}')"
-        >
-          <i class="fas fa-edit"></i> 
-          {% trans 'Edit' %} 
+        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          href="{% url 'add_listener' object.pk %}?init=on">
+          <i class="fas fa-plus"></i></i> 
+          {% trans 'Listeners' %}
         </a>
       </li>
-      {% if object.listeners.count == 0 %}
+
+      {% if object.center == request.user.person.center or request.user.is_superuser %}
         <li class="nav-item">
           <a 
             href="#"
-            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-            onclick="manageData('{% url 'lecture_delete' object.pk %}')"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+            onclick="manageData('{% url 'lecture_update' object.pk %}')"
           >
-            <i class="fas fa-trash-alt"></i> 
-            {% trans 'Delete' %}
+            <i class="fas fa-edit"></i> 
+            {% trans 'Edit' %} 
           </a>
         </li>
+        {% if object.listeners.count == 0 %}
+          <li class="nav-item">
+            <a 
+              href="#"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+              onclick="manageData('{% url 'lecture_delete' object.pk %}')"
+            >
+              <i class="fas fa-trash-alt"></i> 
+              {% trans 'Delete' %}
+            </a>
+          </li>
+        {% endif %}
       {% endif %}
     {% endif %}
 
