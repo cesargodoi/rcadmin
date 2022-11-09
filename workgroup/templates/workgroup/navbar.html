@@ -14,7 +14,7 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-    {% if nav == "home" %}
+    {% if nav == "home" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a 
           href="#"
@@ -27,7 +27,7 @@
       </li>
     {% endif %}
 
-    {% if nav == "detail" %}
+    {% if nav == "detail" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
           href="{% url 'membership_insert' object.id %}?init=on">

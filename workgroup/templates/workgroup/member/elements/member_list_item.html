@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load i18n %}
 <div class="col-sm-5">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
@@ -18,7 +19,7 @@
 </div>
 
 <div class="col-sm text-right">
-  {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
+  {% if obj.person.center == request.user.person.center and not request.user|has_group:"presidium" %}
     {% if obj.update_link %}
       <button 
         type="button" 
