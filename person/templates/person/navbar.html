@@ -9,30 +9,31 @@
 
   <div class="navbar-nav-scroll">
     <ul class="navbar-nav bd-navbar-nav flex-row">
-      <li class="nav-item">
-        <a 
-          class="nav-link {% if nav == 'invitations' %}active{% endif %}" 
-          href="{% url 'invitations' %}"
-        >
-          {% trans 'Invitations' %}
-        </a>
-      </li>
-
       {% if nav == 'home' %}
-        <li class="nav-item dropdown">
-          <a class="nav-item nav-link dropdown-toggle mr-md-2" 
-             href="#" 
-             id="person-tools" 
-             data-toggle="dropdown" 
-             aria-haspopup="true" 
-             aria-expanded="false">
-             {% trans 'Tools' %}
+        <li class="nav-item">
+          <a 
+            class="nav-link {% if nav == 'invitations' %}active{% endif %}" 
+            href="{% url 'invitations' %}"
+          >
+            {% trans 'Invitations' %}
           </a>
-          <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
-            <a class="dropdown-item" href="{% url 'import_from_seekers' %}">{% trans 'Import from Seekers' %}</a>
-            <!-- <div class="dropdown-divider"></div> -->
-          </div>
         </li>
+        {% if not request.user|has_group:"presidium" %}
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" 
+              href="#" 
+              id="person-tools" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false">
+              {% trans 'Tools' %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
+              <a class="dropdown-item" href="{% url 'import_from_seekers' %}">{% trans 'Import from Seekers' %}</a>
+              <!-- <div class="dropdown-divider"></div> -->
+            </div>
+          </li>
+        {% endif %}
       {% endif %}
       
       {% if nav == 'detail' %}
@@ -68,7 +69,7 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-    {% if nav == "invitations" %}
+    {% if nav == "invitations" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a 
           href="#"
@@ -94,7 +95,7 @@
       </li>
     {% endif %}
 
-    {% if nav == "detail" %}
+    {% if nav == "detail" and not request.user|has_group:"presidium" %}
       {% if tab == "info" %}
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 

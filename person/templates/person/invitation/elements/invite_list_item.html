@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load i18n %}
 <div class="col-sm-4 d-flex justify-content-between">
   <div class="align-middle">
@@ -22,6 +23,7 @@
   </small>
 </div>
 
+{% if not request.user|has_group:"presidium" %}
 <div class="col-sm-1 text-right">
   {% if obj.migration %}
     <span 
@@ -59,3 +61,4 @@
     <i class="fas fa-trash-alt"></i>
   </button>
 </div>
+{% endif %}

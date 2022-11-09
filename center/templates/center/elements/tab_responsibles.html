@@ -18,15 +18,17 @@
     <div class="col-sm-2">
       {{ resp.get_rule_display }}
     </div>
-    <div class="col-sm-1 text-right">
-      <button 
-        type="button" 
-        onclick="manageData('{% url 'center_del_responsible' resp.pk %}')"
-        class="btn btn-light text-danger btn-sm"
-      >
-        <i class="fas fa-trash-alt"></i>
-      </button>
-    </div>
+    {% if not request.user|has_group:"presidium" %}
+      <div class="col-sm-1 text-right">
+        <button 
+          type="button" 
+          onclick="manageData('{% url 'center_del_responsible' resp.pk %}')"
+          class="btn btn-light text-danger btn-sm"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    {% endif %}
   </div>
 {% endfor %}
 {% if request.user|has_group:"office" and request.user.person.center_id == object.id or request.user.is_superuser %}

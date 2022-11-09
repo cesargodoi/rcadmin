@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load i18n %}
 <div class="col-sm-2">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
@@ -13,23 +14,25 @@
   {% if obj.description %}{{ obj.description | truncatechars:50 }}{% endif %}
 </div>
 
-<div class="col-sm text-right">
-  {% if obj.update_link %}
-    <button 
-      type="button" 
-      onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
-      class="btn btn-light text-warning btn-sm"
-    >
-      <i class="fas fa-edit"></i>
-    </button>
-  {% endif %}
-  {% if obj.del_link %}
-    <button 
-      type="button" 
-      onclick="manageData('{{ obj.del_link }}')"
-      class="btn btn-light text-danger btn-sm"
-    >
-      <i class="fas fa-trash-alt"></i>
-    </button>
-  {% endif %}
-</div>
+{% if not request.user|has_group:"presidium" %}
+  <div class="col-sm text-right">
+    {% if obj.update_link %}
+      <button 
+        type="button" 
+        onclick="manageData('{{ obj.update_link }}?pos={{ forloop.counter|add:counter }}')"
+        class="btn btn-light text-warning btn-sm"
+      >
+        <i class="fas fa-edit"></i>
+      </button>
+    {% endif %}
+    {% if obj.del_link %}
+      <button 
+        type="button" 
+        onclick="manageData('{{ obj.del_link }}')"
+        class="btn btn-light text-danger btn-sm"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    {% endif %}
+  </div>
+{% endif %}
