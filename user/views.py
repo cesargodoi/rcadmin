@@ -17,7 +17,6 @@ from treasury.models import BankFlags, Order, PayTypes
 from rcadmin.common import PROFILE_PAYFORM_TYPES, check_center_module
 
 from .forms import (
-    UserForm,
     UserFormReadonly,
     ProfileFormUpdate,
     ImageFormUpdate,

@@ -4,7 +4,7 @@ import json
 from datetime import date, datetime, timedelta
 from django.urls import reverse
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
@@ -34,6 +34,8 @@ modal_updated_triggers = json.dumps(
 )
 
 
+@login_required
+@permission_required("person.view_invitation")
 def invitations(request):
     clear_session(request, ["search"])
     context = {"title": _("invitations"), "nav": "invitations"}
@@ -63,6 +65,8 @@ def invite_list(request):
     return HttpResponse(render_to_string(template_name, context, request))
 
 
+@login_required
+@permission_required("person.add_invitation")
 def invite(request):
     if request.method == "POST":
         data = QueryDict(request.body).dict()
@@ -92,18 +96,6 @@ def invite(request):
     return render(request, template_name, context)
 
 
-def remove_invite(request, pk):
-    print("---- remove_invite ----")
-    invite = Invitation.objects.get(pk=pk)
-    if request.method == "POST":
-        invite.delete()
-        return redirect("invitations")
-
-    template_name = "person/invitation/confirm/delete.html"
-    context = {"object": "{} ⛔️ {}".format(invite.name, invite.center)}
-    return render(request, template_name, context)
-
-
 def send_invitation(request, invite):
     address = "https://rcadmin.rosacruzaurea.org.br"
     _link = f"{address}{reverse('confirm_invitation', args=[invite.pk])}"
@@ -116,6 +108,21 @@ def send_invitation(request, invite):
     )
 
 
+@login_required
+@permission_required("person.delete_invitation")
+def remove_invite(request, pk):
+    invite = Invitation.objects.get(pk=pk)
+    if request.method == "POST":
+        invite.delete()
+        return redirect("invitations")
+
+    template_name = "person/invitation/confirm/delete.html"
+    context = {"object": "{} ⛔️ {}".format(invite.name, invite.center)}
+    return render(request, template_name, context)
+
+
+@login_required
+@permission_required("person.add_invitation")
 def resend_invitation(request, pk):
     invite = Invitation.objects.get(pk=pk)
     if request.method == "POST":

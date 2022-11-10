@@ -12,7 +12,7 @@ from factories import (
     TempRegOfSeeker,
     SeekerFactory,
 )
-from person.models import Person, Historic
+from person.models import Person, Historic, Invitation
 from event.models import Event
 
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
@@ -84,6 +84,22 @@ def create_historic(db):
         return historic
 
     return make_historic
+
+
+@pytest.fixture
+def create_invitation(db):
+    def make_invitation(center, occur=None):
+        new_invite = dict(
+            center=center,
+            name=fake.name(),
+            email=fake.email(),
+            birth=fake.date_between(start_date="-38y", end_date="-18y"),
+            id_card=fake.cpf(),
+        )
+        invitation = Invitation.objects.create(**new_invite)
+        return invitation
+
+    return make_invitation
 
 
 @pytest.fixture
@@ -178,6 +194,11 @@ def get_perms(db):
             Permission.objects.get(codename="change_person"),
             Permission.objects.get(codename="delete_person"),
             Permission.objects.get(codename="view_person"),
+            # invitation
+            Permission.objects.get(codename="add_invitation"),
+            Permission.objects.get(codename="change_invitation"),
+            Permission.objects.get(codename="delete_invitation"),
+            Permission.objects.get(codename="view_invitation"),
             # membership
             Permission.objects.get(codename="add_membership"),
             Permission.objects.get(codename="change_membership"),
@@ -250,6 +271,22 @@ def get_perms(db):
             Permission.objects.get(codename="change_listener"),
             Permission.objects.get(codename="delete_listener"),
             Permission.objects.get(codename="view_listener"),
+        ],
+        "presidium": [
+            # center
+            Permission.objects.get(codename="view_center"),
+            # event
+            Permission.objects.get(codename="view_event"),
+            # frequency
+            Permission.objects.get(codename="view_frequency"),
+            # historic
+            Permission.objects.get(codename="view_historic"),
+            # person
+            Permission.objects.get(codename="view_person"),
+            # membership
+            Permission.objects.get(codename="view_membership"),
+            # workgroup
+            Permission.objects.get(codename="view_workgroup"),
         ],
     }
     return perms

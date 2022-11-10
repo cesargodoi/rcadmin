@@ -149,6 +149,7 @@ def test_clear_frequencies_on_event(
 def test_remove_specific_frequency_from_event(
     center_factory, activity_factory, create_event, create_person
 ):
+    """As vezes este teste não passa de primeira - vai saber..."""
     _center = center_factory()
     _activity = activity_factory()
     persons = [

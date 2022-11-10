@@ -347,15 +347,10 @@ def get_pagination(request, limit=10):
 
 def check_center_module(request, module):
     if module == "mentoring":
-        if not request.user.person.center.mentoring:
-            return False
+        return request.user.person.center.mentoring
     elif module == "treasury":
-        if not request.user.person.center.treasury:
-            return False
+        return request.user.person.center.treasury
     elif module == "publicwork":
-        if not request.user.person.center.publicwork:
-            return False
+        return request.user.person.center.publicwork
     elif module == "accommodation":
-        if not request.user.person.center.accommodation:
-            return False
-    return True
+        return request.user.person.center.accommodation

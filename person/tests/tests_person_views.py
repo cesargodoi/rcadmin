@@ -6,14 +6,25 @@ from django.urls import reverse
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "_type",
-    [("home"), ("detail"), ("create"), ("update"), ("delete"), ("reinsert")],
+    [
+        ("home"),
+        ("detail"),
+        ("create"),
+        ("update_profile"),
+        ("update_pupil"),
+        ("update_image"),
+        ("delete"),
+        ("reinsert"),
+    ],
 )
 def test_unlogged_person_cannot_view_center_page(create_person, client, _type):
     """unlogged person can't access any page of person app"""
     person = create_person()
     page = f"person_{_type}"
-    if _type in ("update", "detail", "delete", "reinsert"):
+    if _type in ("detail", "delete", "reinsert"):
         url = reverse(page, args=[str(person.pk)])
+    elif _type in ("update_profile", "update_pupil", "update_image"):
+        url = reverse(_type, args=[str(person.pk)])
     else:
         url = reverse(page)
     response = client.get(url)
@@ -23,7 +34,15 @@ def test_unlogged_person_cannot_view_center_page(create_person, client, _type):
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 200),
+    ],
 )
 def test_access__person_home__by_user_type(
     auto_login_user, get_group, user_type, status_code
@@ -38,7 +57,15 @@ def test_access__person_home__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 200),
+    ],
 )
 def test_access__person_detail__by_user_type(
     center_factory,
@@ -74,7 +101,15 @@ def test_access_office_cannot_access__person_detail__from_other_center(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__person_create__by_user_type(
     center_factory,
@@ -94,7 +129,15 @@ def test_access__person_create__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__person_update__by_user_type(
     center_factory,
@@ -107,15 +150,24 @@ def test_access__person_update__by_user_type(
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
-    url = reverse("person_update", args=[person.pk])
-    response = client.get(url)
-    assert response.status_code == status_code
+    for update in ["update_profile", "update_pupil", "update_image"]:
+        url = reverse(update, args=[person.pk])
+        response = client.get(url)
+        assert response.status_code == status_code
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__person_delete__by_user_type(
     center_factory,
@@ -126,8 +178,8 @@ def test_access__person_delete__by_user_type(
 ):
     """only 'office' can access person_delete view"""
     center = center_factory.create()
-    client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
+    client, user = auto_login_user(group=user_type, center=center)
     url = reverse("person_delete", args=[person.pk])
     response = client.get(url)
     assert response.status_code == status_code
@@ -136,7 +188,15 @@ def test_access__person_delete__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 200),
+    ],
 )
 def test_search_persons_by_user_type(
     auto_login_user, get_group, user_type, status_code
@@ -151,7 +211,15 @@ def test_search_persons_by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__person_reinsert__by_user_type(
     center_factory,
@@ -173,7 +241,15 @@ def test_access__person_reinsert__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 200),
+    ],
 )
 def test_access__person_historic__by_user_type(
     center_factory,
@@ -194,7 +270,15 @@ def test_access__person_historic__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__historic_create__by_user_type(
     center_factory,
@@ -215,7 +299,15 @@ def test_access__historic_create__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__historic_update__by_user_type(
     center_factory,
@@ -238,7 +330,15 @@ def test_access__historic_update__by_user_type(
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 302), ("treasury_jr", 302)],
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
 )
 def test_access__historic_delete__by_user_type(
     center_factory,
@@ -254,6 +354,121 @@ def test_access__historic_delete__by_user_type(
     person = create_person(center=center)
     create_historic(person)
     url = reverse("historic_delete", args=[person.pk, 1])
+    response = client.get(url)
+    assert response.status_code == status_code
+
+
+#  Invitation  ################################################################
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
+)
+def test_access__invitations__by_user_type(
+    center_factory,
+    create_person,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'office' can access invitations"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    url = reverse("invitations")
+    response = client.get(url)
+    assert response.status_code == status_code
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
+)
+def test_access__invite_person__by_user_type(
+    center_factory,
+    create_person,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'office' can access invite_person"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    url = reverse("invite_person")
+    response = client.get(url)
+    assert response.status_code == status_code
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
+)
+def test_access__remove_invite__by_user_type(
+    center_factory,
+    create_invitation,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'office' can access remove_invite"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    invite = create_invitation(center)
+    url = reverse("remove_invite", args=[invite.pk])
+    response = client.get(url)
+    assert response.status_code == status_code
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "user_type, status_code",
+    [
+        ("user", 302),
+        ("office", 200),
+        ("treasury", 302),
+        ("treasury_jr", 302),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 302),
+    ],
+)
+def test_access__resend_invitation__by_user_type(
+    center_factory,
+    create_invitation,
+    auto_login_user,
+    user_type,
+    status_code,
+):
+    """only 'office' can access resend_invitation"""
+    center = center_factory.create()
+    client, user = auto_login_user(group=user_type, center=center)
+    invite = create_invitation(center)
+    url = reverse("resend_invitation", args=[invite.pk])
     response = client.get(url)
     assert response.status_code == status_code
 

@@ -55,6 +55,10 @@ class CenterFactory(factory.django.DjangoModelFactory):
     phone_1 = fake.phone_number()
     email = fake.email()
     center_type = "CNT"
+    mentoring = True
+    treasury = True
+    publicwork = True
+    accommodation = True
     made_by = factory.SubFactory(UserFactory)
 
 

@@ -74,8 +74,8 @@ class Invitation(models.Model):
         return "{} - {}".format(self.name, self.center)
 
     class Meta:
-        verbose_name = _("temporary registration of person")
-        verbose_name_plural = _("temporary registration of pupil")
+        verbose_name = _("invitation")
+        verbose_name_plural = _("invitations")
 
 
 # Person
