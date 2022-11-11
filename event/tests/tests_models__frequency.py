@@ -1,78 +1,6 @@
 import pytest
-from event.models import Activity, Event
+from event.models import Event
 from person.models import Person
-
-
-# Activity
-@pytest.mark.events
-@pytest.mark.django_db
-def test_list_activities(activity_factory):
-    for _ in range(3):
-        activity_factory()
-    assert Activity.objects.count() == 3
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_create_activity(activity_factory):
-    activity_factory()
-    assert Activity.objects.count() == 1
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_update_activity(activity_factory):
-    activity_factory()
-    activity = Activity.objects.last()
-    activity.multi_date = True
-    activity.save()
-    assert activity.multi_date is True
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_delete_activity(activity_factory):
-    for _ in range(3):
-        activity_factory()
-    Activity.objects.last().delete()
-    assert Activity.objects.count() == 2
-
-
-# events
-@pytest.mark.events
-@pytest.mark.django_db
-def test_list_event(center_factory, create_event):
-    _center = center_factory()
-    for _ in range(3):
-        create_event(center=_center)
-    assert Event.objects.count() == 3
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_create_event(create_event):
-    create_event()
-    assert Event.objects.count() == 1
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_update_event(create_event):
-    create_event()
-    event = Event.objects.last()
-    event.status = "CLS"
-    event.save()
-    assert event.status != "OPN"
-
-
-@pytest.mark.events
-@pytest.mark.django_db
-def test_delete_event(center_factory, create_event):
-    _center = center_factory()
-    for _ in range(3):
-        create_event(center=_center)
-    Event.objects.last().delete()
-    assert Event.objects.count() == 2
 
 
 # frequencies
@@ -147,17 +75,17 @@ def test_clear_frequencies_on_event(
 @pytest.mark.events
 @pytest.mark.django_db
 def test_remove_specific_frequency_from_event(
-    center_factory, activity_factory, create_event, create_person
+    create_center, create_user, activity_factory, create_event, create_person
 ):
     """As vezes este teste não passa de primeira - vai saber..."""
-    _center = center_factory()
-    _activity = activity_factory()
+    center = create_center(user=create_user(email="u2@mail.com"))
+    activity = activity_factory()
     persons = [
-        create_person(center=_center, email=_email)
+        create_person(center=center, email=_email)
         for _email in ["a@a.com", "b@b.com", "c@c.com", "d@d.com"]
     ]
 
-    event = create_event(center=_center, activity=_activity)
+    event = create_event(center=center, activity=activity)
     event.frequencies.add(*persons)
 
     person = Person.objects.last()

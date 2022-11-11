@@ -12,8 +12,10 @@ from factories import (
     TempRegOfSeeker,
     SeekerFactory,
 )
+from center.models import Center
 from person.models import Person, Historic, Invitation
 from event.models import Event
+from workgroup.models import Workgroup, Membership
 
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
@@ -40,13 +42,38 @@ def create_user(db, django_user_model, get_password):
 
 
 @pytest.fixture
+def create_center(db, create_user):
+    def make_center(**kwargs):
+        new_center = dict(
+            name=kwargs.get("name")
+            or f"Center {fake.pyint(min_value=1, max_value=100)}",
+            city=fake.city(),
+            state=fake.estado_sigla(),
+            country=fake.current_country_code(),
+            phone_1=fake.phone_number(),
+            email=kwargs.get("email") or fake.email(),
+            center_type="CNT",
+            mentoring=True,
+            treasury=True,
+            publicwork=True,
+            accommodation=True,
+            made_by=kwargs.get("user") or create_user(),
+        )
+        return Center.objects.create(**new_center)
+
+    return make_center
+
+
+@pytest.fixture
 def auto_login_user(db, client, create_user, get_password, get_group):
-    def make_auto_login(user=None, group=None, center=None):
-        new_user = user if user else create_user()
-        if group:
-            new_user.groups.add(get_group(group))
-        if center:
-            center.person_set.add(new_user.person)
+    def make_auto_login(**kwargs):
+        new_user = kwargs.get("user") or create_user()
+
+        if kwargs.get("group"):
+            new_user.groups.add(get_group(kwargs.get("group")))
+        if kwargs.get("center"):
+            kwargs.get("center").person_set.add(new_user.person)
+
         client.login(email=new_user.email, password=get_password)
         return client, new_user
 
@@ -55,11 +82,12 @@ def auto_login_user(db, client, create_user, get_password, get_group):
 
 @pytest.fixture
 def create_person(db, create_user, center_factory):
-    def make_person(center=None, name=None, email=None):
-        user = create_user(email=email)
+    def make_person(**kwargs):
+        user = create_user(email=kwargs.get("email"))
+
         person = Person.objects.get(user=user)
-        person.name = name if name else fake.name()
-        person.center = center if center else center_factory.create()
+        person.name = kwargs.get("name") or fake.name()
+        person.center = kwargs.get("center") or center_factory.create()
         person.birth = fake.date_of_birth(maximum_age=80)
         person.aspect = random.choice(ASPECTS)
         person.aspect_date = fake.date_between(
@@ -67,6 +95,7 @@ def create_person(db, create_user, center_factory):
         )
         person.status = random.choice(STATUS)
         person.save()
+
         return person
 
     return make_person
@@ -80,6 +109,7 @@ def create_historic(db):
             occurrence=occur if occur else random.choice(OCCURRENCES),
             date=fake.date_between(start_date="-1y", end_date="today"),
         )
+
         historic = Historic.objects.create(**new_occur)
         return historic
 
@@ -88,7 +118,7 @@ def create_historic(db):
 
 @pytest.fixture
 def create_invitation(db):
-    def make_invitation(center, occur=None):
+    def make_invitation(center):
         new_invite = dict(
             center=center,
             name=fake.name(),
@@ -96,6 +126,7 @@ def create_invitation(db):
             birth=fake.date_between(start_date="-38y", end_date="-18y"),
             id_card=fake.cpf(),
         )
+
         invitation = Invitation.objects.create(**new_invite)
         return invitation
 
@@ -104,17 +135,19 @@ def create_invitation(db):
 
 @pytest.fixture
 def create_event(db, activity_factory, center_factory, create_user):
-    def make_event(center=None, activity=None):
-        _center = center if center else center_factory()
-        _activity = activity if activity else activity_factory()
-        _event = dict(
-            center=_center,
-            activity=_activity,
+    def make_event(**kwargs):
+        center = kwargs.get("center") or center_factory()
+        activity = kwargs.get("activity") or activity_factory()
+
+        new_event = dict(
+            center=center,
+            activity=activity,
             date=timezone.now(),
             status="OPN",
             made_by=create_user(),
         )
-        event = Event(**_event)
+
+        event = Event(**new_event)
         event.save()
         return event
 
@@ -125,25 +158,63 @@ def create_event(db, activity_factory, center_factory, create_user):
 def create_frequency(
     db, create_event, create_person, activity_factory, center_factory
 ):
-    def make_frequency(center=None, activity=None, event=None, person=None):
-        _center = center if center else center_factory()
-        _activity = activity if activity else activity_factory()
-        if Event.objects.filter(center=_center, activity=_activity):
-            _event = Event.objects.filter(
-                center=_center, activity=_activity
+    def make_frequency(**kwargs):
+        center = kwargs.get("center") or center_factory()
+        activity = kwargs.get("activity") or activity_factory()
+
+        if Event.objects.filter(center=center, activity=activity):
+            event = Event.objects.filter(
+                center=center, activity=activity
             ).first()
         else:
-            _event = (
-                event
-                if event
-                else create_event(center=_center, activity=_activity)
+            event = kwargs.get("event") or create_event(
+                center=center, activity=activity
             )
-        _person = person if person else create_person(center=_center)
 
-        frequency = _event.frequency_set.create(person=_person)
+        _person = kwargs.get("person") or create_person(center=center)
+
+        frequency = event.frequency_set.create(person=_person)
         return frequency
 
     return make_frequency
+
+
+@pytest.fixture
+def create_workgroup(db, create_user, center_factory):
+    def make_workgroup(**kwargs):
+        new_workgroup = dict(
+            name=kwargs.get("name")
+            or f"Group_{fake.pyint(min_value=1, max_value=9)}",
+            center=kwargs.get("center") or center_factory(),
+            workgroup_type=kwargs.get("workgroup_type") or "MNT",
+            aspect=kwargs.get("aspect") or "",
+            made_by=create_user(),
+        )
+
+        workgroup = Workgroup.objects.create(**new_workgroup)
+        return workgroup
+
+    return make_workgroup
+
+
+@pytest.fixture
+def create_membership(db, create_person, create_workgroup):
+    def make_membership(**kwargs):
+        new_membership = dict(
+            person=kwargs.get("person")
+            or create_person(center=kwargs.get("center")),
+            workgroup=kwargs.get("workgroup")
+            or create_workgroup(center=kwargs.get("center")),
+            role_type=kwargs.get("role_type") or "MBR",
+        )
+
+        membership = Membership.objects.create(**new_membership)
+        return membership
+
+    return make_membership
+
+
+#######
 
 
 #  Groups and Permissions

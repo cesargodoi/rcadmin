@@ -135,7 +135,7 @@ def test_access__center_update__by_offices_own_center(
     [("user", 302), ("office", 302), ("treasury", 302), ("treasury_jr", 302)],
 )
 def test_access__center_create__by_user_type(
-    center_factory, auto_login_user, get_group, user_type, status_code
+    center_factory, auto_login_user, user_type, status_code
 ):
     """
     'user', 'office', 'treasury' and treasury_jr can't access center_create
@@ -153,7 +153,7 @@ def test_access__center_create__by_user_type(
     [("user", 302), ("office", 302), ("treasury", 302), ("treasury_jr", 302)],
 )
 def test_access__center_delete__by_user_type(
-    center_factory, auto_login_user, get_group, user_type, status_code
+    center_factory, auto_login_user, user_type, status_code
 ):
     """
     'user', 'office', 'treasury' and treasury_jr can't access center_delete
@@ -171,7 +171,7 @@ def test_access__center_delete__by_user_type(
     [("user", 302), ("office", 200), ("treasury", 200), ("treasury_jr", 200)],
 )
 def test_search__center_home__by_user_types(
-    auto_login_user, get_group, user_type, status_code
+    auto_login_user, user_type, status_code
 ):
     """the 'oficce', 'treasury' and 'treasury_jr' can search center"""
     client, user = auto_login_user(group=user_type)

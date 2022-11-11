@@ -8,6 +8,7 @@ from center.models import Center
 from event.models import Activity
 from publicwork.models import TempRegOfSeeker, Seeker
 
+
 fake = Faker("pt_BR")
 get_gender = random.choice(["M", "F"])
 
