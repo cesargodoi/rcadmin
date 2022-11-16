@@ -7,6 +7,9 @@ from user.models import User, Profile
 from center.models import Center
 from event.models import Activity
 from publicwork.models import TempRegOfSeeker, Seeker
+from treasury.models import PayTypes, BankFlags
+
+from rcadmin.common import PAY_TYPES
 
 
 fake = Faker("pt_BR")
@@ -15,8 +18,6 @@ get_gender = random.choice(["M", "F"])
 
 #  User
 class UserFactory(factory.django.DjangoModelFactory):
-    Faker.seed()
-
     class Meta:
         model = User
 
@@ -71,6 +72,24 @@ class ActivityFactory(factory.django.DjangoModelFactory):
     name = f"Activity {fake.pyint(min_value=1, max_value=9)}"
     activity_type = "SRV"
     multi_date = False
+
+
+#  PayTypes
+class PaytypeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = PayTypes
+
+    name = f"PayType {fake.pyint(min_value=1, max_value=9)}"
+    pay_type = random.choice([pt[0] for pt in PAY_TYPES])
+
+
+#  BankFlags
+class BankflagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = BankFlags
+
+    name = f"BankFlag {fake.pyint(min_value=1, max_value=9)}"
+    is_active = True
 
 
 #  TempRegOfSeeker

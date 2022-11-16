@@ -9,21 +9,24 @@ from factories import (
     UserFactory,
     CenterFactory,
     ActivityFactory,
-    TempRegOfSeeker,
     SeekerFactory,
+    PaytypeFactory,
+    BankflagFactory,
 )
 from center.models import Center
 from person.models import Person, Historic, Invitation
 from event.models import Event
 from workgroup.models import Workgroup, Membership
+from treasury.models import Payment, FormOfPayment, Order
 
 from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
 
 register(UserFactory)
 register(CenterFactory)
 register(ActivityFactory)
-register(TempRegOfSeeker)
 register(SeekerFactory)
+register(PaytypeFactory)
+register(BankflagFactory)
 
 
 @pytest.fixture
@@ -44,7 +47,7 @@ def create_user(db, django_user_model, get_password):
 @pytest.fixture
 def create_center(db, create_user):
     def make_center(**kwargs):
-        new_center = dict(
+        new = dict(
             name=kwargs.get("name")
             or f"Center {fake.pyint(min_value=1, max_value=100)}",
             city=fake.city(),
@@ -59,7 +62,7 @@ def create_center(db, create_user):
             accommodation=True,
             made_by=kwargs.get("user") or create_user(),
         )
-        return Center.objects.create(**new_center)
+        return Center.objects.create(**new)
 
     return make_center
 
@@ -104,13 +107,13 @@ def create_person(db, create_user, center_factory):
 @pytest.fixture
 def create_historic(db):
     def make_historic(person, occur=None):
-        new_occur = dict(
+        new = dict(
             person=person,
             occurrence=occur if occur else random.choice(OCCURRENCES),
             date=fake.date_between(start_date="-1y", end_date="today"),
         )
 
-        historic = Historic.objects.create(**new_occur)
+        historic = Historic.objects.create(**new)
         return historic
 
     return make_historic
@@ -119,7 +122,7 @@ def create_historic(db):
 @pytest.fixture
 def create_invitation(db):
     def make_invitation(center):
-        new_invite = dict(
+        new = dict(
             center=center,
             name=fake.name(),
             email=fake.email(),
@@ -127,7 +130,7 @@ def create_invitation(db):
             id_card=fake.cpf(),
         )
 
-        invitation = Invitation.objects.create(**new_invite)
+        invitation = Invitation.objects.create(**new)
         return invitation
 
     return make_invitation
@@ -182,7 +185,7 @@ def create_frequency(
 @pytest.fixture
 def create_workgroup(db, create_user, center_factory):
     def make_workgroup(**kwargs):
-        new_workgroup = dict(
+        new = dict(
             name=kwargs.get("name")
             or f"Group_{fake.pyint(min_value=1, max_value=9)}",
             center=kwargs.get("center") or center_factory(),
@@ -191,7 +194,7 @@ def create_workgroup(db, create_user, center_factory):
             made_by=create_user(),
         )
 
-        workgroup = Workgroup.objects.create(**new_workgroup)
+        workgroup = Workgroup.objects.create(**new)
         return workgroup
 
     return make_workgroup
@@ -200,7 +203,7 @@ def create_workgroup(db, create_user, center_factory):
 @pytest.fixture
 def create_membership(db, create_person, create_workgroup):
     def make_membership(**kwargs):
-        new_membership = dict(
+        new = dict(
             person=kwargs.get("person")
             or create_person(center=kwargs.get("center")),
             workgroup=kwargs.get("workgroup")
@@ -208,13 +211,72 @@ def create_membership(db, create_person, create_workgroup):
             role_type=kwargs.get("role_type") or "MBR",
         )
 
-        membership = Membership.objects.create(**new_membership)
+        membership = Membership.objects.create(**new)
         return membership
 
     return make_membership
 
 
-#######
+@pytest.fixture
+def create_payment(db, paytype_factory, create_person):
+    def make_payment(**kwargs):
+        new = dict(
+            paytype=paytype_factory.create(),
+            person=kwargs.get("person")
+            or create_person(center=kwargs.get("center")),
+            event=kwargs.get("event") or None,
+            ref_month=kwargs.get("ref_month") or fake.date(),
+            value=kwargs.get("value") or 120,
+        )
+
+        payment = Payment.objects.create(**new)
+        return payment
+
+    return make_payment
+
+
+@pytest.fixture
+def create_form_of_payment(db, bankflag_factory):
+    def make_form_of_payment(**kwargs):
+        new = dict(
+            payform_type=kwargs.get("type") or "CSH",
+            bank_flag=kwargs.get("bank_flag") or bankflag_factory.create(),
+            value=kwargs.get("value") or 120,
+        )
+
+        form_of_payment = FormOfPayment.objects.create(**new)
+        return form_of_payment
+
+    return make_form_of_payment
+
+
+@pytest.fixture
+def create_order(
+    db, center_factory, create_person, create_payment, create_form_of_payment
+):
+    def make_order(**kwargs):
+        center = kwargs.get("center") or center_factory()
+        person = kwargs.get("person") or create_person(center=center)
+        new = dict(
+            center=center,
+            person=person,
+            amount=kwargs.get("amount") or 120,
+            status=kwargs.get("status") or "PND",
+        )
+
+        order = Order.objects.create(**new)
+        order.payments.add(
+            kwargs.get("payment") or create_payment(person=person)
+        )
+        order.form_of_payments.add(
+            kwargs.get("form_of_payment") or create_form_of_payment()
+        )
+        return order
+
+    return make_order
+
+
+###############################################################################
 
 
 #  Groups and Permissions
@@ -232,132 +294,121 @@ def get_group(db, get_perms):
 
 @pytest.fixture
 def get_perms(db):
+    user = [
+        "view_user",  # user
+        "change_user",
+        "view_profile",  # profile
+        "change_profile",
+    ]
+    office = [
+        "view_center",  # center
+        "change_center",
+        "add_event",  # event
+        "change_event",
+        "delete_event",
+        "view_event",
+        "add_frequency",  # frequency
+        "change_frequency",
+        "delete_frequency",
+        "view_frequency",
+        "add_historic",  # historic
+        "change_historic",
+        "delete_historic",
+        "view_historic",
+        "add_person",  # person
+        "change_person",
+        "delete_person",
+        "view_person",
+        "add_invitation",  # invitation
+        "change_invitation",
+        "delete_invitation",
+        "view_invitation",
+        "add_membership",  # membership
+        "change_membership",
+        "delete_membership",
+        "view_membership",
+        "add_workgroup",  # workgroup
+        "change_workgroup",
+        "delete_workgroup",
+        "view_workgroup",
+    ]
+    treasury = [
+        "view_center",  # center
+        "add_order",  # orde
+        "change_order",
+        "delete_order",
+        "view_order",
+    ]
+    treasury_jr = [
+        "view_center",  # center
+        "add_order",  # order
+        "view_order",
+    ]
+    publicwork = [
+        "add_seeker",  # seeker
+        "change_seeker",
+        "delete_seeker",
+        "view_seeker",
+        "add_publicworkgroup",  # publicwork_group
+        "change_publicworkgroup",
+        "delete_publicworkgroup",
+        "view_publicworkgroup",
+        "add_historicofseeker",  # historic
+        "change_historicofseeker",
+        "delete_historicofseeker",
+        "view_historicofseeker",
+        "add_lecture",  # lecture
+        "change_lecture",
+        "delete_lecture",
+        "view_lecture",
+        "add_listener",  # listener
+        "change_listener",
+        "delete_listener",
+        "view_listener",
+    ]
+    publicwork_jr = [
+        "change_seeker",  # seeker
+        "view_seeker",
+        "view_publicworkgroup",  # publicwork_group
+        "add_historicofseeker",  # historic
+        "change_historicofseeker",
+        "delete_historicofseeker",
+        "view_historicofseeker",
+        "view_lecture",  # lecture
+        "add_listener",  # listener
+        "change_listener",
+        "delete_listener",
+        "view_listener",
+    ]
+    presidium = [
+        "view_center",  # center
+        "view_event",  # event
+        "view_frequency",  # frequency
+        "view_historic",  # historic
+        "view_person",  # person
+        "view_membership",  # membership
+        "view_workgroup",  # workgroup
+    ]
+
     perms = {
         "admin": [perm for perm in Permission.objects.all()],
-        "user": [
-            # user and profile
-            Permission.objects.get(codename="view_user"),
-            Permission.objects.get(codename="change_user"),
-            Permission.objects.get(codename="view_profile"),
-            Permission.objects.get(codename="change_profile"),
-        ],
-        "office": [
-            # center
-            Permission.objects.get(codename="view_center"),
-            Permission.objects.get(codename="change_center"),
-            # event
-            Permission.objects.get(codename="add_event"),
-            Permission.objects.get(codename="change_event"),
-            Permission.objects.get(codename="delete_event"),
-            Permission.objects.get(codename="view_event"),
-            # frequency
-            Permission.objects.get(codename="add_frequency"),
-            Permission.objects.get(codename="change_frequency"),
-            Permission.objects.get(codename="delete_frequency"),
-            Permission.objects.get(codename="view_frequency"),
-            # historic
-            Permission.objects.get(codename="add_historic"),
-            Permission.objects.get(codename="change_historic"),
-            Permission.objects.get(codename="delete_historic"),
-            Permission.objects.get(codename="view_historic"),
-            # person
-            Permission.objects.get(codename="add_person"),
-            Permission.objects.get(codename="change_person"),
-            Permission.objects.get(codename="delete_person"),
-            Permission.objects.get(codename="view_person"),
-            # invitation
-            Permission.objects.get(codename="add_invitation"),
-            Permission.objects.get(codename="change_invitation"),
-            Permission.objects.get(codename="delete_invitation"),
-            Permission.objects.get(codename="view_invitation"),
-            # membership
-            Permission.objects.get(codename="add_membership"),
-            Permission.objects.get(codename="change_membership"),
-            Permission.objects.get(codename="delete_membership"),
-            Permission.objects.get(codename="view_membership"),
-            # workgroup
-            Permission.objects.get(codename="add_workgroup"),
-            Permission.objects.get(codename="change_workgroup"),
-            Permission.objects.get(codename="delete_workgroup"),
-            Permission.objects.get(codename="view_workgroup"),
-        ],
+        "user": [Permission.objects.get(codename=perm) for perm in user],
+        "office": [Permission.objects.get(codename=perm) for perm in office],
         "treasury": [
-            # center
-            Permission.objects.get(codename="view_center"),
-            # order
-            Permission.objects.get(codename="add_order"),
-            Permission.objects.get(codename="change_order"),
-            Permission.objects.get(codename="delete_order"),
-            Permission.objects.get(codename="view_order"),
+            Permission.objects.get(codename=perm) for perm in treasury
         ],
         "treasury_jr": [
-            # center
-            Permission.objects.get(codename="view_center"),
-            # order
-            Permission.objects.get(codename="add_order"),
-            Permission.objects.get(codename="view_order"),
+            Permission.objects.get(codename=perm) for perm in treasury_jr
         ],
         "publicwork": [
-            # seeker
-            Permission.objects.get(codename="add_seeker"),
-            Permission.objects.get(codename="change_seeker"),
-            Permission.objects.get(codename="delete_seeker"),
-            Permission.objects.get(codename="view_seeker"),
-            # publicwork_group
-            Permission.objects.get(codename="add_publicworkgroup"),
-            Permission.objects.get(codename="change_publicworkgroup"),
-            Permission.objects.get(codename="delete_publicworkgroup"),
-            Permission.objects.get(codename="view_publicworkgroup"),
-            # historic
-            Permission.objects.get(codename="add_historicofseeker"),
-            Permission.objects.get(codename="change_historicofseeker"),
-            Permission.objects.get(codename="delete_historicofseeker"),
-            Permission.objects.get(codename="view_historicofseeker"),
-            # lecture
-            Permission.objects.get(codename="add_lecture"),
-            Permission.objects.get(codename="change_lecture"),
-            Permission.objects.get(codename="delete_lecture"),
-            Permission.objects.get(codename="view_lecture"),
-            # listener
-            Permission.objects.get(codename="add_listener"),
-            Permission.objects.get(codename="change_listener"),
-            Permission.objects.get(codename="delete_listener"),
-            Permission.objects.get(codename="view_listener"),
+            Permission.objects.get(codename=perm) for perm in publicwork
         ],
         "publicwork_jr": [
-            # seeker
-            Permission.objects.get(codename="change_seeker"),
-            Permission.objects.get(codename="view_seeker"),
-            # publicwork_group
-            Permission.objects.get(codename="view_publicworkgroup"),
-            # historic
-            Permission.objects.get(codename="add_historicofseeker"),
-            Permission.objects.get(codename="change_historicofseeker"),
-            Permission.objects.get(codename="delete_historicofseeker"),
-            Permission.objects.get(codename="view_historicofseeker"),
-            # lecture
-            Permission.objects.get(codename="view_lecture"),
-            # listener
-            Permission.objects.get(codename="add_listener"),
-            Permission.objects.get(codename="change_listener"),
-            Permission.objects.get(codename="delete_listener"),
-            Permission.objects.get(codename="view_listener"),
+            Permission.objects.get(codename=perm) for perm in publicwork_jr
         ],
         "presidium": [
-            # center
-            Permission.objects.get(codename="view_center"),
-            # event
-            Permission.objects.get(codename="view_event"),
-            # frequency
-            Permission.objects.get(codename="view_frequency"),
-            # historic
-            Permission.objects.get(codename="view_historic"),
-            # person
-            Permission.objects.get(codename="view_person"),
-            # membership
-            Permission.objects.get(codename="view_membership"),
-            # workgroup
-            Permission.objects.get(codename="view_workgroup"),
+            Permission.objects.get(codename=perm) for perm in presidium
         ],
     }
+
     return perms

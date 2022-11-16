@@ -6,7 +6,7 @@ from person.models import Person
 def test_list_persons(center_factory, create_person):
     """The center_factory will make an user (consequently a person).
     Add +1 on your count."""
-    center = center_factory()
+    center = center_factory.create()
     for _ in range(5):
         create_person(center=center)
     assert Person.objects.count() == 6

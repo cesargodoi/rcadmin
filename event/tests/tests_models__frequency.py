@@ -22,7 +22,7 @@ def test_list_frequencies_from_event(
 @pytest.mark.events
 @pytest.mark.django_db
 def test_list_frequencies_from_person_side(
-    center_factory, activity_factory, create_frequency, create_person
+    center_factory, activity_factory, create_frequency
 ):
     """from the person's side we use .event_set"""
 
@@ -72,12 +72,12 @@ def test_clear_frequencies_on_event(
     assert event.frequencies.count() == 0
 
 
+@pytest.mark.actual
 @pytest.mark.events
 @pytest.mark.django_db
 def test_remove_specific_frequency_from_event(
     create_center, create_user, activity_factory, create_event, create_person
 ):
-    """As vezes este teste não passa de primeira - vai saber..."""
     center = create_center(user=create_user(email="u2@mail.com"))
     activity = activity_factory()
     persons = [
@@ -88,7 +88,7 @@ def test_remove_specific_frequency_from_event(
     event = create_event(center=center, activity=activity)
     event.frequencies.add(*persons)
 
-    person = Person.objects.last()
+    person = Person.objects.filter(user__email="a@a.com")[0]
     event.frequencies.remove(person)
     event.save()
 
