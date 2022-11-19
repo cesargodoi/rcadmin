@@ -46,7 +46,7 @@ def import_seeker(request, id):
         new_user.profile.state = seeker.state
         new_user.profile.country = seeker.country
         new_user.profile.image = seeker.image
-        new_user.profile.phone_1 = seeker.phone
+        new_user.profile.phone = seeker.phone
         new_user.profile.save()
         # updating the new_user.person
         new_user.person.name = seeker.name

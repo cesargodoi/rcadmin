@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="content-section mb-1" 
+<div class="content-section mb-1 is-link" 
      onclick="location.href='{% url 'center_detail' object.pk %}?from=home'">
   <div class="article-metadata">{% trans 'Welcome to' %}</div>
   <div class="row">
@@ -46,7 +46,7 @@
 
 <div class="row-pg-initial">
   {% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"office_jr" %}
-  <div class="col-lg-3 card-principal-col-lg-3"
+  <div class="col-lg-3 card-principal-col-lg-3 is-link"
     onclick="location.href='{% url 'center_home' %}?init=on';">
       <div class="card h-100 card-principal-backimage ">
         <img src="{% static 'images/center.png' %}" class="card-img-top" alt="...">
@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 card-principal-col-lg-3"
+  <div class="col-lg-3 card-principal-col-lg-3 is-link"
         onclick="location.href='{% url 'person_home' %}?init=on';">
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/persons.png' %}" class="card-img-top" alt="...">
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-3 card-principal-col-lg-3"
+  <div class="col-lg-3 card-principal-col-lg-3 is-link"
         onclick="location.href='{% url 'event_home' %}?init=on';">
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/events.png' %}" class="card-img-top" alt="...">
@@ -74,7 +74,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-3 card-principal-col-lg-3"
+  <div class="col-lg-3 card-principal-col-lg-3 is-link"
         onclick="location.href='{% url 'workgroup_home' %}?init=on';">
     <div class="card h-100 card-principal-backimage ">
       <img src="{% static 'images/workgroups.png' %}" class="card-img-top" alt="...">
@@ -87,7 +87,7 @@
 
   {% if request.user.person.center.mentoring %}
     {% if request.user.is_superuser or request.user|has_group:"mentoring" %}
-    <div class="col-lg-3 card-principal-col-lg-3"
+    <div class="col-lg-3 card-principal-col-lg-3 is-link"
           onclick="location.href='{% url 'mentoring_home' %}';">
       <div class="card h-100 card-principal-backimage ">
         <img src="{% static 'images/mentoring.png' %}" class="card-img-top" alt="...">
@@ -101,7 +101,7 @@
 
   {% if request.user.person.center.publicwork %}
     {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
-    <div class="col-lg-3 card-principal-col-lg-3"
+    <div class="col-lg-3 card-principal-col-lg-3 is-link"
           onclick="location.href='{% url 'publicwork_home' %}';">
       <div class="card h-100 card-principal-backimage ">
         <img src="{% static 'images/publicwork.png' %}" class="card-img-top" alt="...">
@@ -115,7 +115,7 @@
 
   {% if request.user.person.center.treasury %}
     {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
-    <div class="col-lg-3 card-principal-col-lg-3"
+    <div class="col-lg-3 card-principal-col-lg-3 is-link"
           onclick="location.href='{% url 'treasury_home' %}';">
       <div class="card h-100 card-principal-backimage ">
         <img src="{% static 'images/reports.png' %}" class="card-img-top" alt="...">
