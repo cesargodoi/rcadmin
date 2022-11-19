@@ -2,7 +2,11 @@ from datetime import datetime, date
 
 from django.http import QueryDict
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import (
+    login_required,
+    permission_required,
+    user_passes_test,
+)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -23,6 +27,10 @@ from ..models import Workgroup, Membership
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_home(request):
     if not check_center_module(request, "mentoring"):
         return render(request, "base/module_not_avaiable.html")
@@ -54,6 +62,10 @@ def mentoring_home(request):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_group_detail(request, pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -104,6 +116,10 @@ def mentoring_group_detail(request, pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_group_frequencies(request, pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -152,6 +168,10 @@ def mentoring_group_frequencies(request, pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_member_detail(request, group_pk, person_pk):
     obj = Person.objects.get(pk=person_pk)
     age = (date.today() - obj.birth).days // 365
@@ -169,6 +189,10 @@ def mentoring_member_detail(request, group_pk, person_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_member_frequencies(request, group_pk, person_pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -209,6 +233,10 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_member_historic(request, group_pk, person_pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -239,6 +267,10 @@ def mentoring_member_historic(request, group_pk, person_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def membership_add_frequency(request, group_pk, person_pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
@@ -312,6 +344,10 @@ def membership_add_frequency(request, group_pk, person_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def membership_update_frequency(request, group_pk, person_pk, freq_pk):
     person = Person.objects.get(pk=person_pk)
     frequency = Frequency.objects.get(pk=freq_pk)
@@ -358,6 +394,10 @@ def membership_update_frequency(request, group_pk, person_pk, freq_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
     frequency = Frequency.objects.get(pk=freq_pk)
 
@@ -386,6 +426,10 @@ def membership_remove_frequency(request, group_pk, person_pk, freq_pk):
 
 @login_required
 @permission_required("workgroup.view_workgroup")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "mentoring" in [pr.name for pr in u.groups.all()]
+)
 def mentoring_add_frequencies(request, group_pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,

@@ -2,11 +2,9 @@ import random
 import factory
 
 from faker import Faker
-from django.utils import timezone
 from user.models import User, Profile
 from center.models import Center
 from event.models import Activity
-from publicwork.models import TempRegOfSeeker, Seeker
 from treasury.models import PayTypes, BankFlags
 
 from rcadmin.common import PAY_TYPES
@@ -90,31 +88,3 @@ class BankflagFactory(factory.django.DjangoModelFactory):
 
     name = f"BankFlag {fake.pyint(min_value=1, max_value=9)}"
     is_active = True
-
-
-#  TempRegOfSeeker
-class TempRegOfSeeker(factory.django.DjangoModelFactory):
-    class Meta:
-        model = TempRegOfSeeker
-
-    name = fake.name()
-    birth = fake.date_of_birth(maximum_age=80)
-    gender = get_gender
-    city = fake.city()
-    state = fake.estado_sigla()
-    country = "BR"
-    solicited_on = timezone.now()
-
-
-#  Seeker
-class SeekerFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = Seeker
-
-    name = fake.name()
-    birth = fake.date_of_birth(maximum_age=80)
-    gender = random.choice(["M", "F"])
-    city = fake.city()
-    state = fake.estado_sigla()
-    country = "BR"
-    solicited_on = timezone.now()

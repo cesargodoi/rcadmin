@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
+
 
 #  Workgroup  #################################################################
 @pytest.mark.django_db
@@ -12,16 +14,7 @@ def test_unlogged_user_cannot_access_workgroup(db, client):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__workgroup_home__user_by_type(
     auto_login_user, user_type, status_code
@@ -35,16 +28,7 @@ def test_access__workgroup_home__user_by_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__workgroup_detail__user_by_type(
     auto_login_user, create_workgroup, user_type, status_code
@@ -58,18 +42,7 @@ def test_access__workgroup_detail__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__workgroup_create__user_by_type(
     auto_login_user, user_type, status_code
 ):
@@ -81,18 +54,7 @@ def test_access__workgroup_create__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__workgroup_update__user_by_type(
     auto_login_user, create_workgroup, user_type, status_code
 ):
@@ -105,18 +67,7 @@ def test_access__workgroup_update__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__workgroup_delete__user_by_type(
     auto_login_user, create_workgroup, user_type, status_code
 ):
@@ -130,16 +81,7 @@ def test_access__workgroup_delete__user_by_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__search_workgroup__user_by_type(
     auto_login_user, user_type, status_code

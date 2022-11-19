@@ -1,21 +1,12 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
+
 
 #  Membership  ################################################################
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__membership_insert__user_by_type(
     auto_login_user, create_workgroup, user_type, status_code
 ):
@@ -28,18 +19,7 @@ def test_access__membership_insert__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__membership_update__user_by_type(
     auto_login_user,
     center_factory,
@@ -59,18 +39,7 @@ def test_access__membership_update__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__membership_delete__user_by_type(
     auto_login_user,
     center_factory,

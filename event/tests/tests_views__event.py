@@ -1,26 +1,18 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
 
-#  Event  ##################################################################
+
 @pytest.mark.events
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__event_home__by_user_type(
     auto_login_user, user_type, status_code
 ):
-    """only 'admin' or 'superuser' can access event_home"""
+    """only 'admin', ' 'superuser' can access event_home"""
     client, user = auto_login_user(group=user_type)
     url = reverse("event_home")
     response = client.get(url)
@@ -30,16 +22,7 @@ def test_access__event_home__by_user_type(
 @pytest.mark.events
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__event_detail__by_user_type(
     auto_login_user, create_event, user_type, status_code
@@ -54,18 +37,7 @@ def test_access__event_detail__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__event_create__by_user_type(
     auto_login_user, user_type, status_code
 ):
@@ -78,18 +50,7 @@ def test_access__event_create__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__event_update__by_user_type(
     auto_login_user, create_event, user_type, status_code
 ):
@@ -103,18 +64,7 @@ def test_access__event_update__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__event_delete__by_user_type(
     auto_login_user, create_event, user_type, status_code
 ):

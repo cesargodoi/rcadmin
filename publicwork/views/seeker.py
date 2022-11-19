@@ -1,7 +1,11 @@
 from datetime import date
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import (
+    login_required,
+    permission_required,
+    user_passes_test,
+)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -67,6 +71,7 @@ def seeker_home(request):
 def seeker_detail(request, pk):
     belongs_center(request, pk, Seeker)
     seeker = Seeker.objects.get(pk=pk)
+
     age = (date.today() - seeker.birth).days // 365
     if request.GET.get("pwg"):
         request.session["pwg"] = request.GET["pwg"]
@@ -81,7 +86,7 @@ def seeker_detail(request, pk):
 
 
 @login_required
-@permission_required("publicwork.add_seeker")
+@user_passes_test(lambda u: u.is_superuser)
 def seeker_create(request):
     if request.method == "POST":
         seeker_form = SeekerForm(request.POST, request.FILES)
@@ -113,8 +118,8 @@ def seeker_create(request):
 @permission_required("publicwork.change_seeker")
 def seeker_update(request, pk):
     belongs_center(request, pk, Seeker)
-
     seeker = Seeker.objects.get(pk=pk)
+
     if request.method == "POST":
         seeker_form = SeekerForm(request.POST, request.FILES, instance=seeker)
         if seeker_form.is_valid():
@@ -142,6 +147,7 @@ def seeker_update(request, pk):
 @login_required
 @permission_required("publicwork.delete_seeker")
 def seeker_delete(request, pk):
+    belongs_center(request, pk, Seeker)
     seeker = Seeker.objects.get(pk=pk)
 
     if request.method == "POST":
@@ -163,8 +169,12 @@ def seeker_delete(request, pk):
 
 
 @login_required
-@permission_required("publicwork.add_seeker")
+@user_passes_test(
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "publicwork" in [pr.name for pr in u.groups.all()]
+)
 def seeker_reinsert(request, pk):
+    belongs_center(request, pk, Seeker)
     seeker = Seeker.objects.get(pk=pk)
 
     if request.method == "POST":

@@ -1,8 +1,9 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
 
-#  Activity  ##################################################################
+
 @pytest.mark.events
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -25,18 +26,7 @@ def test_unlogged_person_cannot_view_activity_page(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__activity_home__by_user_type(
     auto_login_user, user_type, status_code
 ):
@@ -49,18 +39,7 @@ def test_access__activity_home__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__activity_create__by_user_type(
     auto_login_user, user_type, status_code
 ):
@@ -73,18 +52,7 @@ def test_access__activity_create__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__activity_update__by_user_type(
     center_factory,
     activity_factory,
@@ -103,18 +71,7 @@ def test_access__activity_update__by_user_type(
 
 @pytest.mark.events
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("admin", 200),
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__activity_delete__by_user_type(
     center_factory,
     activity_factory,

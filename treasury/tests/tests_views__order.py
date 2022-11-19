@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
+
 
 #  Workgroup  #################################################################
 @pytest.mark.django_db
@@ -12,16 +14,7 @@ def test_unlogged_user_cannot_access_orders(db, client):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
+    "user_type, status_code", permission["adm_tre_trej__200"]
 )
 def test_access__orders__user_by_type(auto_login_user, user_type, status_code):
     """only 'treasury' and 'treasury_jr' can access orders"""
@@ -33,16 +26,7 @@ def test_access__orders__user_by_type(auto_login_user, user_type, status_code):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
+    "user_type, status_code", permission["adm_tre_trej__200"]
 )
 def test_access__order_detail__user_by_type(
     center_factory, auto_login_user, create_order, user_type, status_code
@@ -58,21 +42,12 @@ def test_access__order_detail__user_by_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
+    "user_type, status_code", permission["adm_tre_trej__200"]
 )
 def test_access__order_create__user_by_type(
     center_factory, auto_login_user, create_order, user_type, status_code
 ):
-    """only 'treasury and 'treasury_jr' can access order_create"""
+    """only 'treasury' and 'treasury_jr' can access order_create"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     url = reverse("order_create")
@@ -81,18 +56,7 @@ def test_access__order_create__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_tre__200"])
 def test_access__order_update__user_by_type(
     center_factory, auto_login_user, create_order, user_type, status_code
 ):
@@ -106,18 +70,7 @@ def test_access__order_update__user_by_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_tre__200"])
 def test_access__order_delete__user_by_type(
     center_factory, auto_login_user, create_order, user_type, status_code
 ):
@@ -132,16 +85,7 @@ def test_access__order_delete__user_by_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 302),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
+    "user_type, status_code", permission["adm_tre_trej__200"]
 )
 def test_access__search_orders__user_by_type(
     auto_login_user, user_type, status_code

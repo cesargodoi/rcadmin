@@ -1,8 +1,7 @@
 import pytest
 from django.urls import reverse
 
-
-center_home = reverse("center_home")
+from rcadmin.permissions_for_tests import permission
 
 
 @pytest.mark.django_db
@@ -38,16 +37,7 @@ def test_unlogged_person_cannot_access__center_(center_factory, client, _type):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_tre_trej_pre__200"]
 )
 def test_access__center_home__by_user_type(
     center_factory, auto_login_user, get_group, user_type, status_code
@@ -62,16 +52,7 @@ def test_access__center_home__by_user_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 200),
-        ("treasury_jr", 200),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_tre_trej_pre__200"]
 )
 def test_access__center_detail__by_user_type(
     center_factory, auto_login_user, get_group, user_type, status_code
@@ -89,18 +70,7 @@ def test_access__center_detail__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 404),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__404"])
 def test_access__center_update__by_user_type(
     center_factory, auto_login_user, get_group, user_type, status_code
 ):
@@ -130,16 +100,11 @@ def test_access__center_update__by_offices_own_center(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [("user", 302), ("office", 302), ("treasury", 302), ("treasury_jr", 302)],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__center_create__by_user_type(
     center_factory, auto_login_user, user_type, status_code
 ):
-    """
-    'user', 'office', 'treasury' and treasury_jr can't access center_create
-    """
+    """only 'admin' can access center_create"""
     center_factory.create()
     client, user = auto_login_user(group=user_type)
     url = reverse("center_create")
@@ -148,16 +113,11 @@ def test_access__center_create__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [("user", 302), ("office", 302), ("treasury", 302), ("treasury_jr", 302)],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm__200"])
 def test_access__center_delete__by_user_type(
     center_factory, auto_login_user, user_type, status_code
 ):
-    """
-    'user', 'office', 'treasury' and treasury_jr can't access center_delete
-    """
+    """only 'admin' can access center_delete"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type)
     url = reverse("center_delete", args=[center.pk])
@@ -167,8 +127,7 @@ def test_access__center_delete__by_user_type(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [("user", 302), ("office", 200), ("treasury", 200), ("treasury_jr", 200)],
+    "user_type, status_code", permission["adm_off_tre_trej_pre__200"]
 )
 def test_search__center_home__by_user_types(
     auto_login_user, user_type, status_code

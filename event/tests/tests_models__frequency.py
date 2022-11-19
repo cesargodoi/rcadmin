@@ -72,7 +72,6 @@ def test_clear_frequencies_on_event(
     assert event.frequencies.count() == 0
 
 
-@pytest.mark.actual
 @pytest.mark.events
 @pytest.mark.django_db
 def test_remove_specific_frequency_from_event(

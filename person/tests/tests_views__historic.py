@@ -1,20 +1,13 @@
 import pytest
 from django.urls import reverse
 
+from rcadmin.permissions_for_tests import permission
+
 
 #  Historic  ##################################################################
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 200),
-    ],
+    "user_type, status_code", permission["adm_off_pre__200"]
 )
 def test_access__person_historic__by_user_type(
     center_factory,
@@ -23,7 +16,7 @@ def test_access__person_historic__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access person_historic"""
+    """only 'admin' and 'office' can access person_historic"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
@@ -33,18 +26,7 @@ def test_access__person_historic__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__historic_create__by_user_type(
     center_factory,
     create_person,
@@ -52,7 +34,7 @@ def test_access__historic_create__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access historic_create"""
+    """only 'admin' and 'office' can access historic_create"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
@@ -62,18 +44,7 @@ def test_access__historic_create__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__historic_update__by_user_type(
     center_factory,
     create_person,
@@ -82,7 +53,7 @@ def test_access__historic_update__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access historic_update"""
+    """only 'admin' and 'office' can access historic_update"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
@@ -93,18 +64,7 @@ def test_access__historic_update__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__historic_delete__by_user_type(
     center_factory,
     create_person,
@@ -113,7 +73,7 @@ def test_access__historic_delete__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access historic_delete"""
+    """only 'admin' and 'office' can access historic_delete"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     person = create_person(center=center)
@@ -125,18 +85,7 @@ def test_access__historic_delete__by_user_type(
 
 #  Invitation  ################################################################
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__invitations__by_user_type(
     center_factory,
     create_person,
@@ -144,7 +93,7 @@ def test_access__invitations__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access invitations"""
+    """only 'admin' and 'office' can access invitations"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     url = reverse("invitations")
@@ -153,18 +102,7 @@ def test_access__invitations__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__invite_person__by_user_type(
     center_factory,
     create_person,
@@ -172,7 +110,7 @@ def test_access__invite_person__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access invite_person"""
+    """only 'admin' and 'office' can access invite_person"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     url = reverse("invite_person")
@@ -181,18 +119,7 @@ def test_access__invite_person__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__remove_invite__by_user_type(
     center_factory,
     create_invitation,
@@ -200,7 +127,7 @@ def test_access__remove_invite__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access remove_invite"""
+    """only 'admin' and 'office' can access remove_invite"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     invite = create_invitation(center)
@@ -210,18 +137,7 @@ def test_access__remove_invite__by_user_type(
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type, status_code",
-    [
-        ("user", 302),
-        ("office", 200),
-        ("treasury", 302),
-        ("treasury_jr", 302),
-        ("publicwork", 302),
-        ("publicwork_jr", 302),
-        ("presidium", 302),
-    ],
-)
+@pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__resend_invitation__by_user_type(
     center_factory,
     create_invitation,
@@ -229,7 +145,7 @@ def test_access__resend_invitation__by_user_type(
     user_type,
     status_code,
 ):
-    """only 'office' can access resend_invitation"""
+    """only 'admin' and 'office' can access resend_invitation"""
     center = center_factory.create()
     client, user = auto_login_user(group=user_type, center=center)
     invite = create_invitation(center)

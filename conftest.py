@@ -9,7 +9,6 @@ from factories import (
     UserFactory,
     CenterFactory,
     ActivityFactory,
-    SeekerFactory,
     PaytypeFactory,
     BankflagFactory,
 )
@@ -18,13 +17,17 @@ from person.models import Person, Historic, Invitation
 from event.models import Event
 from workgroup.models import Workgroup, Membership
 from treasury.models import Payment, FormOfPayment, Order
-
-from rcadmin.common import ASPECTS, STATUS, OCCURRENCES
+from publicwork.models import (
+    Seeker,
+    HistoricOfSeeker,
+    Lecture,
+    PublicworkGroup,
+)
+from rcadmin.common import ASPECTS, STATUS, OCCURRENCES, SEEKER_STATUS
 
 register(UserFactory)
 register(CenterFactory)
 register(ActivityFactory)
-register(SeekerFactory)
 register(PaytypeFactory)
 register(BankflagFactory)
 
@@ -276,6 +279,74 @@ def create_order(
     return make_order
 
 
+@pytest.fixture
+def create_seeker(db, center_factory):
+    def make_seeker(**kwargs):
+        new = dict(
+            center=kwargs.get("center") or center_factory.create(),
+            name=kwargs.get("name") or fake.name(),
+            birth=kwargs.get("birth") or fake.date_of_birth(maximum_age=80),
+            gender=kwargs.get("gender") or random.choice(["M", "F"]),
+            city=kwargs.get("city") or fake.city(),
+            state=kwargs.get("state") or fake.state(),
+            country=kwargs.get("country") or fake.country(),
+            email=kwargs.get("email") or fake.email(),
+        )
+        seeker = Seeker.objects.create(**new)
+        return seeker
+
+    return make_seeker
+
+
+@pytest.fixture
+def create_historic_of_seeker(db, create_seeker):
+    def make_historic(**kwargs):
+        new = dict(
+            seeker=kwargs.get("seeker") or create_seeker(),
+            occurrence=kwargs.get("occurrence")
+            or random.choice([occ[0] for occ in SEEKER_STATUS]),
+            date=kwargs.get("date") or timezone.now().date(),
+        )
+        historic = HistoricOfSeeker.objects.create(**new)
+        return historic
+
+    return make_historic
+
+
+@pytest.fixture
+def create_lecture(db, center_factory):
+    def make_lecture(**kwargs):
+        new = dict(
+            center=kwargs.get("center") or center_factory.create(),
+            theme=kwargs.get("theme")
+            or f"Theme_{fake.pyint(min_value=1, max_value=9)}",
+            date=kwargs.get("date") or timezone.now().date(),
+        )
+        lecture = Lecture.objects.create(**new)
+        return lecture
+
+    return make_lecture
+
+
+@pytest.fixture
+def create_publicwork_group(db, center_factory):
+    def make_publicwork_group(**kwargs):
+        center = kwargs.get("center") or center_factory.create()
+        new = dict(
+            name=kwargs.get("name")
+            or f"Publicwork_Group_{fake.pyint(min_value=1, max_value=9)}",
+            center=center,
+            made_by=center.made_by,
+        )
+        publicwork_group = PublicworkGroup.objects.create(**new)
+        publicwork_group.mentors.set(kwargs.get("mentors") or [])
+        publicwork_group.members.set(kwargs.get("members") or [])
+
+        return publicwork_group
+
+    return make_publicwork_group
+
+
 ###############################################################################
 
 
@@ -332,6 +403,9 @@ def get_perms(db):
         "delete_workgroup",
         "view_workgroup",
     ]
+    mentoring = [
+        "view_workgroup",
+    ]
     treasury = [
         "view_center",  # center
         "add_order",  # orde
@@ -345,8 +419,7 @@ def get_perms(db):
         "view_order",
     ]
     publicwork = [
-        "add_seeker",  # seeker
-        "change_seeker",
+        "change_seeker",  # seeker
         "delete_seeker",
         "view_seeker",
         "add_publicworkgroup",  # publicwork_group
@@ -388,12 +461,20 @@ def get_perms(db):
         "view_person",  # person
         "view_membership",  # membership
         "view_workgroup",  # workgroup
+        "view_seeker",  # publicwork
+        "view_historicofseeker",
+        "view_lecture",
+        "view_listener",
+        "view_publicworkgroup",
     ]
 
     perms = {
         "admin": [perm for perm in Permission.objects.all()],
         "user": [Permission.objects.get(codename=perm) for perm in user],
         "office": [Permission.objects.get(codename=perm) for perm in office],
+        "mentoring": [
+            Permission.objects.get(codename=perm) for perm in mentoring
+        ],
         "treasury": [
             Permission.objects.get(codename=perm) for perm in treasury
         ],

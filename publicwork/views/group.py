@@ -1,7 +1,11 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import (
+    login_required,
+    permission_required,
+    user_passes_test,
+)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -157,8 +161,8 @@ def group_create(request):
 @permission_required("publicwork.change_publicworkgroup")
 def group_update(request, pk):
     belongs_center(request, pk, PublicworkGroup)
-
     pw_group = PublicworkGroup.objects.get(pk=pk)
+
     if request.method == "POST":
         pw_group_form = GroupForm(request.POST, instance=pw_group)
         if pw_group_form.is_valid():
@@ -186,6 +190,7 @@ def group_update(request, pk):
 @login_required
 @permission_required("publicwork.delete_publicworkgroup")
 def group_delete(request, pk):
+    belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
     if request.method == "POST":
@@ -207,6 +212,7 @@ def group_delete(request, pk):
 @login_required
 @permission_required("publicwork.add_publicworkgroup")
 def group_reinsert(request, pk):
+    belongs_center(request, pk, PublicworkGroup)
     pw_group = PublicworkGroup.objects.get(pk=pk)
 
     if request.method == "POST":
@@ -225,6 +231,9 @@ def group_reinsert(request, pk):
 # seeker frequencies
 @login_required
 @permission_required("publicwork.view_publicworkgroup")
+@user_passes_test(
+    lambda u: "presidium" not in [pr.name for pr in u.groups.all()]
+)
 def group_frequencies(request, pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
         request,
