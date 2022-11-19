@@ -8,11 +8,8 @@ from django.conf import settings
 
 from center.models import Center
 from person.models import Person
-from rcadmin.common import (
-    cpf_validation,
-    cpf_format,
-    DEFAULT_DATES,
-)
+from rcadmin.common import cpf_validation, cpf_format
+from base.sanitize_to_import import DEFAULT_DATES
 
 
 """

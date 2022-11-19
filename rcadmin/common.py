@@ -1,7 +1,5 @@
 import re
-import pandas as pd
 
-from io import StringIO
 from unicodedata import normalize
 
 from django import forms
@@ -135,7 +133,13 @@ BR_REGIONS = {
 
 
 def sanitize_name(name):
-    return " ".join([w.lower().capitalize() for w in name.split()])
+    words = []
+    for word in [w.lower() for w in name.split()]:
+        if len(word) > 3:
+            words.append(word.capitalize())
+        else:
+            words.append(word)
+    return " ".join(words)
 
 
 def us_inter_char(txt, codif="utf-8"):
@@ -341,109 +345,12 @@ def get_pagination(request, limit=10):
     return (page, _from, _to, limit)
 
 
-#  sanitize csv ###############################################################
-# lists to sanitize class
-DEFAULT_COLUMNS = [
-    "reg",
-    "name",
-    "gender",
-    "birth",
-    "__full_address",
-    "district",
-    "city",
-    "state_prov",
-    "zip",
-    "country",
-    "rg",
-    "exp",
-    "cpf",
-    "phone",
-    "cell_phone",
-    "email",
-    "profession",
-    "sos_contact",
-    "sos_phone",
-    "ps",
-    "A1",
-    "A2",
-    "A3",
-    "A4",
-    "GR",
-    "A5",
-    "A6",
-]
-
-DEFAULT_DATES = ["birth", "A1", "A2", "A3", "A4", "GR", "A5", "A6"]
-
-
-class SanitizeCsv:
-    def __init__(
-        self,
-        file,
-        path,
-        columns=DEFAULT_COLUMNS,
-        dates=DEFAULT_DATES,
-        fields=False,
-    ):
-        self.file = file
-        self.path = path
-        self.columns = columns
-        self.dates = dates
-        self.objs = [
-            col for col in columns if col not in dates and col != "email"
-        ]
-        self.fields = fields
-        self.df = self.get_dataframe
-
-    @property
-    def get_dataframe(self):
-        df = pd.read_csv(
-            StringIO(self.file.read().decode("utf-8")),
-            parse_dates=self.dates,
-            dtype={k: object for k in self.objs},
-        )
-        for column in self.columns:
-            if column not in df.columns:
-                return False
-        return df[self.columns]
-
-    def adjust_data(self):
-        # remove NaN
-        for _obj in self.objs:
-            self.df[_obj] = self.df[_obj].fillna("")
-        # split __full_address in address, number, complement
-        if "__full_address" in self.df.columns:
-            self.df[["address", "number", "complement"]] = (
-                self.df["__full_address"]
-                .str.split(",", expand=True)
-                .fillna("")
-            )
-        # clear phones
-        phones = [_ph for _ph in self.columns if "phone" in _ph]
-        if phones:
-            for phone in phones:
-                self.df[phone] = (
-                    self.df[phone]
-                    .apply(lambda x: self.clear_phone(x))
-                    .fillna("")
-                )
-
-    def generate_files(self):
-        if self.fields:
-            self.df.to_csv(f"{self.path}/fields__{self.file}")
-        elif self.df["email"].isnull().sum() > 0:
-            without_email = self.df.loc[self.df["email"].isna()]
-            without_email_path = f"{self.path}/without_email/we__{self.file}"
-            without_email.reset_index(drop=True).to_csv(without_email_path)
-
-            with_email = self.df.drop(without_email.index)
-            with_email_path = f"{self.path}/{self.file}"
-            with_email.reset_index(drop=True).to_csv(with_email_path)
-        else:
-            self.df.to_csv(f"{self.path}/{self.file}")
-
-    @staticmethod
-    def clear_phone(phone):
-        if isinstance(phone, str):
-            return "".join(re.findall(r"\d*", phone))
-        return phone
+def check_center_module(request, module):
+    if module == "mentoring":
+        return request.user.person.center.mentoring
+    elif module == "treasury":
+        return request.user.person.center.treasury
+    elif module == "publicwork":
+        return request.user.person.center.publicwork
+    elif module == "accommodation":
+        return request.user.person.center.accommodation

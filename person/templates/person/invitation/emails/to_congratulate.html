@@ -1,0 +1,32 @@
+{% load i18n %} 
+
+{% autoescape off %}
+<h1 style="color:#3366cc">{% trans 'Congratulations' %} {{ object.name }}!</h1>
+
+Seu cadastro foi realizado com sucesso e você já foi incluído(a) no grupo de
+alunos do <strong>{{ object.get_aspect_display }}</strong> de nossa escola, 
+no núcleo de <strong>{{ object.center }}</strong>.  
+<br>
+Nos próximos dias a secretaria do núcleo entrará em contato com você
+para lhe passar maiores imformações.
+<br>
+No link abaixo você tem acesso à sua página de perfil de aluno onde 
+estão seus dados. É sua responsabilidade mantê-los atualizados.
+<br><br>
+<a href="https://rcadmin.rosacruzaurea.org.br/">rcadmin.rosacruzaurea.org.br/</a>
+<br><br>
+Será uma alegria te conhecer pessoalmente!
+<br><br>
+Atenciosamente
+<br><br>
+Direção da Rosacruz Áurea
+<hr>
+<h3>{{ object.center.name }}</h3>
+{{ object.center.phone_1 }}<br>
+{{ object.center.email }}<br>
+<br>
+{{ object.center.address }}, {{ object.center.number }}&nbsp;&nbsp;<small><em>{{ object.center.complement }}</em></small><br>
+{{ object.center.district }} - {{ object.center.city }} - {{ object.center.state }}<br>
+{{ object.center.get_country_display }} - {{ object.center.zip_code }}
+<hr>
+{% endautoescape %}

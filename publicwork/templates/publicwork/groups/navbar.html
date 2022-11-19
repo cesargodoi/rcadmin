@@ -1,6 +1,5 @@
 {% load base_extras %}
 {% load i18n %}
-
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" id="submenu">
   <a class="navbar-brand mr-0 mr-md-2" 
      href="#" aria-label="Bootstrap">
@@ -26,77 +25,78 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-
-    {% if nav == "sk_home" %}
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          href="{% url 'seeker_create' %}">
-          <i class="fas fa-plus"></i> 
-          {% trans 'Seeker' %}
-        </a>
-      </li>
-    {% endif %}
-  
-    {% if nav == "info" %}
-      {% if not request.user|has_group:"publicwork_jr" %}
+    {% if not request.user|has_group:"presidium" %}
+      {% if nav == "sk_home" %}
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_mentor' object.pk %}?init=on">
-            <i class="fas fa-plus"></i> <i class="fas fa-user-graduate"></i>
-            <!-- Mentor -->
+            href="{% url 'seeker_create' %}">
+            <i class="fas fa-plus"></i> 
+            {% trans 'Seeker' %}
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_member' object.pk %}?init=on">
-            <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
-            <!-- Member -->
-          </a>
-        </li>
-        <li class="nav-item">
-          <a 
-            href="#"
-            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
-            onclick="manageData('{% url 'group_update' object.pk %}')"
-          >
-            <i class="fas fa-edit"></i> 
-            {% trans 'Edit' %}
-          </a>
-        </li>
-        {% if object.is_active %}
+      {% endif %}
+    
+      {% if nav == "info" %}
+        {% if not request.user|has_group:"publicwork_jr" %}
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+              href="{% url 'group_add_mentor' object.pk %}?init=on">
+              <i class="fas fa-plus"></i> <i class="fas fa-user-graduate"></i>
+              <!-- Mentor -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+              href="{% url 'group_add_member' object.pk %}?init=on">
+              <i class="fas fa-plus"></i> <i class="fas fa-user"></i>
+              <!-- Member -->
+            </a>
+          </li>
           <li class="nav-item">
             <a 
               href="#"
-              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
-              onclick="manageData('{% url 'group_delete' object.pk %}')"
+              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-warning" 
+              onclick="manageData('{% url 'group_update' object.pk %}')"
             >
-              <i class="fas fa-trash-alt"></i> 
-              {% trans 'Del' %}
+              <i class="fas fa-edit"></i> 
+              {% trans 'Edit' %}
             </a>
           </li>
-        {% else %}
-          <li class="nav-item">
-            <a 
-              href="#"
-              class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
-              onclick="manageData('{% url 'group_reinsert' object.pk %}')"
-            >
-              <i class="fas fa-sign-in-alt"></i> 
-              {% trans 'Reinsert' %}
-            </a>
-          </li>
+          {% if object.is_active %}
+            <li class="nav-item">
+              <a 
+                href="#"
+                class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-danger" 
+                onclick="manageData('{% url 'group_delete' object.pk %}')"
+              >
+                <i class="fas fa-trash-alt"></i> 
+                {% trans 'Del' %}
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a 
+                href="#"
+                class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 
+                onclick="manageData('{% url 'group_reinsert' object.pk %}')"
+              >
+                <i class="fas fa-sign-in-alt"></i> 
+                {% trans 'Reinsert' %}
+              </a>
+            </li>
+          {% endif %}
         {% endif %}
       {% endif %}
-    {% endif %}
 
-    {% if nav == "frequencies" %}
-      <li class="nav-item">
-        <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-            href="{% url 'group_add_frequencies' object.pk %}">
-          <i class="fas fa-calendar-plus"></i>
-          {% trans 'Frequencies' %}
-        </a>
-      </li>
+      {% if nav == "frequencies" %}
+        <li class="nav-item">
+          <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+              href="{% url 'group_add_frequencies' object.pk %}">
+            <i class="fas fa-calendar-plus"></i>
+            {% trans 'Frequencies' %}
+          </a>
+        </li>
+      {% endif %}
     {% endif %}
 
     <li class="nav-item">

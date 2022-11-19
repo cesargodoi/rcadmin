@@ -39,44 +39,45 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
-
-    {% if nav == "sk_home" %}
-      <li class="nav-item">
-        <a 
-          href="#"
-          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          onclick="manageData('{% url 'seeker_create' %}')"
-        >
-          <i class="fas fa-plus"></i>
-          {% trans 'Seeker' %}  
-        </a>
-      </li>
-    {% endif %}
-  
-    {% if nav == "lc_home" %}
-      <li class="nav-item">
-        <a 
-          href="#"
-          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          onclick="manageData('{% url 'lecture_create' %}')"
-        >
-          <i class="fas fa-plus"></i> 
-          {% trans 'Lecture' %}
-        </a>
-      </li>
-    {% endif %}
-  
-    {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
-      <li class="nav-item">
-        <a 
-          href="#"
-          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
-          onclick="manageData('{% url 'group_create' %}')"
-        >
-          <i class="fas fa-plus"></i> 
-          {% trans 'Group' %}
-        </a>
-      </li>
+    {% if not request.user|has_group:"presidium" %}
+      {% if nav == "sk_home" %}
+        <li class="nav-item">
+          <a 
+            href="#"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+            onclick="manageData('{% url 'seeker_create' %}')"
+          >
+            <i class="fas fa-plus"></i>
+            {% trans 'Seeker' %}  
+          </a>
+        </li>
+      {% endif %}
+    
+      {% if nav == "lc_home" %}
+        <li class="nav-item">
+          <a 
+            href="#"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+            onclick="manageData('{% url 'lecture_create' %}')"
+          >
+            <i class="fas fa-plus"></i> 
+            {% trans 'Lecture' %}
+          </a>
+        </li>
+      {% endif %}
+    
+      {% if nav == 'gp_home' and not request.user|has_group:"publicwork_jr" %}
+        <li class="nav-item">
+          <a 
+            href="#"
+            class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+            onclick="manageData('{% url 'group_create' %}')"
+          >
+            <i class="fas fa-plus"></i> 
+            {% trans 'Group' %}
+          </a>
+        </li>
+      {% endif %}
     {% endif %}
 
     <li class="nav-item">

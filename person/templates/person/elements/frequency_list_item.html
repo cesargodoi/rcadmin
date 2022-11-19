@@ -17,12 +17,14 @@
   </small>
 </div>
 
-<div class="col-sm-2 text-right">
-  <button 
-    type="button" 
-    onclick="manageData('{{ obj.del_link }}')"
-    class="btn btn-light text-danger btn-sm"
-  >
-    <i class="fas fa-trash-alt"></i>
-  </button>
-</div>
+{% if not request.user|has_group:"presidium" %}
+  <div class="col-sm-2 text-right">
+    <button 
+      type="button" 
+      onclick="manageData('{{ obj.del_link }}')"
+      class="btn btn-light text-danger btn-sm"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+{% endif %}

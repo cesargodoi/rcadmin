@@ -52,6 +52,17 @@ class CenterAdmin(admin.ModelAdmin):
             },
         ),
         (
+            "Extra modules",
+            {
+                "fields": [
+                    "mentoring",
+                    "treasury",
+                    "publicwork",
+                    "accommodation",
+                ]
+            },
+        ),
+        (
             "Auth Informations",
             {"fields": ["is_active", "created_on", "modified_on", "made_by"]},
         ),

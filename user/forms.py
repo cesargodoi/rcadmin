@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import User, Profile
 from treasury.models import Payment, FormOfPayment
 from rcadmin.common import PROFILE_PAYFORM_TYPES
@@ -10,16 +11,20 @@ class UserForm(forms.ModelForm):
         fields = ["email"]
 
 
+class UserFormReadonly(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["email"]
+        widgets = {
+            "email": forms.widgets.EmailInput(attrs={"readonly": "readonly"}),
+        }
+
+
 class ProfileFormUpdate(forms.ModelForm):
     class Meta:
         model = Profile
         fields = "__all__"
         exclude = ["user", "image"]
-        widgets = {
-            "image": forms.FileInput(
-                attrs={"accept": "video/*;capture=camera"}
-            ),
-        }
 
 
 class MyPaymentForm(forms.ModelForm):
@@ -53,3 +58,8 @@ class ImageFormUpdate(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ["image"]
+        widgets = {
+            "image": forms.FileInput(
+                attrs={"accept": "video/*;capture=camera"}
+            ),
+        }

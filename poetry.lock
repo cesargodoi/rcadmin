@@ -314,6 +314,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "factory-boy"
 version = "3.2.1"
 description = "A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby."
@@ -560,6 +568,17 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jsonfield"
+version = "3.1.0"
+description = "A reusable Django field that allows you to store validated JSON in your model."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
 
 [[package]]
 name = "jsonschema"
@@ -845,6 +864,17 @@ description = "NumPy is the fundamental package for array computing with Python.
 category = "main"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "openpyxl"
+version = "3.0.10"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "packaging"
@@ -1407,7 +1437,7 @@ notebook = ">=4.4.1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ce5335b8ad629e71894e37eedee2673e8d0f99dd886ff2ea04e8616d4f090986"
+content-hash = "0ddf5a6fa7c243ab2ac3fd833cee2a44cac835b17198c598de70692409faf9fb"
 
 [metadata.files]
 appnope = []
@@ -1437,6 +1467,7 @@ django-htmx = []
 django-rosetta = []
 dynaconf = []
 entrypoints = []
+et-xmlfile = []
 factory-boy = []
 faker = []
 fastjsonschema = []
@@ -1454,6 +1485,7 @@ ipywidgets = []
 isort = []
 jedi = []
 jinja2 = []
+jsonfield = []
 jsonschema = []
 jupyter = []
 jupyter-client = []
@@ -1474,6 +1506,7 @@ nbformat = []
 nest-asyncio = []
 notebook = []
 numpy = []
+openpyxl = []
 packaging = []
 pandas = []
 pandocfilters = []

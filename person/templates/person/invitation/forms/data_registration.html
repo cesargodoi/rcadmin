@@ -1,0 +1,179 @@
+{% extends "user/base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block recaptcha %}
+  <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+{% endblock recaptcha %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+  <div class="box-jady mt-4">
+    <div class="alert-jady alert-primary-jady text-justify">
+      <div class="row">
+        <div class="col-lg-2 text-center">
+          <img
+            class="m-4" 
+            src="{% static 'img/RCA-Symbol-white.png' %}" 
+            alt="rca-logo" 
+            width="70" 
+            height="70"
+          >
+        </div>
+        <div class="col-lg-8">
+          <h4 class="mt-3 border-bottom">
+            Escola Espiritual da Rosacruz Áurea
+          </h4>
+          <p>Formulário de cadastro de aluno</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="alert-jady alert-secondary-jady">
+      <form 
+        id="form"
+        class="form-group text-justify" 
+        method="post" 
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <div class="pb-4">
+          <div class="form-row">
+            <div class="col-lg-8">{{ form.name | as_crispy_field }}</div>
+            <div class="col-lg-4">{{ form.id_card | as_crispy_field }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col-lg-6">{{ form.birth | as_crispy_field }}</div>
+            <div class="col-lg-6">{{ form.gender | as_crispy_field }}</div>
+          </div>
+        </div>
+        <div class="pb-4">
+          <div class="form-row">
+            <div class="col-lg-6">{{ form.phone | as_crispy_field }}</div>
+            <div class="col-lg-6">{{ form.email | as_crispy_field }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col-lg-6">{{ form.sos_contact | as_crispy_field }}</div>
+            <div class="col-lg-6">{{ form.sos_phone | as_crispy_field }}</div>
+          </div>
+        </div>
+        <div class="pb-4">
+          {% if total_address %}
+            <div class="form-row">
+              <div class="col-lg-4">{{ form.address | as_crispy_field }}</div>
+              <div class="col-lg-2">{{ form.number | as_crispy_field }}</div>
+              <div class="col-lg-3">{{ form.complement | as_crispy_field }}</div>
+              <div class="col-lg-3">{{ form.district | as_crispy_field }}</div>
+            </div>
+            <div class="form-row">
+              <div class="col-lg-4">{{ form.city | as_crispy_field }}</div>
+              <div class="col-lg-2">{{ form.state | as_crispy_field }}</div>
+              <div class="col-lg-3">{{ form.country | as_crispy_field }}</div>
+              <div class="col-lg-3">{{ form.zip_code | as_crispy_field }}</div>
+            </div>
+          {% else %}
+            <div class="form-row">
+              <div class="col-lg-6">{{ form.city | as_crispy_field }}</div>
+              <div class="col-lg-2">{{ form.state | as_crispy_field }}</div>
+              <div class="col-lg-4">{{ form.country | as_crispy_field }}</div>
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="pb-4">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <label for="password">{% trans 'Password' %}*</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <a class="text-secondary" onclick="togglePassword('password')">
+                      <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div id="passStrength" class="d-flex justify-content-start mt-1 mb-1 pt-2 pb-2 pl-4">
+                <span id="lengthPass" class="mr-4 text-secondary small"><i class="fa-regular fa-square"></i> +10 caract.</span>
+                <span id="numberChar" class="mr-4 text-secondary small"><i class="fa-regular fa-square"></i> 0-9</span>
+                <span id="lowerChar" class="mr-4 text-secondary small"><i class="fa-regular fa-square"></i> a-z</span>
+                <span id="upperChar" class="mr-4 text-secondary small"><i class="fa-regular fa-square"></i> A-Z</span>
+                <span id="specialChar" class="mr-4 text-secondary small"><i class="fa-regular fa-square"></i> !@#$-...</span>
+                <span id="strength"></span>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label for="passwordRepeat">{% trans 'Repeat the password' %}*</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="passwordRepeat" name="passwordRepeat" minlength="8" required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <a class="text-secondary" onclick="togglePassword('passwordRepeat')">
+                      <i id="passwordRepeatIcon" class="fa-solid fa-eye"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div id="passDiff" class="font-weight-bold text-danger small mt-1 mb-1 pt-2 pb-2 pl-4"></div>
+            </div>
+          </div>
+          {{ form.invited_on | as_crispy_field }}
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="accept" name="accept">
+            <label class="form-check-label" for="accept">
+              {% trans 'I have read and agree to become a pupil and I am aware of the ' %} 
+              <a data-toggle="modal" 
+                data-target="#modal"
+                href="#"> 
+                {% trans 'Data Policy' %} 
+              </a>
+              {% trans 'of Golden Rosicrucian.' %}
+            </label>
+          </div>
+          <!-- reCAPTCHA input -->
+          <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+          
+          <div class="text-right mt-4">
+            <input 
+              id="submit-button" 
+              type="submit" 
+              class="btn btn-primary btn-lg" 
+              value="{% translate 'Register' %}" 
+              disabled
+            >
+            <a class="btn btn-info btn-lg" href="#" onclick="window.history.go(-1); return false;">{% trans 'Go back' %}</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% include "base/data_policy/modal.html" %}
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'js/registration.js' %}"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    }); 
+
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+
+    // comment recaptcha in development to use popover
+    global grecaptcha
+    grecaptcha.ready(function() {
+      grecaptcha.execute('{{recaptcha_site_key}}', {action: "/contact/"}).then(function(token) {
+        document.getElementById('g-recaptcha-response').value = token;
+      });
+    });
+    
+  </script>
+{% endblock %}

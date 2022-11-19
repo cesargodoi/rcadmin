@@ -77,6 +77,12 @@ class Center(models.Model):
     observations = models.CharField(
         _("observations"), max_length=200, null=True, blank=True
     )
+    # modules
+    mentoring = models.BooleanField(default=False)
+    treasury = models.BooleanField(default=False)
+    publicwork = models.BooleanField(default=False)
+    accommodation = models.BooleanField(default=False)
+    # auth sign
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)

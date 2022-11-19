@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load static %}
 {% load i18n %}
 
@@ -12,12 +13,14 @@
     src="{% static 'img/default_profile.jpg' %}"
   >
 {% endif %}
-<div class="text-right photo-edit-button">
-  <a 
-    href="#"
-    class="btn btn-sm btn-outline-warning mb-4" 
-    onclick="manageData('{% url 'update_image' object.id %}')"
-  >
-    <i class="fas fa-edit"></i> 
-  </a>
-</div>
+{% if not request.user|has_group:"presidium" %}
+  <div class="text-right photo-edit-button">
+    <a 
+      href="#"
+      class="btn btn-sm btn-outline-warning mb-4" 
+      onclick="manageData('{% url 'update_image' object.id %}')"
+    >
+      <i class="fas fa-edit"></i> 
+    </a>
+  </div>
+{% endif %}

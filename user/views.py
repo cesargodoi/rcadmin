@@ -14,10 +14,10 @@ from django.utils.translation import gettext as _
 from event.models import Event
 from person.models import Historic
 from treasury.models import BankFlags, Order, PayTypes
-from rcadmin.common import PROFILE_PAYFORM_TYPES
+from rcadmin.common import PROFILE_PAYFORM_TYPES, check_center_module
 
 from .forms import (
-    UserForm,
+    UserFormReadonly,
     ProfileFormUpdate,
     ImageFormUpdate,
     MyPaymentForm,
@@ -49,7 +49,7 @@ def updt_profile(request):
     template_name = "user/forms/updt_profile.html"
     if request.method == "POST":
         # updating the user
-        user_form = UserForm(request.POST, instance=request.user)
+        user_form = UserFormReadonly(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
         # updating the user.profile
@@ -69,7 +69,7 @@ def updt_profile(request):
                 },
             )
     else:
-        user_form = UserForm(instance=request.user)
+        user_form = UserFormReadonly(instance=request.user)
         profile_form = ProfileFormUpdate(instance=request.user.profile)
 
     context = {
@@ -162,6 +162,9 @@ def scan_qrcode_event(request):
 
 @login_required
 def user_payments(request):
+    if not check_center_module(request, "treasury"):
+        return render(request, "base/module_not_avaiable.html")
+
     template_name = "user/profile/detail.html"
     if request.session.get("my_order"):
         del request.session["my_order"]
@@ -178,6 +181,9 @@ def user_payments(request):
 
 @login_required
 def user_new_order(request):
+    if not check_center_module(request, "treasury"):
+        return render(request, "base/module_not_avaiable.html")
+
     template_name = "user/profile/new_order.html"
     if not request.session.get("my_order"):
         request.session["my_order"] = {

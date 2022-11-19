@@ -2,11 +2,13 @@ import random
 import factory
 
 from faker import Faker
-from django.utils import timezone
 from user.models import User, Profile
 from center.models import Center
 from event.models import Activity
-from publicwork.models import TempRegOfSeeker, Seeker
+from treasury.models import PayTypes, BankFlags
+
+from rcadmin.common import PAY_TYPES
+
 
 fake = Faker("pt_BR")
 get_gender = random.choice(["M", "F"])
@@ -14,8 +16,6 @@ get_gender = random.choice(["M", "F"])
 
 #  User
 class UserFactory(factory.django.DjangoModelFactory):
-    Faker.seed()
-
     class Meta:
         model = User
 
@@ -55,6 +55,10 @@ class CenterFactory(factory.django.DjangoModelFactory):
     phone_1 = fake.phone_number()
     email = fake.email()
     center_type = "CNT"
+    mentoring = True
+    treasury = True
+    publicwork = True
+    accommodation = True
     made_by = factory.SubFactory(UserFactory)
 
 
@@ -68,29 +72,19 @@ class ActivityFactory(factory.django.DjangoModelFactory):
     multi_date = False
 
 
-#  TempRegOfSeeker
-class TempRegOfSeeker(factory.django.DjangoModelFactory):
+#  PayTypes
+class PaytypeFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = TempRegOfSeeker
+        model = PayTypes
 
-    name = fake.name()
-    birth = fake.date_of_birth(maximum_age=80)
-    gender = get_gender
-    city = fake.city()
-    state = fake.estado_sigla()
-    country = "BR"
-    solicited_on = timezone.now()
+    name = f"PayType {fake.pyint(min_value=1, max_value=9)}"
+    pay_type = random.choice([pt[0] for pt in PAY_TYPES])
 
 
-#  Seeker
-class SeekerFactory(factory.django.DjangoModelFactory):
+#  BankFlags
+class BankflagFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = Seeker
+        model = BankFlags
 
-    name = fake.name()
-    birth = fake.date_of_birth(maximum_age=80)
-    gender = random.choice(["M", "F"])
-    city = fake.city()
-    state = fake.estado_sigla()
-    country = "BR"
-    solicited_on = timezone.now()
+    name = f"BankFlag {fake.pyint(min_value=1, max_value=9)}"
+    is_active = True

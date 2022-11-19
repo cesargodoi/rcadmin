@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     frequency_ps,
     historic,
+    invitation,
     membership_ps,
     person,
     tools,
@@ -24,6 +25,43 @@ urlpatterns = [
     path("<uuid:id>/delete/", person.person_delete, name="person_delete"),
     path(
         "<uuid:id>/reinsert/", person.person_reinsert, name="person_reinsert"
+    ),
+]
+
+# invitation
+urlpatterns += [
+    path("invitations/", invitation.invitations, name="invitations"),
+    path("invitations/list", invitation.invite_list, name="invite_list"),
+    path("invitations/invite", invitation.invite, name="invite_person"),
+    path(
+        "invitations/<uuid:pk>/remove",
+        invitation.remove_invite,
+        name="remove_invite",
+    ),
+    path(
+        "invitations/send_invitation/<uuid:new_person>",
+        invitation.send_invitation,
+        name="send_invitation",
+    ),
+    path(
+        "invitations/resend_invitation/<uuid:pk>",
+        invitation.resend_invitation,
+        name="resend_invitation",
+    ),
+    path(
+        "invitations/confirm_invitation/<uuid:token>/",
+        invitation.confirm_invitation,
+        name="confirm_invitation",
+    ),
+    path(
+        "invitations/congratulations/<uuid:pk>/",
+        invitation.congratulations,
+        name="congratulations",
+    ),
+    path(
+        "invitations/reg_feedback/",
+        invitation.reg_feedback,
+        name="reg_feedback",
     ),
 ]
 

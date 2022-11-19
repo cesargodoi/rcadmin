@@ -1,0 +1,86 @@
+{% extends "user/base.html" %}
+{% load static %}
+{% load i18n %} 
+
+{% block content %}
+<div class="jumbotron text-justify">
+  <h1 class="text-center">{% trans 'Congratulations' %} {{ object.name }}!</h1>
+</div>
+<div class="row">
+  <div class="col-md-8 text-justify" style="font-size: 1.3rem;">
+    <p class="mb-2">
+      Seu cadastro foi realizado com sucesso e você já foi incluído(a) no grupo de
+      alunos do <strong>{{ object.get_aspect_display }}</strong> de nossa escola, 
+      no núcleo de <strong>{{ object.center }}</strong>.  
+    </p>
+    <p class="mb-2">
+      Nos próximos dias a secretaria do núcleo entrará em contato com você
+      para lhe passar maiores imformações.
+    </p>
+    <p class="mb-2">
+      No link abaixo você tem acesso à sua página de perfil de aluno onde 
+      estão seus dados. É sua responsabilidade mantê-los atualizados.
+    </p>
+  
+    <a href="https://rcadmin.rosacruzaurea.org.br/">rcadmin.rosacruzaurea.org.br/</a>
+
+    <p class="mb-4 mt-2">Será uma alegria te conhecer pessoalmente!</p>
+
+    <p class="mb-4 text-right">Atenciosamente</p>
+
+    <h4 class="mb-2 text-right">Direção da Rosacruz Áurea</h4>
+
+  </div>
+  <div class="col-md-4 d-flex justify-content-center">
+    <div class="card border-secondary mb-3" style="width: 20rem;">
+      {% if object.center.image %}
+        <img src="{{ object.center.image.url }}" class="card-img-top">
+      {% else %}
+        <img src="{% static 'img/default_center.jpg' %}" class="card-img-top">
+      {% endif %}
+      <div class="card-body text-right">
+        <h5 class="card-title">{{ object.center.name }}</h5>
+        <p class="card-text">{{ object.center.phone_1 }}</p>
+        <p class="card-text">{{ object.center.email }}</p>
+        <br>
+        <address class="card-text">
+          {% if object.center.address %}
+            {{ object.center.address }}
+          {% endif %}
+          {% if object.center.number %}
+            , {{ object.center.number }}
+          {% endif %}
+          {% if object.center.complement %}
+            &nbsp;&nbsp;<small><em>{{ object.center.complement }}</em></small>
+          {% endif %}
+          <br>
+          {% if object.center.district %}
+            {{ object.center.district }} 
+          {% endif %}
+          {% if object.center.city %}
+            - {{ object.center.city }} 
+          {% endif %}
+          {% if object.center.state %}
+            - {{ object.center.state }} 
+          {% endif %}
+          <br>
+          {% if object.center.country %}
+            {{ object.center.get_country_display }} 
+          {% endif %}
+          {% if object.center.zip_code %}
+            - {{ object.center.zip_code }}
+          {% endif %}
+        </address>
+      </div>
+    </div>
+  </div>
+</div>
+  
+{% endblock %}
+
+
+
+
+
+
+

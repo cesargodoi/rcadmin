@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% load i18n %}
 <div class="col-sm-6">
   <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
@@ -37,28 +38,30 @@
 </div>
 
 <div class="col-sm text-right">
-  {% if obj.click_link %}
-    {% if obj.seeker.status != 'ITD'%}
-      {% if obj.center == request.user.person.center or request.user.is_superuser %}
-        <a 
-          href="#"
-          class="btn btn-light text-warning btn-sm" 
-          onclick="manageData('{{ obj.click_link }}')"
-        >
-          <i class="fas fa-edit"></i>
-        </a>
+  {% if not request.user|has_group:"presidium" %}
+    {% if obj.click_link %}
+      {% if obj.seeker.status != 'ITD'%}
+        {% if obj.center == request.user.person.center or request.user.is_superuser %}
+          <a 
+            href="#"
+            class="btn btn-light text-warning btn-sm" 
+            onclick="manageData('{{ obj.click_link }}')"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+        {% endif %}
       {% endif %}
     {% endif %}
-  {% endif %}
-  {% if obj.seeker.status != 'ITD' %}
-    {% if obj.del_link %}
-      <a 
-        href="#"
-        class="btn btn-light text-danger btn-sm" 
-        onclick="manageData('{{ obj.del_link }}')"
-      >
-        <i class="fas fa-trash-alt"></i>
-      </a>
+    {% if obj.seeker.status != 'ITD' %}
+      {% if obj.del_link %}
+        <a 
+          href="#"
+          class="btn btn-light text-danger btn-sm" 
+          onclick="manageData('{{ obj.del_link }}')"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      {% endif %}
     {% endif %}
   {% endif %}
 </div>

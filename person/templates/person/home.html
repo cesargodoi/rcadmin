@@ -5,16 +5,13 @@
 
   {% include "person/navbar.html" %}
 
-    <article class="media content-section mb-1">
-      <div class="media-body">
-        <form class="form-control-sm mt-1" method="GET">
-          {% include "base/searchs/person.html" %}
-        </form>
-        <br>
-        {% include 'person/persons.html' %}
-      </div>
-    </article>
-    <br>
+  {% if nav == "home" %}
+    {% include "person/person_home.html" %}
+  {% elif nav == "invitations" %}
+    {% include "person/invitation/invitation_home.html" %}
+  {% endif %}
+  
+  <br>
 
   {% include "base/elements/modal_form.html" %}
 
@@ -22,9 +19,7 @@
 
 {% block scripts %}
   <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();   
-    }); 
+    $(document).ready(() => {$('[data-toggle="tooltip"]').tooltip()}); 
 
     function manageData(url) {
       htmx.ajax('GET', url, '#formBody')

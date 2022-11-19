@@ -146,7 +146,10 @@ def historic_delete(request, person_id, pk):
 
 # handlers
 def adjust_person_side(person, occurrence, dt):
-    date = datetime.strptime(dt, "%Y-%m-%d").date()
+    if isinstance(dt, str):
+        date = datetime.strptime(dt, "%Y-%m-%d").date()
+    else:
+        date = dt
     if len(occurrence) == 2:
         if not person.aspect_date or date >= person.aspect_date:
             person.aspect = occurrence

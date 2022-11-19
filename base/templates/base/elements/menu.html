@@ -1,12 +1,12 @@
 {% load base_extras %}
 {% load i18n %}
 
-{% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"treasury" %}
+{% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"treasury" or request.user|has_group:"presidium" %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'center_home' %}">{% trans 'Centers' %}</a>
   </li>
 {% endif %}
-{% if request.user.is_superuser or request.user|has_group:"office" %}
+{% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"presidium" %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'person_home' %}?init=on">{% trans 'Persons' %}</a>
   </li>
@@ -18,22 +18,28 @@
   </li>
 {% endif %}
 
-{% if request.user.is_superuser or request.user|has_group:"mentoring" %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'mentoring_home' %}?init=on">{% trans 'Mentoring' %}</a>
-  </li>
+{% if request.user.person.center.mentoring %}
+  {% if request.user.is_superuser or request.user|has_group:"mentoring" or request.user|has_group:"presidium" %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'mentoring_home' %}?init=on">{% trans 'Mentoring' %}</a>
+    </li>
+  {% endif %}
 {% endif %}
 
-{% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'publicwork_home' %}?init=on">{% trans 'Public Work' %}</a>
-  </li>
+{% if request.user.person.center.publicwork %}
+  {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" or request.user|has_group:"presidium" %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'publicwork_home' %}?init=on">{% trans 'Public Work' %}</a>
+    </li>
+  {% endif %}
 {% endif %}
 
-{% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'treasury_home' %}">{% trans 'Treasury' %}</a>
-  </li>
+{% if request.user.person.center.treasury %}
+  {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" or request.user|has_group:"presidium" %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'treasury_home' %}">{% trans 'Treasury' %}</a>
+    </li>
+  {% endif %}
 {% endif %}
 
 {% if request.user.is_superuser %}

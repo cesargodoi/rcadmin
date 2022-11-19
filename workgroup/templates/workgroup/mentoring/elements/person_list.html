@@ -1,9 +1,10 @@
+{% load base_extras %}
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
       class="row border-top border-secondary pb-2 pt-2 is-link"
       {% if obj.click_link %}
-        {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        {% if obj.center == request.user.person.center or request.user.is_superuser or request.user|has_group:"presidium" %}
           onclick="location.href='{{ obj.click_link }}';"
         {% endif %}
       {% endif %}
@@ -16,7 +17,7 @@
     <div 
       class="row border-top border-secondary pb-2 pt-2 is-link"
       {% if obj.click_link %}
-        {% if obj.center == request.user.person.center or request.user.is_superuser %}
+        {% if obj.center == request.user.person.center or request.user.is_superuser or request.user|has_group:"presidium" %}
           onclick="location.href='{{ obj.click_link }}';"
         {% endif %}
       {% endif %}

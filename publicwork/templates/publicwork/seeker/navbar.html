@@ -33,8 +33,7 @@
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
 
-
-    {% if tab == "info" %}
+    {% if tab == "info" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a 
           href="#"
@@ -72,7 +71,7 @@
       {% endif %}
     {% endif %}
 
-    {% if tab == "frequencies" %}
+    {% if tab == "frequencies" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
           href="{% url 'add_frequency' object.id %}?init=on">
@@ -82,7 +81,7 @@
       </li>
     {% endif %}
 
-    {% if tab == "historic" %}
+    {% if tab == "historic" and not request.user|has_group:"presidium" %}
       <li class="nav-item">
         <a 
           href="#"

@@ -9,22 +9,31 @@
 
   <div class="navbar-nav-scroll">
     <ul class="navbar-nav bd-navbar-nav flex-row">
-
       {% if nav == 'home' %}
-        <li class="nav-item dropdown">
-          <a class="nav-item nav-link dropdown-toggle mr-md-2" 
-             href="#" 
-             id="person-tools" 
-             data-toggle="dropdown" 
-             aria-haspopup="true" 
-             aria-expanded="false">
-             {% trans 'Tools' %}
+        <li class="nav-item">
+          <a 
+            class="nav-link {% if nav == 'invitations' %}active{% endif %}" 
+            href="{% url 'invitations' %}"
+          >
+            {% trans 'Invitations' %}
           </a>
-          <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
-            <a class="dropdown-item" href="{% url 'import_from_seekers' %}">{% trans 'Import from Seekers' %}</a>
-            <!-- <div class="dropdown-divider"></div> -->
-          </div>
         </li>
+        {% if not request.user|has_group:"presidium" %}
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link dropdown-toggle mr-md-2" 
+              href="#" 
+              id="person-tools" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false">
+              {% trans 'Tools' %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-tools">
+              <a class="dropdown-item" href="{% url 'import_from_seekers' %}">{% trans 'Import from Seekers' %}</a>
+              <!-- <div class="dropdown-divider"></div> -->
+            </div>
+          </li>
+        {% endif %}
       {% endif %}
       
       {% if nav == 'detail' %}
@@ -60,6 +69,19 @@
 
   <!-- actions -->
   <ul class="navbar-nav ml-md-auto">
+    {% if nav == "invitations" and not request.user|has_group:"presidium" %}
+      <li class="nav-item">
+        <a 
+          href="#"
+          class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-primary" 
+          onclick="manageData('{% url 'invite_person' %}')"
+        >
+          <i class="fas fa-plus"></i>
+          {% trans 'Invite person' %}
+        </a>
+      </li>
+    {% endif %}
+
     {% if nav == "home" and request.user.is_superuser %}
       <li class="nav-item">
         <a 
@@ -68,12 +90,12 @@
           onclick="manageData('{% url 'person_create' %}')"
         >
           <i class="fas fa-plus"></i>
-          {% trans 'Person' %}  
+          {% trans 'Person' %}
         </a>
       </li>
     {% endif %}
 
-    {% if nav == "detail" %}
+    {% if nav == "detail" and not request.user|has_group:"presidium" %}
       {% if tab == "info" %}
         <li class="nav-item">
           <a class="nav-link pl-2 pr-1 mx-1 py-3 my-n2 text-success" 

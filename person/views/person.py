@@ -4,7 +4,11 @@ from datetime import date
 
 from django.template.loader import render_to_string
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import (
+    login_required,
+    permission_required,
+    user_passes_test,
+)
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.http.response import Http404
@@ -102,7 +106,7 @@ def person_detail(request, id):
 
 
 @login_required
-@permission_required("person.add_person")
+@user_passes_test(lambda u: u.is_superuser)
 def person_create(request):
     if request.method == "POST":
         try:

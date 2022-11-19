@@ -1,3 +1,4 @@
+{% load base_extras %}
 {% for obj in object_list %}
   {% if forloop.last and forloop.counter == LIMIT %}
     <div 
@@ -6,7 +7,7 @@
                                                        {% elif obj.center != request.user.person.center %}
                                                          text-warning
                                                        {% endif %}"
-      {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
+      {% if obj.person.center == request.user.person.center or request.user.is_superuser or request.user|has_group:"presidium" %}
         {% if obj.click_link %}
           onclick="location.href='{{ obj.click_link }}';"
         {% endif %}
@@ -23,7 +24,7 @@
                                                        {% elif obj.center != request.user.person.center %}
                                                          text-warning
                                                        {% endif %}"
-      {% if obj.person.center == request.user.person.center or request.user.is_superuser %}
+      {% if obj.person.center == request.user.person.center or request.user.is_superuser or request.user|has_group:"presidium" %}
         {% if obj.click_link %}
           onclick="location.href='{{ obj.click_link }}';"
         {% endif %}

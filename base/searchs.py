@@ -29,6 +29,35 @@ def search_center(request, obj, _from, _to):
     return (objects, count)
 
 
+#  invitations  ###############################################################
+def search_invitations(request, obj, _from, _to):
+    # checking for search in request.session
+    if not request.session.get("search"):
+        get_base_search(request)
+    adjust_session(request, ["ps_term", "page", "all"])
+    # basic query
+    search = request.session["search"]
+    _query = [Q(imported=False), Q(center=request.user.person.center)]
+    # adding more complexity
+    if search["ps_term"]:
+        _query.append(Q(name__icontains=search["ps_term"]))
+    if search["all"] == "on":
+        try:
+            _query.remove(Q(imported=False))
+        except Exception:
+            pass
+        _query.remove(Q(center=request.user.person.center))
+    # generating query
+    query = Q()
+    for q in _query:
+        query.add(q, Q.AND)
+
+    count = obj.objects.filter(query).count()
+    objects = obj.objects.filter(query).order_by("name")[_from:_to]
+
+    return (objects, count)
+
+
 #  person  ####################################################################
 def search_person(request, obj, _from, _to):
     # checking for search in request.session

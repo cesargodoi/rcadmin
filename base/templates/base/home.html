@@ -85,40 +85,46 @@
   </div>
   {% endif %}
 
-  {% if request.user.is_superuser or request.user|has_group:"mentoring" %}
-  <div class="col-lg-3 card-principal-col-lg-3"
-        onclick="location.href='{% url 'mentoring_home' %}';">
-    <div class="card h-100 card-principal-backimage ">
-      <img src="{% static 'images/mentoring.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-principal-title">{% trans 'Mentoring' %}</h5>
+  {% if request.user.person.center.mentoring %}
+    {% if request.user.is_superuser or request.user|has_group:"mentoring" %}
+    <div class="col-lg-3 card-principal-col-lg-3"
+          onclick="location.href='{% url 'mentoring_home' %}';">
+      <div class="card h-100 card-principal-backimage ">
+        <img src="{% static 'images/mentoring.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-principal-title">{% trans 'Mentoring' %}</h5>
+        </div>
       </div>
     </div>
-  </div>
+    {% endif %}
   {% endif %}
 
-  {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
-  <div class="col-lg-3 card-principal-col-lg-3"
-        onclick="location.href='{% url 'publicwork_home' %}';">
-    <div class="card h-100 card-principal-backimage ">
-      <img src="{% static 'images/publicwork.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-principal-title">{% trans 'Public Work' %}</h5>
+  {% if request.user.person.center.publicwork %}
+    {% if request.user.is_superuser or request.user|has_group:"publicwork" or request.user|has_group:"publicwork_jr" %}
+    <div class="col-lg-3 card-principal-col-lg-3"
+          onclick="location.href='{% url 'publicwork_home' %}';">
+      <div class="card h-100 card-principal-backimage ">
+        <img src="{% static 'images/publicwork.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-principal-title">{% trans 'Public Work' %}</h5>
+        </div>
       </div>
     </div>
-  </div>
+    {% endif %}
   {% endif %}
 
-  {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
-  <div class="col-lg-3 card-principal-col-lg-3"
-        onclick="location.href='{% url 'treasury_home' %}';">
-    <div class="card h-100 card-principal-backimage ">
-      <img src="{% static 'images/reports.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-principal-title" onclick="location.href='{% url 'treasury_home' %}';">{% trans 'Treasury' %}</h5>
+  {% if request.user.person.center.treasury %}
+    {% if request.user.is_superuser or request.user|has_group:"treasury" or request.user|has_group:"treasury_jr" %}
+    <div class="col-lg-3 card-principal-col-lg-3"
+          onclick="location.href='{% url 'treasury_home' %}';">
+      <div class="card h-100 card-principal-backimage ">
+        <img src="{% static 'images/reports.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-principal-title" onclick="location.href='{% url 'treasury_home' %}';">{% trans 'Treasury' %}</h5>
+        </div>
       </div>
     </div>
-  </div>
+    {% endif %}
   {% endif %}
 
 </div>

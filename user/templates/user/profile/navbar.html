@@ -22,12 +22,14 @@
            {% trans "Historic" %}
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link {% if tab == 'payments' %}active{% endif %}" 
-           href="{% url 'user_payments' %}">
-           {% trans "Payments" %}
-        </a>
-      </li>
+      {% if request.user.person.center.treasury %}
+        <li class="nav-item">
+          <a class="nav-link {% if tab == 'payments' %}active{% endif %}" 
+            href="{% url 'user_payments' %}">
+            {% trans "Payments" %}
+          </a>
+        </li>
+      {% endif %}
 
     </ul>
   </div>

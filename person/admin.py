@@ -1,7 +1,22 @@
 from django.contrib import admin, messages
 from django.utils.translation import ngettext
 
-from .models import Historic, Person
+from .models import Historic, Person, Invitation
+
+
+@admin.register(Invitation)
+class InvitationAdmin(admin.ModelAdmin):
+    list_filter = ["city", "state", "center", "migration", "imported"]
+    search_fields = ["name", "email"]
+    list_display = [
+        "name",
+        "email",
+        "center",
+        "invited_on",
+        "migration",
+        "imported",
+        "imported_on",
+    ]
 
 
 @admin.register(Person)
@@ -100,7 +115,8 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Historic)
 class HistoricAdmin(admin.ModelAdmin):
-    # list_filter = []
+    search_fields = ["person__name_sa"]
+    list_filter = ["occurrence"]
     list_display = [
         "date",
         "occurrence",

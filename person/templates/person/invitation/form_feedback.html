@@ -1,0 +1,41 @@
+{% extends "user/base.html" %} 
+{% load i18n %} 
+
+{% block content %}
+
+<div class="alert alert-info">
+  {% if request.session.fbk.type in 'expired_token lost_invitation' %}
+
+    <h2>Seu token de solicitação expirou!</h2>
+    Por favor, entre em contato com o aluno do trabalho público que lhe fez o convite ou envie um email para:
+    <br>
+    <h4>
+      <a href="mailto:​rcadmin@rosacruzaurea.org.br">rcadmin@rosacruzaurea.org.br</a>
+    </h4>
+    solicitando uma nova inscrição.
+
+  {% elif request.session.fbk.type == 'already_imported' %}
+    
+    <h2>Você já está no sistema!</h2>
+    <strong>{{ request.session.fbk.name}}</strong>, você já está na nossa base de dados desde: {{ request.session.fbk.imported_on }}
+    <br>
+    Você pode fazer o seu login no sistema através do link:
+    <h4>
+      <a href="https://rcadmin.rosacruzaurea.org.br/">rcadmin.rosacruzaurea.org.br/</a>
+    </h4>
+
+  {% elif request.session.fbk.type == 'recaptcha' %}
+
+    <h2>{% trans 'Invalid reCAPTCHA, please try again.' %}</h2>
+
+  {% endif %}
+
+</div>
+<a href="#" id="close">{% translate 'This page can be closed' %}</a>
+<script>
+  document.getElementById("close").addEventListener("click", function () {
+    window.open("", "_self").close();
+  });
+</script>
+
+{% endblock %}

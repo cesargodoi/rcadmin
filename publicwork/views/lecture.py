@@ -11,6 +11,7 @@ from rcadmin.common import (
     LECTURE_TYPES,
     clear_session,
     get_template_and_pagination,
+    belongs_center,
 )
 from base.searchs import search_lecture
 
@@ -58,6 +59,7 @@ def lecture_home(request):
 @login_required
 @permission_required("publicwork.view_lecture")
 def lecture_detail(request, pk):
+    belongs_center(request, pk, Lecture)
     lect_object = Lecture.objects.get(pk=pk)
 
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
@@ -121,6 +123,7 @@ def lecture_create(request):
 @login_required
 @permission_required("publicwork.change_lecture")
 def lecture_update(request, pk):
+    belongs_center(request, pk, Lecture)
     lect_object = Lecture.objects.get(pk=pk)
     if lect_object.center != request.user.person.center:
         raise Http404
@@ -157,6 +160,7 @@ def lecture_update(request, pk):
 @login_required
 @permission_required("publicwork.delete_lecture")
 def lecture_delete(request, pk):
+    belongs_center(request, pk, Lecture)
     lect_object = Lecture.objects.get(pk=pk)
     if lect_object.center != request.user.person.center:
         raise Http404
