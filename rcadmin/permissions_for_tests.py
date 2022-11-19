@@ -76,6 +76,17 @@ permission = dict(
         ("publicwork_jr", 302),
         ("presidium", 200),
     ],
+    adm_off_tre_trej_pre__200=[
+        ("admin", 200),
+        ("user", 302),
+        ("office", 200),
+        ("mentoring", 302),
+        ("treasury", 200),
+        ("treasury_jr", 200),
+        ("publicwork", 302),
+        ("publicwork_jr", 302),
+        ("presidium", 200),
+    ],
     adm_pub__200=[
         ("admin", 200),
         ("user", 302),
