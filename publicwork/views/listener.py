@@ -31,7 +31,6 @@ def add_listener(request, lect_pk):
             Listener.objects.create(
                 lecture=lecture,
                 seeker=seeker,
-                ranking=int(request.POST["ranking"]),
                 observations=request.POST["observations"],
             )
             messages.success(
@@ -96,7 +95,6 @@ def update_listener(request, lect_pk, lstn_pk):
     listener = Listener.objects.get(pk=lstn_pk)
 
     if request.method == "POST":
-        listener.ranking = int(request.POST["ranking"])
         listener.observations = request.POST["observations"]
         listener.save()
         messages.success(request, _("The Listener has been updated!"))
@@ -149,7 +147,6 @@ def add_frequency(request, pk):
             Listener.objects.create(
                 lecture=lecture,
                 seeker=seeker,
-                ranking=int(request.POST["ranking"]),
                 observations=request.POST["observations"],
             )
             messages.success(
@@ -207,9 +204,6 @@ def add_frequency(request, pk):
 def update_frequency(request, seek_pk, freq_pk):
     listener = Listener.objects.get(pk=freq_pk)
     if request.method == "POST":
-        listener.ranking = (
-            int(request.POST["ranking"]) if request.POST.get("ranking") else 0
-        )
         listener.observations = request.POST["observations"]
         listener.save()
 

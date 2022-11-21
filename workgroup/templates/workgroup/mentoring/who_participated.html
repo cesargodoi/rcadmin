@@ -34,34 +34,18 @@
       </small>
     </div>
 
-    <div class="col-sm-2 text-right mt-1 mb-1">
-      <div class="form-row">
-        <div class="col">
-          {% if not listener.frequency %}
-            <input type="checkbox" 
-                  class="form-check-input"  
-                  value="on" 
-                  name="freq-{{ forloop.counter }}">
-          {% else %}
-            <i class="fas fa-check-square mr-2"></i>
-          {% endif %}
-        </div>
-        <div class="col">
-          {% if not listener.frequency %}
-            <input type="number" min="0" max="2"
-                class="form-control form-control-sm" 
-                value="0"
-                name="rank-{{ forloop.counter }}">
-          {% else %}
-            {% if listener.ranking > 0 %}
-              {{ listener.ranking }} <i class="fas fa-star"></i>
-            {% endif %}
-          {% endif %}
-        </div>
-      </div>
+    <div class="col-sm-1 text-right mt-1 mb-1">
+      {% if not listener.frequency %}
+        <input type="checkbox" 
+              class="form-check-input"  
+              value="on" 
+              name="freq-{{ forloop.counter }}">
+      {% else %}
+        <i class="fas fa-check-square mr-2"></i>
+      {% endif %}
     </div>
 
-    <div class="col-sm-6 mt-1 mb-1">
+    <div class="col-sm-7 mt-1 mb-1">
       {% if not listener.frequency %}
         <input type="text" 
                class="form-control form-control-sm" 

@@ -18,18 +18,10 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-10">
-    <h3>
-      {{ object.name }} &nbsp;&nbsp;
-      <small class="text-muted">
-        <em>{{ object.city }} - {{ object.state }} ({{ object.country }})</em>
-      </small>
-    </h3>
-  </div>
-  <div class="col-2 text-right">
-    {% if ranking %}
-    <h3>{{ ranking }} <i class="fas fa-star"></i></h3>
-    {% endif %}
-  </div>
-</div>
+
+<h3>
+  {{ object.name }} &nbsp;&nbsp;
+  <small class="text-muted">
+    <em>{{ object.city }} - {{ object.state }} ({{ object.country }})</em>
+  </small>
+</h3>

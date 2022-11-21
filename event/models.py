@@ -99,14 +99,13 @@ class Frequency(models.Model):
     aspect = models.CharField(
         _("aspect"), max_length=2, choices=ASPECTS, default="--"
     )
-    ranking = models.IntegerField(_("ranking"), default=0)
     observations = models.CharField(
         _("observations"), max_length=100, null=True, blank=True
     )
 
     def __str__(self):
-        return "event: {} person: {} asp: {} rank: {}".format(
-            self.event, self.person, self.aspect, self.ranking
+        return "event: {} person: {} asp: {}".format(
+            self.event, self.person, self.aspect
         )
 
     class Meta:

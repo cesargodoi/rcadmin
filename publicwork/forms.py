@@ -56,10 +56,9 @@ class LectureForm(forms.ModelForm):
 class ListenerForm(forms.ModelForm):
     class Meta:
         model = Listener
-        fields = ["ranking", "observations"]
+        fields = ["observations"]
         widgets = {
             "observations": forms.Textarea(attrs={"rows": 2}),
-            "ranking": forms.widgets.NumberInput(attrs={"min": 0, "max": 2}),
         }
 
 

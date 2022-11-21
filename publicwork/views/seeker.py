@@ -206,7 +206,6 @@ def seeker_frequencies(request, pk):
     _object_list = seeker.listener_set.all()
 
     count = len(_object_list)
-    ranking = sum([f.ranking for f in _object_list])
 
     object_list = _object_list[_from:_to]
     # add action links
@@ -224,7 +223,6 @@ def seeker_frequencies(request, pk):
         "title": _("seeker detail | frequencies"),
         "nav": "seeker",
         "tab": "frequencies",
-        "ranking": ranking,
     }
 
     return render(request, template_name, context)
