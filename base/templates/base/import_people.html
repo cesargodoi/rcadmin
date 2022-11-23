@@ -56,58 +56,82 @@
       <div class="row border-top pt-2">
         <div class="col-1 h4">{{ forloop.counter }}</div>
         <div class="col-3">{{ entry.center }}</div>
-        <div class="col-3">{{ entry.file }}</div>
+        <div class="col-3">{% if not entry.file %}({% trans 'No file - Sign LGPD' %}){% else %}{{ entry.file }}{% endif %}</div>
         <div class="col-5 text-right text-muted small">
           {{ entry.imported_by }} <em>{% trans 'in' %}</em> {{ entry.imported_on|date:"d/m/y H:i:s" }}
         </div>
       </div>
-      <div class="row mb-2 text-right text-secondary small">
-        <div class="col-2 font-weight-bold">
-          {% trans 'Entries' %}: &nbsp;&nbsp; 
-          <span class="h5 text-light">{{ entry.entries }}</span>
-        </div>
-        <div class="col-2 font-weight-bold">
-          {% trans 'Importeds' %}: &nbsp;&nbsp; 
-          <span class="h5 text-light">{{ entry.importeds }}</span>
-          {% if entry.importeds %}
-            <a href="{% url 'download_csv' entry.file %}?type=se" title="to MailChimp">
+      {% if not entry.file %}
+        <div class="row mb-2 text-right text-secondary small">
+          <div class="col-4 font-weight-bold">
+            {% trans 'People to sign LGPD' %}: &nbsp;&nbsp; 
+            <span class="h5 text-light">{{ entry.importeds }}</span>
+          </div>
+          <div class="col-4 font-weight-bold">
+            {% trans 'To send email' %}: &nbsp;&nbsp; 
+            <span class="h5 text-light">{{ entry.importeds }}</span>
+            {% if entry.importeds %}
+            <a href="{% url 'download_csv' entry.center %}?type=se" title="to MailChimp">
               <i class="fas fa-file-download"></i>
             </a>
-          {% endif %}
-        </div>
-        <div class="col-2 font-weight-bold">
-          {% trans 'Duplicate email' %}: &nbsp;&nbsp;
-          <span class="h5 text-light">{{ entry.duplicate_email }}</span>
-          {% if entry.duplicate_email %}
-            <a href="{% url 'download_csv' entry.file %}?type=de">
-              <i class="fas fa-file-download"></i> 
+            {% endif %}
+          </div>
+          <div class="col-4">
+            <a type="button" href="{% url 'import_people' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
+              <i class="fas fa-eye"></i> 
+              {% trans 'Details' %}
             </a>
-          {% endif %}
+          </div>
         </div>
-        <div class="col-2 font-weight-bold">
-          {% trans 'Without email' %}: &nbsp;&nbsp;
-          <span class="h5 text-light">{{ entry.without_email }}</span>
-          {% if entry.without_email %}
-            <a href="{% url 'download_csv' entry.file %}?type=we">
-              <i class="fas fa-file-download"></i> 
+      {% else %}
+        <div class="row mb-2 text-right text-secondary small">
+          <div class="col-2 font-weight-bold">
+            {% trans 'Entries' %}: &nbsp;&nbsp; 
+            <span class="h5 text-light">{{ entry.entries }}</span>
+          </div>
+          <div class="col-2 font-weight-bold">
+            {% trans 'Importeds' %}: &nbsp;&nbsp; 
+            <span class="h5 text-light">{{ entry.importeds }}</span>
+            {% if entry.importeds %}
+              <a href="{% url 'download_csv' entry.file %}?type=se" title="to MailChimp">
+                <i class="fas fa-file-download"></i>
+              </a>
+            {% endif %}
+          </div>
+          <div class="col-2 font-weight-bold">
+            {% trans 'Duplicate email' %}: &nbsp;&nbsp;
+            <span class="h5 text-light">{{ entry.duplicate_email }}</span>
+            {% if entry.duplicate_email %}
+              <a href="{% url 'download_csv' entry.file %}?type=de">
+                <i class="fas fa-file-download"></i> 
+              </a>
+            {% endif %}
+          </div>
+          <div class="col-2 font-weight-bold">
+            {% trans 'Without email' %}: &nbsp;&nbsp;
+            <span class="h5 text-light">{{ entry.without_email }}</span>
+            {% if entry.without_email %}
+              <a href="{% url 'download_csv' entry.file %}?type=we">
+                <i class="fas fa-file-download"></i> 
+              </a>
+            {% endif %}
+          </div>
+          <div class="col-2 font-weight-bold">
+            {% trans 'Used email' %}: &nbsp;&nbsp;
+            <span class="h5 text-light">{{ entry.used_email }}</span>
+            {% if entry.used_email %}
+              <a href="{% url 'download_csv' entry.file %}?type=ue">
+                <i class="fas fa-file-download"></i> 
+              </a>
+            {% endif %}
+          </div>
+          <div class="col-2">
+            <a type="button" href="{% url 'import_people' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
+              <i class="fas fa-eye"></i> 
+              {% trans 'Details' %}
             </a>
-          {% endif %}
-        </div>
-        <div class="col-2 font-weight-bold">
-          {% trans 'Used email' %}: &nbsp;&nbsp;
-          <span class="h5 text-light">{{ entry.used_email }}</span>
-          {% if entry.used_email %}
-            <a href="{% url 'download_csv' entry.file %}?type=ue">
-              <i class="fas fa-file-download"></i> 
-            </a>
-          {% endif %}
-        </div>
-        <div class="col-2">
-          <a type="button" href="{% url 'import_people' %}?report={{ entry.report }}" class="btn btn-info btn-sm">
-            <i class="fas fa-eye"></i> 
-            {% trans 'Details' %}
-          </a>
-        </div>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
 

@@ -271,7 +271,7 @@ def center_add_responsible(request, pk):
             form = ResponsibleForm(request.POST)
             if form.is_valid():
                 form.save()
-                # TODO - Fazer validação para inserir (o não) de permissão.
+                # TODO - Fazer validação para inserir (ou não) de permissão.
                 return HttpResponse(
                     headers={
                         "HX-Redirect": reverse(
@@ -322,7 +322,7 @@ def center_del_responsible(request, pk):
     _user = responsible.user.person.name
     if request.method == "POST":
         responsible.delete()
-        # TODO - Fazer validação para retirada (o não) de permissão.
+        # TODO - Fazer validação para retirada (ou não) de permissão.
         template_name = "center/elements/tab_responsibles.html"
         context = {"object": Center.objects.get(pk=responsible.center.pk)}
         return HttpResponse(

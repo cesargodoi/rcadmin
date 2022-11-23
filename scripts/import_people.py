@@ -177,7 +177,7 @@ def run(*args):
 
     # make report
     with open(report_path, "w") as report:
-        report.write("  IMPORT PERSONS  ".center(80, "*"))
+        report.write("  IMPORT PEOPLE  ".center(80, "*"))
         report.write(f"\n\ncenter:      {center}")
         report.write(f"\nfile:        {file_name}.csv")
         report.write(f"\nimported_by: {user}")

@@ -128,7 +128,7 @@ class PupilRegistrationForm(forms.ModelForm):
         self.fields["id_card"].required = True
         self.fields["address"].required = True
         self.fields["number"].required = True
-        self.fields["complement"].required = True
+        self.fields["complement"].required = False
         self.fields["district"].required = True
         self.fields["city"].required = True
         self.fields["state"].required = True

@@ -59,6 +59,7 @@ class Invitation(models.Model):
     historic = JSONField(null=True, blank=True)
     observations = models.TextField(_("observations"), blank=True)
     migration = models.BooleanField(default=False)
+    sign_lgpd = models.BooleanField(default=False)
     invited_on = models.DateTimeField(_("invited on"), default=timezone.now)
     imported = models.BooleanField(default=False)
     imported_on = models.DateTimeField(_("imported on"), null=True, blank=True)
