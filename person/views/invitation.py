@@ -100,12 +100,18 @@ def invite(request):
 def send_invitation(request, invite):
     address = "https://rcadmin.rosacruzaurea.org.br"
     _link = f"{address}{reverse('confirm_invitation', args=[invite.pk])}"
+    action = "migration" if invite.migration else "invitation"
     send_email(
-        body_text="person/invitation/emails/confirm_invitation.txt",
-        body_html="person/invitation/emails/confirm_invitation.html",
+        body_text=f"person/invitation/emails/confirm_{action}.txt",
+        body_html=f"person/invitation/emails/confirm_{action}.html",
         _subject="Convite para ser aluno",
         _to=invite.email,
-        _context={"name": invite.name, "link": _link},
+        _context={
+            "name": invite.name,
+            "center": invite.center.name,
+            "email": invite.email,
+            "link": _link,
+        },
     )
 
 
@@ -257,10 +263,10 @@ def confirm_invitation(request, token):
             body_html="person/invitation/emails/to_congratulate.html",
             _subject="cadastro realizado",
             _to=invite.email,
-            _context={"object": user.person},
+            _context={"object": invite},
         )
 
-        return redirect("congratulations", pk=user.person.pk)
+        return redirect("congratulations", pk=invite.pk)
 
     else:
         form = PupilRegistrationForm(instance=invite)
@@ -278,6 +284,6 @@ def congratulations(request, pk):
     template_name = "person/invitation/congratulations.html"
     context = {
         "title": _("congratulations"),
-        "object": Person.objects.get(pk=pk),
+        "object": Invitation.objects.get(pk=pk),
     }
     return render(request, template_name, context)

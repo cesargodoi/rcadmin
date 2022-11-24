@@ -56,10 +56,11 @@ def run(*args):
             "sos_phone": person.user.profile.sos_phone,
             "historic": {str(person.aspect): str(person.aspect)},
             "observations": person.observations,
-            "sign_lgpd": True
+            "migration": True,
+            "sign_lgpd": True,
         }
 
-        # TODO - cuidar de que o fluxo não quebre
+        # TODO - cuidar de que o fluxo não quebre (try except)
         new = Invitation.objects.create(**invite)
 
         person.is_active = False

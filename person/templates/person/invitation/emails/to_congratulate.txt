@@ -1,19 +1,26 @@
 {% load i18n %}{% autoescape off %}
 Parabéns {{ object.name }}!
 
+{% if object.migration %}
+Seu cadastro foi realizado com sucesso e você já foi incluído(a) no sistema de nossa escola, 
+no(a) {{ object.center.name }}. 
+{% else %}
 Seu cadastro foi realizado com sucesso e você já foi incluído(a) no grupo de
-alunos do <strong>{{ object.get_aspect_display }}</strong> de nossa escola, 
-no núcleo de <strong>{{ object.center }}</strong>.  
+alunos do {{ object.get_aspect_display }} de nossa escola, 
+no(a) {{ object.center.name }}. 
 
 Nos próximos dias a secretaria do núcleo entrará em contato com você
 para lhe passar maiores imformações.
+{% endif %}
 
 No link abaixo você tem acesso à sua página de perfil de aluno onde 
 estão seus dados. É sua responsabilidade mantê-los atualizados.
 
 rcadmin.rosacruzaurea.org.br
 
+{% if not object.migration %}
 Será uma alegria te conhecer pessoalmente!
+{% endif %}
 
 Atenciosamente
 

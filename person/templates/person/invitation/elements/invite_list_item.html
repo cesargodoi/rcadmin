@@ -1,10 +1,12 @@
 {% load base_extras %}
 {% load i18n %}
-<div class="col-sm-4 d-flex justify-content-between">
+<div class="col-sm-5 d-flex justify-content-between">
   <div class="align-middle">
     <small class="text-muted align-top">{{ forloop.counter|add:counter }}</small>
     &nbsp;&nbsp;
-    <strong>{{ obj.name }}</strong>
+    <strong data-toggle="tooltip" data-placement="top" title="{{ obj.name }}">
+      {{ obj.name | truncatechars:25 }}
+    </strong>
   </div>
   &nbsp;&nbsp;
   <small class="text-{% if obj.imported %}warning{% else %}muted{% endif %}">
@@ -12,7 +14,7 @@
   </small>
 </div>
 
-<div class="col-sm-5 d-flex justify-content-between">
+<div class="col-sm-5 d-flex justify-content-between small">
   <div><i class="fas fa-envelope"></i> {{ obj.email }}</div>
   <small class="text-{% if obj.imported %}warning{% else %}muted{% endif %}">
     {% if obj.imported %}
@@ -24,41 +26,39 @@
 </div>
 
 {% if not request.user|has_group:"presidium" %}
-<div class="col-sm-1 text-right">
-  {% if obj.migration %}
-    <span 
-      class="ml-2 {% if obj.imported %}text-warning{% endif %}"
-      data-toggle="tooltip" 
-      data-placement="top" 
-      title="{% trans 'migration' %}"
-    >
-      <i class="fa-solid fa-file-import"></i>
-    </span>
-  {% endif %}
-</div>
+  <div class="col-sm-2 text-right">
+    {% if obj.migration %}
+      <span 
+        class="mr-2 {% if obj.imported %}text-warning{% endif %}"
+        data-toggle="tooltip" 
+        data-placement="top" 
+        title="{% trans 'migration' %}"
+      >
+        <i class="fa-solid fa-file-import"></i>
+      </span>
+    {% endif %}
 
-<div class="col-sm-2 text-right">
-  {% if not obj.imported %}
+    {% if not obj.imported %}
+      <button 
+        type="button" 
+        onclick="manageData('{{ obj.resend_invitation }}')"
+        class="btn btn-light text-info btn-sm"
+        data-toggle="tooltip" 
+        data-placement="top" 
+        title="{% trans 'Invite Again' %}"
+      >
+        <i class="fas fa-envelope"></i>
+      </button>
+    {% endif %}
     <button 
       type="button" 
-      onclick="manageData('{{ obj.resend_invitation }}')"
-      class="btn btn-light text-info btn-sm"
+      onclick="manageData('{{ obj.del_link }}')"
+      class="btn btn-light text-danger btn-sm"
       data-toggle="tooltip" 
       data-placement="top" 
-      title="{% trans 'Invite Again' %}"
+      title="{% trans 'Remove' %}"
     >
-      <i class="fas fa-envelope"></i>
+      <i class="fas fa-trash-alt"></i>
     </button>
-  {% endif %}
-  <button 
-    type="button" 
-    onclick="manageData('{{ obj.del_link }}')"
-    class="btn btn-light text-danger btn-sm"
-    data-toggle="tooltip" 
-    data-placement="top" 
-    title="{% trans 'Remove' %}"
-  >
-    <i class="fas fa-trash-alt"></i>
-  </button>
-</div>
+  </div>
 {% endif %}

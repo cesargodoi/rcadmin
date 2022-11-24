@@ -45,7 +45,7 @@
 
 
 <div class="row-pg-initial">
-  {% if request.user.is_superuser or request.user|has_group:"office" or request.user|has_group:"office_jr" %}
+  {% if request.user.is_superuser or request.user|has_group:"admin" or request.user|has_group:"office" or request.user|has_group:"office_jr" or request.user|has_group:"treasury" %}
   <div class="col-lg-3 card-principal-col-lg-3 is-link"
     onclick="location.href='{% url 'center_home' %}?init=on';">
       <div class="card h-100 card-principal-backimage ">
@@ -55,7 +55,8 @@
       </div>
     </div>
   </div>
-
+  {% endif %}
+  {% if request.user.is_superuser or request.user|has_group:"admin" or request.user|has_group:"office" or request.user|has_group:"office_jr" %}
   <div class="col-lg-3 card-principal-col-lg-3 is-link"
         onclick="location.href='{% url 'person_home' %}?init=on';">
     <div class="card h-100 card-principal-backimage ">

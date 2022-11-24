@@ -1,0 +1,22 @@
+{% load i18n %}{% autoescape off %}
+Saudações {{ name }}!
+
+Estamos implantando um sistema de informação nos núcleos da Escola Espiritual 
+da Rosacruz Áurea aqui no Brasil, e como você é aluno(a) ativo(a) do: {{ center }} 
+precisamos criar o seu perfil dentro desse sistema. 
+
+Ao clicar no link abaixo, você será direcionado(a) para um formulário onde 
+poderá confirmar seus dados, criar uma senha de acesso e também nos autorizar 
+a armazenar seus dados no nosso Banco de Dados.
+
+{{ link }}
+
+Após essa etapa você receberá um e-mail com o link para acessar 
+seu perfil no sistema.
+
+Para se logar no sistema, você deverá usar o seu endereço de e-mail ({{ email }}) 
+e a senha que você criou.
+
+Atenciosamente.
+equipe rc@dmin
+{% endautoescape %}

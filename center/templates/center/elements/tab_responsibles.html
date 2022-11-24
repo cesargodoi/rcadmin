@@ -18,7 +18,7 @@
     <div class="col-sm-2">
       {{ resp.get_rule_display }}
     </div>
-    {% if not request.user|has_group:"presidium" %}
+    {% if request.user|has_group:"admin" or request.user|has_group:"office" or request.user.is_superuser %}
       <div class="col-sm-1 text-right">
         <button 
           type="button" 
