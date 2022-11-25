@@ -2,8 +2,14 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-<form method="POST" action="{{ request.path }}">
+<!-- <form method="POST" action="{{ request.path }}"> -->
 
+<form 
+  hx-post="{{ request.path }}"
+  hx-target="body"
+>
+  <!-- hx-swap="{{ swap }}" -->
+  
   {% csrf_token %}
 
   <div class="modal-header bg-primary">

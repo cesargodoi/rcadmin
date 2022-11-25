@@ -32,6 +32,7 @@ def run(*args):
 
     # lists to report
     people_to_sign_lgpd = []
+    already_in_db = []
     to_send_email = []
 
     count = 1
@@ -60,28 +61,32 @@ def run(*args):
             "sign_lgpd": True,
         }
 
-        # TODO - cuidar de que o fluxo não quebre (try except)
-        new = Invitation.objects.create(**invite)
+        try:
+            new = Invitation.objects.create(**invite)
 
-        person.is_active = False
-        person.user.is_active = False
-        person.save()
+            person.is_active = False
+            person.user.is_active = False
+            person.save()
 
-        # to report
-        people_to_sign_lgpd.append(f"{sanitize_name(new.name)} - {new.email}")
+            # to report
+            people_to_sign_lgpd.append(f"{new.name} - {new.email}")
 
-        # to send email
-        to_send = {
-            "name": new.name,
-            "email": new.email,
-            "link": "{}{}".format(
-                "https://rcadmin.rosacruzaurea.org.br",
-                reverse("confirm_invitation", args=[new.pk]),
-            ),
-        }
-        to_send_email.append(to_send)
+            # to send email
+            to_send = {
+                "name": new.name,
+                "email": new.email,
+                "link": "{}{}".format(
+                    "https://rcadmin.rosacruzaurea.org.br",
+                    reverse("confirm_invitation", args=[new.pk]),
+                ),
+            }
+            to_send_email.append(to_send)
+            print(f"{count} -> {person} - imported")
 
-        print(f"{count} -> {person}")
+        except Exception:
+            already_in_db.append(f"{person.name} - {person.user.email}")
+            print(f"{count} -> {person} - already in db")
+
         count += 1
 
     # write to_send_email .csv file
@@ -106,9 +111,16 @@ def run(*args):
         report.write(f"\ntime:        {datetime.now() - start}")
         report.write("\n\n")
         report.write("  SUMMARY  ".center(80, "*"))
-        report.write(f"\n\n- IMPORTEDS:       {len(people_to_sign_lgpd)}")
+        report.write(f"\n\n- ALREADY IN DB:   {len(already_in_db)}")
+        report.write(f"\n- IMPORTEDS:       {len(people_to_sign_lgpd)}")
         report.write("\n\n")
         report.write("  DETAIL  ".center(80, "*"))
+
+        if already_in_db:
+            report.write("\n\nALREADY IN DB:")
+            for n, item in enumerate(already_in_db):
+                report.write(f"\n  {n + 1} - {item}")
+
         if people_to_sign_lgpd:
             report.write("\n\nIMPORTEDS:")
             for n, item in enumerate(people_to_sign_lgpd):

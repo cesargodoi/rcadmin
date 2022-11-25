@@ -87,7 +87,9 @@ def test_access_from_other_center__lecture_detail__by_user_type(
     """
     center = center_factory.create()
     lecture = create_lecture(center=center, email="s1@um.com")
-    other_center = create_center(user=create_user(email="u2@mail.com"))
+    other_center = create_center(
+        name="Other Center", user=create_user(email="u2@mail.com")
+    )
     client, user = auto_login_user(group=user_type, center=other_center)
     url = reverse("lecture_detail", args=[lecture.pk])
     response = client.get(url)

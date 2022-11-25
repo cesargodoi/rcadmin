@@ -71,21 +71,35 @@ def invite(request):
     if request.method == "POST":
         data = QueryDict(request.body).dict()
         form = InvitationForm(data)
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            if User.objects.filter(email=email):
-                # TODO - cuidar das verificações abaixo
-                print("já está cadastrado na tabela User")
-            elif Invitation.objects.filter(email=email):
-                print("já está cadastrado na tabela Invitation")
-            elif Seeker.objects.filter(email=email):
-                print("já esta cadastrado na tabela Seeker")
-            else:
+        msg = ""
+        if User.objects.filter(email=data["email"]):
+            msg = f"{data['name']} is already a pupil."
+        elif Invitation.objects.filter(email=data["email"]):
+            msg = f"{data['email']} has already been invited."
+        elif Seeker.objects.filter(email=data["email"]):
+            msg = "{} is already a 'seeker'.\nUse import from Seekers.".format(
+                data["name"]
+            )
+        else:
+            if form.is_valid():
                 new_invite = form.save()
                 new_invite.historic = {"A1": str(date.today())}
                 new_invite.save()
                 send_invitation(request, new_invite)
                 return redirect("invitations")
+
+        return HttpResponse(
+            headers={
+                "HX-Retarget": "#formBody",
+                "HX-Trigger": json.dumps(
+                    {
+                        "closeModal": True,
+                        "showToast": msg,
+                    }
+                ),
+            },
+        )
+
     else:
         form = InvitationForm(initial={"center": request.user.person.center})
 

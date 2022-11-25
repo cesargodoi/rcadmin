@@ -88,7 +88,9 @@ def test_access_from_other_center__seeker_detail__by_user_type(
     """
     center = center_factory.create()
     seeker = create_seeker(center=center, email="s1@um.com")
-    other_center = create_center(user=create_user(email="u2@mail.com"))
+    other_center = create_center(
+        name="Other Center", user=create_user(email="u2@mail.com")
+    )
     client, user = auto_login_user(group=user_type, center=other_center)
     url = reverse("seeker_detail", args=[seeker.pk])
     response = client.get(url)
