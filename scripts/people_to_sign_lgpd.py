@@ -83,7 +83,7 @@ def run(*args):
 
         print(f"{count} -> {person}")
         count += 1
-    
+
     # write to_send_email .csv file
     if to_send_email:
         pd.DataFrame(to_send_email).to_csv(

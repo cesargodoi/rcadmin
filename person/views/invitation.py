@@ -199,7 +199,7 @@ def confirm_invitation(request, token):
         if invite.sign_lgpd:
             # update user
             user = User.objects.get(email=invite.email)
-            user.set_password(data['password'])
+            user.set_password(data["password"])
             # updating the user.profile
             user.profile.social_name = sanitize_name(data["name"])
             user.profile.gender = data["gender"]
@@ -214,9 +214,7 @@ def confirm_invitation(request, token):
             user.person.name = invite.name
             user.person.center = invite.center
             user.person.id_card = data["id_card"]
-            user.person.birth = datetime.strptime(
-                data["birth"], "%Y-%m-%d"
-            )
+            user.person.birth = datetime.strptime(data["birth"], "%Y-%m-%d")
             user.is_active = True
             user.save()
             user.person.is_active = True

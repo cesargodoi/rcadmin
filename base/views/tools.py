@@ -141,7 +141,7 @@ def download_csv(request, file):
         _file = f"duplicate_email__{file}"
         _path = f"{IMPORT_PATH}/duplicate_email/{_file}"
     elif request.GET.get("type") == "se":
-        if file.split('.')[-1] != 'csv':
+        if file.split(".")[-1] != "csv":
             _file = f"to_send_email__{file.split(' ')[0]}__to_sign_lgpd.csv"
         else:
             _file = f"to_send_email__{file}"
