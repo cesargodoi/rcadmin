@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rcadmin"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["Cesar Godoi <cesar.godoi@gmail.com>", "Jady Godoi <jady.s.m@gmail.com>"]
 

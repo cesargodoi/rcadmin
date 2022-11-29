@@ -1,6 +1,6 @@
 from django import forms
 
-from django.utils.translation import gettext_lazy as _
+# from django.utils.translation import gettext_lazy as _
 from rcadmin.common import HIDDEN_AUTH_FIELDS
 from user.models import Profile, User
 
