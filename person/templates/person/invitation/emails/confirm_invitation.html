@@ -1,24 +1,27 @@
 {% load i18n %} 
 
 {% autoescape off %}
-<h1>{% trans 'Congratulations' %} {{ name }}!</h1>
+<h1>Saudações {{ name }}!</h1>
 
-<p>{% trans 'You are receiving this email because you have signed up to join the Golden Rosicrucian Spiritual School "Welcome" group.' %}</p>
+<p>Você está recebendo este e-mail porque solicitou o seu ingresso como aluno 
+  na Escola Espiritual da Rosacruz Áurea.</p>
 
-<p>{% trans 'Please click on the link below to confirm your registration.' %}</p>
+<p>Por favor, clique no link abaixo para confirmar sua inscrição e fornecer 
+  alguns dados complementares.</p>
 
-<h2 style="color:#3366cc"><a href="{{ link }}">{% trans 'confirmation link' %}</a> <i>[*]</i></h2>
+<h2 style="color:#3366cc"><a href="{{ link }}">link de confirmação</a> <i>[*]</i></h2>
 
-<p>{% trans 'If you have not made this request, please disregard this email.' %}</p>
+<p>Se você não fez essa solicitação, por favor, desconsidere este e-mail.</p>
 
-<p>{% trans 'Best regards' %}.</p>
-<h4>{% trans 'team rc@dmin' %}</h4>
+<p>Atenciosamente.</p>
+<h4>Equipe rc@dmin</h4>
 <div style="color:#3366cc">
   <i>[*]</i>
 </div>
 <div style="color:#3366cc">
-  <i> {% trans 'if you can not click on the link, copy a url below and paste in your browser:' %} <br>
-    {{ link }}</i>
+  <i> caso não consiga clicar no link, copie uma url abaixo e cole no seu navegador: <br>
+    {{ link }}
+  </i>
 </div>
 <br>
 {% endautoescape %}

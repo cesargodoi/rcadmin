@@ -73,7 +73,9 @@ def test_access_office_cannot_access__person_detail__from_other_center(
     """the 'office' can't access person_detail from other center"""
     center = center_factory.create()
     person = create_person(center=center, email="p1@um.com")
-    other_center = create_center(user=create_user(email="u2@mail.com"))
+    other_center = create_center(
+        name="Other Center", user=create_user(email="u2@mail.com")
+    )
     client, user = auto_login_user(group="office", center=other_center)
     url = reverse("person_detail", args=[person.pk])
     response = client.get(url)
@@ -115,7 +117,6 @@ def test_access__person_update__by_user_type(
         assert response.status_code == status_code
 
 
-@pytest.mark.actual
 @pytest.mark.django_db
 @pytest.mark.parametrize("user_type, status_code", permission["adm_off__200"])
 def test_access__person_delete__by_user_type(

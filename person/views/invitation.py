@@ -71,20 +71,35 @@ def invite(request):
     if request.method == "POST":
         data = QueryDict(request.body).dict()
         form = InvitationForm(data)
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            if User.objects.filter(email=email):
-                print("já está cadastrado na tabela User")
-            elif Invitation.objects.filter(email=email):
-                print("já está cadastrado na tabela Invitation")
-            elif Seeker.objects.filter(email=email):
-                print("já esta cadastrado na tabela Seeker")
-            else:
+        msg = ""
+        if User.objects.filter(email=data["email"]):
+            msg = f"{data['name']} is already a pupil."
+        elif Invitation.objects.filter(email=data["email"]):
+            msg = f"{data['email']} has already been invited."
+        elif Seeker.objects.filter(email=data["email"]):
+            msg = "{} is already a 'seeker'.\nUse import from Seekers.".format(
+                data["name"]
+            )
+        else:
+            if form.is_valid():
                 new_invite = form.save()
                 new_invite.historic = {"A1": str(date.today())}
                 new_invite.save()
                 send_invitation(request, new_invite)
                 return redirect("invitations")
+
+        return HttpResponse(
+            headers={
+                "HX-Retarget": "#formBody",
+                "HX-Trigger": json.dumps(
+                    {
+                        "closeModal": True,
+                        "showToast": msg,
+                    }
+                ),
+            },
+        )
+
     else:
         form = InvitationForm(initial={"center": request.user.person.center})
 
@@ -99,12 +114,18 @@ def invite(request):
 def send_invitation(request, invite):
     address = "https://rcadmin.rosacruzaurea.org.br"
     _link = f"{address}{reverse('confirm_invitation', args=[invite.pk])}"
+    action = "migration" if invite.migration else "invitation"
     send_email(
-        body_text="person/invitation/emails/confirm_invitation.txt",
-        body_html="person/invitation/emails/confirm_invitation.html",
+        body_text=f"person/invitation/emails/confirm_{action}.txt",
+        body_html=f"person/invitation/emails/confirm_{action}.html",
         _subject="Convite para ser aluno",
         _to=invite.email,
-        _context={"name": invite.name, "link": _link},
+        _context={
+            "name": invite.name,
+            "center": invite.center.name,
+            "email": invite.email,
+            "link": _link,
+        },
     )
 
 
@@ -186,56 +207,84 @@ def confirm_invitation(request, token):
         form = PupilRegistrationForm(request.POST, instance=invite)
         # using the data
         data = request.POST.dict()
-        # creating a new user
-        new_user = User.objects.create_user(
-            email=invite.email, password=data["password"]
-        )
-        # add user in "user" group
-        new_user.groups.add(Group.objects.get(name="user"))
-        # updating the user.profile
-        new_user.profile.social_name = sanitize_name(data["name"])
-        new_user.profile.gender = data["gender"]
-        new_user.profile.city = data["city"]
-        new_user.profile.state = data["state"]
-        new_user.profile.country = data["country"]
-        new_user.profile.phone = data["phone"]
-        new_user.profile.sos_contact = sanitize_name(data["sos_contact"])
-        new_user.profile.sos_phone = data["sos_phone"]
-        new_user.profile.save()
-        # updating the user.person
-        new_user.person.name = invite.name
-        new_user.person.center = invite.center
-        new_user.person.id_card = data["id_card"]
-        new_user.person.birth = datetime.strptime(data["birth"], "%Y-%m-%d")
-        new_user.person.save()
-        # add historic - Aspect 'A1'
-        aspect, _date = tuple(invite.historic.items())[0]
-        date = datetime.strptime(_date, "%Y-%m-%d")
-        Historic.objects.create(
-            person=new_user.person, occurrence=aspect, date=date
-        )
-        adjust_person_side(new_user.person, aspect, date)
+
+        # update or create user
+        if invite.sign_lgpd:
+            # update user
+            user = User.objects.get(email=invite.email)
+            user.set_password(data["password"])
+            # updating the user.profile
+            user.profile.social_name = sanitize_name(data["name"])
+            user.profile.gender = data["gender"]
+            user.profile.city = data["city"]
+            user.profile.state = data["state"]
+            user.profile.country = data["country"]
+            user.profile.phone = data["phone"]
+            user.profile.sos_contact = sanitize_name(data["sos_contact"])
+            user.profile.sos_phone = data["sos_phone"]
+            user.profile.save()
+            # updating the user.person
+            user.person.name = invite.name
+            user.person.center = invite.center
+            user.person.id_card = data["id_card"]
+            user.person.birth = datetime.strptime(data["birth"], "%Y-%m-%d")
+            user.is_active = True
+            user.save()
+            user.person.is_active = True
+            user.person.save()
+        else:
+            # creating a new user
+            user = User.objects.create_user(
+                email=invite.email, password=data["password"]
+            )
+            # add user in "user" group
+            user.groups.add(Group.objects.get(name="user"))
+            # updating the user.profile
+            user.profile.social_name = sanitize_name(data["name"])
+            user.profile.gender = data["gender"]
+            user.profile.city = data["city"]
+            user.profile.state = data["state"]
+            user.profile.country = data["country"]
+            user.profile.phone = data["phone"]
+            user.profile.sos_contact = sanitize_name(data["sos_contact"])
+            user.profile.sos_phone = data["sos_phone"]
+            user.profile.save()
+            # updating the user.person
+            user.person.name = invite.name
+            user.person.center = invite.center
+            user.person.id_card = data["id_card"]
+            user.person.birth = datetime.strptime(data["birth"], "%Y-%m-%d")
+            user.person.save()
+            # add historic - Aspect 'A1'
+            aspect, _date = tuple(invite.historic.items())[0]
+            date = datetime.strptime(_date, "%Y-%m-%d")
+            Historic.objects.create(
+                person=user.person, occurrence=aspect, date=date
+            )
+            adjust_person_side(user.person, aspect, date)
+
         # update invite imported
         invite.imported = True
         invite.imported_on = datetime.now()
         invite.save()
+
         # send congratulations email
         send_email(
             body_text="person/invitation/emails/to_congratulate.txt",
             body_html="person/invitation/emails/to_congratulate.html",
             _subject="cadastro realizado",
             _to=invite.email,
-            _context={"object": new_user.person},
+            _context={"object": invite},
         )
 
-        return redirect("congratulations", pk=new_user.person.pk)
+        return redirect("congratulations", pk=invite.pk)
 
     else:
         form = PupilRegistrationForm(instance=invite)
 
     context = {
         "form": form,
-        "total_address": True if "A2" in invite.historic.keys() else False,
+        "total_address": True if "A1" not in invite.historic.keys() else False,
         "title": _("create pupil"),
         "rca_logo": True,
     }
@@ -246,6 +295,6 @@ def congratulations(request, pk):
     template_name = "person/invitation/congratulations.html"
     context = {
         "title": _("congratulations"),
-        "object": Person.objects.get(pk=pk),
+        "object": Invitation.objects.get(pk=pk),
     }
     return render(request, template_name, context)

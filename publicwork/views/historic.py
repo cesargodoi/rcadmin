@@ -124,4 +124,6 @@ def adjust_seeker_side(seeker, occur=None, dt=None, reverse=False):
         if not seeker.status_date or date >= seeker.status_date:
             seeker.status = occur
             seeker.status_date = date
+            if occur == "RST":
+                seeker.is_active = False
             seeker.save()

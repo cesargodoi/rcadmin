@@ -1,6 +1,6 @@
 from django import forms
 
-from django.utils.translation import gettext_lazy as _
+# from django.utils.translation import gettext_lazy as _
 from rcadmin.common import HIDDEN_AUTH_FIELDS
 from user.models import Profile, User
 
@@ -128,7 +128,7 @@ class PupilRegistrationForm(forms.ModelForm):
         self.fields["id_card"].required = True
         self.fields["address"].required = True
         self.fields["number"].required = True
-        self.fields["complement"].required = True
+        self.fields["complement"].required = False
         self.fields["district"].required = True
         self.fields["city"].required = True
         self.fields["state"].required = True

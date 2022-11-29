@@ -280,12 +280,10 @@ def get_frequencies(ids):
             "center": seek.center,
             "status": status[str(seek.status)],
             "date": seek.status_date,
-            "rank": 0,
             "freq": 0,
         }
         if seek.listener_set.count():
             for freq in seek.listener_set.all():
-                seeker["rank"] += freq.ranking
                 seeker["freq"] += 1
         frequencies.append(seeker)
 
@@ -310,7 +308,7 @@ def group_add_frequencies(request, pk):
             active_members = [
                 m
                 for m in pw_group.members.all()
-                if m.status not in ("ITD", "STD")
+                if m.status not in ("ITD", "STD", "RST")
             ]
             preparing_the_session(request, active_members, lecture)
 
@@ -321,7 +319,6 @@ def group_add_frequencies(request, pk):
                 new_freq = dict(
                     lecture=lecture,
                     seeker_id=listener["id"],
-                    ranking=listener["rank"],
                     observations=listener["obs"],
                 )
                 Listener.objects.create(**new_freq)
@@ -565,7 +562,7 @@ def group_remove_mentor(request, group_pk, mentor_pk):
 def preparing_the_session(request, members, lecture):
     # check which frequencies have already been entered
     inserteds = [
-        [str(lect.seeker.pk), lect.ranking, lect.observations]
+        [str(lect.seeker.pk), lect.observations]
         for lect in lecture.listener_set.all()
     ]
     inserteds_pks = [ins[0] for ins in inserteds]
@@ -592,8 +589,7 @@ def preparing_the_session(request, members, lecture):
                             "center": str(seek.center),
                         },
                         "freq": "on",
-                        "ranking": ins[1],
-                        "observations": ins[2],
+                        "observations": ins[1],
                     }
                     break
         else:
@@ -604,7 +600,6 @@ def preparing_the_session(request, members, lecture):
                     "center": str(seek.center),
                 },
                 "freq": "",
-                "ranking": 0,
                 "observations": "",
             }
         frequencies["listeners"].append(listener)

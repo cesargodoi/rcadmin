@@ -17,35 +17,29 @@
           <span class="badge badge-pill badge-warning">{% trans 'only view' %}</span>
         {% endif %}
       </div>
+
       <div class="col text-right">
-        {% if object.reg %}
-          <strong>{{ object.reg }}</strong>
+        {% if object.status not in "ACT,---,OTH" %}
+          <strong class="{% if object.status == 'LIC' %}
+                           text-success
+                         {% elif object.status == 'DIS' %}
+                           text-warning
+                         {% elif object.status == 'REM' %}
+                           text-danger
+                         {% elif object.status == 'DEA' %}
+                           text-secondary
+                         {% endif %}">
+            {{ object.get_status_display }}
+          </strong>
         {% endif %}
       </div>
+
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-9">
-      <h3>
-        {{ object.name }} &nbsp;&nbsp;
-        <small class="text-muted"><em>{{ object.user.profile.social_name }}</em></small>
-      </h3>
-    </div>
-    <div class="col text-right">
-      {% if object.status not in "ACT,---,OTH" %}
-        <strong class="{% if object.status == 'LIC' %}
-                        text-success
-                      {% elif object.status == 'DIS' %}
-                        text-warning
-                      {% elif object.status == 'REM' %}
-                        text-danger
-                      {% elif object.status == 'DEA' %}
-                        text-secondary
-                      {% endif %}">
-          {{ object.get_status_display }}
-        </strong>
-      {% endif %}
-    </div>
-  </div>
+  <h3>
+    {{ object.name }} &nbsp;&nbsp;
+    <small class="text-muted"><em>{{ object.user.profile.social_name }}</em></small>
+  </h3>
+  
 </div>

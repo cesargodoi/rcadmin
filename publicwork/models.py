@@ -210,13 +210,12 @@ class Listener(models.Model):
     seeker = models.ForeignKey(
         Seeker, on_delete=models.PROTECT, verbose_name=_("seeker")
     )
-    ranking = models.IntegerField(_("ranking"), default=0)
     observations = models.CharField(
         _("observations"), max_length=100, null=True, blank=True
     )
 
     def __str__(self):
-        return f"{self.lecture} - {self.seeker} [{self.ranking}]"
+        return f"{self.lecture} - {self.seeker}"
 
     class Meta:
         verbose_name = _("listener")

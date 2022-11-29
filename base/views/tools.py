@@ -21,6 +21,7 @@ IMPORT_PATH = f"{os.path.dirname(settings.BASE_DIR)}/imports"
 def import_people(request):
     # geting imported files
     txt_files = get_txt_files(f"{IMPORT_PATH}/reports")
+
     context = {
         "title": _("import people"),
         "entries": get_entries(IMPORT_PATH, txt_files) if txt_files else [],
@@ -58,9 +59,6 @@ def import_people(request):
             file=file,
             path=f"{os.path.dirname(settings.BASE_DIR)}/imports",
         )
-        # import ipdb
-
-        # ipdb.set_trace()
 
         # checking if the dataframe is ok
         if sf.df is False:
@@ -102,20 +100,14 @@ def get_txt_files(path):
     return [file for file in os.listdir(path) if ".txt" in file]
 
 
-def get_entries(path, files, fields=False):
-    """
-    fields -> to import only an specific field
-    """
+def get_entries(path, files):
     # header of each data imported
     data = ("center", "file", "imported_", "time", "- ")
 
     entries = []
     for file in files:
-        _path = (
-            f"{path}/reports/fields/{file}"
-            if fields
-            else f"{path}/reports/{file}"
-        )
+        _path = f"{path}/reports/{file}"
+
         with open(_path, "r") as _file:
             report_data = _file.readlines()
             entry = {"report": file}
@@ -149,7 +141,10 @@ def download_csv(request, file):
         _file = f"duplicate_email__{file}"
         _path = f"{IMPORT_PATH}/duplicate_email/{_file}"
     elif request.GET.get("type") == "se":
-        _file = f"to_send_email__{file}"
+        if file.split(".")[-1] != "csv":
+            _file = f"to_send_email__{file.split(' ')[0]}__to_sign_lgpd.csv"
+        else:
+            _file = f"to_send_email__{file}"
         _path = f"{IMPORT_PATH}/to_send_email/{_file}"
     response = HttpResponse(open(_path, "rb").read())
     response["Content-Type"] = "text/plain"

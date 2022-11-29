@@ -30,8 +30,7 @@ class MembershipForm(forms.ModelForm):
 class MentoringFrequencyForm(forms.ModelForm):
     class Meta:
         model = Frequency
-        fields = ["ranking", "observations"]
+        fields = ["observations"]
         widgets = {
-            "ranking": forms.widgets.NumberInput(attrs={"min": 0, "max": 2}),
             "observations": forms.Textarea(attrs={"rows": 2}),
         }

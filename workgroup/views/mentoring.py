@@ -146,9 +146,7 @@ def mentoring_group_frequencies(request, pk):
         member.click_link = reverse(
             "mentoring_member_detail", args=[pk, member.person.pk]
         )
-        ranks = [f.ranking for f in member.person.frequency_set.all()]
-        member.freq = len(ranks)
-        member.rank = sum(ranks)
+        member.freq = member.person.frequency_set.count()
 
     context = {
         "LIMIT": LIMIT,
@@ -203,7 +201,6 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
     obj = Person.objects.get(pk=person_pk)
     count = obj.frequency_set.all().count()
     object_list = obj.frequency_set.all().order_by("-event__date")[_from:_to]
-    ranking = sum([f.ranking for f in object_list])
 
     # add action links
     for item in object_list:
@@ -224,7 +221,6 @@ def mentoring_member_frequencies(request, group_pk, person_pk):
         "title": _("member detail | frequencies"),
         "nav": "detail",
         "tab": "frequencies",
-        "ranking": ranking,
         "goback": reverse("mentoring_group_detail", args=[group_pk]),
         "group_pk": group_pk,
     }
@@ -288,7 +284,6 @@ def membership_add_frequency(request, group_pk, person_pk):
                 person=person,
                 event=event,
                 aspect=person.aspect,
-                ranking=request.POST.get("ranking"),
                 observations=request.POST.get("observations"),
             )
 
@@ -464,7 +459,6 @@ def mentoring_add_frequencies(request, group_pk):
                     event=event,
                     person_id=listener["id"],
                     aspect=listener["asp"],
-                    ranking=listener["rank"],
                     observations=listener["obs"],
                 )
                 Frequency.objects.create(**new_freq)
@@ -509,7 +503,7 @@ def mentoring_add_frequencies(request, group_pk):
 def preparing_the_session(request, persons, event):
     # check which frequencies have already been entered
     inserteds = [
-        [str(ev.person.pk), ev.person.aspect, ev.ranking, ev.observations]
+        [str(ev.person.pk), ev.person.aspect, ev.observations]
         for ev in event.frequency_set.all()
     ]
     inserteds_pks = [ins[0] for ins in inserteds]
@@ -536,8 +530,7 @@ def preparing_the_session(request, persons, event):
                         },
                         "frequency": "on",
                         "aspect": ins[1],
-                        "ranking": ins[2],
-                        "observations": ins[3],
+                        "observations": ins[2],
                     }
                     break
         else:
@@ -549,7 +542,6 @@ def preparing_the_session(request, persons, event):
                 },
                 "frequency": "",
                 "aspect": per.aspect,
-                "ranking": 0,
                 "observations": "",
             }
         frequencies["listeners"].append(listener)

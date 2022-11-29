@@ -59,6 +59,7 @@ class Invitation(models.Model):
     historic = JSONField(null=True, blank=True)
     observations = models.TextField(_("observations"), blank=True)
     migration = models.BooleanField(default=False)
+    sign_lgpd = models.BooleanField(default=False)
     invited_on = models.DateTimeField(_("invited on"), default=timezone.now)
     imported = models.BooleanField(default=False)
     imported_on = models.DateTimeField(_("imported on"), null=True, blank=True)
@@ -89,7 +90,6 @@ class Person(models.Model):
         blank=True,
         verbose_name=_("center"),
     )
-    reg = models.CharField(_("reg"), max_length=10, null=True, blank=True)
     name = models.CharField(_("name"), max_length=100)
     name_sa = models.CharField(max_length=100, editable=False)
     short_name = models.CharField(

@@ -14,7 +14,7 @@
   >
 {% endif %}
 
-{% if not request.user|has_group:"presidium" %}
+{% if request.user|has_group:"admin" or request.user|has_group:"office" or request.user.is_superuser %}
   <div class="text-right photo-edit-button">
     <a 
       href="#"

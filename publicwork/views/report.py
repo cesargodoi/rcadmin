@@ -46,19 +46,19 @@ def frequencies_per_period(request):
                 "seek_status_date",
             ]
             # generate pandas dataframe
-            dataframe = pd.DataFrame(_dict, columns=columns + ["ranking"])
+            dataframe = pd.DataFrame(_dict, columns=columns)
             # add since column
             dataframe["since"] = since(dataframe, "seek_status_date")
             # count frequencies and insert on each row as freqs column
             dataframe["freqs"] = dataframe.groupby("seek_pk")[
                 "seek_name"
             ].transform("count")
-            # .sort_values('ranking', ascending=False)
+            # .sort_values('freqs', ascending=False)
             columns += ["since", "freqs"]
             report_data = (
                 dataframe.groupby(columns)
-                .sum("ranking")
-                .sort_values("ranking", ascending=False)
+                .sum("freqs")
+                .sort_values("freqs", ascending=False)
                 .reset_index()
             )
             # drop columns
@@ -83,7 +83,6 @@ def frequencies_per_period(request):
                 "seek_local": "local",
                 "seek_center": "center",
                 "seek_status": "status",
-                "ranking": "rank",
             }
             report_data = report_data.rename(columns=rename, inplace=False)
 

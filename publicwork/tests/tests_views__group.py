@@ -69,6 +69,7 @@ def test_access__group_detail__by_user_type(
     assert response.status_code == status_code
 
 
+@pytest.mark.actual
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type, status_code",
@@ -89,7 +90,9 @@ def test_access_from_other_center__group_detail__by_user_type(
     """
     center = center_factory.create()
     lecture = create_lecture(center=center, email="s1@um.com")
-    other_center = create_center(user=create_user(email="u2@mail.com"))
+    other_center = create_center(
+        name="Other Center", user=create_user(email="u2@mail.com")
+    )
     client, user = auto_login_user(group=user_type, center=other_center)
     url = reverse("group_detail", args=[lecture.pk])
     response = client.get(url)
@@ -263,7 +266,6 @@ def test_access__group_add_mentor__by_user_type(
     assert response.status_code == status_code
 
 
-@pytest.mark.actual
 @pytest.mark.django_db
 @pytest.mark.parametrize("user_type, status_code", permission["adm_pub__200"])
 def test_access__group_remove_mentor__by_user_type(

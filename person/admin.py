@@ -52,7 +52,7 @@ class PersonAdmin(admin.ModelAdmin):
     make_active.short_description = "Mark selected persons as 'active'."
 
     actions = [make_inactive, make_active]
-    list_filter = ["aspect", "status"]
+    list_filter = ["aspect", "status", "is_active"]
     search_fields = ["name"]
     list_display = [
         "name",
