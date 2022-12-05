@@ -1,0 +1,15 @@
+{% load i18n %}
+<li class="nav-item dropdown">
+  <a class="nav-item nav-link dropdown-toggle mr-md-2" 
+    href="#" 
+    id="person-reports" 
+    data-toggle="dropdown" 
+    aria-haspopup="true" 
+    aria-expanded="false">
+    {% trans 'Reports' %}
+  </a>
+  <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="person-reports">
+    <a class="dropdown-item" href="{% url 'installed_per_period' %}">{% trans 'Installed People' %}</a>
+    <!-- <div class="dropdown-divider"></div> -->
+  </div>
+</li>

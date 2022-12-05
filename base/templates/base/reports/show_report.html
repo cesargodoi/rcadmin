@@ -1,15 +1,14 @@
 {% extends "base/base.html" %}
 {% load i18n %}
-
 {% load static %}
 
 {% block content %}
 
   {% include search %}
 
-  {% include "publicwork/reports/navbar.html" %}
+  {% include "base/reports/navbar.html" %}
 
-  {% include "publicwork/reports/header.html" %}
+  {% include "base/reports/header.html" %}
 
   {% if report_data %}
 
