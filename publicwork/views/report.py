@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
@@ -8,6 +7,7 @@ from django.urls import reverse
 
 from ..models import Lecture, Seeker
 from base.utils import (
+    get_period_subtitle,
     get_frequencies_dict,
     get_lectures_dict,
     get_seekers_dict,
@@ -89,16 +89,7 @@ def frequencies_per_period(request):
 
             context = {
                 "title": _("frequencies per period"),
-                "subtitle": "from: {} to: {}".format(
-                    datetime.strftime(
-                        datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
-                        "%d/%m/%y",
-                    ),
-                    datetime.strftime(
-                        datetime.strptime(request.GET["dt2"], "%Y-%m-%d"),
-                        "%d/%m/%y",
-                    ),
-                ),
+                "subtitle": get_period_subtitle(request),
                 "report_data": report_data.to_html(),
                 "status": SEEKER_STATUS,
                 "goback": reverse("publicwork_home"),
@@ -145,16 +136,7 @@ def lectures_per_period(request):
 
             context = {
                 "title": _("lectures per period"),
-                "subtitle": "from: {} to: {}".format(
-                    datetime.strftime(
-                        datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
-                        "%d/%m/%y",
-                    ),
-                    datetime.strftime(
-                        datetime.strptime(request.GET["dt2"], "%Y-%m-%d"),
-                        "%d/%m/%y",
-                    ),
-                ),
+                "subtitle": get_period_subtitle(request),
                 "report_data": dataframe.to_html(),
                 "type": LECTURE_TYPES,
                 "goback": reverse("publicwork_home"),

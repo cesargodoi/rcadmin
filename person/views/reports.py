@@ -1,7 +1,5 @@
 import pandas as pd
 
-# from datetime import datetime
-
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.translation import gettext as _
@@ -9,7 +7,7 @@ from django.urls import reverse
 
 from ..models import Person
 from center.models import Responsible
-from base.utils import get_person_dict
+from base.utils import get_person_dict, get_period_subtitle
 
 
 @login_required
@@ -48,7 +46,7 @@ def installed_per_period(request):
 
             context = {
                 "title": _("installed per period"),
-                "subtitle": request.user.person.center,
+                "subtitle": get_period_subtitle(request),
                 "report_data": report_data.to_html(),
                 "goback": reverse("person_home") + "?init=on",
                 "search": "base/searchs/modal_period.html",
