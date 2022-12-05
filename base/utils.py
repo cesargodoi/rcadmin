@@ -205,3 +205,18 @@ def queryset_per_status(request, obj):
         query.add(q, Q.AND)
 
     return obj.objects.filter(query).order_by("name_sa")
+
+
+# helpers
+def get_period_subtitle(request):
+    period_subtitle = "from: {} to: {}".format(
+        datetime.strftime(
+            datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
+            "%d/%m/%y",
+        ),
+        datetime.strftime(
+            datetime.strptime(request.GET["dt2"], "%Y-%m-%d"),
+            "%d/%m/%y",
+        ),
+    )
+    return period_subtitle
