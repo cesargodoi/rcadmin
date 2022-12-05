@@ -4,9 +4,10 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 from django.utils.translation import gettext as _
+from django.urls import reverse
 
 from ..models import Lecture, Seeker
-from ..utils import (
+from base.utils import (
     get_frequencies_dict,
     get_lectures_dict,
     get_seekers_dict,
@@ -100,20 +101,20 @@ def frequencies_per_period(request):
                 ),
                 "report_data": report_data.to_html(),
                 "status": SEEKER_STATUS,
+                "goback": reverse("publicwork_home"),
                 "search": "base/searchs/modal_frequencies.html",
             }
 
-            return render(
-                request, "publicwork/reports/show_report.html", context
-            )
+            return render(request, "base/reports/show_report.html", context)
 
     context = {
         "title": _("frequencies per period"),
         "status": SEEKER_STATUS,
+        "goback": reverse("publicwork_home"),
         "search": "base/searchs/modal_frequencies.html",
     }
 
-    return render(request, "publicwork/reports/show_report.html", context)
+    return render(request, "base/reports/show_report.html", context)
 
 
 @login_required
@@ -156,19 +157,19 @@ def lectures_per_period(request):
                 ),
                 "report_data": dataframe.to_html(),
                 "type": LECTURE_TYPES,
+                "goback": reverse("publicwork_home"),
                 "search": "base/searchs/modal_lectures.html",
             }
-            return render(
-                request, "publicwork/reports/show_report.html", context
-            )
+            return render(request, "base/reports/show_report.html", context)
 
     context = {
         "title": _("lectures per period"),
         "type": LECTURE_TYPES,
+        "goback": reverse("publicwork_home"),
         "search": "base/searchs/modal_lectures.html",
     }
 
-    return render(request, "publicwork/reports/show_report.html", context)
+    return render(request, "base/reports/show_report.html", context)
 
 
 @login_required
@@ -206,20 +207,20 @@ def status_per_center(request):
                 "subtitle": request.user.person.center,
                 "status": SEEKER_STATUS,
                 "report_data": report_data.to_html(),
+                "goback": reverse("publicwork_home"),
                 "search": "base/searchs/modal_status.html",
             }
 
-            return render(
-                request, "publicwork/reports/show_report.html", context
-            )
+            return render(request, "base/reports/show_report.html", context)
 
     context = {
         "title": _("status per center"),
         "status": SEEKER_STATUS,
+        "goback": reverse("publicwork_home"),
         "search": "base/searchs/modal_status.html",
     }
 
-    return render(request, "publicwork/reports/show_report.html", context)
+    return render(request, "base/reports/show_report.html", context)
 
 
 # handlers

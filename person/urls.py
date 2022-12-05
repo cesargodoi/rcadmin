@@ -154,4 +154,9 @@ urlpatterns += [
         reports.person_badge,
         name="person_badge",
     ),
+    path(
+        "reports/installed-per-period/",
+        reports.installed_per_period,
+        name="installed_per_period",
+    ),
 ]
