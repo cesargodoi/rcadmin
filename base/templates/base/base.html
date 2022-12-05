@@ -70,6 +70,8 @@
         $('#liveToast').toast('show');
       });
 
+      $(document).ready(() => {$('[data-toggle="tooltip"]').tooltip()});
+
       function changeColor(){
         $.ajax({
           type: 'GET',

@@ -21,7 +21,7 @@ from rcadmin.common import (
 from base.searchs import search_invitations
 
 from ..views.historic import adjust_person_side
-from ..models import Invitation, Person, Historic
+from ..models import Invitation, Historic
 from ..forms import InvitationForm, PupilRegistrationForm
 from publicwork.models import Seeker
 from user.models import User

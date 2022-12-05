@@ -36,7 +36,6 @@ def get_frequencies_dict(request, obj):
                 if freq.seeker.is_active:
                     row = dict(
                         pk=freq.pk,
-                        ranking=freq.ranking,
                         obs=freq.observations,
                         lect_pk=freq.lecture.pk,
                         lect_theme=freq.lecture.theme,

@@ -19,8 +19,6 @@
 
 {% block scripts %}
   <script>
-    $(document).ready(() => {$('[data-toggle="tooltip"]').tooltip()}); 
-
     function manageData(url) {
       htmx.ajax('GET', url, '#formBody')
     }
