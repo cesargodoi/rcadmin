@@ -8,7 +8,8 @@ from django.urls import reverse
 
 from center.models import Center
 from person.models import Invitation
-from rcadmin.common import sanitize_name
+
+# from rcadmin.common import sanitize_name
 
 """
 pra rodar via:
