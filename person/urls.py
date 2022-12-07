@@ -159,4 +159,9 @@ urlpatterns += [
         reports.installed_per_period,
         name="installed_per_period",
     ),
+    path(
+        "reports/occurrences-per-period/",
+        reports.occurrences_per_period,
+        name="occurrences_per_period",
+    ),
 ]

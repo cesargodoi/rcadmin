@@ -2,17 +2,28 @@ from datetime import datetime, timedelta
 
 from django.db.models import Q
 from django.utils import timezone
-from rcadmin.common import LECTURE_TYPES, SEEKER_STATUS
 
 
-LECT_TYPES = dict(LECTURE_TYPES)
-SEEK_STATUS = dict(SEEKER_STATUS)
+#  person - reports  ##########################################################
+def get_installed_per_period_dict(request, obj):
+    put_search_in_session(request)
+    search = request.session["search"]
+    get_period(request, search)
+    request.session.modified = True
+    # basic query
+    _query = [
+        Q(is_active=True),
+        Q(center=request.user.person.center),
+        Q(aspect="A1"),
+        Q(aspect_date__range=[search["dt1"], search["dt2"]]),
+    ]
+    # generating query
+    query = Q()
+    for q in _query:
+        query.add(q, Q.AND)
 
-
-# reports #####################################################################
-def get_person_dict(request, obj):
     _dict = []
-    for _obj in queryset_period(request, obj):
+    for _obj in obj.objects.filter(query).order_by("-aspect_date"):
         row = dict(
             pk=_obj.pk,
             name=_obj.short_name,
@@ -25,6 +36,38 @@ def get_person_dict(request, obj):
     return _dict
 
 
+def get_occurrences_per_period_dict(request, obj):
+    put_search_in_session(request)
+    search = request.session["search"]
+    get_period(request, search)
+    request.session.modified = True
+    # basic query
+    _query = [
+        Q(person__center=request.user.person.center),
+        Q(date__range=[search["dt1"], search["dt2"]]),
+    ]
+    # generating query
+    query = Q()
+    for q in _query:
+        query.add(q, Q.AND)
+
+    _dict = []
+    for _obj in obj.objects.filter(query).order_by("-date"):
+        row = dict(
+            pk=_obj.pk,
+            name=_obj.person.short_name,
+            local="{} ({})".format(
+                _obj.person.user.profile.city, _obj.person.user.profile.state
+            ),
+            occurrence=_obj.get_occurrence_display(),
+            description=_obj.description,
+            date=_obj.date,
+        )
+        _dict.append(row)
+    return _dict
+
+
+#  publicwork - reports  ######################################################
 def get_lectures_dict(request, obj):
     _dict = []
     for obj in queryset_per_date(request, obj):
@@ -32,7 +75,7 @@ def get_lectures_dict(request, obj):
             pk=obj.pk,
             date=obj.date,
             theme=obj.theme,
-            type=str(LECT_TYPES[obj.type]),
+            type=str(obj.get_type_display()),
             listeners=obj.listener_set.count(),
             center=str(obj.center),
             center_city=obj.center.city,
@@ -54,7 +97,7 @@ def get_frequencies_dict(request, obj):
                         obs=freq.observations,
                         lect_pk=freq.lecture.pk,
                         lect_theme=freq.lecture.theme,
-                        lect_type=LECT_TYPES[obj.type],
+                        lect_type=str(obj.get_type_display()),
                         lect_date=freq.lecture.date,
                         lect_center=str(freq.lecture.center),
                         seek_pk=freq.seeker.pk,
@@ -64,13 +107,9 @@ def get_frequencies_dict(request, obj):
                         seek_city=freq.seeker.city,
                         seek_state=freq.seeker.state,
                         seek_country=freq.seeker.country,
-                        seek_local="{} ({}-{})".format(
-                            freq.seeker.city,
-                            freq.seeker.state,
-                            freq.seeker.country,
-                        ),
+                        seek_local=f"{freq.seeker.city} ({freq.seeker.state})",
                         seek_center=str(freq.seeker.center),
-                        seek_status=str(SEEK_STATUS[freq.seeker.status]),
+                        seek_status=str(freq.seeker.get_status_display()),
                         seek_status_date=freq.seeker.status_date,
                         seek_is_active=freq.seeker.is_active,
                     )
@@ -79,9 +118,24 @@ def get_frequencies_dict(request, obj):
 
 
 def get_seekers_dict(request, obj):
-    queryset = queryset_per_status(request, obj)
+    put_search_in_session(request)
+    search = request.session["search"]
+    search["status"] = (
+        request.GET["status"] if request.GET.get("status") else ""
+    )
+    request.session.modified = True
+    # basic query
+    _query = [Q(is_active=True), Q(center=request.user.person.center)]
+    # adding more complexity
+    if search["status"] != "all":
+        _query.append(Q(status=search["status"]))
+    # generating query
+    query = Q()
+    for q in _query:
+        query.add(q, Q.AND)
+
     _dict = []
-    for obj in queryset:
+    for obj in obj.objects.filter(query).order_by("name_sa"):
         if obj.is_active:
             row = dict(
                 pk=obj.pk,
@@ -91,78 +145,21 @@ def get_seekers_dict(request, obj):
                 city=obj.city,
                 state=obj.state,
                 country=obj.country,
-                local="{} ({}-{})".format(obj.city, obj.state, obj.country),
+                local=f"{obj.city} ({obj.state})",
                 center=str(obj.center),
-                status=str(SEEK_STATUS[obj.status]),
+                status=obj.get_status_display(),
                 status_date=obj.status_date,
             )
         _dict.append(row)
     return _dict
 
 
-# searchs of reports
-def queryset_period(request, obj):
-    # checking for search in request.session
-    if not request.session.get("search"):
-        request.session["search"] = {
-            "dt1": "",
-            "dt2": "",
-        }
-    # adjust search
-    search = request.session["search"]
-    dt1 = (
-        datetime.strptime(request.GET["dt1"], "%Y-%m-%d")
-        if request.GET.get("dt1")
-        else timezone.now() - timedelta(30)
-    )
-    search["dt1"] = dt1.strftime("%Y-%m-%d")
-    dt2 = (
-        datetime.strptime(request.GET["dt2"], "%Y-%m-%d")
-        if request.GET.get("dt2")
-        else timezone.now()
-    )
-    search["dt2"] = dt2.strftime("%Y-%m-%d")
-    # save session
-    request.session.modified = True
-    # basic query
-    _query = [
-        Q(is_active=True),
-        Q(center=request.user.person.center),
-        Q(aspect="A1"),
-        Q(aspect_date__range=[search["dt1"], search["dt2"]]),
-    ]
-    # generating query
-    query = Q()
-    for q in _query:
-        query.add(q, Q.AND)
-
-    return obj.objects.filter(query).order_by("-aspect_date")
-
-
+# helpers #####################################################################
 def queryset_per_date(request, obj):
-    # checking for search in request.session
-    if not request.session.get("search"):
-        request.session["search"] = {
-            "dt1": "",
-            "dt2": "",
-            "all": "",
-        }
-    # adjust search
+    put_search_in_session(request)
     search = request.session["search"]
-    dt1 = (
-        datetime.strptime(request.GET["dt1"], "%Y-%m-%d")
-        if request.GET.get("dt1")
-        else timezone.now() - timedelta(30)
-    )
-    search["dt1"] = dt1.strftime("%Y-%m-%d")
-    dt2 = (
-        datetime.strptime(request.GET["dt2"], "%Y-%m-%d")
-        if request.GET.get("dt2")
-        else timezone.now()
-    )
-    search["dt2"] = dt2.strftime("%Y-%m-%d")
+    get_period(request, search)
     search["all"] = "on" if request.GET.get("all") else ""
-    # save session
     request.session.modified = True
     # basic query
     _query = [
@@ -181,33 +178,6 @@ def queryset_per_date(request, obj):
     return obj.objects.filter(query).order_by("-date")
 
 
-def queryset_per_status(request, obj):
-    # checking for search in request.session
-    if not request.session.get("search"):
-        request.session["search"] = {
-            "status": "",
-        }
-    # adjust search
-    search = request.session["search"]
-    search["status"] = (
-        request.GET["status"] if request.GET.get("status") else ""
-    )
-    # save session
-    request.session.modified = True
-    # basic query
-    _query = [Q(is_active=True), Q(center=request.user.person.center)]
-    # adding more complexity
-    if search["status"] != "all":
-        _query.append(Q(status=search["status"]))
-    # generating query
-    query = Q()
-    for q in _query:
-        query.add(q, Q.AND)
-
-    return obj.objects.filter(query).order_by("name_sa")
-
-
-# helpers
 def get_period_subtitle(request):
     period_subtitle = "from: {} to: {}".format(
         datetime.strftime(
@@ -220,3 +190,23 @@ def get_period_subtitle(request):
         ),
     )
     return period_subtitle
+
+
+def put_search_in_session(request):
+    if not request.session.get("search"):
+        request.session["search"] = {}
+
+
+def get_period(request, search):
+    dt1 = (
+        datetime.strptime(request.GET["dt1"], "%Y-%m-%d")
+        if request.GET.get("dt1")
+        else timezone.now() - timedelta(30)
+    )
+    search["dt1"] = dt1.strftime("%Y-%m-%d")
+    dt2 = (
+        datetime.strptime(request.GET["dt2"], "%Y-%m-%d")
+        if request.GET.get("dt2")
+        else timezone.now()
+    )
+    search["dt2"] = dt2.strftime("%Y-%m-%d")
