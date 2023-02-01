@@ -2,7 +2,7 @@
 Saudações {{ name }}!
 
 Estamos implantando um sistema de informação nos núcleos da Escola Espiritual 
-da Rosacruz Áurea aqui no Brasil, e como você é aluno(a) ativo(a) do: {{ center }} 
+da Rosacruz Áurea aqui no Brasil, e como você é aluno(a) ativo(a) de nossa escola, 
 precisamos criar o seu perfil dentro desse sistema. 
 
 Ao clicar no link abaixo, você será direcionado(a) para um formulário onde 

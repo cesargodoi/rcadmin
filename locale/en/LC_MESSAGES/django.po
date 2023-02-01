@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 16:55-0300\n"
+"POT-Creation-Date: 2022-12-06 19:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -455,7 +455,7 @@ msgstr ""
 msgid "Get file"
 msgstr ""
 
-#: base/templates/base/reports/show_report.html:24
+#: base/templates/base/reports/show_report.html:16
 msgid "define the reporting terms"
 msgstr ""
 
@@ -1339,6 +1339,10 @@ msgstr ""
 msgid "Installed People"
 msgstr ""
 
+#: person/templates/person/elements/reports_menu.html:13
+msgid "Occurrences per period"
+msgstr ""
+
 #: person/templates/person/elements/tab_profile.html:22
 #: user/templates/user/profile/elements/tab_profile.html:21
 msgid "sos contact"
@@ -1587,8 +1591,12 @@ msgstr ""
 msgid "Update pupil"
 msgstr ""
 
-#: person/views/reports.py:50 person/views/reports.py:60
+#: person/views/reports.py:52 person/views/reports.py:62
 msgid "installed per period"
+msgstr ""
+
+#: person/views/reports.py:91 person/views/reports.py:104
+msgid "occurrences per period"
 msgstr ""
 
 #: person/views/tools.py:24
@@ -2084,15 +2092,15 @@ msgstr ""
 msgid "Public work"
 msgstr ""
 
-#: publicwork/views/report.py:91 publicwork/views/report.py:111
+#: publicwork/views/report.py:91 publicwork/views/report.py:102
 msgid "frequencies per period"
 msgstr ""
 
-#: publicwork/views/report.py:147 publicwork/views/report.py:166
+#: publicwork/views/report.py:138 publicwork/views/report.py:148
 msgid "lectures per period"
 msgstr ""
 
-#: publicwork/views/report.py:206 publicwork/views/report.py:217
+#: publicwork/views/report.py:188 publicwork/views/report.py:199
 msgid "status per center"
 msgstr ""
 

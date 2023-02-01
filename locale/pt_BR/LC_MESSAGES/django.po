@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 16:55-0300\n"
-"PO-Revision-Date: 2022-12-05 16:59-0306\n"
+"POT-Creation-Date: 2022-12-06 19:17-0300\n"
+"PO-Revision-Date: 2022-12-06 19:19-0306\n"
 "Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -404,7 +404,6 @@ msgid "People to sign LGPD"
 msgstr "Pessoas para assinar a LGPD"
 
 #: base/templates/base/import_people.html:71
-#| msgid "Used email"
 msgid "To send email"
 msgstr "Enviar email"
 
@@ -458,7 +457,7 @@ msgstr "Imprimir"
 msgid "Get file"
 msgstr "Pegar arquivo"
 
-#: base/templates/base/reports/show_report.html:24
+#: base/templates/base/reports/show_report.html:16
 msgid "define the reporting terms"
 msgstr "definir os termos de relatório"
 
@@ -1276,7 +1275,6 @@ msgid "imported on"
 msgstr "importado em"
 
 #: person/models.py:78
-#| msgid "invitations"
 msgid "invitation"
 msgstr "convite"
 
@@ -1344,9 +1342,13 @@ msgid "Reports"
 msgstr "Relatórios"
 
 #: person/templates/person/elements/reports_menu.html:12
-#| msgid "installed"
 msgid "Installed People"
 msgstr "Pessoas instaladas"
+
+#: person/templates/person/elements/reports_menu.html:13
+#| msgid "Lectures per period"
+msgid "Occurrences per period"
+msgstr "Ocorrências por período"
 
 #: person/templates/person/elements/tab_profile.html:22
 #: user/templates/user/profile/elements/tab_profile.html:21
@@ -1597,10 +1599,14 @@ msgstr "Atualizar perfil"
 msgid "Update pupil"
 msgstr "Atualizar aluno"
 
-#: person/views/reports.py:50 person/views/reports.py:60
-#| msgid "Lectures per period"
+#: person/views/reports.py:52 person/views/reports.py:62
 msgid "installed per period"
 msgstr "Instalados por período"
+
+#: person/views/reports.py:91 person/views/reports.py:104
+#| msgid "Lectures per period"
+msgid "occurrences per period"
+msgstr "Ocorrências por período"
 
 #: person/views/tools.py:24
 msgid "import from seekers"
@@ -2125,15 +2131,15 @@ msgstr "Atualizar frequência"
 msgid "Public work"
 msgstr "Trabalho Público"
 
-#: publicwork/views/report.py:91 publicwork/views/report.py:111
+#: publicwork/views/report.py:91 publicwork/views/report.py:102
 msgid "frequencies per period"
 msgstr "frequências por período"
 
-#: publicwork/views/report.py:147 publicwork/views/report.py:166
+#: publicwork/views/report.py:138 publicwork/views/report.py:148
 msgid "lectures per period"
 msgstr "palestras por período"
 
-#: publicwork/views/report.py:206 publicwork/views/report.py:217
+#: publicwork/views/report.py:188 publicwork/views/report.py:199
 msgid "status per center"
 msgstr "status por núcleo"
 

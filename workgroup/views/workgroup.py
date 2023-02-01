@@ -24,7 +24,9 @@ from ..models import Workgroup
 @login_required
 @permission_required("workgroup.view_workgroup")
 @user_passes_test(
-    lambda u: "mentoring" not in [pr.name for pr in u.groups.all()]
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "office" in [pr.name for pr in u.groups.all()]
+    or "presidium" in [pr.name for pr in u.groups.all()]
 )
 def workgroup_home(request):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
@@ -64,7 +66,9 @@ def workgroup_home(request):
 @login_required
 @permission_required("workgroup.view_workgroup")
 @user_passes_test(
-    lambda u: "mentoring" not in [pr.name for pr in u.groups.all()]
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "office" in [pr.name for pr in u.groups.all()]
+    or "presidium" in [pr.name for pr in u.groups.all()]
 )
 def workgroup_detail(request, pk):
     LIMIT, template_name, _from, _to, page = get_template_and_pagination(
@@ -101,7 +105,8 @@ def workgroup_detail(request, pk):
 @login_required
 @permission_required("workgroup.add_workgroup")
 @user_passes_test(
-    lambda u: "mentoring" not in [pr.name for pr in u.groups.all()]
+    lambda u: "admin" in [pr.name for pr in u.groups.all()]
+    or "office" in [pr.name for pr in u.groups.all()]
 )
 def workgroup_create(request):
     if request.method == "POST":

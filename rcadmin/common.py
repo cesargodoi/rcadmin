@@ -116,7 +116,7 @@ LECTURE_TYPES = (
     ("CTT", _("contact")),
     ("MET", _("meeting")),
 )
-SEEKER_STATUS = (
+SEEKER_STATUS = [
     ("OBS", _("observation")),
     ("NEW", _("new")),
     ("MBR", _("member")),
@@ -124,7 +124,7 @@ SEEKER_STATUS = (
     ("ITD", _("installed")),
     ("STD", _("stand by")),
     ("RST", _("restriction")),
-)
+]
 RESPOSABILITIES = (("BDG", _("Badge")), ("SCR", _("Secretary")))
 BR_REGIONS = {
     "SP": ["SP"],
