@@ -10,6 +10,7 @@ from center.models import Responsible
 from base.utils import (
     get_installed_per_period_dict,
     get_occurrences_per_period_dict,
+    get_report_file_title,
     get_period_subtitle,
 )
 
@@ -47,6 +48,11 @@ def installed_per_period(request):
             report_data = pd.DataFrame(_dict, columns=columns)
             #  adjust index
             report_data.index += 1
+            # prepare file.xslx
+            request.session["data_to_file"] = {
+                "name": get_report_file_title(request, "New_Pupils"),
+                "content": report_data.to_json(orient="records"),
+            }
 
             context = {
                 "title": _("installed per period"),
@@ -86,6 +92,11 @@ def occurrences_per_period(request):
             report_data = pd.DataFrame(_dict, columns=columns)
             #  adjust index
             report_data.index += 1
+            # prepare file.xslx
+            request.session["data_to_file"] = {
+                "name": get_report_file_title(request, "Occurrences"),
+                "content": report_data.to_json(orient="records"),
+            }
 
             context = {
                 "title": _("occurrences per period"),

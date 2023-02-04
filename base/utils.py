@@ -179,7 +179,7 @@ def queryset_per_date(request, obj):
 
 
 def get_period_subtitle(request):
-    period_subtitle = "from: {} to: {}".format(
+    return "from: {0} to: {1}".format(
         datetime.strftime(
             datetime.strptime(request.GET["dt1"], "%Y-%m-%d"),
             "%d/%m/%y",
@@ -189,7 +189,20 @@ def get_period_subtitle(request):
             "%d/%m/%y",
         ),
     )
-    return period_subtitle
+
+
+def get_report_file_title(request, report_name):
+    if not request.GET.get("dt1") or not request.GET.get("dt1"):
+        return "{0} - {1}.xlsx".format(
+            "_".join(request.user.person.center.short_name.split()),
+            report_name,
+        )
+    return "{0} - {1} ({2} to {3}).xlsx".format(
+        "_".join(request.user.person.center.short_name.split()),
+        report_name,
+        request.GET["dt1"],
+        request.GET["dt2"],
+    )
 
 
 def put_search_in_session(request):

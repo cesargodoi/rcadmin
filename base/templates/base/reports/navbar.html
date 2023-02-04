@@ -24,8 +24,12 @@
         <i class="fas fa-print"></i> 
         {% trans 'To print' %}
       </a>
-      <a type="button" class="btn btn-light btn-sm controls-report" href="#">
-        <i class="fas fa-file-csv"></i>
+      <a 
+        type="button" 
+        class="btn btn-light btn-sm controls-report" 
+        href="{% if request.session.data_to_file.empty %} # {% else %} {% url 'get_file' %} {% endif %}"
+      >
+        <i class="fas fa-file-excel"></i>
         {% trans 'Get file' %}
       </a>
       <a type="button" class="btn btn-light btn-sm controls-report" href="{{ goback }}">
