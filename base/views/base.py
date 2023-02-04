@@ -1,5 +1,8 @@
+import pandas as pd
+
+from io import BytesIO
 from django.http.response import Http404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from center.models import Center
@@ -44,3 +47,24 @@ def error_500(request):
 def clear_session(request):
     for key in request.session.keys():
         del request.session[key]
+
+
+def get_file(request):
+    file = request.session["data_to_file"]
+    df = pd.read_json(file["content"])
+
+    if "since" in df.columns:
+        df["since"] = df["since"].div(60 * 60 * 24 * 1000)
+    if "date" in df.columns:
+        df["date"] = df["date"].dt.strftime("%Y-%m-%d")
+
+    bio = BytesIO()
+    writer = pd.ExcelWriter(bio)
+    df.to_excel(writer, sheet_name="Sheet1", index=False)
+    writer.close()
+    bio.seek(0)
+
+    mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    response = HttpResponse(bio, content_type=mime)
+    response["Content-Disposition"] = f"attachment; filename={file['name']}"
+    return response
