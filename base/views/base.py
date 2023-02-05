@@ -49,9 +49,6 @@ def clear_session(request):
         del request.session[key]
 
 
-# TODO -> remove 'data_to_file' from request.session after use the report
-
-
 def get_file(request):
     file = request.session["data_to_file"]
     df = pd.read_json(file["content"])
