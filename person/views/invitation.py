@@ -284,6 +284,7 @@ def confirm_invitation(request, token):
 
     context = {
         "form": form,
+        "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
         "total_address": True if "A1" not in invite.historic.keys() else False,
         "title": _("create pupil"),
         "rca_logo": True,
