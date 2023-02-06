@@ -179,8 +179,8 @@ def confirm_invitation(request, token):
         }
         return redirect("reg_feedback")
 
-    # compare token date (1 day)
-    token_time = invite.invited_on.replace(tzinfo=None) + timedelta(days=1)
+    # compare token date (15 day)
+    token_time = invite.invited_on.replace(tzinfo=None) + timedelta(days=15)
     if datetime.utcnow() > token_time:
         request.session["fbk"] = {"type": "expired_token"}
         return redirect("reg_feedback")
@@ -210,7 +210,7 @@ def confirm_invitation(request, token):
 
         # update or create user
         if invite.sign_lgpd:
-            # update user
+            # update user (from old db)
             user = User.objects.get(email=invite.email)
             user.set_password(data["password"])
             # updating the user.profile
@@ -233,7 +233,7 @@ def confirm_invitation(request, token):
             user.person.is_active = True
             user.person.save()
         else:
-            # creating a new user
+            # creating a new user (from invitation)
             user = User.objects.create_user(
                 email=invite.email, password=data["password"]
             )
