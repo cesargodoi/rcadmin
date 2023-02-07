@@ -134,12 +134,14 @@
               {% trans 'of Golden Rosicrucian.' %}
             </label>
           </div>
+
           <!-- reCAPTCHA input -->
           <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
           
           <div class="text-right mt-4">
             <input 
               id="submit-button" 
+              onclick="onClick()"
               type="submit" 
               class="btn btn-primary btn-lg" 
               value="{% translate 'Register' %}" 
@@ -156,22 +158,20 @@
 
   <script type="text/javascript" src="{% static 'js/registration.js' %}"></script>
 
+  {% endblock %}
+  
+  {% block scripts %}
   <script>
     $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('[data-toggle="popover"]').popover()
+        
+        grecaptcha.execute('{{ recaptcha_site_key }}', {action: "submit"}).then(
+          (token) => {
+            document.getElementById('g-recaptcha-response').value = token;
+          }
+        );
     }); 
-
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
-
-    // comment recaptcha in development to use popover
-    global grecaptcha
-    grecaptcha.ready(function() {
-      grecaptcha.execute('{{recaptcha_site_key}}', {action: "/contact/"}).then(function(token) {
-        document.getElementById('g-recaptcha-response').value = token;
-      });
-    });
-    
   </script>
-{% endblock %}
+  {% endblock %}
