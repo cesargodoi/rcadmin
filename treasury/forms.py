@@ -35,6 +35,12 @@ class PaymentForm(forms.ModelForm):
             ),
         }
 
+    def __init__(self, user=None, **kwargs):
+        super(PaymentForm, self).__init__(**kwargs)
+        self.fields["paytype"].queryset = PayTypes.objects.filter(
+            is_active=True
+        )
+
     field_order = ["paytype", "event", "person", "ref_month", "value", "obs"]
 
 
@@ -48,6 +54,12 @@ class FormOfPaymentForm(forms.ModelForm):
     class Meta:
         model = FormOfPayment
         fields = "__all__"
+
+    def __init__(self, user=None, **kwargs):
+        super(FormOfPaymentForm, self).__init__(**kwargs)
+        self.fields["bank_flag"].queryset = BankFlags.objects.filter(
+            is_active=True
+        )
 
 
 class FormUpdateStatus(forms.Form):
