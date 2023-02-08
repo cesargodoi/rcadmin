@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import User, Profile
-from treasury.models import Payment, FormOfPayment
+from treasury.models import Payment, FormOfPayment, PayTypes
 from rcadmin.common import PROFILE_PAYFORM_TYPES
 
 
@@ -43,6 +43,12 @@ class MyPaymentForm(forms.ModelForm):
             ),
             "person": forms.HiddenInput(),
         }
+
+    def __init__(self, user=None, **kwargs):
+        super(MyPaymentForm, self).__init__(**kwargs)
+        self.fields["paytype"].queryset = PayTypes.objects.filter(
+            is_active=True
+        )
 
 
 class MyFormOfPaymentForm(forms.ModelForm):
