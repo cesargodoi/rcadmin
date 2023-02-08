@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-06 19:17-0300\n"
-"PO-Revision-Date: 2023-02-06 09:52-0306\n"
+"PO-Revision-Date: 2023-02-08 12:17-0306\n"
 "Last-Translator: Anonymous User <cesar.godoi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1250,7 +1250,7 @@ msgstr "gênero"
 #: person/models.py:39 person/models.py:98
 #: person/templates/person/elements/tab_pupil.html:24
 msgid "id card"
-msgstr "CPF (só os números)"
+msgstr "CPF"
 
 #: person/models.py:52 user/models.py:49
 msgid "email address"

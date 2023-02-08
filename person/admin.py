@@ -10,6 +10,7 @@ class InvitationAdmin(admin.ModelAdmin):
     search_fields = ["name", "email"]
     list_display = [
         "name",
+        "id_card",
         "email",
         "center",
         "invited_on",
