@@ -157,6 +157,7 @@
   {% include "base/data_policy/modal.html" %}
 
   <script type="text/javascript" src="{% static 'js/registration.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/cpfValidation.js' %}"></script>
 
   {% endblock %}
   
@@ -172,6 +173,26 @@
             document.getElementById('g-recaptcha-response').value = token;
           }
         );
-    }); 
+
+        
+        
+      }); 
+      let cpf = document.getElementById('id_id_card');
+
+      cpf.addEventListener('blur', (e) => {
+        if (cpfValidation(cpf.value)) {
+          cpf.value = cpf.value.replace(/[^0-9]/g, '');
+          cpf.className = 'textinput textInput form-control';
+        } else {
+          cpf.value = '';
+          cpf.placeholder = 'CPF inválido';
+          cpf.className += 'textinput textInput form-control bg-danger text-light';
+        }
+      });
+
+      cpf.addEventListener('click', (e) => {
+        cpf.className = 'textinput textInput form-control';
+      });
+      
   </script>
   {% endblock %}
