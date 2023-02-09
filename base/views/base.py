@@ -58,13 +58,14 @@ def get_file(request):
     if "date" in df.columns:
         df["date"] = df["date"].dt.strftime("%Y-%m-%d")
 
-    bio = BytesIO()
-    writer = pd.ExcelWriter(bio)
-    df.to_excel(writer, sheet_name="Sheet1", index=False)
-    writer.close()
-    bio.seek(0)
+    buffer = BytesIO()
+
+    with pd.ExcelWriter(buffer) as writer:
+        df.to_excel(writer, index=False)
+
+    buffer.seek(0)
 
     mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    response = HttpResponse(bio, content_type=mime)
+    response = HttpResponse(buffer, content_type=mime)
     response["Content-Disposition"] = f"attachment; filename={file['name']}"
     return response

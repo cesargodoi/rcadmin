@@ -179,8 +179,8 @@ def confirm_invitation(request, token):
         }
         return redirect("reg_feedback")
 
-    # compare token date (15 day)
-    token_time = invite.invited_on.replace(tzinfo=None) + timedelta(days=15)
+    # compare token date (30 day)
+    token_time = invite.invited_on.replace(tzinfo=None) + timedelta(days=30)
     if datetime.utcnow() > token_time:
         request.session["fbk"] = {"type": "expired_token"}
         return redirect("reg_feedback")
