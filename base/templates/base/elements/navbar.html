@@ -5,10 +5,8 @@
 <header class="site-header">
   <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
     <div class="container">
-      <a class="navbar-brand mr-4"
-          href="{% if request.user.groups.all|length > 1 or request.user.is_superuser %}{% url 'home' %}{% else %}#{% endif %}">
+      <a class="navbar-brand mr-4" href="{% url 'home' %}">
         <img src="{% static 'images/logo-white.png' %}" class="logo-img" alt="...">
-
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
           aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
