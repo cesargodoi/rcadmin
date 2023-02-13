@@ -1,11 +1,12 @@
-import requests
+# import requests
 import json
 
 from datetime import date, datetime, timedelta
 from django.urls import reverse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from django.conf import settings
+
+# from django.conf import settings
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.http.request import QueryDict
@@ -188,20 +189,20 @@ def confirm_invitation(request, token):
     template_name = "person/invitation/forms/data_registration.html"
 
     if request.method == "POST":
-        # reCAPTCHA validation
-        recaptcha_response = request.POST.get("g-recaptcha-response")
-        data = {
-            "secret": settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-            "response": recaptcha_response,
-        }
-        r = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify", data=data
-        )
-        result = r.json()
-        # if reCAPTCHA returns False
-        if not result["success"]:
-            request.session["fbk"] = {"type": "recaptcha"}
-            return redirect("reg_feedback")
+        # # reCAPTCHA validation
+        # recaptcha_response = request.POST.get("g-recaptcha-response")
+        # data = {
+        #     "secret": settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+        #     "response": recaptcha_response,
+        # }
+        # r = requests.post(
+        #     "https://www.google.com/recaptcha/api/siteverify", data=data
+        # )
+        # result = r.json()
+        # # if reCAPTCHA returns False
+        # if not result["success"]:
+        #     request.session["fbk"] = {"type": "recaptcha"}
+        #     return redirect("reg_feedback")
 
         # populating the form
         form = PupilRegistrationForm(request.POST, instance=invite)
@@ -284,7 +285,7 @@ def confirm_invitation(request, token):
 
     context = {
         "form": form,
-        "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
+        # "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
         "total_address": True if "A1" not in invite.historic.keys() else False,
         "title": _("create pupil"),
         "rca_logo": True,
