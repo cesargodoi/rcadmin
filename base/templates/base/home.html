@@ -5,8 +5,14 @@
 
 {% block content %}
 
-<div class="content-section mb-1 is-link" 
-     onclick="location.href='{% url 'center_detail' object.pk %}?from=home'">
+{% if request.user|has_group:'user' and request.user.groups.all|length == 1 %}
+<div class="content-section mb-1">
+{% else %}
+<div 
+  class="content-section mb-1 is-link" 
+  onclick="location.href='{% url 'center_detail' object.pk %}?from=home'"
+>
+{% endif %}
   <div class="article-metadata">{% trans 'Welcome to' %}</div>
   <div class="row">
     <div class="col-lg-2">
@@ -42,6 +48,17 @@
     </div>
   </div>
 </div>
+{% if request.user|has_group:'user' and request.user.groups.all|length == 1 %}
+<div class="text-center">
+  <a 
+    class="btn btn-outline-primary btn-lg mt-4"
+    href="{% url 'profile_detail' %}"
+  >
+    <i class="fa-solid fa-id-card"></i>
+    Ir para minha página de perfil
+  </a>
+</div>
+{% endif %}
 
 
 <div class="row-pg-initial">
